@@ -1,9 +1,12 @@
 package Entity;
 
+
+
 import TileMap.TileMap;
 
 public class SmallFireball extends Projectile
 {
+
 	public SmallFireball(
 			TileMap tileMap, 
 			boolean right, 
@@ -12,6 +15,7 @@ public class SmallFireball extends Projectile
 			boolean friendly
 		)
 	{
+		
 		super(
 				tileMap, 															//Tile map
 				right, 																// Facing right
@@ -22,17 +26,17 @@ public class SmallFireball extends Projectile
 				60, 																// Projectile height
 				60, 																// Explosion width
 				60, 																// Explosion height
-				28, 																// Collision width
-				28, 																// Collision height
+				56, 																// Collision width
+				56, 																// Collision height
 				7.6, 																// Projectile speed
-				"fireball.png", 									// Projectile path
+				"/Sprites/Effects/fireball.png",	 								// Projectile path
 				4, 																	// Projectile pictures
-				"/Sprites/Effects/smallFireballexplosion.png", 						// Explosion path
-				3, 																	// Explosion parts
+				"/Sprites/Effects/newSmallFireballExplosion.png", 							// Explosion path
+				14, 																// Explosion parts
 				3, 																	// Explosion damage
-				60, 																// Explosion radius
+				240, 																// Explosion radius
 				"Resources/Sound/FireballImpact.wav"								// Explosion sound
-				
-				);
+			);
 	}
+		
 }

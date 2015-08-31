@@ -609,15 +609,15 @@ public class Character extends MapObject
 				animation.setDelay(100);
 				if(dy == 0) dx = 0;
 				
-				try
-				{
-					Audio sound = new Audio();
-					sound.playSound("Resources/Sound/LaunchFireball.wav");
-				}
-				catch(Exception e)
-				{
-					e.printStackTrace();
-				}
+//				try
+//				{
+//					Audio sound = new Audio();
+//					sound.playSound("Resources/Sound/LaunchFireball.wav");
+//				}
+//				catch(Exception e)
+//				{
+//					e.printStackTrace();
+//				}
 				
 			}
 			if(animation.hasPlayedOnce())
