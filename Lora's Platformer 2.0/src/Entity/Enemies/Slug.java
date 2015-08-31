@@ -1,7 +1,6 @@
 package Entity.Enemies;
 
 import TileMap.TileMap;
-import Entity.*;
 import Entity.Character;
 
 public class Slug extends Character
@@ -96,7 +95,7 @@ public class Slug extends Character
 		
 		if(turnTimer == 50)
 		{
-			System.out.println("FIRE THE FIREBALL!");
+//			System.out.println("FIRE THE FIREBALL!");
 			castingSmallFireball = true;
 		}
 	}

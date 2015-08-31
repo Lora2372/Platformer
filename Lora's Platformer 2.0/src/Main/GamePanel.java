@@ -3,7 +3,6 @@ package Main;
 import java.awt.image.BufferedImage;
 import java.awt.*;
 
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import GameState.GameStateManager;

@@ -2,11 +2,9 @@ package Entity;
 
 import java.awt.Rectangle;
 
-import javax.swing.JOptionPane;
 
 import Main.GamePanel;
 import TileMap.TileMap;
-import TileMap.Tile;
 
 public abstract class MapObject 
 {
@@ -129,8 +127,13 @@ public abstract class MapObject
 		bottomLeft = tileMap.getType(bottomTile,leftTile);
 		bottomRight = tileMap.getType(bottomTile, rightTile);
 		
-		face = tileMap.getType( (int) x / tileSize, (int) y / tileSize);
+		int centerX = (int) x / tileSize;
+		int centerY = (int) y / tileSize;
+		
+		face = tileMap.getType(centerX, centerY);
 
+		System.out.println("face: " + face);
+		System.out.println(bottomLeft);
 		
 //		if(topLeft == -5000 || topRight == -5000 || bottomLeft == -5000 || bottomRight == -5000) return;
 		
@@ -165,7 +168,17 @@ public abstract class MapObject
 		
 		calculateCorners(x, ydest);
 		
-//		if()
+//		System.out.println("face: " + face);
+		
+		if(!swimming && face == 2)
+		{
+			swimming = true;
+			System.out.println("swimming is true");
+		}
+		else if(swimming)
+		{
+			swimming = false;
+		}
 		
 		// We're going upwards
 		if(dy < 0)

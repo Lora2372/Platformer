@@ -4,9 +4,6 @@ import java.awt.*;
 import java.awt.image.*;
 import java.io.*;
 
-import javax.imageio.ImageIO;
-import javax.swing.JOptionPane;
-
 import Main.GamePanel;
 
 public class TileMap 

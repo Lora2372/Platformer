@@ -157,7 +157,7 @@ public class Character extends MapObject
 			int manaRegen,
 			int smallFireballManaCost,
 			int smallFireballDamage,			
-			int largeFireballCost,
+			int largeFireballManaCost,
 			int largeFireballDamage,					
 			String spritePath,
 			int[] animationState,
@@ -381,7 +381,7 @@ public class Character extends MapObject
 		
 		// Falling
 //		System.out.println("character name: " + getName() + ", falling: " + falling);
-		if(falling)
+		if(falling || swimming)
 		{
 			if(dy > 0 && gliding) dy += fallSpeed * 0.1;
 			else dy += fallSpeed;
@@ -392,10 +392,6 @@ public class Character extends MapObject
 			if(dy > maxFallSpeed) dy = maxFallSpeed;
 		}
 		
-		if(swimming)
-		{
-			
-		}
 		
 		
 	}

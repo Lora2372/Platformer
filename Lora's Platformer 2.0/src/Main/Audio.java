@@ -1,10 +1,5 @@
 package Main;
 import java.io.*;
-import java.net.URL;
-
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
 
 import sun.audio.*;
 
@@ -29,6 +24,7 @@ public class Audio
 //		AudioPlayer.player.stop();
 		
 	}
+	@SuppressWarnings("deprecation")
 	public void stop() 
 	{ 
 		AudioPlayer.player.stop();
