@@ -73,12 +73,12 @@ public class TileMap
 				
 				if(col >= waterBlockStart && col <= waterBlockEnd)
 				{
-					System.out.println("water: col: " + col);
+//					System.out.println("water: col: " + col);
 					tiles[0][col] = new Tile(subimage, Tile.UNDERWATER);
 				}
 				else
 				{
-					System.out.println("normal: col: " + col);
+//					System.out.println("normal: col: " + col);
 					tiles[0][col] = new Tile(subimage, Tile.NORMAL);
 				}
 				

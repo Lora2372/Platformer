@@ -44,7 +44,7 @@ public class Level1State extends GameState
 			//tileMap.loadTiles("/Tilesets/tileset.png");
 			
 			tileMap.loadTiles(ImageIO.read(getClass().getResource("/Tilesets/LorasTileset.png")));
-			tileMap.loadMap("/Maps/DemoMapVersion0.1.map");
+			tileMap.loadMap("/Maps/LorasMap01001.map");
 			tileMap.setPosition(0, 0);
 			
 			background = new Background(getClass().getResource("/Backgrounds/grassbg1.gif"), 0.1);
@@ -120,7 +120,7 @@ public class Level1State extends GameState
 		}
 		else
 		{
-			System.out.println("Background is null");
+//			System.out.println("Background is null");
 		}
 		
 		

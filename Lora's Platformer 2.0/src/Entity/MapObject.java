@@ -3,6 +3,8 @@ package Entity;
 import java.awt.Rectangle;
 
 
+
+
 import Main.GamePanel;
 import TileMap.TileMap;
 
@@ -42,7 +44,6 @@ public abstract class MapObject
 	protected int topRight;
 	protected int bottomLeft;
 	protected int bottomRight;
-	protected int face;
 	
 	// Animation
 	protected Animation animation;
@@ -95,26 +96,6 @@ public abstract class MapObject
 	
 	public void calculateCorners(double x, double y)
 	{
-//		if(notOnScreen())
-//		{
-//			
-//			System.out.println("not on screen");
-//			return;
-//		}
-		
-		// This code was mostly an attempt to get rid of the error message caused when leaving the screen
-		//****************************************************************************************************
-//		//If the object is beyond the left side of the screen
-//		if(x + xmap + width < 0) return;
-//		
-//		// if the object is beyond the right side of the screen
-//		if(x + xmap - width > GamePanel.WIDTH) return;
-//		//if the object is above the screen
-//		if(y + ymap + height < 0) return;
-//		//if the object is below the screen
-//		if(y + ymap - height > GamePanel.HEIGHT) ;
-		//****************************************************************************************************
-//		
 		int leftTile 	= (int) (x - collisionWidth / 2) 		/ tileSize;
 		int rightTile 	= (int) (x + collisionWidth / 2 - 1) 	/ tileSize;
 		
@@ -125,33 +106,7 @@ public abstract class MapObject
 		topLeft = tileMap.getType(topTile, leftTile);		
 		topRight = tileMap.getType(topTile, rightTile);
 		bottomLeft = tileMap.getType(bottomTile,leftTile);
-		bottomRight = tileMap.getType(bottomTile, rightTile);
-		
-		int centerX = (int) x / tileSize;
-		int centerY = (int) y / tileSize;
-		
-		face = tileMap.getType(centerX, centerY);
-
-		System.out.println("face: " + face);
-		System.out.println(bottomLeft);
-		
-//		if(topLeft == -5000 || topRight == -5000 || bottomLeft == -5000 || bottomRight == -5000) return;
-		
-		
-		
-		
-//		topLeft = topL == Tile.BLOCKED;		
-//		topRight = topR == Tile.BLOCKED;
-//		bottomLeft = bottomL == Tile.BLOCKED;
-//		bottomRight = bottomR == Tile.BLOCKED;
-		
-//		System.out.println("Tile.UNDERWATER: " + Tile.UNDERWATER);
-		
-//		topLeft = topL == Tile.UNDERWATER;
-//		topRight = topR == Tile.UNDERWATER;
-//		bottomLeft = bottomL == Tile.UNDERWATER;
-//		bottomRight = bottomR == Tile.UNDERWATER;
-		
+		bottomRight = tileMap.getType(bottomTile, rightTile);		
 	}
 	
 	
@@ -168,15 +123,15 @@ public abstract class MapObject
 		
 		calculateCorners(x, ydest);
 		
-//		System.out.println("face: " + face);
 		
-		if(!swimming && face == 2)
+		if(!swimming && (topLeft == 2 || topRight == 2))
 		{
 			swimming = true;
-			System.out.println("swimming is true");
+//			System.out.println("swimming is true");
 		}
 		else if(swimming)
 		{
+//			System.out.println("swimming is false");
 			swimming = false;
 		}
 		

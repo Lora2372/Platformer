@@ -96,7 +96,7 @@ public class Slug extends Character
 		if(turnTimer == 50)
 		{
 //			System.out.println("FIRE THE FIREBALL!");
-			castingSmallFireball = true;
+//			castingSmallFireball = true;
 		}
 	}
 	

@@ -26,8 +26,8 @@ public class LargeFireball extends Projectile
 				120, 																// Projectile height
 				480, 																// Explosion width
 				480, 																// Explosion height
-				28, 																// Collision width
-				28, 																// Collision height
+				56, 																// Collision width
+				56, 																// Collision height
 				7.6, 																// Projectile speed
 				"/Sprites/Effects/bigFireball2.png", 								// Projectile path
 				3, 																	// Projectile pictures
