@@ -25,7 +25,7 @@ public class SmallFireball extends Projectile
 				28, 																// Collision width
 				28, 																// Collision height
 				7.6, 																// Projectile speed
-				"/Sprites/Effects/fireball.png", 									// Projectile path
+				"fireball.png", 									// Projectile path
 				4, 																	// Projectile pictures
 				"/Sprites/Effects/smallFireballexplosion.png", 						// Explosion path
 				3, 																	// Explosion parts
