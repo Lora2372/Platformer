@@ -21,6 +21,7 @@ public class MenuState extends GameState
 	
 	private String title = "Lora's Platformer, KIRBY!";
 	
+	
 	private Color titleColor;
 	private Font titleFont;
 	
@@ -44,6 +45,10 @@ public class MenuState extends GameState
 					50);
 			
 			font = new Font("Arial", Font.PLAIN, 28);
+			
+			
+			
+			
 		}
 		catch(Exception e)
 		{
@@ -77,6 +82,15 @@ public class MenuState extends GameState
 		
 		
 		graphics.drawString(title, textX, GamePanel.HEIGHT / 5);
+		
+		String versionString = "Version: " + GamePanel.version;
+		
+		
+		stringLength = (int) graphics.getFontMetrics().getStringBounds(versionString, graphics).getWidth();
+		textX = GamePanel.WIDTH - stringLength - 20;
+		int textY = GamePanel.HEIGHT - 20;
+		
+		graphics.drawString(versionString, textX, textY);
 		
 		// Draw menu options
 		graphics.setFont(font);
