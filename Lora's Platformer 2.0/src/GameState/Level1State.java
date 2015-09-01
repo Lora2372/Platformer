@@ -49,7 +49,7 @@ public class Level1State extends GameState
 			tileMap.loadMap("/Maps/LorasMap01001.map");
 			tileMap.setPosition(0, 0);
 			
-			background = new Background(getClass().getResource("/Backgrounds/grassbg1.gif"), 0.1);
+			background = new Background(getClass().getResource("/Backgrounds/Mountains5.png"), 0.1);
 
 		}
 		catch(IOException e)
@@ -100,6 +100,7 @@ public class Level1State extends GameState
 					else
 					{
 						// Player died...
+						gameStateManager.setState(GameStateManager.MENUSTATE);
 					}
 				}
 
@@ -175,6 +176,26 @@ public class Level1State extends GameState
 		
 	}
 	
+	public void spawnSuccubi()
+	{
+		String[] succubiNames = new String[]
+				{
+					"Fiona",
+					"Rui",
+					"Domwena"
+				};
+		
+		Random randomizer = new Random();
+	int random2 = randomizer.nextInt((2 - 0) + 1 + 0);
+		
+		Succubus succubus = new Succubus(tileMap,false,false,succubiNames[random2],player.getx(), player.getx());
+		characterList.add(succubus);
+		enemies.add(succubus);
+		succubus.setPosition(player.getx(), player.getx());
+		
+		
+	}
+	
 	public void spawnEnemies()
 	{
 		String[] names = new String[]
@@ -186,10 +207,9 @@ public class Level1State extends GameState
 					"carl",
 					"john"				
 				};
-		
 		Random randomizer = new Random();
 		int random = randomizer.nextInt((5 - 0) + 1 + 0);
-		
+	
 		Slug slug = new Slug(tileMap, true, false, names[random], player.getx(), player.gety());
 		characterList.add(slug);
 		enemies.add(slug);
@@ -213,6 +233,7 @@ public class Level1State extends GameState
 		if(k == KeyEvent.VK_B) player.setSexytime2();
 		
 		if(k == KeyEvent.VK_P) GPS(); 
+		if(k == KeyEvent.VK_O) spawnSuccubi(); 
 	}
 	public void GPS()
 	{

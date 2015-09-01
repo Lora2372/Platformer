@@ -3,12 +3,12 @@ package Entity.Enemies;
 import TileMap.TileMap;
 import Entity.Character;
 
-public class Slug extends Character
+public class Succubus extends Character
 {
 	protected int turnTime;
 	protected int turnTimer;
 	
-	public Slug(
+	public Succubus(
 			TileMap tileMap,
 			boolean facingRight,
 			boolean friendly,
@@ -19,25 +19,25 @@ public class Slug extends Character
 	{
 		super(
 				tileMap,  															// TileMap
-				60, 	 															// Width
-				60, 	 															// Height
-				40, 	 															// Collision width
-				40, 	 															// Collision height
+				100, 	 															// Width
+				100, 	 															// Height
+				100, 	 															// Collision width
+				100, 	 															// Collision height
 				0.1, 	 															// Move speed
-				0.6, 	 															// Max speed
-				0.1, 	 															// stopSpeed
+				1.0, 	 															// Max speed
+				0.4, 	 															// stopSpeed
 				0.3, 	 															// fallSpeed
 				8.0, 	 															// maxFallSpeed
-				-4, 	 															// jumpStart
+				-9.6, 	 															// jumpStart
 				0.6, 	 															// stopJumpSpeed
 				facingRight,														// facingRight
 				true,  																// inControl
-				1,		 															// health
-				1, 		 															//maxHealth
-				-1,		 															// healthCounter
-				0,	 																// stamina
-				0, 	 																// maxStamina
-				-1,		 															// staminaCounter
+				5,		 															// health
+				5, 		 															//maxHealth
+				30,		 															// healthCounter
+				100,	 																// stamina
+				100, 	 																// maxStamina
+				30,		 															// staminaCounter
 				0,	 	 															// punchCost
 				0, 		 															// punchDamage
 				0,	 	 															// punchRange
@@ -45,17 +45,17 @@ public class Slug extends Character
 				2,		 															// dashDamage
 				40,		 															// dashRange
 				20, 	 															// dashSpeed
-				0,		 															// mana
-				0,		 															// maxMana
-				-1,		 															// manaCounter
-				0,		 															// smallFireballManaCost
+				100,		 															// mana
+				100,		 															// maxMana
+				30,		 															// manaCounter
+				20,		 															// smallFireballManaCost
 				20,		 															// smallFireballDamage
-				0,		 															// largeFireballManaCost
-				0, 																	// largeFireballDamage
-				"/Sprites/Characters/slugger.gif",									// spritePath
-				new int[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},						// animationStates
-				new int[]{3},														// numImages
-				10,																	// damageOnTouch
+				40,		 															// largeFireballManaCost
+				50, 																	// largeFireballDamage
+				"/Sprites/Characters/Succubus.png",									// spritePath
+				new int[] {0,0,0,0,0,0,0,0,4,2,4,2,4,0,0,0,0},				// animationStates
+				new int[]{7, 2, 6, 2, 1, 4, 4, 1, 6},								// numImages
+				0,																	// damageOnTouch
 				friendly,															// friendly				
 				name,
 				spawnX,
@@ -63,15 +63,19 @@ public class Slug extends Character
 				
 				);
 		
-		turnTimer = 50;
-		turnTime = 50;
+		turnTimer = 0;
+		turnTime = 500;
 		
 		
 		
 	}
 	public void updateAI()
 	{
+//		if(!friendly) return;
 		//System.out.println("dx: " + dx + ", turnTimer: " + turnTimer);
+		
+		
+		
 		turnTimer++;
 		if(dx == 0 && turnTimer > turnTime)
 		{			
@@ -93,9 +97,8 @@ public class Slug extends Character
 			
 		}
 		
-		if(turnTimer == 50)
+		if(turnTimer == 300)
 		{
-//			System.out.println("FIRE THE FIREBALL!");
 			castingSmallFireball = true;
 		}
 	}

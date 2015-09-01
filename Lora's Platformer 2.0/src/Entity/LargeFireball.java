@@ -33,7 +33,7 @@ public class LargeFireball extends Projectile
 				3, 																	// Projectile pictures
 				"/Sprites/Effects/largeFireballExplosion.png", 						// Explosion path
 				14, 																// Explosion parts
-				3, 																	// Explosion damage
+				50, 																	// Explosion damage
 				240, 																// Explosion radius
 				"Resources/Sound/FireballImpact.wav"								// Explosion sound
 			);

@@ -35,22 +35,22 @@ public class Player extends Character
 				50,		 															// healthCounter
 				100,	 															// stamina
 				100, 	 															// maxStamina
-				50,		 															// staminaCounter
-				40, 	 															// punchCost
-				1, 		 															// punchDamage
+				25,		 															// staminaCounter
+				5,	 	 															// punchCost
+				5, 		 															// punchDamage
 				40, 	 															// punchRange
 				40,		 															// dashCost
-				2,		 															// dashDamage
+				40,		 															// dashDamage
 				40,		 															// dashRange
 				20, 	 															// dashSpeed
 				100,	 															// mana
 				100,	 															// maxMana
-				50,		 															// manaCounter
-				10,		 															// smallFireballManaCost
-				4,		 															// smallFireballDamage
+				25,		 															// manaCounter
+				20,		 															// smallFireballManaCost
+				20,		 															// smallFireballDamage
 				40,		 															// largeFireballManaCost
-				8, 																	// largeFireballDamage
-				"/Sprites/Player/Lora.png", 										// spritePath
+				50, 																	// largeFireballDamage
+				"/Sprites/Characters/Lora.png", 									// spritePath
 				new int[] {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,14,15},				// animationStates
 				new int[]{6, 6, 1, 5, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1},			// numImages
 				0,																	// damageOnTouch

@@ -199,7 +199,7 @@ public class Character extends MapObject
 		this.mana = mana;
 		this.maxMana = maxMana;
 		this.manaRegen = manaRegen;
-		this.smallFireballManaCost = smallFireballDamage;
+		this.smallFireballManaCost = smallFireballManaCost;
 		this.smallFireballDamage = smallFireballDamage;
 		this.largeFireballManaCost = largeFireballManaCost;
 		this.largeFireballDamage = largeFireballDamage;
@@ -269,6 +269,14 @@ public class Character extends MapObject
 	{
 		this.spawnX = spawnX;
 		this.spawnY = spawnY;
+	}
+	
+	public void respawn()
+	{
+		x = spawnX;
+		y = spawnY;
+		dead = false;
+		health = maxHealth;
 	}
 	
 	
@@ -405,8 +413,10 @@ public class Character extends MapObject
 	
 	public void hit(int damage)
 	{
+		System.out.println("Damage: " + damage);
 		if(dead || flinching) return;
 		health -= damage;
+		System.out.println(name + "'s health: " + health);
 		if( health < 0) health = 0;
 		if(health == 0) dead = true;
 //		flinching = true;
@@ -864,7 +874,19 @@ public class Character extends MapObject
 				//*Projectile                                                                    *
 				//********************************************************************************	
 				for(int j = 0; j < projectiles.size(); j++)
-				{					
+				{
+					for(int k = 0; k < projectiles.size(); k++)
+					{
+						if(projectiles.get(j).getFriendly() != projectiles.get(k).getFriendly())
+						{
+							if(projectiles.get(j).intersects(projectiles.get(k)))
+							{
+								projectiles.get(j).setHit(characterList);
+								projectiles.get(k).setHit(characterList);
+							}
+						}
+
+					}
 					if(projectiles.get(j).intersects(character))
 					{
 						projectiles.get(j).setHit(characterList);
