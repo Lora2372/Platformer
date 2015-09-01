@@ -22,7 +22,7 @@ public class Slug extends Character
 				60, 	 															// Width
 				60, 	 															// Height
 				40, 	 															// Collision width
-				60, 	 															// Collision height
+				40, 	 															// Collision height
 				0.1, 	 															// Move speed
 				0.6, 	 															// Max speed
 				0.1, 	 															// stopSpeed
@@ -95,8 +95,8 @@ public class Slug extends Character
 		
 		if(turnTimer == 50)
 		{
-//			System.out.println("FIRE THE FIREBALL!");
-//			castingSmallFireball = true;
+			System.out.println("FIRE THE FIREBALL!");
+			castingSmallFireball = true;
 		}
 	}
 	

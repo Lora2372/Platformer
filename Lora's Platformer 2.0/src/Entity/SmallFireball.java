@@ -26,15 +26,15 @@ public class SmallFireball extends Projectile
 				60, 																// Projectile height
 				60, 																// Explosion width
 				60, 																// Explosion height
-				56, 																// Collision width
-				56, 																// Collision height
+				80, 																// Collision width
+				80, 																// Collision height
 				7.6, 																// Projectile speed
-				"/Sprites/Effects/fireball.png",	 								// Projectile path
+				"/Sprites/Effects/smallFireball.png",	 								// Projectile path
 				4, 																	// Projectile pictures
-				"/Sprites/Effects/newSmallFireballExplosion.png", 							// Explosion path
+				"/Sprites/Effects/smallFireballExplosion.png", 							// Explosion path
 				14, 																// Explosion parts
 				3, 																	// Explosion damage
-				240, 																// Explosion radius
+				60, 																// Explosion radius
 				"Resources/Sound/FireballImpact.wav"								// Explosion sound
 			);
 	}

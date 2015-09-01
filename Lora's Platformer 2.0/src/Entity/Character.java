@@ -259,7 +259,7 @@ public class Character extends MapObject
 	}
 	
 	public int getHealth() { return health; }
-	public int getMaxhealth() { return maxHealth; }
+	public int getMaxHealth() { return maxHealth; }
 	public int getMana() { return mana; }
 	public int getMaxMana() { return maxMana; }
 	public int getStamina() { return stamina; }
@@ -398,6 +398,8 @@ public class Character extends MapObject
 	
 	
 	public void updateAI(){}
+	
+	public boolean getFriendly() { return friendly; }
 
 	public boolean isDead() { return dead; }
 	
@@ -407,17 +409,18 @@ public class Character extends MapObject
 		health -= damage;
 		if( health < 0) health = 0;
 		if(health == 0) dead = true;
-		flinching = true;
+//		flinching = true;
 		flinchTimer = System.nanoTime();
 	}
 	
-	public void update()
+	public void update(ArrayList<Character> characterList)
 	{
 		// Update position
 		getNextPosition();
 		checkTileMapCollision();
 		setPosition(xtemp, ytemp);
 		
+//		System.out.println(name + "'s health: " + health);
 		
 		if(x > tileMap.getWidth() || x < 0 || y > tileMap.getHeight())
 		{
@@ -427,21 +430,21 @@ public class Character extends MapObject
 		
 		// Regeneration
 		healthCounter++;
-		if(healthCounter > healthRegen)
+		if(healthCounter > healthRegen && healthCounter != -1)
 		{
 			healthCounter = 0;
 			if(health < maxHealth) health++;
 		}
 
 		manaCounter++;
-		if(manaCounter > manaRegen)
+		if(manaCounter > manaRegen && manaCounter != -1)
 		{
 			manaCounter = 0;
 			if(mana < maxMana) mana++;
 		}
 		
 		staminaCounter++;
-		if(staminaCounter > staminaRegen)
+		if(staminaCounter > staminaRegen && staminaCounter != -1)
 		{
 			staminaCounter = 0;
 			if(stamina < maxStamina) stamina++;
@@ -451,7 +454,7 @@ public class Character extends MapObject
 		// Update fireballs
 		for(int i = 0; i < projectiles.size(); i++)
 		{
-			projectiles.get(i).update();
+			projectiles.get(i).update(characterList);
 			if(projectiles.get(i).shouldRemove())
 			{
 				projectiles.remove(i);
@@ -609,15 +612,15 @@ public class Character extends MapObject
 				animation.setDelay(100);
 				if(dy == 0) dx = 0;
 				
-//				try
-//				{
-//					Audio sound = new Audio();
-//					sound.playSound("Resources/Sound/LaunchFireball.wav");
-//				}
-//				catch(Exception e)
-//				{
-//					e.printStackTrace();
-//				}
+				try
+				{
+					Audio sound = new Audio();
+					sound.playSound("Resources/Sound/LaunchFireball.wav");
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}
 				
 			}
 			if(animation.hasPlayedOnce())
@@ -627,8 +630,8 @@ public class Character extends MapObject
 				castingSmallFireball = false;
 				doneCastingSmallFireball = true;
 				
-				SmallFireball fireball = new SmallFireball(tileMap, facingRight, up, down, true);
-				fireball.setPosition(x, y);
+				SmallFireball fireball = new SmallFireball(tileMap, facingRight, up, down, friendly);
+				fireball.setPosition(x, y - 20);
 				projectiles.add(fireball);
 				
 				currentAction = animationState[9];
@@ -778,6 +781,116 @@ public class Character extends MapObject
 			if(right) facingRight = true;
 			if(left) facingRight = false;
 		}
+	}
+	
+	
+	
+	public void checkAttack(ArrayList<Character> characterList)
+	{
+		
+		for(int i = 0; i < characterList.size(); i++)
+		{
+			Character character = characterList.get(i);
+			if(character.getFriendly() != friendly)
+			{
+				//********************************************************************************
+				//*Punching                                                                      *
+				//********************************************************************************	
+				if(endPunch)
+				{
+					if(facingRight)
+					{
+						if
+						(
+								character.getx() > x &&
+								character.getx() < x + punchRange &&
+								character.gety() > y - height / 2 &&
+								character.gety() < y + height / 2
+						)
+						{
+							character.hit(punchDamage);
+						}
+					}
+					else
+					{
+						if
+						(
+							character.getx() < x &&
+							character.getx() > x - punchRange &&
+							character.gety() > y - height / 2 &&
+							character.gety() < y + height / 2
+						)
+						{
+							character.hit(punchDamage);
+						}
+					}
+					
+				}
+
+				//********************************************************************************
+				//*Dashing                                                                      *
+				//********************************************************************************	
+				if(endDash)
+				{
+					if(facingRight)
+					{
+						if
+						(
+								character.getx() > x &&
+								character.getx() < x + dashRange &&
+								character.gety() > y - height / 2 &&
+								character.gety() < y + height / 2
+						)
+						{
+							character.hit(dashDamage);
+						}
+					}
+					else
+					{
+						if
+						(
+							character.getx() < x &&
+							character.getx() > x - dashRange &&
+							character.gety() > y - height / 2 &&
+							character.gety() < y + height / 2
+						)
+						{
+							character.hit(dashDamage);
+						}
+					}
+				}
+				
+				//********************************************************************************
+				//*Projectile                                                                    *
+				//********************************************************************************	
+				for(int j = 0; j < projectiles.size(); j++)
+				{					
+					if(projectiles.get(j).intersects(character))
+					{
+						projectiles.get(j).setHit(characterList);
+					}
+				}								
+			}
+			
+
+			
+		} // End for loop		
+		
+		
+		
+//		for(int i = 0; i < projectiles.size(); i++)
+//		{
+//			System.out.println("Projectile: " + projectiles.get(i) + " collisionWidth: " + projectiles.get(i).collisionWidth);
+//			for(int j = 0; j < characterList.size(); j++)
+//			{
+//				if()
+//				if(projectiles.get(i).intersects(characterList.get(j)))
+//				{
+//					projectiles.get(i).setHit(characterList);
+//				}
+//			}
+//
+//		}
 	}
 	
 	

@@ -2,6 +2,7 @@ package Entity;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
@@ -16,17 +17,9 @@ public class Projectile extends MapObject
 	protected BufferedImage[] sprites;
 	protected BufferedImage[] hitSprites;
 	
-	protected boolean right; 
-	protected boolean up; 
-	protected boolean down; 
 	protected boolean friendly; 
-	protected int width; 
-	protected int height;
 	protected int explosionWidth;
 	protected int explosionHeight;
-	protected int collisionWidth;
-	protected int collisionHeight;
-	protected double moveSpeed;
 	protected String projectilePath;
 	protected String explosionPath;
 	protected int explosionParts;
@@ -74,6 +67,9 @@ public class Projectile extends MapObject
 		this.explosionRadius = explosionRadius;
 		this.explosionParts = explosionParts;
 		this.explosionSound = explosionSound;
+		this.damage = damage;
+		
+		
 		
 		if(right) dx = this.moveSpeed;
 		else dx = -this.moveSpeed;
@@ -134,12 +130,28 @@ public class Projectile extends MapObject
 		}
 	}
 	
+	public boolean getFriendly() { return friendly; }
+
+	
 	// Functions that figures out whether or not the fireball has hit something.
-	public void setHit()
+	public void setHit(ArrayList<Character> characterList)
 	{
 		if(hit) return;
 		hit = true;
 				
+		
+		for(int i = 0; i < characterList.size(); i++)
+		{
+			Character character = characterList.get(i);
+			if(character.getFriendly() != friendly)
+			{
+				if(this.intersects(character))
+				{
+					character.hit(damage);
+				}
+			}
+		}
+		
 		
 		try
 		{
@@ -167,20 +179,20 @@ public class Projectile extends MapObject
 		return remove; 
 	}
 	
-	public void update()
+	public void update(ArrayList<Character> characterList)
 	{
 		checkTileMapCollision();
 		setPosition(xtemp, ytemp);
 
 		if(x > tileMap.getWidth() || x < 0 || y < 0 || y > tileMap.getHeight())
 		{
-			setHit();
+			setHit(characterList);
 		}
 		
 		
 		if((dx == 0 || ((down || up) && dy == 0)) && !hit)
 		{
-			setHit();
+			setHit(characterList);
 		}
 		
 		animation.update();

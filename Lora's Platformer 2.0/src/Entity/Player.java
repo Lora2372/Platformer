@@ -1,5 +1,7 @@
 package Entity;
 
+import java.util.ArrayList;
+
 import TileMap.TileMap;
 
 public class Player extends Character
@@ -58,5 +60,5 @@ public class Player extends Character
 				spawnY
 				);
 		
-	}	
+	}
 }

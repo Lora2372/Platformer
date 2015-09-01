@@ -5,6 +5,9 @@ import java.awt.Rectangle;
 
 
 
+
+import javax.swing.JOptionPane;
+
 import Main.GamePanel;
 import TileMap.TileMap;
 
@@ -73,20 +76,23 @@ public abstract class MapObject
 	public MapObject(TileMap tileMap)
 	{
 		this.tileMap = tileMap;
+		
+		
 		tileSize = tileMap.getTileSize();
 	}
 	
-	public Boolean intersects(MapObject other)
+	public Boolean intersects(MapObject mapObject)
 	{
-		Rectangle r1 = getRectangle();
-		Rectangle r2 = getRectangle();
 		
+		Rectangle r1 = getRectangle();
+		Rectangle r2 = mapObject.getRectangle();
+				
 		return r1.intersects(r2);
 	}
 	
 	public Rectangle getRectangle()
-	{
-		return new Rectangle(
+	{		
+		return new Rectangle(				
 				(int)x - collisionWidth,
 				(int)y - collisionHeight,
 				collisionWidth,

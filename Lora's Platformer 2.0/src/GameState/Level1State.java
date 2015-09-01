@@ -24,6 +24,8 @@ public class Level1State extends GameState
 	
 	private Player player;
 	private ArrayList<Character> characterList;
+	private ArrayList<Character> enemies;
+	private HUD hud;
 	
 	private boolean doneInitializing;
 	
@@ -56,11 +58,17 @@ public class Level1State extends GameState
 		}
 
 		characterList = new ArrayList<Character>();
+		enemies = new ArrayList<Character>();
 		
 		player = new Player(tileMap,"Lora", 125, 100);
 		player.setPosition(125, 100);
 		characterList.add(player);
+		
+		hud = new HUD(player);
+		
 		doneInitializing = true;
+		
+		
 	}
 	
 	public void update()
@@ -71,17 +79,34 @@ public class Level1State extends GameState
 		{	
 			for(int i = 0; i < characterList.size(); i++)
 			{
-//				System.out.println("i: " + i);
-				characterList.get(i).update();
-				if(characterList.get(i) != player)
+				if(!characterList.get(i).isDead())
 				{
-					characterList.get(i).updateAI();
+					characterList.get(i).checkAttack(characterList);
+					
+					characterList.get(i).update(characterList);
+					if(characterList.get(i) != player)
+					{
+						characterList.get(i).updateAI();
+					}
 				}
+				else
+				{
+					if(characterList.get(i) != player)
+					{
+						System.out.println(characterList.get(i).getName() + " has died.");
+						characterList.remove(i);
+						i--;
+					}
+					else
+					{
+						// Player died...
+					}
+				}
+
 //				System.out.println("isdead? " + characterList.get(i).isDead() + ", name: " + characterList.get(i).getName());
 			}
 		}
 		
-
 	// Update character
 		if(characterList != null)
 		{
@@ -109,6 +134,8 @@ public class Level1State extends GameState
 	
 	public void draw(Graphics2D graphics)
 	{
+		if(!doneInitializing) return;
+		
 		graphics.setColor(Color.WHITE);
 		graphics.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
 
@@ -120,7 +147,7 @@ public class Level1State extends GameState
 		}
 		else
 		{
-//			System.out.println("Background is null");
+			System.out.println("Background is null");
 		}
 		
 		
@@ -137,6 +164,13 @@ public class Level1State extends GameState
 			{
 				characterList.get(i).draw(graphics);
 			}
+		}
+		
+		// Draw HUD
+		
+		if(hud != null)
+		{
+			hud.draw(graphics);			
 		}
 		
 	}
@@ -158,6 +192,7 @@ public class Level1State extends GameState
 		
 		Slug slug = new Slug(tileMap, true, false, names[random], player.getx(), player.gety());
 		characterList.add(slug);
+		enemies.add(slug);
 		slug.setPosition(player.getx(), player.gety());
 	}
 	
