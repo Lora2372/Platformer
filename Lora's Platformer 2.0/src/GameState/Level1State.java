@@ -9,6 +9,7 @@ import TileMap.*;
 import Entity.*;
 import Entity.Character;
 import Entity.Enemies.*;
+import Entity.Doodad.*;
 
 import java.awt.event.KeyEvent;
 import java.io.IOException;
@@ -25,6 +26,7 @@ public class Level1State extends GameState
 	private Player player;
 	private ArrayList<Character> characterList;
 	private ArrayList<Character> enemies;
+	private ArrayList<Doodad> stuff;
 	private HUD hud;
 	
 	private boolean doneInitializing;
@@ -46,7 +48,7 @@ public class Level1State extends GameState
 			//tileMap.loadTiles("/Tilesets/tileset.png");
 			
 			tileMap.loadTiles(ImageIO.read(getClass().getResource("/Tilesets/LorasTileset.png")));
-			tileMap.loadMap("/Maps/LorasMap01001.map");
+			tileMap.loadMap("/Maps/LorasMap01006.map");
 			tileMap.setPosition(0, 0);
 			
 			background = new Background(getClass().getResource("/Backgrounds/Mountains5.png"), 0.1);
@@ -59,13 +61,25 @@ public class Level1State extends GameState
 
 		characterList = new ArrayList<Character>();
 		enemies = new ArrayList<Character>();
-		
+		stuff = new ArrayList<Doodad>();
 		player = new Player(tileMap,"Lora", 125, 100);
 		player.setPosition(125, 100);
 		characterList.add(player);
 		
-		hud = new HUD(player);
+		for(int i = 0; i < 10; i++)
+		{
+			Waterfall waterfall = new Waterfall(tileMap, 1500, (132 * i));
+			stuff.add(waterfall);
+		}
 		
+		
+		
+		spawnTorch(450, 360);
+		spawnTorch(1170,270);
+		
+		
+		hud = new HUD(player);
+		spawnEnemies();
 		doneInitializing = true;
 		
 		
@@ -125,6 +139,16 @@ public class Level1State extends GameState
 				System.out.println("AND WHY THE FUCK IS THE PLAYER NULL?!");
 			}
 		}
+		
+		// Update doodads
+		if(stuff != null)
+		{
+			for(int i = 0; i < stuff.size(); i++)
+			{
+				stuff.get(i).update();
+			}
+		}
+		
 		// Set background
 		if(background != null)
 		{
@@ -132,6 +156,8 @@ public class Level1State extends GameState
 		}
 		
 	}
+	
+
 	
 	public void draw(Graphics2D graphics)
 	{
@@ -152,11 +178,22 @@ public class Level1State extends GameState
 		}
 		
 		
+
+		
 		// Draw tilemap
 		if(tileMap != null)
 		{
 			tileMap.draw(graphics);
 		}
+		
+		if(stuff != null)
+		{
+			for(int i = 0; i < stuff.size(); i++)
+			{
+				stuff.get(i).draw(graphics);
+			}
+		}
+		
 
 		// Draw Characters!
 		if(characterList != null)
@@ -176,7 +213,7 @@ public class Level1State extends GameState
 		
 	}
 	
-	public void spawnSuccubi()
+	public void spawnSuccubi(double x, double y)
 	{
 		String[] succubiNames = new String[]
 				{
@@ -188,32 +225,23 @@ public class Level1State extends GameState
 		Random randomizer = new Random();
 	int random2 = randomizer.nextInt((2 - 0) + 1 + 0);
 		
-		Succubus succubus = new Succubus(tileMap,false,false,succubiNames[random2],player.getx(), player.getx());
+		Succubus succubus = new Succubus(tileMap,false,false, false, false, succubiNames[random2],x, y);
 		characterList.add(succubus);
 		enemies.add(succubus);
-		succubus.setPosition(player.getx(), player.getx());
+		succubus.setPosition(x, y);
 		
 		
 	}
 	
+
+	
+	
 	public void spawnEnemies()
 	{
-		String[] names = new String[]
-				{
-					"cookie",
-					"steven",
-					"morgan",
-					"tom",
-					"carl",
-					"john"				
-				};
-		Random randomizer = new Random();
-		int random = randomizer.nextInt((5 - 0) + 1 + 0);
-	
-		Slug slug = new Slug(tileMap, true, false, names[random], player.getx(), player.gety());
-		characterList.add(slug);
-		enemies.add(slug);
-		slug.setPosition(player.getx(), player.gety());
+		spawnSlug(1100, 100);
+		spawnSlug(1200, 300);
+		
+		spawnSuccubi(2400, 400);
 	}
 	
 	public void keyPressed(int k)
@@ -232,12 +260,50 @@ public class Level1State extends GameState
 		if(k == KeyEvent.VK_V) player.setSexytime1();
 		if(k == KeyEvent.VK_B) player.setSexytime2();
 		
-		if(k == KeyEvent.VK_P) GPS(); 
-		if(k == KeyEvent.VK_O) spawnSuccubi(); 
+		if(k == KeyEvent.VK_P) spawnSlug(player.getx(), player.gety()); 
+		if(k == KeyEvent.VK_O) spawnSuccubi(player.getx(), player.gety()); 
+		if(k == KeyEvent.VK_I) spawnWaterfall(player.getx(), player.gety()); 
+		if(k == KeyEvent.VK_G) GPS(); 
 	}
+	
+	public void spawnWaterfall(double x, double y)
+	{
+		Waterfall waterfall = new Waterfall(tileMap, x, y);
+		waterfall.setPosition(x, y);
+		stuff.add(waterfall);
+		
+	}
+	
+	public void spawnTorch(double x, double y)
+	{
+		Torch torch = new Torch(tileMap, x, y);
+		torch.setPosition(x, y);
+		stuff.add(torch);
+	}
+	
+	public void spawnSlug(double x, double y)
+	{
+		String[] names = new String[]
+				{
+					"cookie",
+					"steven",
+					"morgan",
+					"tom",
+					"carl",
+					"john"				
+				};
+		Random randomizer = new Random();
+		int random = randomizer.nextInt((5 - 0) + 1 + 0);
+	
+		Slug slug = new Slug(tileMap, true, false, false, false, names[random], x, y);
+		characterList.add(slug);
+		enemies.add(slug);
+		slug.setPosition(x, y);
+	}
+	
 	public void GPS()
 	{
-		spawnEnemies();
+//		spawnEnemies();
 		System.out.println("player X: " + player.getx() + ", playerY: " + player.gety());
 	}
 	

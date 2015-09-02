@@ -12,6 +12,8 @@ public class Succubus extends Character
 			TileMap tileMap,
 			boolean facingRight,
 			boolean friendly,
+			boolean untouchable,
+			boolean invulnerable,
 			String name,
 			double spawnX,
 			double spawnY
@@ -57,6 +59,8 @@ public class Succubus extends Character
 				new int[]{7, 2, 6, 2, 1, 4, 4, 1, 6},								// numImages
 				0,																	// damageOnTouch
 				friendly,															// friendly				
+				untouchable,
+				invulnerable,
 				name,
 				spawnX,
 				spawnY
@@ -82,14 +86,12 @@ public class Succubus extends Character
 			turnTimer = 0;
 			if(facingRight)
 			{
-				System.out.println("turning left");
 				facingRight = false;
 				right = false;
 				left = true;
 			}
 			else
 			{
-				System.out.println("turning right");
 				facingRight = true;
 				left = false;
 				right = true;

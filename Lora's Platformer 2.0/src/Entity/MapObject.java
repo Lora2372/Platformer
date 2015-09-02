@@ -72,6 +72,10 @@ public abstract class MapObject
 	protected double jumpStart;
 	protected double stopJumpSpeed;
 	protected double dashSpeed;
+	
+	protected boolean untouchable;
+	protected boolean invulnerable;
+
 	// Constructor
 	public MapObject(TileMap tileMap)
 	{
@@ -83,7 +87,7 @@ public abstract class MapObject
 	
 	public Boolean intersects(MapObject mapObject)
 	{
-		
+		if(untouchable || mapObject.untouchable) return false;
 		Rectangle r1 = getRectangle();
 		Rectangle r2 = mapObject.getRectangle();
 				

@@ -5,13 +5,15 @@ import Entity.Character;
 
 public class Slug extends Character
 {
-	protected int turnTime;
-	protected int turnTimer;
+	protected int cooldown;
+	protected int timer;
 	
 	public Slug(
 			TileMap tileMap,
 			boolean facingRight,
 			boolean friendly,
+			boolean untouchable,
+			boolean invulnerable,
 			String name,
 			double spawnX,
 			double spawnY
@@ -57,14 +59,16 @@ public class Slug extends Character
 				new int[]{3},														// numImages
 				10,																	// damageOnTouch
 				friendly,															// friendly				
+				untouchable,
+				invulnerable,				
 				name,
 				spawnX,
 				spawnY
 				
 				);
 		
-		turnTimer = 50;
-		turnTime = 50;
+		timer = 0;
+		cooldown = 100;
 		
 		
 		
@@ -72,20 +76,17 @@ public class Slug extends Character
 	public void updateAI()
 	{
 		//System.out.println("dx: " + dx + ", turnTimer: " + turnTimer);
-		turnTimer++;
-		if(dx == 0 && turnTimer > turnTime)
+
+		if(dx == 0)
 		{			
-			turnTimer = 0;
 			if(facingRight)
 			{
-				System.out.println("turning left");
 				facingRight = false;
 				right = false;
 				left = true;
 			}
 			else
 			{
-				System.out.println("turning right");
 				facingRight = true;
 				left = false;
 				right = true;
@@ -93,8 +94,11 @@ public class Slug extends Character
 			
 		}
 		
-		if(turnTimer == 50)
+		timer++;
+		
+		if(timer > cooldown)
 		{
+			timer = 0;
 //			System.out.println("FIRE THE FIREBALL!");
 			castingSmallFireball = true;
 		}

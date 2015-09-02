@@ -26,7 +26,7 @@ public class Player extends Character
 				0.3, 	 															// stopSpeed
 				0.3, 	 															// fallSpeed
 				8.0, 	 															// maxFallSpeed
-				-9.6, 	 															// jumpStart
+				-11, 	 															// jumpStart
 				0.6, 	 															// stopJumpSpeed
 				false,   															// facingRight
 				true,  																// inControl
@@ -55,6 +55,8 @@ public class Player extends Character
 				new int[]{6, 6, 1, 5, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1},			// numImages
 				0,																	// damageOnTouch
 				true,																// friendly
+				false,
+				false,
 				name,
 				spawnX,
 				spawnY

@@ -3,6 +3,8 @@ package GameState;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 
+import javax.swing.JOptionPane;
+
 import Main.GamePanel;
 import TileMap.Background;
 
@@ -122,13 +124,33 @@ public class MenuState extends GameState
 		if(currentChoice == 1)
 		{
 			// Help
-			
+			String message = "Disclaimer, the following help section is still under construction to be vastly improved in the hopefully near future...\n"
+					+ "\n"
+					+ "Greetings!\n"
+					+ "Don't have much information for you yet but the controls are currently:\n"
+					+ "Left arrow: Move left\n"
+					+ "Right arrow: Move right\n"
+					+ "Up arrow: Aim up\n"
+					+ "Down arrow: Aim down\n"
+					+ "Space: Jump\n"
+					+ "A: Small fireball\n"
+					+ "S: Large fireball\n"
+					+ "D: Dash attack\n"
+					+ "F: Punch attack\n"
+					+ "E: Gliding\n"
+					+ "\n"
+					+ "Extra stuff:\n"
+					+ "O: Summon a succubus\n"
+					+ "P: Summon a slug\n"
+					+ "\n"
+					+ "Have fun!";
+			JOptionPane.showMessageDialog(null, message);
 		}
 		
 		if(currentChoice == 2)
 		{
 			// Quit
-			
+			System.exit(0);
 		}
 	}
 	

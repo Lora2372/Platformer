@@ -46,7 +46,6 @@ public class Character extends MapObject
 	
 	protected String spritePath;
 	protected int[] animationState;
-	protected int spriteParts;
 	
 	protected double saveFallSpeed;
 	
@@ -164,6 +163,8 @@ public class Character extends MapObject
 			int[] numFrames,
 			int damageOnTouch,
 			boolean friendly,
+			boolean untouchable,
+			boolean invulnerable,
 			String name,
 			double spawnX,
 			double spawnY
