@@ -18,7 +18,10 @@ public class Torch extends Doodad
 				150,
 				150,
 				"/Sprites/Doodads/Torch.png",
-				new int[] {8}
+				new int[] {8},
+				true,
+				true,
+				false
 				);
 	}
 }

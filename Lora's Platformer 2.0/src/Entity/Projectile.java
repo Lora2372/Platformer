@@ -70,7 +70,6 @@ public class Projectile extends MapObject
 		this.damage = damage;
 		
 		
-		
 		if(right) dx = this.moveSpeed;
 		else dx = -this.moveSpeed;
 		

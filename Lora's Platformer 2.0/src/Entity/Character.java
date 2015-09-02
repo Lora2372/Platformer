@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
+import Entity.Doodad.SummoningEffect;
 import Main.Audio;
 import TileMap.TileMap;
 
@@ -95,6 +96,9 @@ public class Character extends MapObject
 	protected ArrayList<BufferedImage[]> sprites;
 	protected int[] numFrames;
 	
+	protected boolean initializeSpawning;
+	protected boolean spawning;
+	protected SummoningEffect summoningEffect;
 	// Animation actions, these are enums similar to the GameState, we use them to determine the index of the sprite animation
 	
 	
@@ -217,6 +221,8 @@ public class Character extends MapObject
 		manaCounter = 0;
 		staminaCounter = 0;
 		
+		setPosition(spawnX, spawnY);
+		
 		projectiles = new ArrayList<Projectile>();
 		
 		// Load the sprites.
@@ -338,6 +344,7 @@ public class Character extends MapObject
 	
 	protected void getNextPosition()
 	{
+		if(spawning) return;
 		// Movement
 		if(left && inControl)
 		{
@@ -412,6 +419,10 @@ public class Character extends MapObject
 
 	public boolean isDead() { return dead; }
 	
+	public boolean getSpawning() { return spawning; };
+	
+	public void setSpawning(boolean b) { initializeSpawning = b; }
+	
 	public void hit(int damage)
 	{
 		System.out.println("Damage: " + damage);
@@ -420,7 +431,8 @@ public class Character extends MapObject
 		System.out.println(name + "'s health: " + health);
 		if( health < 0) health = 0;
 		if(health == 0) dead = true;
-//		flinching = true;
+		flinching = true;
+		inControl = false;
 		flinchTimer = System.nanoTime();
 	}
 	
@@ -433,10 +445,32 @@ public class Character extends MapObject
 		
 //		System.out.println(name + "'s health: " + health);
 		
+		if(initializeSpawning)
+		{
+			summoningEffect = new SummoningEffect(tileMap, x, y);
+			initializeSpawning = false;
+			spawning = true;
+		}
+		
+		if(summoningEffect != null && !summoningEffect.animation.hasPlayedOnce())
+		{
+			summoningEffect.update();
+		}
+		if(spawning && summoningEffect.animation.hasPlayedOnce())
+		{
+			summoningEffect = null;
+			spawning = false;
+			inControl = true;
+		}
+		
 		if(x > tileMap.getWidth() || x < 0 || y > tileMap.getHeight())
 		{
 			System.out.println("spawnX: " + spawnX + ", spawnY: " + spawnY);
 			setPosition(spawnX, spawnY);
+			initializeSpawning = true;
+			dx = 0;
+			dy = 0;
+			inControl = false;
 		}
 		
 		// Regeneration
@@ -524,6 +558,34 @@ public class Character extends MapObject
 			}
 
 		}
+		//********************************************************************************
+		//*Flinching	                                                                 *
+		//********************************************************************************
+		else if(flinching)
+		{
+			if(currentAction != animationState[12])
+			{
+				
+				
+				// Consider to keep or remove the loss of control of your character, should possibly
+				// restrict that to different sorts of crowd control rather than all types of damage.
+				
+				gliding = false;
+				left = false;
+				right = false;
+				
+				currentAction = animationState[12];
+				animation.setFrames(sprites.get(animationState[12]));
+				animation.setDelay(300);
+			}
+			if(animation.hasPlayedOnce())
+			{
+				flinching = false;
+				inControl = true;
+			}
+				
+		}
+		
 		
 		
 		//********************************************************************************
@@ -641,7 +703,7 @@ public class Character extends MapObject
 				castingSmallFireball = false;
 				doneCastingSmallFireball = true;
 				
-				SmallFireball fireball = new SmallFireball(tileMap, facingRight, up, down, friendly);
+				SmallFireball fireball = new SmallFireball(tileMap, facingRight, up, down, friendly, smallFireballDamage);
 				fireball.setPosition(x, y - 20);
 				projectiles.add(fireball);
 				
@@ -681,7 +743,7 @@ public class Character extends MapObject
 				castingLargeFireball = false;
 				doneCastingLargeFireball = true;
 				
-				LargeFireball fireball = new LargeFireball(tileMap, facingRight, up, down, true);
+				LargeFireball fireball = new LargeFireball(tileMap, facingRight, up, down, true, largeFireballDamage);
 				fireball.setPosition(x, y);
 				projectiles.add(fireball);
 				
@@ -922,6 +984,12 @@ public class Character extends MapObject
 	{
 		setMapPosition();
 		
+		// Draw Summoning Effect
+		if(summoningEffect != null)
+		{
+			summoningEffect.draw(graphics);
+		}
+		
 		// Draw fireballs
 		for(int i = 0; i < projectiles.size(); i++)
 		{
@@ -930,12 +998,7 @@ public class Character extends MapObject
 		
 		// Draw player
 		
-		if(flinching)
-		{
-			long elapsed = (System.nanoTime() - flinchTimer) / 1000000;
-			if(elapsed / 100 % 2 == 0) return;
-					
-		}
+		if(spawning) return;
 		
 		if(facingRight)
 		{

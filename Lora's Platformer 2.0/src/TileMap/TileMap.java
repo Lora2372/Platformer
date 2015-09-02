@@ -44,7 +44,7 @@ public class TileMap
 		this.tileSize = tileSize;
 		numRowsToDraw = GamePanel.HEIGHT / tileSize + 2;
 		numColsToDraw = GamePanel.WIDTH / tileSize + 2;
-		tween = 0.07;
+		tween = 1;
 	}
 	
 	public void loadTiles(BufferedImage bufferedImage)
@@ -163,6 +163,11 @@ public class TileMap
 	public int getHeight()
 	{
 		return height;
+	}
+	
+	public void setTween(double newTween)
+	{
+		tween = newTween;
 	}
 	
 	public int getType(int row, int col)

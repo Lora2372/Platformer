@@ -18,7 +18,10 @@ public class Waterfall extends Doodad
 				192,
 				192,
 				"/Sprites/Doodads/Waterfall.png",
-				new int[] {4}
+				new int[] {4},
+				true,
+				true,
+				false
 				);
 	}
 }

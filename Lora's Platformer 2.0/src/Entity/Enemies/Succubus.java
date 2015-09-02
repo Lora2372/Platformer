@@ -5,8 +5,8 @@ import Entity.Character;
 
 public class Succubus extends Character
 {
-	protected int turnTime;
-	protected int turnTimer;
+	protected int cooldown;
+	protected int timer;
 	
 	public Succubus(
 			TileMap tileMap,
@@ -67,8 +67,8 @@ public class Succubus extends Character
 				
 				);
 		
-		turnTimer = 0;
-		turnTime = 500;
+		timer = 0;
+		cooldown = 300;
 		
 		
 		
@@ -80,27 +80,31 @@ public class Succubus extends Character
 		
 		
 		
-		turnTimer++;
-		if(dx == 0 && turnTimer > turnTime)
-		{			
-			turnTimer = 0;
-			if(facingRight)
-			{
-				facingRight = false;
-				right = false;
-				left = true;
-			}
-			else
-			{
-				facingRight = true;
-				left = false;
-				right = true;
-			}
-			
-		}
+//		turnTimer++;
+//		if(dx == 0 && turnTimer > turnTime)
+//		{			
+//			turnTimer = 0;
+//			if(facingRight)
+//			{
+//				facingRight = false;
+//				right = false;
+//				left = true;
+//			}
+//			else
+//			{
+//				facingRight = true;
+//				left = false;
+//				right = true;
+//			}
+//			
+//		}
 		
-		if(turnTimer == 300)
+		timer++;
+		
+		if(timer > cooldown)
 		{
+			timer = 0;
+//			System.out.println("FIRE THE FIREBALL!");
 			castingSmallFireball = true;
 		}
 	}

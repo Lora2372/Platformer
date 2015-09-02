@@ -12,7 +12,8 @@ public class LargeFireball extends Projectile
 			boolean right, 
 			boolean up, 
 			boolean down, 
-			boolean friendly
+			boolean friendly,
+			int damage
 		)
 	{
 		
@@ -33,7 +34,7 @@ public class LargeFireball extends Projectile
 				3, 																	// Projectile pictures
 				"/Sprites/Effects/largeFireballExplosion.png", 						// Explosion path
 				14, 																// Explosion parts
-				50, 																	// Explosion damage
+				damage,																// Explosion damage
 				240, 																// Explosion radius
 				"Resources/Sound/FireballImpact.wav"								// Explosion sound
 			);

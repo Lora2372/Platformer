@@ -12,7 +12,8 @@ public class SmallFireball extends Projectile
 			boolean right, 
 			boolean up, 
 			boolean down, 
-			boolean friendly
+			boolean friendly,
+			int damage
 		)
 	{
 		
@@ -33,7 +34,7 @@ public class SmallFireball extends Projectile
 				4, 																	// Projectile pictures
 				"/Sprites/Effects/smallFireballExplosion.png", 							// Explosion path
 				14, 																// Explosion parts
-				20, 																	// Explosion damage
+				damage,																// Explosion damage
 				60, 																// Explosion radius
 				"Resources/Sound/FireballImpact.wav"								// Explosion sound
 			);

@@ -16,7 +16,8 @@ public class Doodad extends MapObject
 	protected int[] numFrames;
 	protected ArrayList<BufferedImage[]> sprites;
 	
-	
+	protected boolean runOnce;
+	protected boolean removeMe;
 	
 	public Doodad(
 			TileMap tileMap, 
@@ -25,7 +26,10 @@ public class Doodad extends MapObject
 			int width,
 			int height,
 			String spritePath,
-			int[] numFrames
+			int[] numFrames,
+			Boolean untouchable,
+			Boolean invulnerable,
+			Boolean runOnce
 			)
 	{
 		super(tileMap);
@@ -34,6 +38,9 @@ public class Doodad extends MapObject
 		this.height = height;
 		this.spritePath = spritePath;
 		this.numFrames = numFrames;
+		this.untouchable = untouchable;
+		this.invulnerable = invulnerable;
+		this.runOnce = runOnce;
 		
 		x = spawnX;
 		y = spawnY;
@@ -69,6 +76,7 @@ public class Doodad extends MapObject
 			e.printStackTrace();
 		}
 		
+		setPosition(spawnX, spawnY);
 		
 		animation = new Animation();
 		
@@ -82,7 +90,20 @@ public class Doodad extends MapObject
 	
 	public void update()
 	{
+		
 		animation.update();
+		if(!animation.hasPlayedOnce()) return;
+		
+		if(runOnce)
+		{
+			removeMe = true;
+		}
+		
+	}
+	
+	public boolean removeMe()
+	{
+		return removeMe;
 	}
 	
 	

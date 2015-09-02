@@ -48,7 +48,7 @@ public class Level1State extends GameState
 			//tileMap.loadTiles("/Tilesets/tileset.png");
 			
 			tileMap.loadTiles(ImageIO.read(getClass().getResource("/Tilesets/LorasTileset.png")));
-			tileMap.loadMap("/Maps/LorasMap01006.map");
+			tileMap.loadMap("/Maps/LorasMap01007.map");
 			tileMap.setPosition(0, 0);
 			
 			background = new Background(getClass().getResource("/Backgrounds/Mountains5.png"), 0.1);
@@ -62,20 +62,18 @@ public class Level1State extends GameState
 		characterList = new ArrayList<Character>();
 		enemies = new ArrayList<Character>();
 		stuff = new ArrayList<Doodad>();
-		player = new Player(tileMap,"Lora", 125, 100);
-		player.setPosition(125, 100);
+		player = new Player(tileMap,"Lora", 720, 2200);
 		characterList.add(player);
 		
-		for(int i = 0; i < 10; i++)
-		{
-			Waterfall waterfall = new Waterfall(tileMap, 1500, (132 * i));
-			stuff.add(waterfall);
-		}
 		
 		
+		player.setSpawning(true);
 		
-		spawnTorch(450, 360);
-		spawnTorch(1170,270);
+				
+		
+		
+		spawnTorch(800, 1600);
+		spawnTorch(1850,1400);
 		
 		
 		hud = new HUD(player);
@@ -89,25 +87,30 @@ public class Level1State extends GameState
 	{
 		if(!doneInitializing) return;
 		// Update Characters
+		
+		
 		if(characterList != null)
 		{	
 			for(int i = 0; i < characterList.size(); i++)
 			{
-				if(!characterList.get(i).isDead())
+				Character character = characterList.get(i);
+				
+				if(!character.isDead())
 				{
-					characterList.get(i).checkAttack(characterList);
+					character.checkAttack(characterList);
 					
-					characterList.get(i).update(characterList);
-					if(characterList.get(i) != player)
+					character.update(characterList);
+					if(character != player)
 					{
-						characterList.get(i).updateAI();
+						character.updateAI();
 					}
+					
 				}
 				else
 				{
-					if(characterList.get(i) != player)
+					if(character != player)
 					{
-						System.out.println(characterList.get(i).getName() + " has died.");
+						System.out.println(character.getName() + " has died.");
 						characterList.remove(i);
 						i--;
 					}
@@ -118,13 +121,14 @@ public class Level1State extends GameState
 					}
 				}
 
-//				System.out.println("isdead? " + characterList.get(i).isDead() + ", name: " + characterList.get(i).getName());
+//				System.out.println("isdead? " + character.isDead() + ", name: " + character.getName());
 			}
 		}
 		
 	// Update character
 		if(characterList != null)
 		{
+
 //			System.out.println("player x: " + player.getx() + ", player y: " + player.gety() + ", position x: " + (GamePanel.WIDTH / 2 - player.getx()) + ", position y: " + (GamePanel.HEIGHT / 2 - player.gety()));
 			tileMap.setPosition(
 					GamePanel.WIDTH / 2 - player.getx(), 
@@ -145,7 +149,15 @@ public class Level1State extends GameState
 		{
 			for(int i = 0; i < stuff.size(); i++)
 			{
-				stuff.get(i).update();
+				if(stuff.get(i).removeMe())
+				{
+					stuff.remove(i);
+					i--;
+				}
+				else
+				{
+					stuff.get(i).update();					
+				}
 			}
 		}
 		
@@ -228,20 +240,20 @@ public class Level1State extends GameState
 		Succubus succubus = new Succubus(tileMap,false,false, false, false, succubiNames[random2],x, y);
 		characterList.add(succubus);
 		enemies.add(succubus);
-		succubus.setPosition(x, y);
-		
 		
 	}
 	
 
+	public void spawnPlayer(double x, double y)
+	{
+		// find me
+	}
 	
 	
 	public void spawnEnemies()
 	{
-		spawnSlug(1100, 100);
-		spawnSlug(1200, 300);
-		
-		spawnSuccubi(2400, 400);
+		spawnSlug(1760, 1652);
+		spawnSuccubi(2700, 1400);
 	}
 	
 	public void keyPressed(int k)
@@ -263,21 +275,27 @@ public class Level1State extends GameState
 		if(k == KeyEvent.VK_P) spawnSlug(player.getx(), player.gety()); 
 		if(k == KeyEvent.VK_O) spawnSuccubi(player.getx(), player.gety()); 
 		if(k == KeyEvent.VK_I) spawnWaterfall(player.getx(), player.gety()); 
+		if(k == KeyEvent.VK_U) spawnSummonEffect(player.getx(), player.gety()); 
 		if(k == KeyEvent.VK_G) GPS(); 
 	}
 	
 	public void spawnWaterfall(double x, double y)
 	{
 		Waterfall waterfall = new Waterfall(tileMap, x, y);
-		waterfall.setPosition(x, y);
 		stuff.add(waterfall);
+		
+	}
+	
+	public void spawnSummonEffect(double x, double y)
+	{
+		SummoningEffect summoningEffect = new SummoningEffect(tileMap, x, y);
+		stuff.add(summoningEffect);
 		
 	}
 	
 	public void spawnTorch(double x, double y)
 	{
 		Torch torch = new Torch(tileMap, x, y);
-		torch.setPosition(x, y);
 		stuff.add(torch);
 	}
 	
@@ -298,7 +316,6 @@ public class Level1State extends GameState
 		Slug slug = new Slug(tileMap, true, false, false, false, names[random], x, y);
 		characterList.add(slug);
 		enemies.add(slug);
-		slug.setPosition(x, y);
 	}
 	
 	public void GPS()

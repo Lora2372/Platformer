@@ -75,7 +75,8 @@ public abstract class MapObject
 	
 	protected boolean untouchable;
 	protected boolean invulnerable;
-
+	
+	
 	// Constructor
 	public MapObject(TileMap tileMap)
 	{
