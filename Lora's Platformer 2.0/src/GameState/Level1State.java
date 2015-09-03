@@ -14,9 +14,12 @@ import Entity.Doodad.*;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
+
+import Sound.SoundPlayer;
 
 public class Level1State extends GameState
 {
@@ -28,14 +31,17 @@ public class Level1State extends GameState
 	private ArrayList<Character> enemies;
 	private ArrayList<Doodad> stuff;
 	private HUD hud;
-	
+	private HashMap<String, SoundPlayer> sfx;
 	private boolean doneInitializing;
 	
-
+	protected long soundTimer;
+	
+	protected boolean gameover;
 	
 	public Level1State(GameStateManager gameStatemanager)
 	{
 		this.gameStateManager = gameStatemanager;
+		initialize();
 	}
 	
 	public void initialize()
@@ -48,7 +54,7 @@ public class Level1State extends GameState
 			//tileMap.loadTiles("/Tilesets/tileset.png");
 			
 			tileMap.loadTiles(ImageIO.read(getClass().getResource("/Tilesets/LorasTileset.png")));
-			tileMap.loadMap("/Maps/LorasMap01007.map");
+			tileMap.loadMap("/Maps/LorasMap01008.map");
 			tileMap.setPosition(0, 0);
 			
 			background = new Background(getClass().getResource("/Backgrounds/Mountains5.png"), 0.1);
@@ -80,7 +86,26 @@ public class Level1State extends GameState
 		spawnEnemies();
 		doneInitializing = true;
 		
+		sfx = new HashMap<String, SoundPlayer>();
+		sfx.put("Music", new SoundPlayer("/Sound/Music/Battle9.mp3"));
+		sfx.put("GameOver", new SoundPlayer("/Sound/Music/GameOver.mp3"));
 		
+		
+		sfx.get("Music").play();
+		soundTimer = 0;
+	}
+	
+	public void GameOverUpdate()
+	{
+		
+
+		long elapsed = (System.nanoTime() - soundTimer) / 1000000;
+		System.out.println("Elapsed: " + elapsed);
+		if(elapsed/1000 > 9)
+		{
+			sfx.get("GameOver").stop();
+			gameStateManager.setState(GameStateManager.MENUSTATE);
+		}
 	}
 	
 	public void update()
@@ -88,6 +113,11 @@ public class Level1State extends GameState
 		if(!doneInitializing) return;
 		// Update Characters
 		
+		if(gameover)
+		{
+			GameOverUpdate();
+			return;
+		}
 		
 		if(characterList != null)
 		{	
@@ -111,13 +141,34 @@ public class Level1State extends GameState
 					if(character != player)
 					{
 						System.out.println(character.getName() + " has died.");
+						if(!characterList.get(i).getFriendly())
+						{
+							for(int z = 0; z < enemies.size(); z++)
+							{
+								if(enemies.get(z) == characterList.get(i))
+								{
+									enemies.remove(z);
+									z--;
+								}
+							}
+						}
+						CartoonExplosion cartoonExplosion = new CartoonExplosion(tileMap, characterList.get(i).getx(), characterList.get(i).gety());
+						stuff.add(cartoonExplosion);
+						
 						characterList.remove(i);
 						i--;
 					}
 					else
 					{
 						// Player died...
-						gameStateManager.setState(GameStateManager.MENUSTATE);
+						System.out.println("Game Over...");
+						
+						gameover = true;
+						
+						sfx.get("Music").stop();
+						sfx.get("GameOver").play();
+						
+						soundTimer = System.nanoTime();
 					}
 				}
 

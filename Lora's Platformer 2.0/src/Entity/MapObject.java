@@ -86,6 +86,16 @@ public abstract class MapObject
 		tileSize = tileMap.getTileSize();
 	}
 	
+	public void setCollisionWidth(int i)
+	{
+		this.collisionWidth = i;
+	}
+	
+	public void setCollisionHeight(int i)
+	{
+		this.collisionHeight = i;
+	}
+	
 	public Boolean intersects(MapObject mapObject)
 	{
 		if(untouchable || mapObject.untouchable) return false;

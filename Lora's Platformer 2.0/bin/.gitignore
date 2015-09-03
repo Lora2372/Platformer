@@ -1,10 +1,7 @@
 /GameState/
-/TileMap/
+/Audio/
+/Sound/
 /Entity/
-/Sprites/
-/HUD/
 /Main/
-/Backgrounds/
-/Doodad/
+/Sprites/
 /Maps/
-/Tilesets/

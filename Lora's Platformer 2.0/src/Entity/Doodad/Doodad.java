@@ -45,7 +45,6 @@ public class Doodad extends MapObject
 		x = spawnX;
 		y = spawnY;
 		
-		
 		try{
 			BufferedImage spritesheet = ImageIO.read(
 					getClass().getResource(

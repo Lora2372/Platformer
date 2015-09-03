@@ -3,10 +3,13 @@ package Entity;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
-import Main.Audio;
+import Entity.Doodad.FireballLargeExplosion;
+import Entity.Doodad.FireballSmallExplosion;
+import Sound.SoundPlayer;
 import TileMap.TileMap;
 
 public class Projectile extends MapObject
@@ -15,17 +18,21 @@ public class Projectile extends MapObject
 	protected boolean hit;
 	protected boolean remove;
 	protected BufferedImage[] sprites;
-	protected BufferedImage[] hitSprites;
 	
 	protected boolean friendly; 
 	protected int explosionWidth;
 	protected int explosionHeight;
 	protected String projectilePath;
-	protected String explosionPath;
-	protected int explosionParts;
 	protected int damage;
 	protected int explosionRadius;
 	protected String explosionSound;
+	
+	private HashMap<String, SoundPlayer> sfx;
+	
+	private FireballLargeExplosion fireballLargeExplosion;
+	private FireballSmallExplosion fireballSmallExplosion;
+	
+	private boolean exploding;
 	
 	public Projectile(
 			TileMap tileMap, 
@@ -42,8 +49,6 @@ public class Projectile extends MapObject
 			double moveSpeed,
 			String projectilePath,
 			int projectileParts,
-			String explosionPath,
-			int explosionParts,
 			int damage,
 			int explosionRadius,
 			String explosionSound
@@ -63,9 +68,7 @@ public class Projectile extends MapObject
 		this.collisionHeight = collisionHeight;
 		this.moveSpeed = moveSpeed;
 		this.projectilePath = projectilePath;
-		this.explosionPath = explosionPath;
 		this.explosionRadius = explosionRadius;
-		this.explosionParts = explosionParts;
 		this.explosionSound = explosionSound;
 		this.damage = damage;
 		
@@ -79,6 +82,10 @@ public class Projectile extends MapObject
 		
 		hit = false;
 
+		
+		sfx = new HashMap<String, SoundPlayer>();
+		sfx.put("FireballLargeImpact", new SoundPlayer("/Sound/FireballLargeImpact.mp3"));
+		sfx.put("FireballSmallImpact", new SoundPlayer("/Sound/FireballSmallImpact.mp3"));
 		
 		// Load sprites
 		
@@ -98,23 +105,6 @@ public class Projectile extends MapObject
 						0,  
 						width,  
 						height
-					);
-			}
-			
-			spritesheet = ImageIO.read(
-				getClass().getResourceAsStream(
-					this.explosionPath
-				)
-			);
-			
-			hitSprites = new BufferedImage[explosionParts];
-			for(int i = 0; i < hitSprites.length; i++)
-			{
-				hitSprites[i] = spritesheet.getSubimage(
-						i * explosionWidth, 
-						0, 
-						explosionWidth, 
-						explosionHeight
 					);
 			}
 			
@@ -138,7 +128,8 @@ public class Projectile extends MapObject
 		if(hit) return;
 		hit = true;
 				
-		
+		collisionWidth = explosionRadius;
+		collisionHeight = explosionRadius;
 		for(int i = 0; i < characterList.size(); i++)
 		{
 			Character character = characterList.get(i);
@@ -151,22 +142,15 @@ public class Projectile extends MapObject
 			}
 		}
 		
-		
-		try
-		{
-			Audio sound = new Audio();
-			sound.playSound(explosionSound);
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		}
+		sfx.get(explosionSound + "Impact").play();
 		
 		height = explosionHeight;
 		width = explosionWidth;
 		
-		animation.setFrames(hitSprites);
-		animation.setDelay(70);
+		
+		if(explosionSound == "FireballLarge") fireballLargeExplosion = new FireballLargeExplosion(tileMap, x, y);
+		else if(explosionSound == "FireballSmall") fireballSmallExplosion = new FireballSmallExplosion(tileMap, x, y);
+		exploding = true;
 		
 		
 		dx = 0;
@@ -194,16 +178,49 @@ public class Projectile extends MapObject
 			setHit(characterList);
 		}
 		
-		animation.update();
-		if(hit == true && animation.hasPlayedOnce())
+		if(!exploding) animation.update();
+		
+		else
 		{
-			remove = true;
+			// Look into merging all explosions into one class later, to prevent repeating code further...
+			if(fireballLargeExplosion != null)
+			{
+				if(fireballLargeExplosion.animation.hasPlayedOnce())
+				{
+					fireballLargeExplosion = null;
+					remove = true;
+				}
+				else
+				{
+					fireballLargeExplosion.update();
+				}
+			}
+			else if(fireballSmallExplosion != null)
+			{
+				if(fireballSmallExplosion.animation.hasPlayedOnce())
+				{
+					fireballSmallExplosion = null;
+					remove = true;
+				}
+				else
+				{
+					fireballSmallExplosion.update();
+				}
+			}
 		}
+
 	}
 	
 	public void draw(Graphics2D graphics)
-	{
+	{	
 		setMapPosition();
+	
+		if(exploding)
+		{
+			if(fireballSmallExplosion != null) fireballSmallExplosion.draw(graphics);
+			else if(fireballLargeExplosion != null) fireballLargeExplosion.draw(graphics);
+			return;
+		}
 		
 		if(facingRight)
 		{

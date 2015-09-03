@@ -32,11 +32,9 @@ public class SmallFireball extends Projectile
 				7.6, 																// Projectile speed
 				"/Sprites/Effects/smallFireball.png",	 								// Projectile path
 				4, 																	// Projectile pictures
-				"/Sprites/Effects/smallFireballExplosion.png", 							// Explosion path
-				14, 																// Explosion parts
 				damage,																// Explosion damage
 				60, 																// Explosion radius
-				"Resources/Sound/FireballImpact.wav"								// Explosion sound
+				"FireballSmall"														// Explosion sound
 			);
 	}
 		
