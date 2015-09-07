@@ -20,20 +20,20 @@ public class Content
 	public static BufferedImage[][] FireballDouble 			= load("/Sprites/Effects/FireballDouble.png", 60, 60);
 	
 	// Characters
-	public static BufferedImage[][] Slugger = load("/Sprites/Characters/slugger.gif", 60, 60);
-	public static BufferedImage[][] Succubus = load("/Sprites/Characters/Succubus.png", 100, 100);
-	public static BufferedImage[][] Player = load("/Sprites/Characters/Lora.png", 72, 120);
+	public static BufferedImage[][] Slugger 				= load("/Sprites/Characters/slugger.gif", 60, 60);
+	public static BufferedImage[][] Succubus 				= load("/Sprites/Characters/Succubus.png", 100, 100);
+	public static BufferedImage[][] Player 					= load("/Sprites/Characters/Lora.png", 72, 120);
 	
 	
 	//Doodads
-	public static BufferedImage[][] Teleport = load("/Sprites/Effects/Teleport.png", 192, 192);
-	public static BufferedImage[][] Sign = load("/Sprites/Doodads/Sign.png", 50, 50);
-	public static BufferedImage[][] SignLeft = load("/Sprites/Doodads/SignLeft.png", 50, 50);
-	public static BufferedImage[][] SignRight = load("/Sprites/Doodads/SignRight.png", 50, 50);
-	public static BufferedImage[][] Mushroom1 = load("/Sprites/Doodads/Mushroom01.png", 50, 50);
-	public static BufferedImage[][] Mushroom2 = load("/Sprites/Doodads/Mushroom02.png", 50, 50);
-	public static BufferedImage[][] Torch = load("/Sprites/Doodads/Torch.png", 150, 150);
-	public static BufferedImage[][] Waterfall = load("/Sprites/Doodads/Waterfall.png", 192, 192);
+	public static BufferedImage[][] Teleport 				= load("/Sprites/Effects/Teleport.png", 192, 192);
+	public static BufferedImage[][] Sign 					= load("/Sprites/Doodads/Sign.png", 50, 50);
+	public static BufferedImage[][] SignLeft 				= load("/Sprites/Doodads/SignLeft.png", 50, 50);
+	public static BufferedImage[][] SignRight 				= load("/Sprites/Doodads/SignRight.png", 50, 50);
+	public static BufferedImage[][] Mushroom1 				= load("/Sprites/Doodads/Mushroom01.png", 50, 50);
+	public static BufferedImage[][] Mushroom2 				= load("/Sprites/Doodads/Mushroom02.png", 50, 50);
+	public static BufferedImage[][] Torch 					= load("/Sprites/Doodads/Torch.png", 150, 150);
+	public static BufferedImage[][] Waterfall 				= load("/Sprites/Doodads/Waterfall.png", 192, 192);
 
 
 	

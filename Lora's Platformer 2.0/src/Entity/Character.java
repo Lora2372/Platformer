@@ -934,14 +934,14 @@ public class Character extends MapObject
 				//********************************************************************************	
 				for(int j = 0; j < projectiles.size(); j++)
 				{
-					for(int k = 0; k < projectiles.size(); k++)
+					for(int k = 0; k < character.projectiles.size(); k++)
 					{
-						if(projectiles.get(j).getFriendly() != projectiles.get(k).getFriendly())
+						if(projectiles.get(j).getFriendly() != character.projectiles.get(k).getFriendly())
 						{
-							if(projectiles.get(j).intersects(projectiles.get(k)))
+							if(projectiles.get(j).intersects(character.projectiles.get(k)))
 							{
 								projectiles.get(j).setHit(characterList);
-								projectiles.get(k).setHit(characterList);
+								character.projectiles.get(k).setHit(characterList);
 							}
 						}
 

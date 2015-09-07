@@ -32,7 +32,6 @@ public class Level1State extends GameState
 	private ArrayList<Character> enemies;
 	private ArrayList<Doodad> stuff;
 	private HUD hud;
-	private HashMap<String, SoundPlayer> sfx;
 	private boolean doneInitializing;
 	
 	protected long soundTimer;
@@ -99,8 +98,9 @@ public class Level1State extends GameState
 		System.out.println("Elapsed: " + elapsed);
 		if(elapsed/1000 > 9)
 		{
-			sfx.get("GameOver").stop();
-			gameStateManager.setState(GameStateManager.MENUSTATE);
+			System.out.println("Game Over.");
+			JukeBox.stop("GameOver");
+			gameStateManager.setState(0);
 		}
 	}
 	
