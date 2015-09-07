@@ -3,7 +3,7 @@ package Entity;
 import java.util.ArrayList;
 import Sound.SoundPlayer;
 import java.util.HashMap;
-
+import Audio.JukeBox;
 import javax.imageio.ImageIO;
 
 import Entity.Doodad.SummoningEffect;
@@ -103,7 +103,6 @@ public class Character extends MapObject
 	protected SummoningEffect summoningEffect;
 	// Animation actions, these are enums similar to the GameState, we use them to determine the index of the sprite animation
 	
-	private HashMap<String, SoundPlayer> sfx;
 	
 	
 //	protected static final int animationState[0]					= 0;
@@ -266,13 +265,6 @@ public class Character extends MapObject
 		currentAction = animationState[0];
 		animation.setFrames(sprites.get(animationState[0]));
 		animation.setDelay(400);
-		
-		sfx = new HashMap<String, SoundPlayer>();
-		sfx.put("jump", new SoundPlayer("/Sound/jump.mp3"));
-		sfx.put("FireballLargeLaunch", new SoundPlayer("/Sound/FireballLargeLaunch.mp3"));
-		sfx.put("FireballSmallLaunch", new SoundPlayer("/Sound/FireballSmallLaunch.mp3"));
-		sfx.put("Teleport", new SoundPlayer("/Sound/Teleport.mp3"));
-		
 	}
 	
 	public int getHealth() { return health; }
@@ -402,7 +394,7 @@ public class Character extends MapObject
 		if(jumping && !falling && inControl)
 		{
 			// I'll leave the jump sound commented out until we find a better one.
-//			sfx.get("jump").play();
+//			JukeBox.play("jump");
 			dy = jumpStart;
 			falling = true;
 		}
@@ -462,7 +454,7 @@ public class Character extends MapObject
 			summoningEffect = new SummoningEffect(tileMap, x, y);
 			initializeSpawning = false;
 			spawning = true;
-			sfx.get("Teleport").play();
+			JukeBox.play("teleport");
 		}
 		
 		if(summoningEffect != null && !summoningEffect.animation.hasPlayedOnce())
@@ -697,8 +689,7 @@ public class Character extends MapObject
 				animation.setFrames(sprites.get(animationState[8]));
 				animation.setDelay(100);
 				if(dy == 0) dx = 0;
-				sfx.get("FireballSmallLaunch").play();
-				
+				JukeBox.play("FireballSmallLaunch");				
 			}
 			if(animation.hasPlayedOnce())
 			{
@@ -707,7 +698,7 @@ public class Character extends MapObject
 				castingSmallFireball = false;
 				doneCastingSmallFireball = true;
 				
-				SmallFireball fireball = new SmallFireball(tileMap, facingRight, up, down, friendly, smallFireballDamage);
+				FireballSmall fireball = new FireballSmall(tileMap, facingRight, up, down, friendly, smallFireballDamage);
 				fireball.setPosition(x, y - 20);
 				projectiles.add(fireball);
 				
@@ -740,7 +731,7 @@ public class Character extends MapObject
 				animation.setFrames(sprites.get(animationState[10]));
 				animation.setDelay(100);
 				if(dy == 0) dx = 0;
-				sfx.get("FireballLargeLaunch").play();
+				JukeBox.play("FireballLargeLaunch");
 			}
 			if(animation.hasPlayedOnce())
 			{
@@ -748,7 +739,7 @@ public class Character extends MapObject
 				castingLargeFireball = false;
 				doneCastingLargeFireball = true;
 				
-				LargeFireball fireball = new LargeFireball(tileMap, facingRight, up, down, friendly, largeFireballDamage);
+				FireballLarge fireball = new FireballLarge(tileMap, facingRight, up, down, friendly, largeFireballDamage);
 				fireball.setPosition(x, y);
 				projectiles.add(fireball);
 				
@@ -1005,26 +996,7 @@ public class Character extends MapObject
 		
 		if(spawning) return;
 		
-		if(facingRight)
-		{
-			graphics.drawImage(
-					animation.getImage(),
-					(int)(x + xmap - width / 2 + width),
-					(int)(y + ymap - height / 2),
-					-width,
-					height,
-					null
-					);
-		}
-		else
-		{
-			graphics.drawImage(
-					animation.getImage(),
-					(int)(x + xmap - width / 2),
-					(int)(y + ymap - height / 2),
-					null
-					);
-		}
+		super.draw(graphics);
 	}
 	
 	

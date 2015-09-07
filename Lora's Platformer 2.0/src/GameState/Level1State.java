@@ -10,6 +10,7 @@ import Entity.*;
 import Entity.Character;
 import Entity.Enemies.*;
 import Entity.Doodad.*;
+import Audio.JukeBox;
 
 import java.awt.event.KeyEvent;
 import java.io.IOException;
@@ -71,8 +72,6 @@ public class Level1State extends GameState
 		player = new Player(tileMap,"Lora", 720, 2200);
 		characterList.add(player);
 		
-		
-		
 		player.setSpawning(true);
 		
 				
@@ -85,13 +84,10 @@ public class Level1State extends GameState
 		hud = new HUD(player);
 		spawnEnemies();
 		doneInitializing = true;
+
 		
-		sfx = new HashMap<String, SoundPlayer>();
-		sfx.put("Music", new SoundPlayer("/Sound/Music/Battle9.mp3"));
-		sfx.put("GameOver", new SoundPlayer("/Sound/Music/GameOver.mp3"));
+		JukeBox.loop("Battle9");
 		
-		
-		sfx.get("Music").play();
 		soundTimer = 0;
 	}
 	
@@ -164,10 +160,9 @@ public class Level1State extends GameState
 						System.out.println("Game Over...");
 						
 						gameover = true;
-						
-						sfx.get("Music").stop();
-						sfx.get("GameOver").play();
-						
+
+						JukeBox.stop("Battle9");
+						JukeBox.play("GameOver");						
 						soundTimer = System.nanoTime();
 					}
 				}
@@ -246,6 +241,7 @@ public class Level1State extends GameState
 		// Draw tilemap
 		if(tileMap != null)
 		{
+			
 			tileMap.draw(graphics);
 		}
 		

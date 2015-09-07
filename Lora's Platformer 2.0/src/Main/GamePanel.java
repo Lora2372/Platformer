@@ -18,7 +18,7 @@ public class GamePanel
 	public static final int WIDTH = 1200;
 	public static final int HEIGHT = 900;
 	
-	public static final String version = "0.1.008";
+	public static final String version = "0.1.009";
 		
 	// Game thread
 	private Thread thread;
@@ -63,6 +63,7 @@ public class GamePanel
 		graphics = (Graphics2D) image.getGraphics();
 		running = true;
 		
+		Content.loadContent();
 		gameStateManager = new GameStateManager();
 	}
 	

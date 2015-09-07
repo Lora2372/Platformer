@@ -1,13 +1,6 @@
 package Entity;
 
 import java.awt.Rectangle;
-
-
-
-
-
-import javax.swing.JOptionPane;
-
 import Main.GamePanel;
 import TileMap.TileMap;
 
@@ -27,6 +20,9 @@ public abstract class MapObject
 	protected double y;
 	protected double dx;
 	protected double dy;
+	
+	protected double spawnX;
+	protected double spawnY;
 	
 	// Dimensions
 	protected int width;
@@ -81,9 +77,9 @@ public abstract class MapObject
 	public MapObject(TileMap tileMap)
 	{
 		this.tileMap = tileMap;
-		
-		
 		tileSize = tileMap.getTileSize();
+		animation = new Animation();
+		setPosition(x, y);
 	}
 	
 	public void setCollisionWidth(int i)
@@ -96,13 +92,18 @@ public abstract class MapObject
 		this.collisionHeight = i;
 	}
 	
-	public Boolean intersects(MapObject mapObject)
+	public boolean intersects(MapObject mapObject)
 	{
 		if(untouchable || mapObject.untouchable) return false;
 		Rectangle r1 = getRectangle();
 		Rectangle r2 = mapObject.getRectangle();
 				
 		return r1.intersects(r2);
+	}
+	
+	public boolean intersects(Rectangle rectangle)
+	{
+		return getRectangle().intersects(rectangle);
 	}
 	
 	public Rectangle getRectangle()
@@ -267,6 +268,35 @@ public abstract class MapObject
 	public void setUp(Boolean b) { up = b; }
 	public void setDown(Boolean b) { down = b; }
 	public void setJumping(Boolean b) { jumping = b; }
+	
+	
+	public void draw(java.awt.Graphics2D graphics)
+	{
+		setMapPosition();
+		
+		
+		if(facingRight)
+		{
+			graphics.drawImage(
+					animation.getImage(),
+					(int) (x + xmap - width / 2 + width),
+					(int) (y + ymap - height / 2),
+					-width,
+					height,
+					null
+				);
+
+		}
+		else
+		{
+			graphics.drawImage(
+					animation.getImage(),
+					(int) (x + xmap - width / 2),
+					(int) (y + ymap - height / 2),
+							null
+					);
+		}
+	}
 	
 	
 	// Since there is no point in drawing objects that are not on the scren, this

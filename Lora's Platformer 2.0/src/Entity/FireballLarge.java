@@ -2,12 +2,16 @@ package Entity;
 
 
 
+import java.awt.Graphics2D;
+
+import Entity.Doodad.FireballLargeExplosion;
 import TileMap.TileMap;
 
-public class LargeFireball extends Projectile
+public class FireballLarge extends Projectile
 {
+	protected FireballLargeExplosion fireballLargeExplosion;
 
-	public LargeFireball(
+	public FireballLarge(
 			TileMap tileMap, 
 			boolean right, 
 			boolean up, 
@@ -30,12 +34,33 @@ public class LargeFireball extends Projectile
 				56, 																// Collision width
 				56, 																// Collision height
 				7.6, 																// Projectile speed
-				"/Sprites/Effects/largeFireball.png", 								// Projectile path
-				3, 																	// Projectile pictures
 				damage,																// Explosion damage
 				240, 																// Explosion radius
 				"FireballLarge"														// Explosion sound
 			);
+	}
+	
+	public void explode(TileMap tilemap, double x, double y)
+	{
+		fireballLargeExplosion = new FireballLargeExplosion(tileMap, x, y);
+	}
+	
+	public void updateExplosion()
+	{
+		if(fireballLargeExplosion != null)
+		{
+			fireballLargeExplosion.animation.update();
+			if(fireballLargeExplosion.animation.hasPlayedOnce())
+			{
+				fireballLargeExplosion.removeMe();
+				remove = true;
+			}
+		}
+	}
+	
+	public void drawExplosion(Graphics2D graphics)
+	{
+		fireballLargeExplosion.draw(graphics);
 	}
 		
 }
