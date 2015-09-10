@@ -63,11 +63,11 @@ public class Projectile extends MapObject
 		this.damage = damage;
 		
 		
-		if(right) dx = this.moveSpeed;
-		else dx = -this.moveSpeed;
+		if(right) directionX = this.moveSpeed;
+		else directionX = -this.moveSpeed;
 		
-		if(down) dy = this.moveSpeed;
-		if(up) dy = -this.moveSpeed;
+		if(down) directionY = this.moveSpeed;
+		if(up) directionY = -this.moveSpeed;
 		
 		
 		hit = false;		
@@ -110,7 +110,18 @@ public class Projectile extends MapObject
 	}
 	
 	public boolean getFriendly() { return friendly; }
-
+	public void setFriendly(boolean b) { friendly = b;};
+	
+	public boolean getFacing() { return facingRight;}
+	public void setFacing(boolean b) { facingRight = b;}
+	
+	public double getDirectionX() { return directionX;}
+	public double getDirectionY() { return directionY;}
+	public void setDirection(double directionX, double directionY)
+	{
+		this.directionX = directionX;
+		this.directionY = directionY;
+	}
 	
 	// Functions that figures out whether or not the fireball has hit something.
 	public void setHit(ArrayList<Character> characterList)
@@ -137,12 +148,12 @@ public class Projectile extends MapObject
 		height = explosionHeight;
 		width = explosionWidth;
 		
-		explode(tileMap, x, y);
+		explode(tileMap, locationX, locationY);
 		exploding = true;
 		
 		
-		dx = 0;
-		dy = 0;
+		directionX = 0;
+		directionY = 0;
 	}
 	
 	public boolean shouldRemove() 
@@ -155,13 +166,13 @@ public class Projectile extends MapObject
 		checkTileMapCollision();
 		setPosition(xtemp, ytemp);
 
-		if(x > tileMap.getWidth() || x < 0 || y < 0 || y > tileMap.getHeight())
+		if(locationX > tileMap.getWidth() || locationX < 0 || locationY < 0 || locationY > tileMap.getHeight())
 		{
 			setHit(characterList);
 		}
 		
 		
-		if((dx == 0 || ((down || up) && dy == 0)) && !hit)
+		if((directionX == 0 || ((down || up) && directionY == 0)) && !hit)
 		{
 			setHit(characterList);
 		}

@@ -1,7 +1,7 @@
 package Entity;
 
-import java.util.ArrayList;
 
+import GameState.Level1State;
 import TileMap.TileMap;
 
 public class Player extends Character
@@ -13,7 +13,7 @@ public class Player extends Character
 	// Animation actions, these are enums similar to the GameState, we use them to determine the index of the sprite animation
 	
 	// Constructor
-	public Player(TileMap tileMap, String name, double spawnX, double spawnY)
+	public Player(TileMap tileMap, String name, double spawnX, double spawnY, Level1State level1state)
 	{
 		super(
 				tileMap,  															// TileMap
@@ -36,9 +36,10 @@ public class Player extends Character
 				100,	 															// stamina
 				100, 	 															// maxStamina
 				25,		 															// staminaCounter
+				800,																// sightRange
 				5,	 	 															// punchCost
 				5, 		 															// punchDamage
-				40, 	 															// punchRange
+				80, 	 															// punchRange
 				40,		 															// dashCost
 				40,		 															// dashDamage
 				40,		 															// dashRange
@@ -59,7 +60,9 @@ public class Player extends Character
 				false,
 				name,
 				spawnX,
-				spawnY
+				spawnY,
+				level1state
+				
 				);
 		
 	}

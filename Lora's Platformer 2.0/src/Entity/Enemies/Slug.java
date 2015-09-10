@@ -1,7 +1,10 @@
 package Entity.Enemies;
 
+import java.util.ArrayList;
+
 import TileMap.TileMap;
 import Entity.Character;
+import GameState.Level1State;
 
 public class Slug extends Character
 {
@@ -16,7 +19,8 @@ public class Slug extends Character
 			boolean invulnerable,
 			String name,
 			double spawnX,
-			double spawnY
+			double spawnY,
+			Level1State level1state
 			) 
 	{
 		super(
@@ -40,6 +44,7 @@ public class Slug extends Character
 				0,	 																// stamina
 				0, 	 																// maxStamina
 				-1,		 															// staminaCounter
+				800,																// sightRange
 				0,	 	 															// punchCost
 				0, 		 															// punchDamage
 				0,	 	 															// punchRange
@@ -63,7 +68,8 @@ public class Slug extends Character
 				invulnerable,				
 				name,
 				spawnX,
-				spawnY
+				spawnY,
+				level1state
 				
 				);
 		
@@ -73,12 +79,18 @@ public class Slug extends Character
 		
 		
 	}
-	public void updateAI()
-	{
-		//System.out.println("dx: " + dx + ", turnTimer: " + turnTimer);
+	
+	
 
-		if(dx == 0)
-		{			
+	
+	
+	public void updateAI(ArrayList<Character> characterList)
+	{
+		//System.out.println("directionX: " + directionX + ", turnTimer: " + turnTimer);
+
+		
+		if(directionX == 0)
+		{
 			if(facingRight)
 			{
 				facingRight = false;
@@ -96,12 +108,21 @@ public class Slug extends Character
 		
 		timer++;
 		
-		if(timer > cooldown)
+		ArrayList<Character> enemiesDetected = detectEnemy(characterList);
+		
+		if(enemiesDetected.size() > 0)
 		{
-			timer = 0;
-//			System.out.println("FIRE THE FIREBALL!");
-			castingSmallFireball = true;
+			if(timer > cooldown)
+			{
+				timer = 0;
+//				System.out.println("FIRE THE FIREBALL!");
+				castingSmallFireball = true;
+			}
 		}
+		
+		if(timer > cooldown * 10) timer = cooldown;
+		
+
 	}
 	
 	

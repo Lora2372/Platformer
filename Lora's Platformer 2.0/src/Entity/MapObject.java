@@ -10,16 +10,16 @@ public abstract class MapObject
 	// Tile stuff
 	protected TileMap tileMap;
 	protected int tileSize;
-	protected double xmap;
-	protected double ymap;
+	protected double mapPositionX;
+	protected double mapPositionY;
 	
 	
 	
 	// Position and vector
-	protected double x;
-	protected double y;
-	protected double dx;
-	protected double dy;
+	protected double locationX;
+	protected double locationY;
+	protected double directionX;
+	protected double directionY;
 	
 	protected double spawnX;
 	protected double spawnY;
@@ -79,7 +79,7 @@ public abstract class MapObject
 		this.tileMap = tileMap;
 		tileSize = tileMap.getTileSize();
 		animation = new Animation();
-		setPosition(x, y);
+		setPosition(locationX, locationY);
 	}
 	
 	public void setCollisionWidth(int i)
@@ -109,8 +109,8 @@ public abstract class MapObject
 	public Rectangle getRectangle()
 	{		
 		return new Rectangle(				
-				(int)x - collisionWidth,
-				(int)y - collisionHeight,
+				(int)locationX - collisionWidth,
+				(int)locationY - collisionHeight,
 				collisionWidth,
 				collisionHeight
 				);
@@ -134,16 +134,16 @@ public abstract class MapObject
 	
 	public void checkTileMapCollision()
 	{
-		currentCol = (int)x / tileSize;
-		currentRow = (int)y / tileSize;
+		currentCol = (int)locationX / tileSize;
+		currentRow = (int)locationY / tileSize;
 		
-		xdest = x + dx;
-		ydest = y + dy;
+		xdest = locationX + directionX;
+		ydest = locationY + directionY;
 		
-		xtemp = x;
-		ytemp = y;
+		xtemp = locationX;
+		ytemp = locationY;
 		
-		calculateCorners(x, ydest);
+		calculateCorners(locationX, ydest);
 		
 		
 		if(!swimming && (topLeft == 2 || topRight == 2))
@@ -158,65 +158,65 @@ public abstract class MapObject
 		}
 		
 		// We're going upwards
-		if(dy < 0)
+		if(directionY < 0)
 		{
 			// Since we're going upwards we have to check the top tiles
 			if(topLeft == 1 || topRight == 1)
 			{
 				// If they are there then we have to stop going upwards (otherwise we'll move through the wall).
-				dy = 0;
+				directionY = 0;
 				ytemp = currentRow * tileSize +collisionHeight / 2;
 			}
 			else
 			{
-				ytemp += dy;
+				ytemp += directionY;
 			}
 		}
 		
 		// We're going downwards
-		if(dy > 0)
+		if(directionY > 0)
 		{
 			// Checking if we have landed on something
 			if(bottomLeft == 1 || bottomRight == 1)
 			{
-				dy = 0;
+				directionY = 0;
 				falling = false;
 				ytemp = (currentRow + 1) * tileSize - collisionHeight / 2;
 			}
 			else
 			{
-				ytemp += dy;
+				ytemp += directionY;
 			}
 		}
 		
-		calculateCorners(xdest, y);
+		calculateCorners(xdest, locationY);
 		// Moving left;
-		if(dx < 0)
+		if(directionX < 0)
 		{
 			// If we've hit a block on our left side
 			if(topLeft == 1 || bottomLeft == 1)
 			{
-				dx = 0;
+				directionX = 0;
 				xtemp = currentCol * tileSize + collisionWidth / 2;
 			}
 			else
 			{
-				xtemp += dx;
+				xtemp += directionX;
 			}
 		}
 		
 		// Moving right
-		if(dx > 0)
+		if(directionX > 0)
 		{
 			// If we've hit a block on the right side
 			if(topRight == 1 || bottomRight == 1)
 			{
-				dx = 0;
+				directionX = 0;
 				xtemp = (currentCol + 1) * tileSize - collisionWidth / 2;
 			}
 			else
 			{
-				xtemp += dx;
+				xtemp += directionX;
 			}
 		}
 		
@@ -224,7 +224,7 @@ public abstract class MapObject
 		if(!falling)
 		{
 			// Check the corners around the object, one tile down to see if we should start falling.
-			calculateCorners(x, ydest + 1);
+			calculateCorners(locationX, ydest + 1);
 			
 			// So if there is no block on the bottom left or right, then we're not standing on anything.
 			if(bottomLeft != 1 && bottomRight != 1)
@@ -234,8 +234,8 @@ public abstract class MapObject
 		}
 	}
 	
-	public int getx() { return (int)x; }
-	public int gety() { return (int)y; }
+	public int getx() { return (int)locationX; }
+	public int gety() { return (int)locationY; }
 	public int getWidth() { return (int)width; }
 	public int getHeight() { return (int)height; }
 	public int getCollisionWidth() { return (int)collisionWidth; }
@@ -244,23 +244,23 @@ public abstract class MapObject
 	public void setPosition(double x, double y)
 	{
 		// Regular position
-		this.x = x;
-		this.y = y;
+		this.locationX = x;
+		this.locationY = y;
 	}
 	
-	public void setVetor(double dx, double dy)
+	public void setVetor(double directionX, double directionY)
 	{
-		this.dx = dx;
-		this.dy = dy;
+		this.directionX = directionX;
+		this.directionY = directionY;
 	}
 	
 	public void setMapPosition()
 	{
 		// Map position, if our player was at 2000, 1000, then he would be off the screen, we have to find out
 		// how far the tilemap has moved in order to offset the player back on to the screen, and that's the final position,
-		// x + xmap, y + ymap.
-		xmap = tileMap.getX();
-		ymap = tileMap.getY();
+		// x + mapPositionX, y + mapPositionY.
+		mapPositionX = tileMap.getX();
+		mapPositionY = tileMap.getY();
 	}
 	
 	public void setLeft(Boolean b) { left = b; }
@@ -279,8 +279,8 @@ public abstract class MapObject
 		{
 			graphics.drawImage(
 					animation.getImage(),
-					(int) (x + xmap - width / 2 + width),
-					(int) (y + ymap - height / 2),
+					(int) (locationX + mapPositionX - width / 2 + width),
+					(int) (locationY + mapPositionY - height / 2),
 					-width,
 					height,
 					null
@@ -291,8 +291,8 @@ public abstract class MapObject
 		{
 			graphics.drawImage(
 					animation.getImage(),
-					(int) (x + xmap - width / 2),
-					(int) (y + ymap - height / 2),
+					(int) (locationX + mapPositionX - width / 2),
+					(int) (locationY + mapPositionY - height / 2),
 							null
 					);
 		}
@@ -303,16 +303,16 @@ public abstract class MapObject
 	// function will determine whether they even are on the screen.
 	public Boolean notOnScreen()
 	{
-		// Again, x + xmap is the final position on the game screen itself.
+		// Again, x + mapPositionX is the final position on the game screen itself.
 		return 
 				//If the object is beyond the left side of the screen
-				x + xmap + width < 0 ||
+				locationX + mapPositionX + width < 0 ||
 				// if the object is beyond the right side of the screen
-				x + xmap - width > GamePanel.WIDTH ||
+				locationY + mapPositionX - width > GamePanel.WIDTH ||
 				//if the object is above the screen
-				y + ymap + height < 0||
+				locationY + mapPositionY + height < 0||
 				//if the object is below the screen
-				y + ymap - height > GamePanel.HEIGHT;
+				locationY + mapPositionY - height > GamePanel.HEIGHT;
 				
 	}
 	

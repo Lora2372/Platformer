@@ -42,8 +42,8 @@ public class Doodad extends MapObject
 		this.invulnerable = invulnerable;
 		this.runOnce = runOnce;
 		
-		x = spawnX;
-		y = spawnY;
+		locationX = spawnX;
+		locationY = spawnY;
 		
 		try{
 			BufferedImage spritesheet = ImageIO.read(
@@ -113,8 +113,8 @@ public class Doodad extends MapObject
 		graphics.drawImage(
 
 		animation.getImage(),
-		(int)(x + xmap - width / 2),
-		(int)(y + ymap - height / 2),
+		(int)(locationX + mapPositionX - width / 2),
+		(int)(locationY + mapPositionY - height / 2),
 		null
 		);
 	}

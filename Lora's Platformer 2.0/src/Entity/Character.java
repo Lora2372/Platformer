@@ -1,13 +1,16 @@
 package Entity;
 
 import java.util.ArrayList;
-import Sound.SoundPlayer;
-import java.util.HashMap;
+
+
+
+
 import Audio.JukeBox;
+
 import javax.imageio.ImageIO;
 
 import Entity.Doodad.SummoningEffect;
-
+import GameState.Level1State;
 import TileMap.TileMap;
 
 import java.awt.*;
@@ -15,6 +18,8 @@ import java.awt.image.BufferedImage;
 
 public class Character extends MapObject
 {
+	protected Level1State level1state;
+	
 	// Character stuff
 	protected String name;
 	
@@ -25,6 +30,8 @@ public class Character extends MapObject
 	protected int maxHealth;
 	protected int healthCounter;
 	protected int healthRegen;
+	
+	protected int sightRange;
 	
 	protected boolean sexytime1;
 	protected boolean sexytime2;
@@ -59,7 +66,6 @@ public class Character extends MapObject
 	
 	protected int smallFireballManaCost;
 	protected int smallFireballDamage;
-	protected ArrayList<Projectile> projectiles;
 	
 	// Large fireball
 	protected boolean castingLargeFireball;
@@ -151,6 +157,7 @@ public class Character extends MapObject
 			int stamina,
 			int maxStamina,
 			int staminaRegen,
+			int sightRange,
 			int punchCost,
 			int punchDamage,			
 			int punchRange,
@@ -174,7 +181,8 @@ public class Character extends MapObject
 			boolean invulnerable,
 			String name,
 			double spawnX,
-			double spawnY
+			double spawnY,
+			Level1State level1state
 			)
 	{
 		super(tileMap);		
@@ -197,6 +205,7 @@ public class Character extends MapObject
 		this.stamina = stamina;
 		this.maxStamina = maxStamina;
 		this.staminaRegen = staminaRegen;
+		this.sightRange = sightRange;
 		this.punchCost = punchCost;
 		this.punchDamage = punchDamage;
 		this.punchRange = punchRange;
@@ -219,6 +228,7 @@ public class Character extends MapObject
 		this.name = name;
 		this.spawnX = spawnX;
 		this.spawnY = spawnY;
+		this.level1state = level1state;
 		
 		healthCounter = 0;
 		manaCounter = 0;
@@ -226,7 +236,6 @@ public class Character extends MapObject
 		
 		setPosition(spawnX, spawnY);
 		
-		projectiles = new ArrayList<Projectile>();
 		
 		// Load the sprites.
 		try{
@@ -282,8 +291,8 @@ public class Character extends MapObject
 	
 	public void respawn()
 	{
-		x = spawnX;
-		y = spawnY;
+		locationX = spawnX;
+		locationY = spawnY;
 		dead = false;
 		health = maxHealth;
 	}
@@ -308,6 +317,8 @@ public class Character extends MapObject
 		}
 	}
 	public void releaseLargeFireball() { holdingLargeFireball = false; }
+	
+	public boolean getEndPunch() { return endPunch; }
 	
 	public void setPunching()
 	{
@@ -351,37 +362,37 @@ public class Character extends MapObject
 		if(left && inControl)
 		{
 
-			dx -= moveSpeed;
-			if(dx < -maxSpeed)
+			directionX -= moveSpeed;
+			if(directionX < -maxSpeed)
 			{
-				dx = -maxSpeed;
+				directionX = -maxSpeed;
 			}
 		}
 		else if(right && inControl)
 		{
 
-			dx += moveSpeed;
-			if(dx > maxSpeed)
+			directionX += moveSpeed;
+			if(directionX > maxSpeed)
 			{
-				dx = maxSpeed;
+				directionX = maxSpeed;
 			}
 		}
 		else
 		{
-			if(dx > 0)
+			if(directionX > 0)
 			{
-				dx -= stopSpeed;
-				if(dx < 0)
+				directionX -= stopSpeed;
+				if(directionX < 0)
 				{
-					dx = 0;
+					directionX = 0;
 				}
 			}
-			else if(dx < 0)
+			else if(directionX < 0)
 			{
-				dx += stopSpeed;
-				if(dx > 0)
+				directionX += stopSpeed;
+				if(directionX > 0)
 				{
-					dx = 0;
+					directionX = 0;
 				}
 			}
 		}
@@ -395,7 +406,7 @@ public class Character extends MapObject
 		{
 			// I'll leave the jump sound commented out until we find a better one.
 //			JukeBox.play("jump");
-			dy = jumpStart;
+			directionY = jumpStart;
 			falling = true;
 		}
 		
@@ -403,13 +414,13 @@ public class Character extends MapObject
 //		System.out.println("character name: " + getName() + ", falling: " + falling);
 		if(falling || swimming)
 		{
-			if(dy > 0 && gliding) dy += fallSpeed * 0.1;
-			else dy += fallSpeed;
+			if(directionY > 0 && gliding) directionY += fallSpeed * 0.1;
+			else directionY += fallSpeed;
 		
-			if(dy > 0) jumping = false;
-			if(dy < 0 && !jumping) dy += stopJumpSpeed;
+			if(directionY > 0) jumping = false;
+			if(directionY < 0 && !jumping) directionY += stopJumpSpeed;
 			
-			if(dy > maxFallSpeed) dy = maxFallSpeed;
+			if(directionY > maxFallSpeed) directionY = maxFallSpeed;
 		}
 		
 		
@@ -417,7 +428,11 @@ public class Character extends MapObject
 	}
 	
 	
-	public void updateAI(){}
+	public void updateAI(ArrayList<Character> characterList){}
+	
+	public int getPunchRange() { return punchRange; }
+	
+	public boolean getFacingRight() { return facingRight; }
 	
 	public boolean getFriendly() { return friendly; }
 
@@ -451,7 +466,7 @@ public class Character extends MapObject
 		
 		if(initializeSpawning)
 		{
-			summoningEffect = new SummoningEffect(tileMap, x, y);
+			summoningEffect = new SummoningEffect(tileMap, locationX, locationY);
 			initializeSpawning = false;
 			spawning = true;
 			JukeBox.play("teleport");
@@ -468,13 +483,13 @@ public class Character extends MapObject
 			inControl = true;
 		}
 		
-		if(x > tileMap.getWidth() || x < 0 || y > tileMap.getHeight())
+		if(locationX > tileMap.getWidth() || locationX < 0 || locationY > tileMap.getHeight())
 		{
 			System.out.println("spawnX: " + spawnX + ", spawnY: " + spawnY);
 			setPosition(spawnX, spawnY);
 			initializeSpawning = true;
-			dx = 0;
-			dy = 0;
+			directionX = 0;
+			directionY = 0;
 			inControl = false;
 		}
 		
@@ -501,16 +516,7 @@ public class Character extends MapObject
 		}
 		
 		
-		// Update fireballs
-		for(int i = 0; i < projectiles.size(); i++)
-		{
-			projectiles.get(i).update(characterList);
-			if(projectiles.get(i).shouldRemove())
-			{
-				projectiles.remove(i);
-				i--;
-			}
-		}
+
 		
 		// Set animations
 		
@@ -522,7 +528,7 @@ public class Character extends MapObject
 		{
 			if(currentAction != animationState[14])
 			{
-				dx = 0;
+				directionX = 0;
 				gliding = false;
 				left = false;
 				right = false;
@@ -551,7 +557,7 @@ public class Character extends MapObject
 				gliding = false;
 				left = false;
 				right = false;
-				dx = 0;
+				directionX = 0;
 				currentAction = animationState[15];
 				animation.setFrames(sprites.get(animationState[15]));
 				animation.setDelay(3000);
@@ -600,17 +606,15 @@ public class Character extends MapObject
 		{
 			if(currentAction != animationState[4])
 			{
-				System.out.println("punching");
 				currentAction = animationState[4];
 				animation.setFrames(sprites.get(animationState[4]));
 				animation.setDelay(125);
 				
-				if(dy == 0) dx = 0;
+				if(directionY == 0) directionX = 0;
 			}
 			
 			if(animation.hasPlayedOnce())
 			{
-				System.out.println("done punching?");
 				stamina -= punchCost;
 				startPunch = false;
 				endPunch = true;
@@ -626,8 +630,7 @@ public class Character extends MapObject
 			if(animation.hasPlayedOnce())
 			{
 				endPunch = false;
-				inControl = true;
-				
+				inControl = true;				
 				// Deal damage?
 			}
 		}
@@ -642,19 +645,19 @@ public class Character extends MapObject
 				currentAction = animationState[6];
 				animation.setFrames(sprites.get(animationState[6]));
 				animation.setDelay(100);
-				if(dy == 0) dx = 0;
+				if(directionY == 0) directionX = 0;
 				
 				saveFallSpeed = fallSpeed;
 				fallSpeed = 0;
-				dy = 0;
+				directionY = 0;
 			}
 			
 			if(animation.hasPlayedOnce())
 			{
 				stamina -= dashCost;
 				
-				if(facingRight) dx = dashSpeed;
-				else dx -= dashSpeed;
+				if(facingRight) directionX = dashSpeed;
+				else directionX -= dashSpeed;
 				
 				startDash = false;
 				endDash = true;
@@ -668,7 +671,7 @@ public class Character extends MapObject
 		{
 			if(animation.hasPlayedOnce())
 			{
-				dx = 0;
+				directionX = 0;
 				fallSpeed = saveFallSpeed;
 				
 				endDash = false;
@@ -688,7 +691,7 @@ public class Character extends MapObject
 				currentAction = animationState[8];
 				animation.setFrames(sprites.get(animationState[8]));
 				animation.setDelay(100);
-				if(dy == 0) dx = 0;
+				if(directionY == 0) directionX = 0;
 				JukeBox.play("FireballSmallLaunch");				
 			}
 			if(animation.hasPlayedOnce())
@@ -699,8 +702,8 @@ public class Character extends MapObject
 				doneCastingSmallFireball = true;
 				
 				FireballSmall fireball = new FireballSmall(tileMap, facingRight, up, down, friendly, smallFireballDamage);
-				fireball.setPosition(x, y - 20);
-				projectiles.add(fireball);
+				fireball.setPosition(locationX, locationY - 20);
+				level1state.addProjectile(fireball);
 				
 				currentAction = animationState[9];
 				animation.setFrames(sprites.get(animationState[9]));
@@ -730,7 +733,7 @@ public class Character extends MapObject
 				currentAction = animationState[10];
 				animation.setFrames(sprites.get(animationState[10]));
 				animation.setDelay(100);
-				if(dy == 0) dx = 0;
+				if(directionY == 0) directionX = 0;
 				JukeBox.play("FireballLargeLaunch");
 			}
 			if(animation.hasPlayedOnce())
@@ -740,8 +743,8 @@ public class Character extends MapObject
 				doneCastingLargeFireball = true;
 				
 				FireballLarge fireball = new FireballLarge(tileMap, facingRight, up, down, friendly, largeFireballDamage);
-				fireball.setPosition(x, y);
-				projectiles.add(fireball);
+				fireball.setPosition(locationX, locationY);
+				level1state.addProjectile(fireball);
 				
 				currentAction = animationState[11];
 				animation.setFrames(sprites.get(animationState[11]));
@@ -765,7 +768,7 @@ public class Character extends MapObject
 		//*Gliding                                                                       *
 		//********************************************************************************	
 		
-		else if(dy > 0)
+		else if(directionY > 0)
 		{
 			if(gliding)
 			{
@@ -786,7 +789,7 @@ public class Character extends MapObject
 				
 		
 		
-		else if(dy < 0)
+		else if(directionY < 0)
 		{
 			//********************************************************************************
 			//*Flying                                                                       *
@@ -852,29 +855,115 @@ public class Character extends MapObject
 		}
 	}
 	
+	public ArrayList<Character> detectEnemy(ArrayList<Character> characterList)
+	{
+		ArrayList<Character> enemiesDetected = new ArrayList<Character>();
+		
+		for(int i = 0; i < characterList.size(); i++)
+		{
+			Character character = characterList.get(i);
+			
+			if(character.getFriendly() != friendly)
+			{
+				if(facingRight)
+				{
+					if
+						(		
+							character.getx() > locationX &&
+							character.getx() < locationX + sightRange &&
+							character.gety() > locationY - height&&
+							character.gety() < locationY + height / 2
+						)
+					{
+						enemiesDetected.add(character);
+					}
+				}
+				else
+				{
+					if
+						(
+								character.getx() < locationX &&
+								character.getx() > locationX - sightRange &&
+								character.gety() > locationY - height &&
+								character.gety() < locationY + height / 2
+						)
+					{
+						enemiesDetected.add(character);
+					}
+				}
+			}
+			
+		}
+		
+		return enemiesDetected;
+	}
+	
+	public void checkProjectile(Projectile projectile)
+	{
+		if(endPunch)
+		{
+			if(facingRight)
+			{
+				if
+				(
+						projectile.getx() > locationX &&
+						projectile.getx() < locationX + punchRange &&
+						projectile.gety() > locationY - height / 2 &&
+						projectile.gety() < locationY + height / 2
+				)
+				{
+					System.out.println("Turning!");
+					System.out.println(projectile.getFriendly() + "\n-----------------");
+					projectile.setFacing(!projectile.getFacing());
+					projectile.setDirection(projectile.getDirectionX() * - 1, 0);
+					projectile.setFriendly(!projectile.getFriendly());
+				}
+			}
+			else
+			{
+				if
+				(
+						projectile.getx() < locationX &&
+						projectile.getx() > locationX - punchRange &&
+						projectile.gety() > locationY - height / 2 &&
+						projectile.gety() < locationY + height / 2
+				)
+				{
+					System.out.println("Turning!");
+					System.out.println(projectile.getFriendly() + "\n-----------------");
+					projectile.setFacing(!projectile.getFacing());
+					projectile.setDirection(projectile.getDirectionX() * - 1, 0);
+					projectile.setFriendly(!projectile.getFriendly());
+				}
+			}
+		}
+	}
 	
 	
 	public void checkAttack(ArrayList<Character> characterList)
 	{
 		
 		for(int i = 0; i < characterList.size(); i++)
-		{
+		{			
+			
 			Character character = characterList.get(i);
 			if(character.getFriendly() != friendly)
 			{
 				//********************************************************************************
 				//*Punching                                                                      *
 				//********************************************************************************	
+				
+				
 				if(endPunch)
 				{
 					if(facingRight)
 					{
 						if
 						(
-								character.getx() > x &&
-								character.getx() < x + punchRange &&
-								character.gety() > y - height / 2 &&
-								character.gety() < y + height / 2
+								character.getx() > locationX &&
+								character.getx() < locationX + punchRange &&
+								character.gety() > locationY - height / 2 &&
+								character.gety() < locationY + height / 2
 						)
 						{
 							character.hit(punchDamage);
@@ -884,10 +973,10 @@ public class Character extends MapObject
 					{
 						if
 						(
-							character.getx() < x &&
-							character.getx() > x - punchRange &&
-							character.gety() > y - height / 2 &&
-							character.gety() < y + height / 2
+							character.getx() < locationX &&
+							character.getx() > locationX - punchRange &&
+							character.gety() > locationY - height / 2 &&
+							character.gety() < locationY + height / 2
 						)
 						{
 							character.hit(punchDamage);
@@ -905,10 +994,10 @@ public class Character extends MapObject
 					{
 						if
 						(
-								character.getx() > x &&
-								character.getx() < x + dashRange &&
-								character.gety() > y - height / 2 &&
-								character.gety() < y + height / 2
+								character.getx() > locationX &&
+								character.getx() < locationX + dashRange &&
+								character.gety() > locationY - height / 2 &&
+								character.gety() < locationY + height / 2
 						)
 						{
 							character.hit(dashDamage);
@@ -918,39 +1007,16 @@ public class Character extends MapObject
 					{
 						if
 						(
-							character.getx() < x &&
-							character.getx() > x - dashRange &&
-							character.gety() > y - height / 2 &&
-							character.gety() < y + height / 2
+							character.getx() < locationX &&
+							character.getx() > locationX - dashRange &&
+							character.gety() > locationY - height / 2 &&
+							character.gety() < locationY + height / 2
 						)
 						{
 							character.hit(dashDamage);
 						}
 					}
 				}
-				
-				//********************************************************************************
-				//*Projectile                                                                    *
-				//********************************************************************************	
-				for(int j = 0; j < projectiles.size(); j++)
-				{
-					for(int k = 0; k < character.projectiles.size(); k++)
-					{
-						if(projectiles.get(j).getFriendly() != character.projectiles.get(k).getFriendly())
-						{
-							if(projectiles.get(j).intersects(character.projectiles.get(k)))
-							{
-								projectiles.get(j).setHit(characterList);
-								character.projectiles.get(k).setHit(characterList);
-							}
-						}
-
-					}
-					if(projectiles.get(j).intersects(character))
-					{
-						projectiles.get(j).setHit(characterList);
-					}
-				}								
 			}
 			
 
@@ -986,11 +1052,6 @@ public class Character extends MapObject
 			summoningEffect.draw(graphics);
 		}
 		
-		// Draw fireballs
-		for(int i = 0; i < projectiles.size(); i++)
-		{
-			projectiles.get(i).draw(graphics);
-		}
 		
 		// Draw player
 		
@@ -998,10 +1059,4 @@ public class Character extends MapObject
 		
 		super.draw(graphics);
 	}
-	
-	
-	
-	
-	
-	
 }

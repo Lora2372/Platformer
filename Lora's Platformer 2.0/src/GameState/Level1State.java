@@ -15,12 +15,10 @@ import Audio.JukeBox;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
 
-import Sound.SoundPlayer;
 
 public class Level1State extends GameState
 {
@@ -31,6 +29,7 @@ public class Level1State extends GameState
 	private ArrayList<Character> characterList;
 	private ArrayList<Character> enemies;
 	private ArrayList<Doodad> stuff;
+	private ArrayList<Projectile> projectiles;
 	private HUD hud;
 	private boolean doneInitializing;
 	
@@ -68,7 +67,8 @@ public class Level1State extends GameState
 		characterList = new ArrayList<Character>();
 		enemies = new ArrayList<Character>();
 		stuff = new ArrayList<Doodad>();
-		player = new Player(tileMap,"Lora", 720, 2200);
+		projectiles = new ArrayList<Projectile>();
+		player = new Player(tileMap,"Lora", 720, 2200, this);
 		characterList.add(player);
 		
 		player.setSpawning(true);
@@ -95,13 +95,64 @@ public class Level1State extends GameState
 		
 
 		long elapsed = (System.nanoTime() - soundTimer) / 1000000;
-		System.out.println("Elapsed: " + elapsed);
 		if(elapsed/1000 > 9)
 		{
-			System.out.println("Game Over.");
 			JukeBox.stop("GameOver");
 			gameStateManager.setState(0);
 		}
+	}
+	
+	public void checkProjectiles()
+	{
+		//********************************************************************************
+		//*Projectile                                                                    *
+		//********************************************************************************	
+		for(int j = 0; j < projectiles.size(); j++)
+		{
+			Projectile projectile = projectiles.get(j);
+			for(int k = 0; k < projectiles.size(); k++)
+			{
+				if(projectiles.get(j).getFriendly() != projectiles.get(k).getFriendly())
+				{
+					if(projectiles.get(j).intersects(projectiles.get(k)))
+					{
+						projectiles.get(j).setHit(characterList);
+						projectiles.get(k).setHit(characterList);
+					}
+				}
+
+			}
+			
+			for(int i = 0; i < characterList.size(); i++)
+			{
+				Character character = characterList.get(i);
+				if(character.getFriendly() != projectiles.get(j).getFriendly())
+				{
+					character.checkProjectile(projectile);
+					
+					if(projectiles.get(j).intersects(character))
+					{
+						projectiles.get(j).setHit(characterList);
+					}	
+				}
+			}
+			
+		}
+	}
+	
+	public void addProjectile(Projectile projectile)
+	{
+		projectiles.add(projectile);
+	}
+	
+	public ArrayList<Projectile> getProjectiles()
+	{
+		return projectiles;
+	}
+	
+	public ArrayList<Character> getCharacterList()
+	{
+		return characterList;
 	}
 	
 	public void update()
@@ -114,6 +165,21 @@ public class Level1State extends GameState
 			GameOverUpdate();
 			return;
 		}
+		
+		// Update fireballs
+		if(projectiles != null)
+		{
+			for(int i = 0; i < projectiles.size(); i++)
+			{
+				projectiles.get(i).update(characterList);
+				if(projectiles.get(i).shouldRemove())
+				{
+					projectiles.remove(i);
+					i--;
+				}
+			}
+		}
+		checkProjectiles();
 		
 		if(characterList != null)
 		{	
@@ -128,7 +194,7 @@ public class Level1State extends GameState
 					character.update(characterList);
 					if(character != player)
 					{
-						character.updateAI();
+						character.updateAI(characterList);
 					}
 					
 				}
@@ -263,6 +329,12 @@ public class Level1State extends GameState
 			}
 		}
 		
+		// Draw fireballs
+		for(int i = 0; i < projectiles.size(); i++)
+		{
+			projectiles.get(i).draw(graphics);
+		}
+		
 		// Draw HUD
 		
 		if(hud != null)
@@ -272,7 +344,7 @@ public class Level1State extends GameState
 		
 	}
 	
-	public void spawnSuccubi(double x, double y)
+	public void spawnSuccubi(double x, double y, boolean facingRight)
 	{
 		String[] succubiNames = new String[]
 				{
@@ -282,9 +354,9 @@ public class Level1State extends GameState
 				};
 		
 		Random randomizer = new Random();
-	int random2 = randomizer.nextInt((2 - 0) + 1 + 0);
+		int random2 = randomizer.nextInt((2 - 0) + 1 + 0);
 		
-		Succubus succubus = new Succubus(tileMap,false,false, false, false, succubiNames[random2],x, y);
+		Succubus succubus = new Succubus(tileMap, facingRight,false, false, false, succubiNames[random2],x, y, this);
 		characterList.add(succubus);
 		enemies.add(succubus);
 		
@@ -299,8 +371,9 @@ public class Level1State extends GameState
 	
 	public void spawnEnemies()
 	{
-		spawnSlug(1760, 1652);
-		spawnSuccubi(2700, 1400);
+		spawnSlug(1690, 1600, false);
+		spawnSuccubi(2700, 1400, false);
+		spawnSuccubi(1339,1900, true);
 	}
 	
 	public void keyPressed(int k)
@@ -319,8 +392,8 @@ public class Level1State extends GameState
 		if(k == KeyEvent.VK_V) player.setSexytime1();
 		if(k == KeyEvent.VK_B) player.setSexytime2();
 		
-		if(k == KeyEvent.VK_P) spawnSlug(player.getx(), player.gety()); 
-		if(k == KeyEvent.VK_O) spawnSuccubi(player.getx(), player.gety()); 
+		if(k == KeyEvent.VK_P) spawnSlug(player.getx(), player.gety(), player.getFacingRight()); 
+		if(k == KeyEvent.VK_O) spawnSuccubi(player.getx(), player.gety(), player.getFacingRight()); 
 		if(k == KeyEvent.VK_I) spawnWaterfall(player.getx(), player.gety()); 
 		if(k == KeyEvent.VK_U) spawnSummonEffect(player.getx(), player.gety()); 
 		if(k == KeyEvent.VK_G) GPS(); 
@@ -346,7 +419,7 @@ public class Level1State extends GameState
 		stuff.add(torch);
 	}
 	
-	public void spawnSlug(double x, double y)
+	public void spawnSlug(double x, double y, boolean facingRight)
 	{
 		String[] names = new String[]
 				{
@@ -360,7 +433,7 @@ public class Level1State extends GameState
 		Random randomizer = new Random();
 		int random = randomizer.nextInt((5 - 0) + 1 + 0);
 	
-		Slug slug = new Slug(tileMap, true, false, false, false, names[random], x, y);
+		Slug slug = new Slug(tileMap, facingRight, false, false, false, names[random], x, y, this);
 		characterList.add(slug);
 		enemies.add(slug);
 	}

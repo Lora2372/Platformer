@@ -1,7 +1,10 @@
 package Entity.Enemies;
 
+import java.util.ArrayList;
+
 import TileMap.TileMap;
 import Entity.Character;
+import GameState.Level1State;
 
 public class Succubus extends Character
 {
@@ -16,7 +19,8 @@ public class Succubus extends Character
 			boolean invulnerable,
 			String name,
 			double spawnX,
-			double spawnY
+			double spawnY,
+			Level1State level1state
 			) 
 	{
 		super(
@@ -40,6 +44,7 @@ public class Succubus extends Character
 				100,	 																// stamina
 				100, 	 																// maxStamina
 				30,		 															// staminaCounter
+				800,																// sightRange
 				0,	 	 															// punchCost
 				0, 		 															// punchDamage
 				0,	 	 															// punchRange
@@ -63,7 +68,8 @@ public class Succubus extends Character
 				invulnerable,
 				name,
 				spawnX,
-				spawnY
+				spawnY,
+				level1state
 				
 				);
 		
@@ -73,7 +79,7 @@ public class Succubus extends Character
 		
 		
 	}
-	public void updateAI()
+	public void updateAI(ArrayList<Character> characterList)
 	{
 //		if(!friendly) return;
 		//System.out.println("dx: " + dx + ", turnTimer: " + turnTimer);
@@ -101,12 +107,19 @@ public class Succubus extends Character
 		
 		timer++;
 		
-		if(timer > cooldown)
+		ArrayList<Character> enemiesDetected = detectEnemy(characterList);
+		
+		if(enemiesDetected.size() > 0)
 		{
-			timer = 0;
-//			System.out.println("FIRE THE FIREBALL!");
-			castingLargeFireball = true;
+			if(timer > cooldown)
+			{
+				timer = 0;
+//				System.out.println("FIRE THE FIREBALL!");
+				castingLargeFireball = true;
+			}
 		}
+		
+		if(timer > cooldown * 10) timer = cooldown;
 	}
 	
 	
