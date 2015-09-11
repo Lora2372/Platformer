@@ -13,11 +13,17 @@ import Entity.MapObject;
 public class Doodad extends MapObject
 {
 	protected String spritePath;
+	
+	protected int[] animationState;
 	protected int[] numFrames;
+	
 	protected ArrayList<BufferedImage[]> sprites;
 	
 	protected boolean runOnce;
 	protected boolean removeMe;
+	protected boolean activatable;
+	protected boolean active;
+	protected boolean spent;
 	
 	public Doodad(
 			TileMap tileMap, 
@@ -25,11 +31,16 @@ public class Doodad extends MapObject
 			double spawnY,
 			int width,
 			int height,
+			int collisionWidth,
+			int collisionHeight,
 			String spritePath,
+			int[] animationState,
 			int[] numFrames,
-			Boolean untouchable,
-			Boolean invulnerable,
-			Boolean runOnce
+			boolean untouchable,
+			boolean invulnerable,
+			boolean runOnce,
+			boolean activatable,
+			boolean active
 			)
 	{
 		super(tileMap);
@@ -37,10 +48,15 @@ public class Doodad extends MapObject
 		this.width = width;
 		this.height = height;
 		this.spritePath = spritePath;
+		this.animationState = animationState;
 		this.numFrames = numFrames;
 		this.untouchable = untouchable;
 		this.invulnerable = invulnerable;
 		this.runOnce = runOnce;
+		this.activatable = activatable;
+		this.active = active;
+		this.collisionHeight = collisionHeight;
+		this.collisionWidth = collisionWidth;
 		
 		locationX = spawnX;
 		locationY = spawnY;
@@ -79,18 +95,54 @@ public class Doodad extends MapObject
 		
 		animation = new Animation();
 		
-		currentAction = 0;
-		animation.setFrames(sprites.get(0));
+//		currentAction = 0;
+//		animation.setFrames(sprites.get(0));
+		currentAction = animationState[0];
+		animation.setFrames(sprites.get(animationState[0]));
 		animation.setDelay(100);
 
 		
 	}
 	
+	public void setActive(boolean b)
+	{
+		active = b;
+	}
+	
+	public void activateSound() { }
 	
 	public void update()
 	{
 		
 		animation.update();
+		
+		if(!spent)
+		{
+			if(active)
+			{
+				if(currentAction!= 1)
+				{
+					currentAction = animationState[1];
+					animation.setFrames(sprites.get(animationState[1]));
+					animation.setDelay(60);
+					activateSound();
+				}
+				if(animation.hasPlayedOnce())
+				{
+					if(currentAction != animationState[2])
+					{
+						currentAction = animationState[2];
+						animation.setFrames(sprites.get(animationState[2]));
+						animation.setDelay(1000);
+						spent = true;
+					}
+				}
+			}
+		}
+
+		
+		
+		
 		if(!animation.hasPlayedOnce()) return;
 		
 		if(runOnce)

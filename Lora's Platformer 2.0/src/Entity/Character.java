@@ -297,6 +297,8 @@ public class Character extends MapObject
 		health = maxHealth;
 	}
 	
+	public boolean getFalling() { return falling; }
+	public boolean getJumping() { return jumping; }
 	
 	public void setCastingSmallFireball()
 	{

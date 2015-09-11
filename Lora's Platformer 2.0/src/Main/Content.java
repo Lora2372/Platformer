@@ -35,6 +35,7 @@ public class Content
 	public static BufferedImage[][] Torch 					= load("/Sprites/Doodads/Torch.png", 150, 150);
 	public static BufferedImage[][] Waterfall 				= load("/Sprites/Doodads/Waterfall.png", 192, 192);
 
+	public static BufferedImage[][] GameOver				= load("/Backgrounds/GameOver.png", 544, 416);
 
 	
 	public static  void loadContent()
@@ -50,7 +51,10 @@ public class Content
 		JukeBox.load("/Sound/FireballSmallImpact.mp3", "FireballSmallImpact");
 		JukeBox.load("/Sound/Music/Battle9.mp3", "Battle9");
 		JukeBox.load("/Sound/Music/GameOver.mp3",  "GameOver");
-		
+		JukeBox.load("/Sound/Doodads/OpenChestUncommon.mp3", "OpenChestUncommon");
+		JukeBox.load("/Sound/Doodads/OpenChestCommon.mp3", "OpenChestCommon");
+		JukeBox.load("/Sound/Doodads/OpenChestRare.mp3", "OpenChestRare");
+
 
 	}
 	

@@ -12,12 +12,17 @@ public class CartoonExplosion extends Doodad
 				x, 
 				y, 
 				60, 
-				60, 
+				60,
+				60,
+				60,
 				"/Sprites/Effects/CartoonExplosion.gif",
+				new int[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				new int[] {6},
 				true,
 				true,
-				true
+				true,
+				false,
+				false
 		);
 	}
 }

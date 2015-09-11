@@ -12,12 +12,18 @@ public class SummoningEffect extends Doodad
 				x, 
 				y, 
 				192, 
-				192, 
+				192,
+				0,
+				0,
 				"/Sprites/Effects/SummonEffect.png",
+				new int[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				new int[] {14},
 				true,
 				true,
-				true
+				true,
+				false,
+				false
+				
 		);
 	}
 }

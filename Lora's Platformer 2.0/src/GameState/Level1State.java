@@ -10,6 +10,7 @@ import Entity.*;
 import Entity.Character;
 import Entity.Enemies.*;
 import Entity.Doodad.*;
+import Entity.Doodad.Activatable.*;
 import Audio.JukeBox;
 
 import java.awt.event.KeyEvent;
@@ -24,11 +25,13 @@ public class Level1State extends GameState
 {
 	private TileMap tileMap;
 	private Background background;
+	private GameOver gameoverScreen;
 	
 	private Player player;
 	private ArrayList<Character> characterList;
 	private ArrayList<Character> enemies;
 	private ArrayList<Doodad> stuff;
+	private ArrayList<Doodad> activatables;
 	private ArrayList<Projectile> projectiles;
 	private HUD hud;
 	private boolean doneInitializing;
@@ -53,11 +56,11 @@ public class Level1State extends GameState
 			//tileMap.loadTiles("/Tilesets/tileset.png");
 			
 			tileMap.loadTiles(ImageIO.read(getClass().getResource("/Tilesets/LorasTileset.png")));
-			tileMap.loadMap("/Maps/LorasMap01008.map");
+			tileMap.loadMap("/Maps/LorasMap01012.map");
 			tileMap.setPosition(0, 0);
 			
 			background = new Background(getClass().getResource("/Backgrounds/Mountains5.png"), 0.1);
-
+			gameoverScreen = new GameOver(getClass().getResource("/Backgrounds/GameOver.png"));
 		}
 		catch(IOException e)
 		{
@@ -67,6 +70,8 @@ public class Level1State extends GameState
 		characterList = new ArrayList<Character>();
 		enemies = new ArrayList<Character>();
 		stuff = new ArrayList<Doodad>();
+		activatables = new ArrayList<Doodad>();
+		
 		projectiles = new ArrayList<Projectile>();
 		player = new Player(tileMap,"Lora", 720, 2200, this);
 		characterList.add(player);
@@ -93,7 +98,6 @@ public class Level1State extends GameState
 	public void GameOverUpdate()
 	{
 		
-
 		long elapsed = (System.nanoTime() - soundTimer) / 1000000;
 		if(elapsed/1000 > 9)
 		{
@@ -287,6 +291,12 @@ public class Level1State extends GameState
 	{
 		if(!doneInitializing) return;
 		
+		if(gameover)
+		{
+			gameoverScreen.draw(graphics);
+			return;
+		}
+		
 		graphics.setColor(Color.WHITE);
 		graphics.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
 
@@ -310,6 +320,8 @@ public class Level1State extends GameState
 			
 			tileMap.draw(graphics);
 		}
+		
+		
 		
 		if(stuff != null)
 		{
@@ -374,6 +386,16 @@ public class Level1State extends GameState
 		spawnSlug(1690, 1600, false);
 		spawnSuccubi(2700, 1400, false);
 		spawnSuccubi(1339,1900, true);
+		spawnChestCommon(989, 2250);
+		spawnChestUncommon(989 + 120, 2250);
+		spawnChestRare(989 + 240, 2250);
+		
+		spawnChestRare(1923, 1170);
+		
+		spawnChestRare(2844, 1650);
+		
+		spawnChestUncommon(1712, 2610);
+		
 	}
 	
 	public void keyPressed(int k)
@@ -383,7 +405,7 @@ public class Level1State extends GameState
 		if(k == KeyEvent.VK_DOWN) player.setDown(true);
 		if(k == KeyEvent.VK_UP) player.setUp(true);
 		if(k == KeyEvent.VK_SPACE) player.setJumping(true);
-		if(k == KeyEvent.VK_E) player.setGliding(true);
+		if(k == KeyEvent.VK_E) interact();
 		
 		if(k == KeyEvent.VK_A) player.setCastingSmallFireball();
 		if(k == KeyEvent.VK_S) player.setCastingLargeFireball();
@@ -397,6 +419,25 @@ public class Level1State extends GameState
 		if(k == KeyEvent.VK_I) spawnWaterfall(player.getx(), player.gety()); 
 		if(k == KeyEvent.VK_U) spawnSummonEffect(player.getx(), player.gety()); 
 		if(k == KeyEvent.VK_G) GPS(); 
+		if(k == KeyEvent.VK_C) spawnChestCommon(player.getx(), player.gety()); 
+	}
+	
+	public void interact()
+	{
+		if(player.getFalling() || player.getJumping())
+		{
+			player.setGliding(true);
+		}
+		else
+		{
+			for(int i = 0; i < activatables.size(); i++)
+			{
+				if(player.intersects(activatables.get(i)))
+				{
+					activatables.get(i).setActive(true);
+				}
+			}
+		}
 	}
 	
 	public void spawnWaterfall(double x, double y)
@@ -417,6 +458,27 @@ public class Level1State extends GameState
 	{
 		Torch torch = new Torch(tileMap, x, y);
 		stuff.add(torch);
+	}
+	
+	public void spawnChestCommon(double x, double y)
+	{
+		ActivatableChestCommon activatableChestCommon = new ActivatableChestCommon(tileMap, x, y);
+		activatables.add(activatableChestCommon);
+		stuff.add(activatableChestCommon);
+	}
+	
+	public void spawnChestUncommon(double x, double y)
+	{
+		ActivatableChestUncommon activatableChestUncommon = new ActivatableChestUncommon(tileMap, x, y);
+		activatables.add(activatableChestUncommon);
+		stuff.add(activatableChestUncommon);
+	}
+	
+	public void spawnChestRare(double x, double y)
+	{
+		ActivatableChestRare activatableChesetRare = new ActivatableChestRare(tileMap, x, y);
+		activatables.add(activatableChesetRare);
+		stuff.add(activatableChesetRare);
 	}
 	
 	public void spawnSlug(double x, double y, boolean facingRight)
