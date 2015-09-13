@@ -11,6 +11,7 @@ import Entity.Character;
 import Entity.Enemies.*;
 import Entity.Doodad.*;
 import Entity.Doodad.Activatable.*;
+import Entity.Player.*;
 import Audio.JukeBox;
 
 import java.awt.event.KeyEvent;
@@ -60,7 +61,7 @@ public class Level1State extends GameState
 			tileMap.setPosition(0, 0);
 			
 			background = new Background(getClass().getResource("/Backgrounds/Mountains5.png"), 0.1);
-			gameoverScreen = new GameOver(getClass().getResource("/Backgrounds/GameOver.png"));
+			gameoverScreen = new GameOver(getClass().getResource("/Foregrounds/GameOver.png"));
 		}
 		catch(IOException e)
 		{
@@ -354,6 +355,11 @@ public class Level1State extends GameState
 			hud.draw(graphics);			
 		}
 		
+		if(ConversationBox.inConversation())
+		{
+			ConversationBox.draw(graphics); 
+		}
+		
 	}
 	
 	public void spawnSuccubi(double x, double y, boolean facingRight)
@@ -396,6 +402,7 @@ public class Level1State extends GameState
 		
 		spawnChestUncommon(1712, 2610);
 		
+		spawnSign(1357, 2250);
 	}
 	
 	public void keyPressed(int k)
@@ -419,7 +426,8 @@ public class Level1State extends GameState
 		if(k == KeyEvent.VK_I) spawnWaterfall(player.getx(), player.gety()); 
 		if(k == KeyEvent.VK_U) spawnSummonEffect(player.getx(), player.gety()); 
 		if(k == KeyEvent.VK_G) GPS(); 
-		if(k == KeyEvent.VK_C) spawnChestCommon(player.getx(), player.gety()); 
+		if(k == KeyEvent.VK_C) spawnChestCommon(player.getx(), player.gety());
+		if(k == KeyEvent.VK_V)spawnSign(player.getx(), player.gety()); 
 	}
 	
 	public void interact()
@@ -434,7 +442,7 @@ public class Level1State extends GameState
 			{
 				if(player.intersects(activatables.get(i)))
 				{
-					activatables.get(i).setActive(true);
+					activatables.get(i).interact();
 				}
 			}
 		}
@@ -458,6 +466,13 @@ public class Level1State extends GameState
 	{
 		Torch torch = new Torch(tileMap, x, y);
 		stuff.add(torch);
+	}
+	
+	public void spawnSign(double x, double y)
+	{
+		ActivatableSign activatableSign = new ActivatableSign(tileMap, x, y, player);
+		activatables.add(activatableSign);
+		stuff.add(activatableSign);
 	}
 	
 	public void spawnChestCommon(double x, double y)

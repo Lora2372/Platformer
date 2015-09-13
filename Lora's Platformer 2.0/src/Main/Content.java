@@ -35,8 +35,14 @@ public class Content
 	public static BufferedImage[][] Torch 					= load("/Sprites/Doodads/Torch.png", 150, 150);
 	public static BufferedImage[][] Waterfall 				= load("/Sprites/Doodads/Waterfall.png", 192, 192);
 
-	public static BufferedImage[][] GameOver				= load("/Backgrounds/GameOver.png", 544, 416);
-
+	// Foreground
+	public static BufferedImage[][] GameOver				= load("/Foregrounds/GameOver.png", 544, 416);
+	public static BufferedImage[][] ConversationGUI			= load("/Foregrounds/Conversation GUI.png", 572, 138);
+	
+	// Portraits
+	public static BufferedImage[][] PortraitPlayer			=load("/Foregrounds/Portraits/PortraitPlayer.png", 94, 94);
+	public static BufferedImage[][] PortraitSign			=load("/Foregrounds/Portraits/PortraitSign.png", 94, 94);
+	
 	
 	public static  void loadContent()
 	{

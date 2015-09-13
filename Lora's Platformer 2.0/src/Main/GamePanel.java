@@ -5,6 +5,7 @@ import java.awt.*;
 
 import javax.swing.JPanel;
 
+import Entity.Player.ConversationBox;
 import GameState.GameStateManager;
 
 import java.awt.event.*;
@@ -18,7 +19,7 @@ public class GamePanel
 	public static final int WIDTH = 1200;
 	public static final int HEIGHT = 900;
 	
-	public static final String version = "0.1.012.5";
+	public static final String version = "0.1.013";
 		
 	// Game thread
 	private Thread thread;
@@ -57,6 +58,7 @@ public class GamePanel
 	private void initialize()
 	{
 		Content.loadContent();
+		ConversationBox.initializeConversationBox();
 		
 		image = new BufferedImage(
 				WIDTH,
@@ -72,6 +74,8 @@ public class GamePanel
 	public void run()
 	{
 		initialize();
+		
+
 		
 		long start;
 		long elapsed;

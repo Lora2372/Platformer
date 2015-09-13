@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
+import Main.Content;
 import TileMap.TileMap;
 import Entity.Animation;
 import Entity.MapObject;
@@ -17,6 +18,8 @@ public class Doodad extends MapObject
 	protected int[] animationState;
 	protected int[] numFrames;
 	
+	protected BufferedImage[] portrait;
+	
 	protected ArrayList<BufferedImage[]> sprites;
 	
 	protected boolean runOnce;
@@ -24,6 +27,8 @@ public class Doodad extends MapObject
 	protected boolean activatable;
 	protected boolean active;
 	protected boolean spent;
+	
+	protected String name;
 	
 	public Doodad(
 			TileMap tileMap, 
@@ -95,6 +100,8 @@ public class Doodad extends MapObject
 		
 		animation = new Animation();
 		
+		portrait = Content.PortraitSign[0];
+		
 //		currentAction = 0;
 //		animation.setFrames(sprites.get(0));
 		currentAction = animationState[0];
@@ -104,9 +111,11 @@ public class Doodad extends MapObject
 		
 	}
 	
-	public void setActive(boolean b)
+	public BufferedImage[] getPortrait() { return portrait; }
+	
+	public void interact()
 	{
-		active = b;
+		if(!active) active = true;
 	}
 	
 	public void activateSound() { }
@@ -169,5 +178,15 @@ public class Doodad extends MapObject
 		(int)(locationY + mapPositionY - height / 2),
 		null
 		);
+	}
+
+	public void setName(String newName)
+	{
+		name = newName;
+	}
+	
+	public String getName()
+	{
+		return name;
 	}
 }

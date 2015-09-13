@@ -31,8 +31,8 @@ public class FireballLarge extends Projectile
 				60, 																// Projectile height
 				240, 																// Explosion width
 				240, 																// Explosion height
-				56, 																// Collision width
-				56, 																// Collision height
+				40, 																// Collision width
+				40, 																// Collision height
 				7.6, 																// Projectile speed
 				damage,																// Explosion damage
 				240, 																// Explosion radius

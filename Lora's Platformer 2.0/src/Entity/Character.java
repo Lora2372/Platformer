@@ -5,12 +5,14 @@ import java.util.ArrayList;
 
 
 
+
 import Audio.JukeBox;
 
 import javax.imageio.ImageIO;
 
 import Entity.Doodad.SummoningEffect;
 import GameState.Level1State;
+import Main.Content;
 import TileMap.TileMap;
 
 import java.awt.*;
@@ -22,6 +24,8 @@ public class Character extends MapObject
 	
 	// Character stuff
 	protected String name;
+	
+	protected BufferedImage[] portrait;
 	
 	protected double spawnX;
 	protected double spawnY;
@@ -236,6 +240,7 @@ public class Character extends MapObject
 		
 		setPosition(spawnX, spawnY);
 		
+		portrait = Content.PortraitPlayer[0];
 		
 		// Load the sprites.
 		try{
@@ -276,6 +281,8 @@ public class Character extends MapObject
 		animation.setDelay(400);
 	}
 	
+	public BufferedImage[] getPortrait() { return portrait;}
+	
 	public int getHealth() { return health; }
 	public int getMaxHealth() { return maxHealth; }
 	public int getMana() { return mana; }
@@ -296,6 +303,8 @@ public class Character extends MapObject
 		dead = false;
 		health = maxHealth;
 	}
+	
+	public void inControl(boolean b) {inControl = b;}
 	
 	public boolean getFalling() { return falling; }
 	public boolean getJumping() { return jumping; }
