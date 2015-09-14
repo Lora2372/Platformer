@@ -137,7 +137,7 @@ public class MenuState extends GameState
 					+ "S: Large fireball\n"
 					+ "D: Dash attack\n"
 					+ "F: Punch attack\n"
-					+ "E: Gliding\n"
+					+ "E: Gliding in the air, interacting with objects on the ground.\n"
 					+ "\n"
 					+ "Extra stuff:\n"
 					+ "O: Summon a succubus\n"

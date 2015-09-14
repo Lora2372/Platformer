@@ -6,11 +6,13 @@ import java.util.ArrayList;
 
 
 
+
 import Audio.JukeBox;
 
 import javax.imageio.ImageIO;
 
 import Entity.Doodad.SummoningEffect;
+import Entity.Player.ConversationBox;
 import GameState.Level1State;
 import Main.Content;
 import TileMap.TileMap;
@@ -21,6 +23,7 @@ import java.awt.image.BufferedImage;
 public class Character extends MapObject
 {
 	protected Level1State level1state;
+	protected ConversationBox conversationbox;
 	
 	// Character stuff
 	protected String name;
@@ -234,6 +237,7 @@ public class Character extends MapObject
 		this.spawnY = spawnY;
 		this.level1state = level1state;
 		
+		
 		healthCounter = 0;
 		manaCounter = 0;
 		staminaCounter = 0;
@@ -305,6 +309,11 @@ public class Character extends MapObject
 	}
 	
 	public void inControl(boolean b) {inControl = b;}
+	public void untouchable(boolean b) { untouchable = b; }
+	public void invulnerable(boolean b) { invulnerable = b; }
+	
+	public boolean getUntouchable() { return untouchable; }
+	public boolean getInvulnderable() { return invulnerable; }
 	
 	public boolean getFalling() { return falling; }
 	public boolean getJumping() { return jumping; }
@@ -345,7 +354,7 @@ public class Character extends MapObject
 	{
 		if(b && inControl)
 		{
-			if((stamina > dashCost && !holdingDash) && inControl)
+			if((stamina > dashCost && !holdingDash && !falling && !jumping) && inControl)
 			{
 				startDash = true;
 				inControl = false;
@@ -874,7 +883,7 @@ public class Character extends MapObject
 		{
 			Character character = characterList.get(i);
 			
-			if(character.getFriendly() != friendly)
+			if(character.getFriendly() != friendly && character.inControl)
 			{
 				if(facingRight)
 				{
@@ -1068,6 +1077,16 @@ public class Character extends MapObject
 		
 		if(spawning) return;
 		
+		
 		super.draw(graphics);
+		
+		if(conversationbox != null)
+		{			
+			if(conversationbox.inConversation())
+			{
+				conversationbox.draw(graphics);
+			}
+		}
+
 	}
 }

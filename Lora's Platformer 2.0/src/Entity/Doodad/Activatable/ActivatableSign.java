@@ -58,20 +58,20 @@ public class ActivatableSign extends Doodad
 		player.inControl(false);
 		active = true;
 		
-		ConversationBox.startConversation(player, null, this, conversation, whoTalks);
+		player.getConversationBox().startConversation(player, null, this, conversation, whoTalks);
 	}
 	
 	public void interact()
 	{
-		if(!ConversationBox.inConversation())startConversation();
-		else ConversationBox.progressConversation();
+		if(!player.getConversationBox().inConversation())startConversation();
+		else player.getConversationBox().progressConversation();
 		
-		if(ConversationBox.getConversationTracker() >= conversation.length)
+		if(player.getConversationBox().getConversationTracker() >= conversation.length)
 		{
 			
 			active = false;
 			player.inControl(true);
-			ConversationBox.endConversation();
+			player.getConversationBox().endConversation();
 		}
 	}
 		

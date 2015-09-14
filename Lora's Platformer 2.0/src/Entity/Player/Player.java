@@ -57,7 +57,7 @@ public class Player extends Character
 				new int[]{6, 6, 1, 5, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1},			// numImages
 				0,																	// damageOnTouch
 				true,																// friendly
-				false,
+				true,
 				false,
 				name,
 				spawnX,
@@ -66,5 +66,13 @@ public class Player extends Character
 				
 				);
 		
+		conversationbox = new ConversationBox(this);
+
+		
+	}
+	
+	public ConversationBox getConversationBox()
+	{
+		return conversationbox;
 	}
 }

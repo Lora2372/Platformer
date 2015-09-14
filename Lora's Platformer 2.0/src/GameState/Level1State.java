@@ -130,8 +130,9 @@ public class Level1State extends GameState
 			
 			for(int i = 0; i < characterList.size(); i++)
 			{
+				
 				Character character = characterList.get(i);
-				if(character.getFriendly() != projectiles.get(j).getFriendly())
+				if(character.getFriendly() != projectiles.get(j).getFriendly() && !character.getUntouchable() && !character.getInvulnderable())
 				{
 					character.checkProjectile(projectile);
 					
@@ -355,10 +356,10 @@ public class Level1State extends GameState
 			hud.draw(graphics);			
 		}
 		
-		if(ConversationBox.inConversation())
-		{
-			ConversationBox.draw(graphics); 
-		}
+//		if(ConversationBox.inConversation())
+//		{
+//			ConversationBox.draw(graphics); 
+//		}
 		
 	}
 	
@@ -496,7 +497,6 @@ public class Level1State extends GameState
 		if(k == KeyEvent.VK_I) spawnWaterfall(player.getx(), player.gety()); 
 		if(k == KeyEvent.VK_U) spawnSummonEffect(player.getx(), player.gety()); 
 		if(k == KeyEvent.VK_G) GPS(); 
-		if(k == KeyEvent.VK_C) spawnChestCommon(player.getx(), player.gety());
 	}
 	
 	public void interact()

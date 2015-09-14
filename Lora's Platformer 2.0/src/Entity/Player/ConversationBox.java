@@ -11,25 +11,25 @@ import Main.GamePanel;
 public class ConversationBox 
 {
 	
-	private static Player player;
-	private static Character otherPerson;
-	private static Doodad sign;
-	private static String[] conversation;
-	private static int[] whoTalks;
+	private Player player;
+	private Character otherPerson;
+	private Doodad sign;
+	private String[] conversation;
+	private int[] whoTalks;
 	
 	
-	private static int conversationTracker;
+	private int conversationTracker;
 	
-	private static boolean inConversation;
+	private boolean inConversation;
 	
-	private static double locationX;
-	private static double locationY;
+	private double locationX;
+	private double locationY;
 	
-	private static BufferedImage[] sprites;
+	private BufferedImage[] sprites;
 	
 	
 	
-	public static void initializeConversationBox()
+	public ConversationBox(Player player)
 	{
 		sprites = Content.ConversationGUI[0];
 		
@@ -38,12 +38,14 @@ public class ConversationBox
 		locationX = GamePanel.WIDTH / 3;
 		locationY = GamePanel.HEIGHT - 138;
 		
+		this.player = player;
+		
 	}
 	
-	public static boolean inConversation() { return inConversation; }
+	public boolean inConversation() { return inConversation; }
 	
 	
-	public static void startConversation(
+	public void startConversation(
 			Player newPlayer,
 			Character newOtherPerson, 
 			Doodad newSign, 
@@ -51,39 +53,40 @@ public class ConversationBox
 			int[] newWhoTalks
 			)
 	{
-		player = newPlayer;
 		otherPerson = newOtherPerson;
 		sign = newSign;
 		conversation = newConversation;
 		conversationTracker = 0;
 		inConversation = true;
 		whoTalks = newWhoTalks;
+		
+		player.inControl(false);
+		player.invulnerable(true);
 	}
 	
-	public static void endConversation()
+	public void endConversation()
 	{
-		player = null;
-		otherPerson = null;
-		sign = null;
-		conversation = null;
 		conversationTracker = 0;
 		inConversation = false;
+		
+		player.inControl(true);
+		player.invulnerable(false);
 	}
 	
 	
-	public static void progressConversation()
+	public void progressConversation()
 	{
 		conversationTracker++;
 	}
 	
-	public static int getConversationTracker()
+	public int getConversationTracker()
 	{
 		return conversationTracker;
 	}
 	
 
 	
-	public static void draw(Graphics graphics)
+	public void draw(Graphics graphics)
 	{
 		
 //		g.drawImage(image[1], 
