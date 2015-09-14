@@ -57,7 +57,7 @@ public class Level1State extends GameState
 			//tileMap.loadTiles("/Tilesets/tileset.png");
 			
 			tileMap.loadTiles(ImageIO.read(getClass().getResource("/Tilesets/LorasTileset.png")));
-			tileMap.loadMap("/Maps/LorasMap01012.map");
+			tileMap.loadMap("/Maps/LorasMap01014.map");
 			tileMap.setPosition(0, 0);
 			
 			background = new Background(getClass().getResource("/Backgrounds/Mountains5.png"), 0.1);
@@ -390,19 +390,89 @@ public class Level1State extends GameState
 	public void spawnEnemies()
 	{
 		spawnSlug(1690, 1600, false);
+		
 		spawnSuccubi(2700, 1400, false);
 		spawnSuccubi(1339,1900, true);
+		spawnSuccubi(2708, 1870, false);
+		spawnSuccubi(2252, 2170, true);
+		
 		spawnChestCommon(989, 2250);
 		spawnChestUncommon(989 + 120, 2250);
 		spawnChestRare(989 + 240, 2250);
 		
 		spawnChestRare(1923, 1170);
 		
-		spawnChestRare(2844, 1650);
 		
 		spawnChestUncommon(1712, 2610);
 		
-		spawnSign(1357, 2250);
+		
+		spawnSign(
+				1357, 
+				2250, 
+				new String[] 
+					{ 
+						"Greetings mortal, I am a welcome sign intended to make you feel,\n well... Welcome!",
+						"What an odd sign..."
+					}, 
+					new int[]
+					{
+						2,
+						0
+					}
+				);
+		
+		
+		spawnSign(
+				3805, 
+				1480, 
+				new String[] 
+					{ 
+						"World's end!",
+						"The world ends here? How is that even possible?",
+						"It is entirely possible.",
+						"Did you just talk?",
+						"...",
+						"No?",
+						"..."
+					}, 
+					new int[]
+					{
+						2,
+						0,
+						2,
+						0,
+						2,
+						2,
+						0
+					}
+				);
+		
+		spawnSign(
+				3614, 
+				2370, 
+				new String[] 
+					{ 
+						"A cave entrance is supposed to be here later."
+					}, 
+					new int[]
+					{
+						2
+					}
+				);
+		
+		spawnSign(
+				2203, 
+				1710, 
+				new String[] 
+					{ 
+						"A helpful NPC will be here later."
+					}, 
+					new int[]
+					{
+						2
+					}
+				);
+	
 	}
 	
 	public void keyPressed(int k)
@@ -427,7 +497,6 @@ public class Level1State extends GameState
 		if(k == KeyEvent.VK_U) spawnSummonEffect(player.getx(), player.gety()); 
 		if(k == KeyEvent.VK_G) GPS(); 
 		if(k == KeyEvent.VK_C) spawnChestCommon(player.getx(), player.gety());
-		if(k == KeyEvent.VK_V)spawnSign(player.getx(), player.gety()); 
 	}
 	
 	public void interact()
@@ -468,9 +537,9 @@ public class Level1State extends GameState
 		stuff.add(torch);
 	}
 	
-	public void spawnSign(double x, double y)
+	public void spawnSign(double x, double y, String[] conversation, int[] whoTalks)
 	{
-		ActivatableSign activatableSign = new ActivatableSign(tileMap, x, y, player);
+		ActivatableSign activatableSign = new ActivatableSign(tileMap, x, y, player, conversation, whoTalks);
 		activatables.add(activatableSign);
 		stuff.add(activatableSign);
 	}

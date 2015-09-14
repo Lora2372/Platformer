@@ -22,7 +22,9 @@ public class ActivatableSign extends Doodad
 			TileMap tileMap, 
 			double spawnX,
 			double spawnY,
-			Player player
+			Player player,
+			String[] conversation,
+			int[] whoTalks
 			) 
 	{
 		super(tileMap, 
@@ -44,17 +46,9 @@ public class ActivatableSign extends Doodad
 		
 		setName("Sign");
 		
-		conversation = new String[]
-				{
-					"Greetings mortal, I am a welcome sign intended to make you feel,\n well... Welcome!",
-					"What an odd sign..."
-				};
+		this.conversation = conversation;
 		
-		whoTalks = new int[]
-				{
-					2,
-					0
-				};
+		this.whoTalks = whoTalks;
 		
 		this.player = player;
 	}
