@@ -88,13 +88,6 @@ public class ConversationBox
 	
 	public void draw(Graphics graphics)
 	{
-		
-//		g.drawImage(image[1], 
-//				94, 
-//				27, 
-//				(int)((t1/t2) * image[1].getWidth()),
-//				image[1].getHeight(),
-//				null);
 
 		graphics.drawImage(
 				sprites[0],
@@ -117,6 +110,7 @@ public class ConversationBox
 		if(whoTalks[conversationTracker] == 1)
 		{
 			tempName = otherPerson.getName();
+			tempIcon = otherPerson.getPortrait();
 		}
 		
 		if(whoTalks[conversationTracker] == 2)
@@ -127,12 +121,12 @@ public class ConversationBox
 		
 		graphics.drawImage(
 				tempIcon[0],
-				(int) (locationX + 10),
-				(int) (locationY + 25),
+				(int) (locationX - 94),
+				(int) (locationY + 35),
 				null
 			);
 		
-		graphics.drawString(tempName, (int)locationX + 135, (int)locationY + 25);		
+		graphics.drawString(tempName, (int)locationX + 21, (int)locationY + 25);		
 		
 		String[] newString = conversation[conversationTracker].split("\n");
 		
@@ -140,7 +134,7 @@ public class ConversationBox
 
 		for(int i = 0; i < newString.length; i++)
 		{
-			graphics.drawString(newString[i], (int)locationX + 130, (int)locationY + 70 + i*20);			
+			graphics.drawString(newString[i], (int)locationX + 21, (int)locationY + 70 + i*20);			
 		}
 		
 		

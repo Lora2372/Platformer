@@ -65,7 +65,8 @@ public class Slug extends Character
 				10,																	// damageOnTouch
 				friendly,															// friendly				
 				untouchable,
-				invulnerable,				
+				invulnerable,
+				false,
 				name,
 				spawnX,
 				spawnY,

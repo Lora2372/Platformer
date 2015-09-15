@@ -7,12 +7,14 @@ import java.util.ArrayList;
 
 
 
+
 import Audio.JukeBox;
 
 import javax.imageio.ImageIO;
 
 import Entity.Doodad.SummoningEffect;
 import Entity.Player.ConversationBox;
+import Entity.Player.Player;
 import GameState.Level1State;
 import Main.Content;
 import TileMap.TileMap;
@@ -55,6 +57,10 @@ public class Character extends MapObject
 	
 	protected int damageOnTouch;
 	protected boolean friendly;
+	
+	protected boolean activatable;
+	
+	protected boolean removeMe;
 	
 	protected boolean dead;
 	protected boolean flinching;
@@ -186,6 +192,7 @@ public class Character extends MapObject
 			boolean friendly,
 			boolean untouchable,
 			boolean invulnerable,
+			boolean activatable,
 			String name,
 			double spawnX,
 			double spawnY,
@@ -232,6 +239,7 @@ public class Character extends MapObject
 		this.numFrames = numFrames;
 		this.damageOnTouch = damageOnTouch;
 		this.friendly = friendly;
+		this.activatable = activatable;
 		this.name = name;
 		this.spawnX = spawnX;
 		this.spawnY = spawnY;
@@ -293,6 +301,15 @@ public class Character extends MapObject
 	public int getMaxMana() { return maxMana; }
 	public int getStamina() { return stamina; }
 	public int getMaxStamina() { return maxStamina; }
+	
+	public boolean getActivatable() { return activatable; }
+	
+	public boolean getRemoveMe() { return removeMe; }
+	
+	public void interact(Player player)
+	{
+
+	}
 	
 	public void setSpawnPoint(double spawnX, double spawnY) 
 	{
@@ -425,7 +442,7 @@ public class Character extends MapObject
 		if(jumping && !falling && inControl)
 		{
 			// I'll leave the jump sound commented out until we find a better one.
-//			JukeBox.play("jump");
+//			JukeBox.play("jump");			
 			directionY = jumpStart;
 			falling = true;
 		}

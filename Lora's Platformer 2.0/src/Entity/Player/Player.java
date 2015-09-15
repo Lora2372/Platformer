@@ -59,6 +59,7 @@ public class Player extends Character
 				true,																// friendly
 				true,
 				false,
+				false,
 				name,
 				spawnX,
 				spawnY,

@@ -63,14 +63,14 @@ public class Succubus extends Character
 				new int[] {0,0,0,0,0,0,0,0,4,2,4,2,4,0,0,0,0},				// animationStates
 				new int[]{7, 2, 6, 2, 1, 4, 4, 1, 6},								// numImages
 				0,																	// damageOnTouch
-				friendly,															// friendly				
+				friendly,															// friendly			
 				untouchable,
 				invulnerable,
+				false,
 				name,
 				spawnX,
 				spawnY,
 				level1state
-				
 				);
 		
 		timer = 0;

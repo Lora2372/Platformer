@@ -11,6 +11,7 @@ import Entity.Character;
 import Entity.Enemies.*;
 import Entity.Doodad.*;
 import Entity.Doodad.Activatable.*;
+import Entity.NPC.Activatable.LiadrinFirstEncounter;
 import Entity.Player.*;
 import Audio.JukeBox;
 
@@ -31,6 +32,7 @@ public class Level1State extends GameState
 	private Player player;
 	private ArrayList<Character> characterList;
 	private ArrayList<Character> enemies;
+	private ArrayList<Character> allies;
 	private ArrayList<Doodad> stuff;
 	private ArrayList<Doodad> activatables;
 	private ArrayList<Projectile> projectiles;
@@ -57,7 +59,7 @@ public class Level1State extends GameState
 			//tileMap.loadTiles("/Tilesets/tileset.png");
 			
 			tileMap.loadTiles(ImageIO.read(getClass().getResource("/Tilesets/LorasTileset.png")));
-			tileMap.loadMap("/Maps/LorasMap01014.map");
+			tileMap.loadMap("/Maps/LorasMap01016.map");
 			tileMap.setPosition(0, 0);
 			
 			background = new Background(getClass().getResource("/Backgrounds/Mountains5.png"), 0.1);
@@ -72,6 +74,7 @@ public class Level1State extends GameState
 		enemies = new ArrayList<Character>();
 		stuff = new ArrayList<Doodad>();
 		activatables = new ArrayList<Doodad>();
+		allies = new ArrayList<Character>();
 		
 		projectiles = new ArrayList<Projectile>();
 		player = new Player(tileMap,"Lora", 720, 2200, this);
@@ -146,6 +149,13 @@ public class Level1State extends GameState
 		}
 	}
 	
+	
+	
+	public void addEffect(Doodad effect)
+	{
+		stuff.add(effect);
+	}
+	
 	public void addProjectile(Projectile projectile)
 	{
 		projectiles.add(projectile);
@@ -193,7 +203,15 @@ public class Level1State extends GameState
 			{
 				Character character = characterList.get(i);
 				
-				if(!character.isDead())
+				if(character.getRemoveMe())
+				{
+					characterList.remove(character);
+					if(character.getFriendly()) 	allies.remove(character);
+					if(!character.getFriendly()) 	enemies.remove(character);	
+					i--;
+				}
+				
+				else if(!character.isDead())
 				{
 					character.checkAttack(characterList);
 					
@@ -363,7 +381,7 @@ public class Level1State extends GameState
 		
 	}
 	
-	public void spawnSuccubi(double x, double y, boolean facingRight)
+	public void spawnSuccubus(double x, double y, boolean facingRight)
 	{
 		String[] succubiNames = new String[]
 				{
@@ -392,10 +410,9 @@ public class Level1State extends GameState
 	{
 		spawnSlug(1690, 1600, false);
 		
-		spawnSuccubi(2700, 1400, false);
-		spawnSuccubi(1339,1900, true);
-		spawnSuccubi(2708, 1870, false);
-		spawnSuccubi(2252, 2170, true);
+		spawnSuccubus(2700, 1400, false);
+		spawnSuccubus(1339,1900, true);
+		spawnSuccubus(2252, 2170, true);
 		
 		spawnChestCommon(989, 2250);
 		spawnChestUncommon(989 + 120, 2250);
@@ -406,6 +423,9 @@ public class Level1State extends GameState
 		
 		spawnChestUncommon(1712, 2610);
 		
+		LiadrinFirstEncounter liadrinFirstEncounter = new LiadrinFirstEncounter(tileMap, false, true, false, true, "Liadrin", 2680, 1800, this);
+		characterList.add(liadrinFirstEncounter);
+		allies.add(liadrinFirstEncounter);
 		
 		spawnSign(
 				1357, 
@@ -476,28 +496,7 @@ public class Level1State extends GameState
 	
 	}
 	
-	public void keyPressed(int k)
-	{
-		if(k == KeyEvent.VK_LEFT) player.setLeft(true);
-		if(k == KeyEvent.VK_RIGHT) player.setRight(true);
-		if(k == KeyEvent.VK_DOWN) player.setDown(true);
-		if(k == KeyEvent.VK_UP) player.setUp(true);
-		if(k == KeyEvent.VK_SPACE) player.setJumping(true);
-		if(k == KeyEvent.VK_E) interact();
-		
-		if(k == KeyEvent.VK_A) player.setCastingSmallFireball();
-		if(k == KeyEvent.VK_S) player.setCastingLargeFireball();
-		if(k == KeyEvent.VK_F) player.setPunching();
-		if(k == KeyEvent.VK_D) player.setDashing(true);
-		if(k == KeyEvent.VK_V) player.setSexytime1();
-		if(k == KeyEvent.VK_B) player.setSexytime2();
-		
-		if(k == KeyEvent.VK_P) spawnSlug(player.getx(), player.gety(), player.getFacingRight()); 
-		if(k == KeyEvent.VK_O) spawnSuccubi(player.getx(), player.gety(), player.getFacingRight()); 
-		if(k == KeyEvent.VK_I) spawnWaterfall(player.getx(), player.gety()); 
-		if(k == KeyEvent.VK_U) spawnSummonEffect(player.getx(), player.gety()); 
-		if(k == KeyEvent.VK_G) GPS(); 
-	}
+
 	
 	public void interact()
 	{
@@ -512,6 +511,16 @@ public class Level1State extends GameState
 				if(player.intersects(activatables.get(i)))
 				{
 					activatables.get(i).interact();
+				}
+			}
+			
+			for(int i = 0; i < allies.size(); i++)
+			{
+				if(player.intersects(allies.get(i)) && allies.get(i).getActivatable())
+				{
+					
+					allies.get(i).interact(player);
+					
 				}
 			}
 		}
@@ -588,6 +597,30 @@ public class Level1State extends GameState
 	{
 //		spawnEnemies();
 		System.out.println("player X: " + player.getx() + ", playerY: " + player.gety());
+	}
+	
+	
+	public void keyPressed(int k)
+	{
+		if(k == KeyEvent.VK_LEFT) player.setLeft(true);
+		if(k == KeyEvent.VK_RIGHT) player.setRight(true);
+		if(k == KeyEvent.VK_DOWN) player.setDown(true);
+		if(k == KeyEvent.VK_UP) player.setUp(true);
+		if(k == KeyEvent.VK_SPACE) player.setJumping(true);
+		if(k == KeyEvent.VK_E) interact();
+		
+		if(k == KeyEvent.VK_A) player.setCastingSmallFireball();
+		if(k == KeyEvent.VK_S) player.setCastingLargeFireball();
+		if(k == KeyEvent.VK_F) player.setPunching();
+		if(k == KeyEvent.VK_D) player.setDashing(true);
+		if(k == KeyEvent.VK_V) player.setSexytime1();
+		if(k == KeyEvent.VK_B) player.setSexytime2();
+		
+		if(k == KeyEvent.VK_P) spawnSlug(player.getx(), player.gety(), player.getFacingRight()); 
+		if(k == KeyEvent.VK_O) spawnSuccubus(player.getx(), player.gety(), player.getFacingRight()); 
+		if(k == KeyEvent.VK_I) spawnWaterfall(player.getx(), player.gety()); 
+		if(k == KeyEvent.VK_U) spawnSummonEffect(player.getx(), player.gety()); 
+		if(k == KeyEvent.VK_G) GPS(); 
 	}
 	
 	public void keyReleased(int k)

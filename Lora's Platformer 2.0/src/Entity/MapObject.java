@@ -54,8 +54,8 @@ public abstract class MapObject
 	protected boolean left;
 	protected boolean right;
 	protected boolean up;
-	protected boolean down;
-	protected boolean jumping;
+	protected boolean down;	
+	protected boolean jumping;	
 	protected boolean falling;
 	protected boolean swimming;
 	
@@ -267,7 +267,11 @@ public abstract class MapObject
 	public void setRight(Boolean b) { right = b; }
 	public void setUp(Boolean b) { up = b; }
 	public void setDown(Boolean b) { down = b; }
-	public void setJumping(Boolean b) { jumping = b; }
+	
+	public void setJumping(Boolean b) 
+	{ 
+		jumping = b; 		
+	}
 	
 	
 	public void draw(java.awt.Graphics2D graphics)

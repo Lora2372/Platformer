@@ -37,11 +37,12 @@ public class Content
 
 	// Foreground
 	public static BufferedImage[][] GameOver				= load("/Foregrounds/GameOver.png", 544, 416);
-	public static BufferedImage[][] ConversationGUI			= load("/Foregrounds/Conversation GUI.png", 572, 138);
+	public static BufferedImage[][] ConversationGUI			= load("/Foregrounds/Conversation GUI.png", 454, 138);
 	
 	// Portraits
 	public static BufferedImage[][] PortraitPlayer			=load("/Foregrounds/Portraits/PortraitPlayer.png", 94, 94);
 	public static BufferedImage[][] PortraitSign			=load("/Foregrounds/Portraits/PortraitSign.png", 94, 94);
+	public static BufferedImage[][] PortraitLiadrin			=load("/Foregrounds/Portraits/PortraitLiadrin.png", 94, 94);
 	
 	
 	public static  void loadContent()
