@@ -106,8 +106,13 @@ public class Level1State extends GameState
 		if(elapsed/1000 > 9)
 		{
 			JukeBox.stop("GameOver");
-			gameStateManager.setState(0);
+			loadMenu();
 		}
+	}
+	
+	public void loadMenu()
+	{
+		gameStateManager.setState(0);
 	}
 	
 	public void checkProjectiles()
@@ -175,6 +180,7 @@ public class Level1State extends GameState
 	{
 		if(!doneInitializing) return;
 		// Update Characters
+		
 		
 		if(gameover)
 		{
@@ -602,6 +608,13 @@ public class Level1State extends GameState
 	
 	public void keyPressed(int k)
 	{
+		if(k == KeyEvent.VK_ESCAPE) 
+		{
+			gameStateManager.paused = !gameStateManager.paused;			
+		}
+		
+		if(gameStateManager.paused) return;
+		
 		if(k == KeyEvent.VK_LEFT) player.setLeft(true);
 		if(k == KeyEvent.VK_RIGHT) player.setRight(true);
 		if(k == KeyEvent.VK_DOWN) player.setDown(true);

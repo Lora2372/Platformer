@@ -1,7 +1,14 @@
 package GameState;
 
+import Audio.JukeBox;
+
 public class GameStateManager 
 {
+	protected PauseState pausestate;
+	protected HelpState helpstate;
+	
+	protected boolean paused;
+	protected boolean options;
 	
 	private GameState[] gameStates;
 	private int currentState;
@@ -12,6 +19,8 @@ public class GameStateManager
 	
 	public GameStateManager() 
 	{
+		pausestate = new PauseState(this);
+		helpstate = new HelpState(this);
 		
 		gameStates = new GameState[NUMGAMESTATES];
 		
@@ -20,10 +29,19 @@ public class GameStateManager
 		
 	}
 	
+	public void pause(boolean b) { paused = b; } 
+	public void options(boolean b) { options = b; }
+	
 	private void loadState(int state) 
 	{
 		if(state == MENUSTATE)
+		{
+			JukeBox.stop("Battle9");
+			
+			
 			gameStates[state] = new MenuState(this);
+
+		}
 		if(state == LEVEL1STATE)
 			gameStates[state] = new Level1State(this);
 	}
@@ -43,19 +61,43 @@ public class GameStateManager
 	public void update() 
 	{
 		try {
+			if(paused)
+			{
+				pausestate.update();
+				
+				if(options){ helpstate.update(); }
+				return;
+			}
+			
+
+			
 			gameStates[currentState].update();
 		} catch(Exception e) {}
 	}
 	
-	public void draw(java.awt.Graphics2D g) 
+	public void draw(java.awt.Graphics2D graphics) 
 	{
-		try {
-			gameStates[currentState].draw(g);
+		try 
+		{
+			if(paused)
+			{
+				pausestate.draw(graphics);
+				if(options) helpstate.draw(graphics);
+				return;
+			}
+			gameStates[currentState].draw(graphics);
 		} catch(Exception e) {}
 	}
 	
 	public void keyPressed(int k) 
 	{
+		if(paused)
+		{
+			if(!options)pausestate.keyPressed(k);
+			else helpstate.keyPressed(k);
+			
+			return;		
+		}
 		gameStates[currentState].keyPressed(k);
 	}
 	
