@@ -10,10 +10,10 @@ import Entity.NPC.Activatable.*;
 import TileMap.Background;
 import TileMap.GameOver;
 
-public class level1state extends MainMap
+public class Level1state extends MainMap
 {
 
-	public level1state(GameStateManager gameStatemanager) 
+	public Level1state(GameStateManager gameStatemanager) 
 	{
 		super(gameStatemanager);
 	
