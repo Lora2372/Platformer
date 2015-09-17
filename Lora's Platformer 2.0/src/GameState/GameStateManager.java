@@ -43,7 +43,7 @@ public class GameStateManager
 
 		}
 		if(state == LEVEL1STATE)
-			gameStates[state] = new Level1state(this);
+			gameStates[state] = new Level1State(this);
 		
 		if(state == LEVEL2STATE)
 			gameStates[state] = new CaveTest(this);
