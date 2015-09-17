@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import Audio.JukeBox;
 import Entity.Doodad.Activatable.*;
 import Entity.NPC.Activatable.*;
 import TileMap.Background;

@@ -5,7 +5,6 @@ import TileMap.TileMap;
 import Audio.JukeBox;
 import Entity.Character;
 import Entity.Doodad.SummoningEffect;
-import Entity.Player.Conversation;
 import Entity.Player.Player;
 import GameState.MainMap;
 import Main.Content;
@@ -91,9 +90,9 @@ public class LiadrinFirstEncounter extends Character
 		
 		conversation = new String[]
 		{
-			"Greetings, you must be " + player.getName(),
+			"Greetings, you must be " + player.getName() + ".",
 			
-			"How did you know that",
+			"How did you know that?",
 			
 			"I'm Liadrin, a pleasure.\n"
 			+ "I've been expecting your arrival for some time now.",
@@ -102,7 +101,7 @@ public class LiadrinFirstEncounter extends Character
 			
 			"Why yes, I won't get into any details now but,\n"
 			+ "I'm supposed to tell you that the way forward\n"
-			+ "is past the depths of the earth.",
+			+ "is through the depths of the earth.",
 			
 			"Thank you, I think...",
 			

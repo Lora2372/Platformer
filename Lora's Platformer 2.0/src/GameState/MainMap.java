@@ -125,7 +125,11 @@ public class MainMap extends GameState
 		}
 	}
 	
-	
+	public void addEnemy(Character enemy)
+	{
+		enemies.add(enemy);
+		characterList.add(enemy);
+	}
 	
 	public void addEffect(Doodad effect)
 	{
@@ -152,6 +156,7 @@ public class MainMap extends GameState
 		if(!doneInitializing) return;
 		// Update Characters
 		
+
 		
 		if(gameover)
 		{
@@ -173,6 +178,7 @@ public class MainMap extends GameState
 			}
 		}
 		checkProjectiles();
+		
 		
 		if(characterList != null)
 		{	
@@ -362,6 +368,14 @@ public class MainMap extends GameState
 		
 	}
 	
+	public Succubus createNewSuccubus(String name, double x, double y, boolean facingRight)
+	{
+		Succubus succubus = new Succubus(tileMap, facingRight, false, false, false, name, x, y, this);
+		characterList.add(succubus);
+		enemies.add(succubus);
+		return succubus;
+	}
+	
 	public void spawnSuccubus(double x, double y, boolean facingRight)
 	{
 		String[] succubiNames = new String[]
@@ -517,6 +531,8 @@ public class MainMap extends GameState
 		if(k == KeyEvent.VK_D) player.setDashing(true);
 		if(k == KeyEvent.VK_V) player.setSexytime1();
 		if(k == KeyEvent.VK_B) player.setSexytime2();
+		
+		if( k == KeyEvent.VK_M)player.setPosition(player.getx() + 200, player.gety()); 
 		
 		if(k == KeyEvent.VK_P) spawnSlug(player.getx(), player.gety(), player.getFacingRight()); 
 		if(k == KeyEvent.VK_O) spawnSuccubus(player.getx(), player.gety(), player.getFacingRight()); 

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import TileMap.TileMap;
 import Entity.Character;
 import GameState.MainMap;
+import Main.Content;
 
 public class Succubus extends Character
 {
@@ -38,7 +39,7 @@ public class Succubus extends Character
 				0.6, 	 															// stopJumpSpeed
 				facingRight,														// facingRight
 				true,  																// inControl
-				5,		 															// health
+				50,		 															// health
 				5, 		 															//maxHealth
 				30,		 															// healthCounter
 				100,	 																// stamina
@@ -76,6 +77,8 @@ public class Succubus extends Character
 		timer = 0;
 		cooldown = 300;
 		
+		portrait = Content.PortraitLiadrin[0];
+		
 		
 		
 	}
@@ -104,6 +107,8 @@ public class Succubus extends Character
 //			}
 //			
 //		}
+		
+		if(!inControl) return;
 		
 		timer++;
 		

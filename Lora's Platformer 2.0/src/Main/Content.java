@@ -68,6 +68,8 @@ public class Content
 		JukeBox.load("/Sound/Music/MusicMenu.mp3", "Menu");
 		JukeBox.load("/Sound/Music/MusicLevel1.mp3", "Level1");
 		JukeBox.load("/Sound/Music/MusicDungeon1.mp3", "Dungeon1");
+		JukeBox.load("/Sound/Music/MysteriousConversation.mp3", "MysteriousConversation");
+		JukeBox.load("/Sound/Music/MysteriousBattle.mp3", "MysteriousBattle");
 		
 		JukeBox.load("/Sound/Music/GameOver.mp3",  "GameOver");
 		

@@ -1,7 +1,6 @@
 package Entity.Doodad.Activatable;
 
 import TileMap.TileMap;
-import Audio.JukeBox;
 import Entity.Doodad.Doodad;
 import Entity.Player.Player;
 import GameState.GameStateManager;

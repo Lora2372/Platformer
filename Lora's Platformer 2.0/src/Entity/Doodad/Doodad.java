@@ -121,6 +121,8 @@ public class Doodad extends MapObject
 	
 	public void activateSound() { }
 	
+	public boolean getActive() { return active; }
+	
 	public void update()
 	{
 		

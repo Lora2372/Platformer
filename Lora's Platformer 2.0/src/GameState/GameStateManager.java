@@ -46,7 +46,7 @@ public class GameStateManager
 			gameStates[state] = new Level1State(this);
 		
 		if(state == LEVEL2STATE)
-			gameStates[state] = new CaveTest(this);
+			gameStates[state] = new MysteriousDungeon(this);
 	}
 	
 	private void unloadState(int state) 
