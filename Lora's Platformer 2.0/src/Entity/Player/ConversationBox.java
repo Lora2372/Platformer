@@ -1,5 +1,6 @@
 package Entity.Player;
 
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
@@ -125,6 +126,8 @@ public class ConversationBox
 				(int) (locationY + 35),
 				null
 			);
+		
+		graphics.setFont(new Font("Arial", Font.PLAIN, 14));
 		
 		graphics.drawString(tempName, (int)locationX + 21, (int)locationY + 25);		
 		

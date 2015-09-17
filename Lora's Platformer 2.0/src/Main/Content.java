@@ -44,20 +44,33 @@ public class Content
 	public static BufferedImage[][] PortraitSign			=load("/Foregrounds/Portraits/PortraitSign.png", 94, 94);
 	public static BufferedImage[][] PortraitLiadrin			=load("/Foregrounds/Portraits/PortraitLiadrin.png", 94, 94);
 	
+	public static String[] mapMusic = new String[]
+	{
+		"Menu",
+		"Level1",
+		"Dungeon1"
+	};
 	
 	public static  void loadContent()
 	{
 		System.out.println("Loading sound files");
 		
 		JukeBox.load("/Sound/jump.mp3", "jump");
+		
 		JukeBox.load("/Sound/FireballLargeLaunch.mp3", "FireballLargeLaunch");
-		JukeBox.load("/Sound/FireballSmallLaunch.mp3", "FireballSmallLaunch");				
+		JukeBox.load("/Sound/FireballSmallLaunch.mp3", "FireballSmallLaunch");	
+		
 		JukeBox.load("/Sound/Teleport.mp3", "teleport");
 		
 		JukeBox.load("/Sound/FireballLargeImpact.mp3", "FireballLargeImpact");
 		JukeBox.load("/Sound/FireballSmallImpact.mp3", "FireballSmallImpact");
-		JukeBox.load("/Sound/Music/Battle9.mp3", "Battle9");
+		
+		JukeBox.load("/Sound/Music/MusicMenu.mp3", "Menu");
+		JukeBox.load("/Sound/Music/MusicLevel1.mp3", "Level1");
+		JukeBox.load("/Sound/Music/MusicDungeon1.mp3", "Dungeon1");
+		
 		JukeBox.load("/Sound/Music/GameOver.mp3",  "GameOver");
+		
 		JukeBox.load("/Sound/Doodads/OpenChestUncommon.mp3", "OpenChestUncommon");
 		JukeBox.load("/Sound/Doodads/OpenChestCommon.mp3", "OpenChestCommon");
 		JukeBox.load("/Sound/Doodads/OpenChestRare.mp3", "OpenChestRare");

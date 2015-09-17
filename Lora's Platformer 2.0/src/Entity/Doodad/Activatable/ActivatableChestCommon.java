@@ -29,8 +29,6 @@ public class ActivatableChestCommon extends Doodad
 				true,
 				false
 				);
-		System.out.println("New chest at: " + spawnX + ", " + spawnY);
-
 	}
 	
 	public void activateSound() 

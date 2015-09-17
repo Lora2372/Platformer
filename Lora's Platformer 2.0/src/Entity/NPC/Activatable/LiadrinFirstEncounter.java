@@ -7,7 +7,7 @@ import Entity.Character;
 import Entity.Doodad.SummoningEffect;
 import Entity.Player.Conversation;
 import Entity.Player.Player;
-import GameState.Level1State;
+import GameState.MainMap;
 import Main.Content;
 public class LiadrinFirstEncounter extends Character
 {
@@ -28,7 +28,7 @@ public class LiadrinFirstEncounter extends Character
 			String name,
 			double spawnX,
 			double spawnY,
-			Level1State level1state
+			MainMap level1state
 			) 
 	{
 		super(

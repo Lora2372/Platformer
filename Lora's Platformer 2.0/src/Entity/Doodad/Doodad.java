@@ -10,6 +10,7 @@ import Main.Content;
 import TileMap.TileMap;
 import Entity.Animation;
 import Entity.MapObject;
+import Entity.Player.Player;
 
 public class Doodad extends MapObject
 {
@@ -113,7 +114,7 @@ public class Doodad extends MapObject
 	
 	public BufferedImage[] getPortrait() { return portrait; }
 	
-	public void interact()
+	public void interact(Player player)
 	{
 		if(!active) active = true;
 	}

@@ -2,7 +2,7 @@ package Entity.Player;
 
 
 import Entity.Character;
-import GameState.Level1State;
+import GameState.MainMap;
 import TileMap.TileMap;
 
 public class Player extends Character
@@ -14,7 +14,7 @@ public class Player extends Character
 	// Animation actions, these are enums similar to the GameState, we use them to determine the index of the sprite animation
 	
 	// Constructor
-	public Player(TileMap tileMap, String name, double spawnX, double spawnY, Level1State level1state)
+	public Player(TileMap tileMap, String name, double spawnX, double spawnY, MainMap level1state)
 	{
 		super(
 				tileMap,  															// TileMap

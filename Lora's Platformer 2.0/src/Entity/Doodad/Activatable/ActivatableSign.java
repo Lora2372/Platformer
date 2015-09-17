@@ -50,7 +50,6 @@ public class ActivatableSign extends Doodad
 		
 		this.whoTalks = whoTalks;
 		
-		this.player = player;
 	}
 	
 	public void startConversation()
@@ -61,10 +60,17 @@ public class ActivatableSign extends Doodad
 		player.getConversationBox().startConversation(player, null, this, conversation, whoTalks);
 	}
 	
-	public void interact()
+	public void interact(Player player)
 	{
-		if(!player.getConversationBox().inConversation())startConversation();
-		else player.getConversationBox().progressConversation();
+		this.player = player;
+		
+		if(player == null)
+			System.out.println("player is null");
+		
+		if(!player.getConversationBox().inConversation()) 
+			startConversation();
+		else 
+			player.getConversationBox().progressConversation();
 		
 		if(player.getConversationBox().getConversationTracker() >= conversation.length)
 		{
@@ -78,7 +84,7 @@ public class ActivatableSign extends Doodad
 	
 	public void activateSound() 
 	{ 
-		JukeBox.play("OpenChestCommon");
+//		JukeBox.play("OpenChestCommon");
 	}
 	
 }

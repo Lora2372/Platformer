@@ -52,7 +52,6 @@ public class HUD
 	public void draw(Graphics2D g)
 	{
 		
-		
 		double t1 = player.getHealth();
 		double t2 = player.getMaxHealth();
 		

@@ -1,6 +1,7 @@
 package GameState;
 
 import Audio.JukeBox;
+import Main.Content;
 
 public class GameStateManager 
 {
@@ -13,9 +14,10 @@ public class GameStateManager
 	private GameState[] gameStates;
 	private int currentState;
 	
-	public static final int NUMGAMESTATES = 2;
+	public static final int NUMGAMESTATES = 3;
 	public static final int MENUSTATE = 0;
 	public static final int LEVEL1STATE = 1;
+	public static final int LEVEL2STATE = 2;
 	
 	public GameStateManager() 
 	{
@@ -34,20 +36,22 @@ public class GameStateManager
 	
 	private void loadState(int state) 
 	{
+		JukeBox.loop(Content.mapMusic[state]);
 		if(state == MENUSTATE)
-		{
-			JukeBox.stop("Battle9");
-			
-			
+		{				
 			gameStates[state] = new MenuState(this);
 
 		}
 		if(state == LEVEL1STATE)
-			gameStates[state] = new Level1State(this);
+			gameStates[state] = new level1state(this);
+		
+		if(state == LEVEL2STATE)
+			gameStates[state] = new CaveTest(this);
 	}
 	
 	private void unloadState(int state) 
 	{
+		JukeBox.stop(Content.mapMusic[state]);
 		gameStates[state] = null;
 	}
 	

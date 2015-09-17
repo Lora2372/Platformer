@@ -29,7 +29,6 @@ public class ActivatableChestUncommon extends Doodad
 				true,
 				false
 				);
-		System.out.println("New chest at: " + spawnX + ", " + spawnY);
 
 	}
 	

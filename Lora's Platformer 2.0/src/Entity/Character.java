@@ -15,7 +15,7 @@ import javax.imageio.ImageIO;
 import Entity.Doodad.SummoningEffect;
 import Entity.Player.ConversationBox;
 import Entity.Player.Player;
-import GameState.Level1State;
+import GameState.MainMap;
 import Main.Content;
 import TileMap.TileMap;
 
@@ -24,7 +24,7 @@ import java.awt.image.BufferedImage;
 
 public class Character extends MapObject
 {
-	protected Level1State level1state;
+	protected MainMap level1state;
 	protected ConversationBox conversationbox;
 	
 	// Character stuff
@@ -196,7 +196,7 @@ public class Character extends MapObject
 			String name,
 			double spawnX,
 			double spawnY,
-			Level1State level1state
+			MainMap level1state
 			)
 	{
 		super(tileMap);		

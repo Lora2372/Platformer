@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import TileMap.TileMap;
 import Entity.Character;
-import GameState.Level1State;
+import GameState.MainMap;
 
 public class Slug extends Character
 {
@@ -20,7 +20,7 @@ public class Slug extends Character
 			String name,
 			double spawnX,
 			double spawnY,
-			Level1State level1state
+			MainMap level1state
 			) 
 	{
 		super(
