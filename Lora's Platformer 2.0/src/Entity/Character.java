@@ -24,11 +24,12 @@ import java.awt.image.BufferedImage;
 
 public class Character extends MapObject
 {
-	protected MainMap level1state;
+	protected MainMap mainMap;
 	protected ConversationBox conversationbox;
 	
 	// Character stuff
 	protected String name;
+	protected boolean player;
 	
 	protected BufferedImage[] portrait;
 	
@@ -196,7 +197,7 @@ public class Character extends MapObject
 			String name,
 			double spawnX,
 			double spawnY,
-			MainMap level1state
+			MainMap mainMap
 			)
 	{
 		super(tileMap);		
@@ -243,7 +244,7 @@ public class Character extends MapObject
 		this.name = name;
 		this.spawnX = spawnX;
 		this.spawnY = spawnY;
-		this.level1state = level1state;
+		this.mainMap = mainMap;
 		
 		
 		healthCounter = 0;
@@ -294,6 +295,8 @@ public class Character extends MapObject
 	}
 	
 	public BufferedImage[] getPortrait() { return portrait;}
+	
+	public boolean isPlayer() { return player; }
 	
 	public int getHealth() { return health; }
 	public int getMaxHealth() { return maxHealth; }
@@ -437,9 +440,35 @@ public class Character extends MapObject
 		// Cannot move while attacking
 		//Might implement this later
 		
+		if(flying)
+		{
+			if(down)
+			{
+				directionY += moveSpeed;
+				if(directionY > maxSpeed) directionY = maxSpeed; 
+			}
+			else if(up)
+			{
+				directionY -= moveSpeed;
+				if(directionY*-1 > maxSpeed) directionY = maxSpeed*-1;
+			}
+			
+			if(right)
+			{
+				directionX += moveSpeed;
+				if(directionX > maxSpeed) directionX = maxSpeed;
+			}
+			else if(left)
+			{
+				directionX -= moveSpeed;
+				if(directionX*-1 > maxSpeed) directionX = maxSpeed*-1;
+			}
+			
+		}
+		
 		
 		// Jumping
-		if(jumping && !falling && inControl)
+		if(jumping && !falling && inControl && !flying)
 		{
 			// I'll leave the jump sound commented out until we find a better one.
 //			JukeBox.play("jump");			
@@ -449,7 +478,7 @@ public class Character extends MapObject
 		
 		// Falling
 //		System.out.println("character name: " + getName() + ", falling: " + falling);
-		if(falling || swimming)
+		if( (falling || swimming) && !flying)
 		{
 			if(directionY > 0 && gliding) directionY += fallSpeed * 0.1;
 			else directionY += fallSpeed;
@@ -740,7 +769,7 @@ public class Character extends MapObject
 				
 				FireballSmall fireball = new FireballSmall(tileMap, facingRight, up, down, friendly, smallFireballDamage);
 				fireball.setPosition(locationX, locationY - 20);
-				level1state.addProjectile(fireball);
+				mainMap.addProjectile(fireball);
 				
 				currentAction = animationState[9];
 				animation.setFrames(sprites.get(animationState[9]));
@@ -781,7 +810,7 @@ public class Character extends MapObject
 				
 				FireballLarge fireball = new FireballLarge(tileMap, facingRight, up, down, friendly, largeFireballDamage);
 				fireball.setPosition(locationX, locationY);
-				level1state.addProjectile(fireball);
+				mainMap.addProjectile(fireball);
 				
 				currentAction = animationState[11];
 				animation.setFrames(sprites.get(animationState[11]));

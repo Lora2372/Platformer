@@ -78,9 +78,6 @@ public class Succubus extends Character
 		cooldown = 300;
 		
 		portrait = Content.PortraitLiadrin[0];
-		
-		
-		
 	}
 	public void updateAI(ArrayList<Character> characterList)
 	{

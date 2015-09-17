@@ -360,21 +360,9 @@ public class MainMap extends GameState
 		{
 			hud.draw(graphics);			
 		}
-		
-//		if(ConversationBox.inConversation())
-//		{
-//			ConversationBox.draw(graphics); 
-//		}
-		
 	}
 	
-	public Succubus createNewSuccubus(String name, double x, double y, boolean facingRight)
-	{
-		Succubus succubus = new Succubus(tileMap, facingRight, false, false, false, name, x, y, this);
-		characterList.add(succubus);
-		enemies.add(succubus);
-		return succubus;
-	}
+	
 	
 	public void spawnSuccubus(double x, double y, boolean facingRight)
 	{

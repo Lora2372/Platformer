@@ -3,11 +3,10 @@ package Entity.Doodad.Activatable;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-
 import TileMap.TileMap;
 import Audio.JukeBox;
 import Entity.Doodad.Doodad;
-import Entity.Enemies.Succubus;
+import Entity.Enemies.Fiona;
 import Entity.Player.Player;
 import GameState.GameStateManager;
 import GameState.MysteriousDungeon;
@@ -20,7 +19,7 @@ public class ActivatableShrineMysteriousDungeon extends Doodad
 	
 	protected boolean startConveration;
 	
-	protected Succubus succubus;
+	protected Fiona fiona;
 	
 	int whoTalks[] = new int[]
 	{
@@ -46,7 +45,7 @@ public class ActivatableShrineMysteriousDungeon extends Doodad
 			MysteriousDungeon mysteriousDungeon,
 			double spawnX,
 			double spawnY,
-			Succubus succubus
+			Fiona fiona
 			) 
 	{
 		super(
@@ -67,7 +66,7 @@ public class ActivatableShrineMysteriousDungeon extends Doodad
 				false
 				);
 		
-		this.succubus = succubus;
+		this.fiona = fiona;
 		this.gameStateManager = gameStateManager;
 	}
 	
@@ -76,9 +75,9 @@ public class ActivatableShrineMysteriousDungeon extends Doodad
 	public void startConversation(Player player)
 	{
 		System.out.println("Engaging conversation");
-		succubus.setPosition(player.getx() + 200, player.gety() - 10);
-		player.getConversationBox().startConversation(player, succubus, null, conversation, whoTalks);
-		
+		fiona.setPosition(player.getx() + 200, player.gety() - 10);
+		player.getConversationBox().startConversation(player, fiona, null, conversation, whoTalks);
+		fiona.setHidden(false);
 		
 		try
 		{

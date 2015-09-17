@@ -3,10 +3,10 @@ package GameState;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.JOptionPane;
 
 import Audio.JukeBox;
 import Entity.Doodad.Activatable.ActivatableShrineMysteriousDungeon;
+import Entity.Enemies.Fiona;
 import Entity.Enemies.Succubus;
 import TileMap.Background;
 import TileMap.GameOver;
@@ -17,7 +17,7 @@ public class MysteriousDungeon extends MainMap
 	
 	protected ActivatableShrineMysteriousDungeon activatableShrine;
 	
-	protected Succubus temporaryBoss;
+	protected Fiona fiona;
 	
 	protected boolean bossEngaged;
 	protected boolean bossDefeated;
@@ -56,14 +56,18 @@ public class MysteriousDungeon extends MainMap
 		
 		spawnSlug(2551, 780, false);
 		
-		temporaryBoss = createNewSuccubus("Fiona", player.getx() + 200, player.gety() - 10, false);
 		
-		activatableShrine = new ActivatableShrineMysteriousDungeon(tileMap, gameStatemanager, this, 3840, 690, temporaryBoss);
+		fiona = new Fiona(tileMap,false,false,false,false, "Fiona", player.getx() + 200, player.gety(), this);
+		enemies.add(fiona);
+		characterList.add(fiona);
+		fiona.setHidden(true);
+		
+		activatableShrine = new ActivatableShrineMysteriousDungeon(tileMap, gameStatemanager, this, 3840, 690, fiona);
 		activatables.add(activatableShrine);
 		stuff.add(activatableShrine);
 		
 		
-		temporaryBoss.inControl(false);
+		fiona.inControl(false);
 		
 		doneInitializing = true;
 		bossEngaged = false;
@@ -76,7 +80,7 @@ public class MysteriousDungeon extends MainMap
 		
 		if(bossEngaged)
 		{
-			if(temporaryBoss.isDead())
+			if(fiona.isDead())
 			{
 				bossEngaged = false;
 				bossDefeated = true;
@@ -94,7 +98,7 @@ public class MysteriousDungeon extends MainMap
 			JukeBox.stop("MysteriousConversation");
 			JukeBox.loop("MysteriousBattle");
 			
-			temporaryBoss.inControl(true);
+			fiona.inControl(true);
 		}
 		
 		

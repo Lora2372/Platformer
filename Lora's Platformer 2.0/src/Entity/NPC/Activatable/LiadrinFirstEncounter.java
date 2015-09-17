@@ -27,7 +27,7 @@ public class LiadrinFirstEncounter extends Character
 			String name,
 			double spawnX,
 			double spawnY,
-			MainMap level1state
+			MainMap mainMap
 			) 
 	{
 		super(
@@ -77,7 +77,7 @@ public class LiadrinFirstEncounter extends Character
 				name,
 				spawnX,
 				spawnY,
-				level1state
+				mainMap
 				);
 		
 		active = false;
@@ -140,7 +140,7 @@ public class LiadrinFirstEncounter extends Character
 			player.getConversationBox().endConversation();
 			
 			summoningEffect = new SummoningEffect(tileMap, locationX, locationY);
-			level1state.addEffect(summoningEffect);
+			mainMap.addEffect(summoningEffect);
 			JukeBox.play("teleport");
 			
 		}

@@ -13,6 +13,7 @@ public abstract class MapObject
 	protected double mapPositionX;
 	protected double mapPositionY;
 	
+	protected boolean hidden;
 	
 	
 	// Position and vector
@@ -72,6 +73,8 @@ public abstract class MapObject
 	protected boolean untouchable;
 	protected boolean invulnerable;
 	
+	
+	public void setHidden(boolean b) { hidden = b; }
 	
 	// Constructor
 	public MapObject(TileMap tileMap)
@@ -278,6 +281,7 @@ public abstract class MapObject
 	{
 		setMapPosition();
 		
+		if(hidden) return;
 		
 		if(facingRight)
 		{

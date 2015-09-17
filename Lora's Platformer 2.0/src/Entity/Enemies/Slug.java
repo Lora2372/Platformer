@@ -20,7 +20,7 @@ public class Slug extends Character
 			String name,
 			double spawnX,
 			double spawnY,
-			MainMap level1state
+			MainMap mainMap
 			) 
 	{
 		super(
@@ -70,7 +70,7 @@ public class Slug extends Character
 				name,
 				spawnX,
 				spawnY,
-				level1state
+				mainMap
 				
 				);
 		

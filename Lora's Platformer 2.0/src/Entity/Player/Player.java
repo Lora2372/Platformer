@@ -66,7 +66,7 @@ public class Player extends Character
 				level1state
 				
 				);
-		
+		player = true;
 		conversationbox = new ConversationBox(this);
 
 		
