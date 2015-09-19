@@ -15,6 +15,7 @@ public class Content
 	
 	// Projectiles
 	public static BufferedImage[][] FireballLarge 			= load("/Sprites/Effects/FireballLarge.png", 60, 60);
+	public static BufferedImage[][] FireballMedium			= load("/Sprites/Effects/FireballMedium.png", 60, 60);
 	public static BufferedImage[][] FireballSmall 			= load("/Sprites/Effects/FireballSmall.png", 60, 60);
 	public static BufferedImage[][] FireballSwirling 		= load("/Sprites/Effects/FireballSwirling.png", 60, 60);
 	public static BufferedImage[][] FireballDouble 			= load("/Sprites/Effects/FireballDouble.png", 60, 60);

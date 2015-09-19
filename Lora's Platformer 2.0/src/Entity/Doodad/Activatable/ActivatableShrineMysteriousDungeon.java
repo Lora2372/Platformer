@@ -75,7 +75,7 @@ public class ActivatableShrineMysteriousDungeon extends Doodad
 	public void startConversation(Player player)
 	{
 		System.out.println("Engaging conversation");
-		fiona.setPosition(player.getx() + 200, player.gety() - 10);
+		fiona.setPosition(player.getx() + 200, player.gety() - 300);
 		player.getConversationBox().startConversation(player, fiona, null, conversation, whoTalks);
 		fiona.setHidden(false);
 		

@@ -5,7 +5,6 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import Audio.JukeBox;
-
 import Main.Content;
 import TileMap.TileMap;
 
@@ -23,15 +22,18 @@ public class Projectile extends MapObject
 	protected int damage;
 	protected int explosionRadius;
 	protected String explosionSound;
+	
+	protected double aim;
 		
 	private boolean exploding;
 	
 	public Projectile(
 			TileMap tileMap, 
-			boolean right, 
-			boolean up, 
-			boolean down, 
-			boolean friendly, 
+			boolean right,
+			boolean up,
+			boolean down,
+			double aim,
+			boolean friendly,
 			int projectileWidth, 
 			int projectileHeight,
 			int explosionWidth,
@@ -62,12 +64,18 @@ public class Projectile extends MapObject
 		this.explosionSound = explosionSound;
 		this.damage = damage;
 		
+		this.aim = aim;
 		
-		if(right) directionX = this.moveSpeed;
-		else directionX = -this.moveSpeed;
+		System.out.println("aim: " + aim + "\ndirectionX: " + Math.cos(aim) + "\ndirectionY: " + Math.sin(aim));
 		
-		if(down) directionY = this.moveSpeed;
-		if(up) directionY = -this.moveSpeed;
+		this.directionX = Math.cos(aim) * 3;
+		this.directionY = Math.sin(aim) * 3;
+		
+//		if(right) directionX = this.moveSpeed;
+//		else directionX = -this.moveSpeed;
+//		
+//		if(down) directionY = this.moveSpeed;
+//		if(up) directionY = -this.moveSpeed;
 		
 		
 		hit = false;		
@@ -75,39 +83,13 @@ public class Projectile extends MapObject
 		// Load sprites
 		
 		
-		sprites = Content.FireballLarge[0];
+		setProjectile();
 		animation.setFrames(sprites);		
 		animation.setDelay(70);
-		
-//		try
-//		{
-//			BufferedImage spritesheet = ImageIO.read(
-//				getClass().getResourceAsStream(
-//					this.projectilePath
-//				)
-//			);
-//			
-//			sprites = new BufferedImage[projectileParts];
-//			for(int i = 0; i  < sprites.length; i++)
-//			{
-//				sprites[i] = spritesheet.getSubimage(
-//						i * width,  
-//						0,  
-//						width,  
-//						height
-//					);
-//			}
-//			
-//			animation = new Animation();
-//			animation.setFrames(sprites);
-//			animation.setDelay(70);
-//			
-//		}
-//		catch(Exception e)
-//		{
-//			e.printStackTrace();
-//		}		
+			
 	}
+	
+	public void setProjectile() { }
 	
 	public boolean getFriendly() { return friendly; }
 	public void setFriendly(boolean b) { friendly = b;};

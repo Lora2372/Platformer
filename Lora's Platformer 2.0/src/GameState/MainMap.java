@@ -521,13 +521,14 @@ public class MainMap extends GameState
 		if(k == KeyEvent.VK_B) player.setSexytime2();
 		
 		if( k == KeyEvent.VK_M)player.setPosition(player.getx() + 200, player.gety()); 
-		
+
 		if(k == KeyEvent.VK_P) spawnSlug(player.getx(), player.gety(), player.getFacingRight()); 
 		if(k == KeyEvent.VK_O) spawnSuccubus(player.getx(), player.gety(), player.getFacingRight()); 
 		if(k == KeyEvent.VK_I) spawnWaterfall(player.getx(), player.gety()); 
 		if(k == KeyEvent.VK_U) spawnSummonEffect(player.getx(), player.gety()); 
 		if(k == KeyEvent.VK_G) GPS(); 
 	}
+	
 	
 	public void keyReleased(int k)
 	{

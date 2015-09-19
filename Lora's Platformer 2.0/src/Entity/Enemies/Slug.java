@@ -117,7 +117,7 @@ public class Slug extends Character
 			{
 				timer = 0;
 //				System.out.println("FIRE THE FIREBALL!");
-				castingSmallFireball = true;
+				fireballSmallCasting = true;
 			}
 		}
 		

@@ -8,10 +8,14 @@ import java.util.ArrayList;
 
 
 
+
+
+
 import Audio.JukeBox;
 
 import javax.imageio.ImageIO;
 
+import Entity.Doodad.FireballMediumChargeUp;
 import Entity.Doodad.SummoningEffect;
 import Entity.Player.ConversationBox;
 import Entity.Player.Player;
@@ -35,6 +39,8 @@ public class Character extends MapObject
 	
 	protected double spawnX;
 	protected double spawnY;
+	
+	protected double aim;
 	
 	protected int health;
 	protected int maxHealth;
@@ -74,20 +80,28 @@ public class Character extends MapObject
 	protected double saveFallSpeed;
 	
 	// Small fireball
-	protected boolean castingSmallFireball;
-	protected boolean doneCastingSmallFireball;
-	protected boolean holdingSmallFireball;
+	protected boolean fireballSmallCasting;
+	protected boolean fireballSmallDoneCasting;
+	protected boolean fireballSmallHolding;
 	
-	protected int smallFireballManaCost;
-	protected int smallFireballDamage;
+	protected int fireballSmallManaCost;
+	protected int fireballSmallDamage;
+	
+	// Medium fireabll
+	protected boolean fireballMediumCasting;
+	protected boolean fireballMediumDoneCasting;
+	protected boolean fireballMediumHolding;
+	
+	protected int fireballMediumManaCost;
+	protected int fireballMediumDamage;
 	
 	// Large fireball
-	protected boolean castingLargeFireball;
-	protected boolean doneCastingLargeFireball;
-	protected boolean holdingLargeFireball;
+	protected boolean fireballLargeCasting;
+	protected boolean fireballLargeDoneCasting;
+	protected boolean fireballLargeHolding;
 	
-	protected int largeFireballManaCost;
-	protected int largeFireballDamage;
+	protected int fireballLargeManaCost;
+	protected int fireballLargeDamage;
 	
 	// Punch
 	protected boolean startPunch;
@@ -182,10 +196,10 @@ public class Character extends MapObject
 			int mana, 
 			int maxMana,
 			int manaRegen,
-			int smallFireballManaCost,
-			int smallFireballDamage,			
-			int largeFireballManaCost,
-			int largeFireballDamage,					
+			int fireballSmallManaCost,
+			int fireballSmallDamage,			
+			int fireballLargeManaCost,
+			int fireballLargeDamage,					
 			String spritePath,
 			int[] animationState,
 			int[] numFrames,
@@ -231,10 +245,10 @@ public class Character extends MapObject
 		this.mana = mana;
 		this.maxMana = maxMana;
 		this.manaRegen = manaRegen;
-		this.smallFireballManaCost = smallFireballManaCost;
-		this.smallFireballDamage = smallFireballDamage;
-		this.largeFireballManaCost = largeFireballManaCost;
-		this.largeFireballDamage = largeFireballDamage;
+		this.fireballSmallManaCost = fireballSmallManaCost;
+		this.fireballSmallDamage = fireballSmallDamage;
+		this.fireballLargeManaCost = fireballLargeManaCost;
+		this.fireballLargeDamage = fireballLargeDamage;
 		this.spritePath = spritePath;
 		this.animationState = animationState;
 		this.numFrames = numFrames;
@@ -294,6 +308,43 @@ public class Character extends MapObject
 		animation.setDelay(400);
 	}
 	
+	public void calculateAim(Character character)
+	{
+		if(character == null)
+		{
+			if(facingRight)
+			{
+				if(up)
+					aim = 45;
+				else if(down)
+					aim = 315;
+				else
+					aim = 0;
+			}
+			else
+			{
+				if(up)
+					aim = 135;
+				else if(down)
+					aim = 225;
+				else
+					aim = 180;
+			}
+		}
+		else
+		{
+			
+			System.out.println("Character.locationY: " + character.locationY + "\nlocationY: " + locationY);
+			
+//			aim = Math.toDegrees(Math.atan2(character.locationY - locationY, character.locationX - locationX));
+//			if(aim < 0)
+//				aim += 360;
+			
+			aim = Math.atan2(character.locationY - locationY, character.locationX - locationX);
+			
+		}
+	}
+	
 	public BufferedImage[] getPortrait() { return portrait;}
 	
 	public boolean isPlayer() { return player; }
@@ -340,23 +391,23 @@ public class Character extends MapObject
 	
 	public void setCastingSmallFireball()
 	{
-		if(mana > smallFireballManaCost && inControl && !holdingSmallFireball && inControl)
+		if(mana > fireballSmallManaCost && inControl && !fireballSmallHolding && inControl)
 		{
-			castingSmallFireball = true;
+			fireballSmallCasting = true;
 			inControl = false;			
 		}
 	}
-	public void releaseSmallFireball() { holdingSmallFireball = false; }
+	public void releaseSmallFireball() { fireballSmallHolding = false; }
 	
 	public void setCastingLargeFireball()
 	{
-		if(mana > largeFireballManaCost && inControl && !holdingLargeFireball && inControl)
+		if(mana > fireballLargeManaCost && inControl && !fireballLargeHolding && inControl)
 		{
-			castingLargeFireball = true;
+			fireballLargeCasting = true;
 			inControl = false;			
 		}
 	}
-	public void releaseLargeFireball() { holdingLargeFireball = false; }
+	public void releaseLargeFireball() { fireballLargeHolding = false; }
 	
 	public boolean getEndPunch() { return endPunch; }
 	
@@ -749,7 +800,7 @@ public class Character extends MapObject
 		//********************************************************************************
 		//*Small fireball                                                                *
 		//********************************************************************************	
-		else if(castingSmallFireball)
+		else if(fireballSmallCasting)
 		{
 			
 			if(currentAction != animationState[8])
@@ -757,17 +808,19 @@ public class Character extends MapObject
 				currentAction = animationState[8];
 				animation.setFrames(sprites.get(animationState[8]));
 				animation.setDelay(100);
-				if(directionY == 0) directionX = 0;
+//				if(directionY == 0) directionX = 0;
 				JukeBox.play("FireballSmallLaunch");				
 			}
 			if(animation.hasPlayedOnce())
 			{
 
-				mana -= smallFireballManaCost;
-				castingSmallFireball = false;
-				doneCastingSmallFireball = true;
+				mana -= fireballSmallManaCost;
+				fireballSmallCasting = false;
+				fireballSmallDoneCasting = true;
+		
+				calculateAim(null);
 				
-				FireballSmall fireball = new FireballSmall(tileMap, facingRight, up, down, friendly, smallFireballDamage);
+				FireballSmall fireball = new FireballSmall(tileMap, facingRight, up, down, aim, friendly, fireballSmallDamage);
 				fireball.setPosition(locationX, locationY - 20);
 				mainMap.addProjectile(fireball);
 				
@@ -780,11 +833,64 @@ public class Character extends MapObject
 			}
 		}
 		
-		else if(currentAction == animationState[9] && doneCastingSmallFireball)
+		else if(currentAction == animationState[9] && fireballSmallDoneCasting)
 		{
 			if (animation.hasPlayedOnce()) 
 			{
-				doneCastingSmallFireball = false;
+				fireballSmallDoneCasting = false;
+				inControl = true;
+			}
+		}
+		
+		//********************************************************************************
+		//*Medium fireball                                                                *
+		//********************************************************************************	
+		else if(fireballMediumCasting)
+		{
+			
+			if(currentAction != animationState[8])
+			{
+				currentAction = animationState[8];
+				animation.setFrames(sprites.get(animationState[8]));
+				animation.setDelay(300);
+				
+				FireballMediumChargeUp fireballMediumChargeUp = new FireballMediumChargeUp(tileMap, locationX, locationY - 20);
+				mainMap.addEffect(fireballMediumChargeUp);
+				
+				if(directionY == 0) directionX = 0;
+//				JukeBox.play("FireballMediumLaunch");				
+			}
+			if(animation.hasPlayedOnce())
+			{
+
+				mana -= fireballMediumManaCost;
+				fireballMediumCasting = false;
+				fireballMediumDoneCasting = true;
+				
+				ArrayList<Character> enemiesDetected = detectEnemy(characterList);
+	
+				calculateAim(enemiesDetected.get(0));
+				
+				System.out.println("Enemy detected: " + enemiesDetected.get(0).name + "\naim: " + aim);
+				
+				FireballMedium fireball = new FireballMedium(tileMap, facingRight, up, down, aim, friendly, fireballMediumDamage);
+				fireball.setPosition(locationX, locationY - 20);
+				mainMap.addProjectile(fireball);
+				
+				currentAction = animationState[9];
+				animation.setFrames(sprites.get(animationState[9]));
+				animation.setDelay(500);
+				
+				
+				// Create new fireball stuff here
+			}
+		}
+		
+		else if(currentAction == animationState[9] && fireballSmallDoneCasting)
+		{
+			if (animation.hasPlayedOnce()) 
+			{
+				fireballSmallDoneCasting = false;
 				inControl = true;
 			}
 		}
@@ -792,7 +898,7 @@ public class Character extends MapObject
 		//********************************************************************************
 		//*Large fireball                                                                *
 		//********************************************************************************	
-		else if(castingLargeFireball)
+		else if(fireballLargeCasting)
 		{
 			if(currentAction != animationState[10])
 			{
@@ -804,11 +910,12 @@ public class Character extends MapObject
 			}
 			if(animation.hasPlayedOnce())
 			{
-				mana -= largeFireballManaCost;
-				castingLargeFireball = false;
-				doneCastingLargeFireball = true;
+				mana -= fireballLargeManaCost;
+				fireballLargeCasting = false;
+				fireballLargeDoneCasting = true;
 				
-				FireballLarge fireball = new FireballLarge(tileMap, facingRight, up, down, friendly, largeFireballDamage);
+				calculateAim(null);
+				FireballLarge fireball = new FireballLarge(tileMap, facingRight, up, down, aim, friendly, fireballLargeDamage);
 				fireball.setPosition(locationX, locationY);
 				mainMap.addProjectile(fireball);
 				
@@ -821,11 +928,11 @@ public class Character extends MapObject
 			}
 		}
 		
-		else if(currentAction == animationState[11] && doneCastingLargeFireball)
+		else if(currentAction == animationState[11] && fireballLargeDoneCasting)
 		{
 			if (animation.hasPlayedOnce()) 
 			{
-				doneCastingLargeFireball = false;
+				fireballLargeDoneCasting = false;
 				inControl = true;
 			}
 		}	
@@ -937,8 +1044,8 @@ public class Character extends MapObject
 						(		
 							character.getx() > locationX &&
 							character.getx() < locationX + sightRange &&
-							character.gety() > locationY - height&&
-							character.gety() < locationY + height / 2
+							character.gety() > locationY - height - sightRange /2 &&
+							character.gety() < locationY + height / 2 + sightRange / 2
 						)
 					{
 						enemiesDetected.add(character);
@@ -950,8 +1057,8 @@ public class Character extends MapObject
 						(
 								character.getx() < locationX &&
 								character.getx() > locationX - sightRange &&
-								character.gety() > locationY - height &&
-								character.gety() < locationY + height / 2
+								character.gety() > locationY - height - sightRange /2 &&
+								character.gety() < locationY + height / 2 + sightRange / 2
 						)
 					{
 						enemiesDetected.add(character);

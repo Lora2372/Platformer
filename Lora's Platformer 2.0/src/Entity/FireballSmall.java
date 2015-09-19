@@ -5,6 +5,7 @@ package Entity;
 import java.awt.Graphics2D;
 
 import Entity.Doodad.FireballSmallExplosion;
+import Main.Content;
 import TileMap.TileMap;
 
 public class FireballSmall extends Projectile
@@ -15,7 +16,8 @@ public class FireballSmall extends Projectile
 			TileMap tileMap, 
 			boolean right, 
 			boolean up, 
-			boolean down, 
+			boolean down,
+			double angle,
 			boolean friendly,
 			int damage
 		)
@@ -26,6 +28,7 @@ public class FireballSmall extends Projectile
 				right, 																// Facing right
 				up,  																// Holding up arrow
 				down,  																// Holding down arrow
+				angle,
 				friendly, 															// Whether the spell is friendly or hostile
 				60, 																// Projectile width
 				60, 																// Projectile height
@@ -39,6 +42,12 @@ public class FireballSmall extends Projectile
 				"FireballSmall"														// Explosion sound
 			);
 	}
+	
+	public void setProjectile()
+	{
+		sprites = Content.FireballSmall[0];
+	}
+	
 		public void explode(TileMap tilemap, double x, double y)
 		{
 			fireballSmallExplosion = new FireballSmallExplosion(tileMap, x, y);

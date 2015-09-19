@@ -117,7 +117,7 @@ public class Succubus extends Character
 			{
 				timer = 0;
 //				System.out.println("FIRE THE FIREBALL!");
-				castingLargeFireball = true;
+				fireballLargeCasting = true;
 			}
 		}
 		

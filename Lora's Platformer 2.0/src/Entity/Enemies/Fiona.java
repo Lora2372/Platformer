@@ -66,7 +66,7 @@ public class Fiona extends Character
 				40,		 															// largeFireballManaCost
 				50, 																	// largeFireballDamage
 				"/Sprites/Characters/Succubus.png",									// spritePath
-				new int[] {0,0,0,0,0,0,0,0,4,2,4,2,4,0,0,0,0},				// animationStates
+				new int[] {0,0,0,0,0,0,0,0,1,2,4,2,4,0,0,0,0},				// animationStates
 				new int[]{7, 2, 6, 2, 1, 4, 4, 1, 6},								// numImages
 				0,																	// damageOnTouch
 				friendly,															// friendly			
@@ -87,12 +87,13 @@ public class Fiona extends Character
 		portrait = Content.PortraitLiadrin[0];
 		
 		moveCooldown = 400;
-		moving = true;
-		right = true;
-		up = true;
-		
-		
+//		moving = true;
+//		right = true;
+//		up = true;
 	}
+	
+	
+	
 	public void updateAI(ArrayList<Character> characterList)
 	{
 		if(!inControl) return;
@@ -108,80 +109,24 @@ public class Fiona extends Character
 		
 		//If the player moves to one corner, she moves to the other!
 		
-		if(moving)
-		{
-			moveTimer++;
-			if( (directionX == 0|| directionY == 0) && moveTimer > 200)
-			{
-				moving = false;
-				moveTimer = 0;
-				System.out.println("moving is set to false");
-			}
-		}
-
 		
-		if(!moving)
+
+		moveTimer++;
+		
+		if(moveTimer > 500)
 		{
-			moveTimer++;
-			System.out.println("moveTimer: " + moveTimer);
-			if(moveTimer > moveCooldown)
-			{
-				System.out.println("it's over " + moveCooldown);
-				moveTimer = 0;
-				moving = true;
-				
-				if(right)
-				{
-					right = false;
-					left = true;
-				}
-				else if(left)
-				{
-					left = false;
-					right = true;
-				}
-				
-				if(up)
-				{
-					up = false;
-					down = true;
-				}
-				else if(down)
-				{
-					down = false;
-					up = true;
-				}
-			}
-		}
-			
-		if(moving)
-		{
-			if(right) 
-			{
-				right = true;
-				left = false;
-			}
-			
-			if(left) 
-			{
-				left = true;
-				right = false;
-			}
-			
-			if(up) 
-			{
-				up = true;
-				down = false;
-			}
-			
-			if(down) 
+			moveTimer = 0;
+			if(up)
 			{
 				down = true;
 				up = false;
 			}
+			else
+			{
+				down = false;
+				up = true;
+			}
 		}
-
-		
 		
 		
 		for(int i = 0; i < characterList.size(); i++)
@@ -205,7 +150,8 @@ public class Fiona extends Character
 			{
 				timer = 0;
 //				System.out.println("FIRE THE FIREBALL!");
-				castingLargeFireball = true;
+//				castingLargeFireball = true;
+				fireballMediumCasting = true;
 			}
 		}
 		

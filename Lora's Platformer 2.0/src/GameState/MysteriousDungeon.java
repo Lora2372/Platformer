@@ -7,7 +7,6 @@ import javax.imageio.ImageIO;
 import Audio.JukeBox;
 import Entity.Doodad.Activatable.ActivatableShrineMysteriousDungeon;
 import Entity.Enemies.Fiona;
-import Entity.Enemies.Succubus;
 import TileMap.Background;
 import TileMap.GameOver;
 
