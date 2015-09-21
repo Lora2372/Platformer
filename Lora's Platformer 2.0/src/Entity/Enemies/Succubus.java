@@ -28,8 +28,8 @@ public class Succubus extends Character
 				tileMap,  															// TileMap
 				100, 	 															// Width
 				100, 	 															// Height
-				100, 	 															// Collision width
-				100, 	 															// Collision height
+				80, 	 															// Collision width
+				80, 	 															// Collision height
 				0.1, 	 															// Move speed
 				1.0, 	 															// Max speed
 				0.4, 	 															// stopSpeed
@@ -46,6 +46,7 @@ public class Succubus extends Character
 				100, 	 																// maxStamina
 				30,		 															// staminaCounter
 				800,																// sightRange
+				120,
 				0,	 	 															// punchCost
 				0, 		 															// punchDamage
 				0,	 	 															// punchRange
@@ -60,9 +61,11 @@ public class Succubus extends Character
 				20,		 															// smallFireballDamage
 				40,		 															// largeFireballManaCost
 				50, 																	// largeFireballDamage
+				30,																	// electricBallManaCost
+				70,																	// electricBallDamage
 				"/Sprites/Characters/Succubus.png",									// spritePath
-				new int[] {0,0,0,0,0,0,0,0,4,2,4,2,4,0,0,0,0},				// animationStates
-				new int[]{7, 2, 6, 2, 1, 4, 4, 1, 6},								// numImages
+				new int[] {0,0,0,0,1,2,0,0,1,2,1,2,3,0,0,0,0},						// animationStates
+				new int[]{7, 2, 2, 1, 2, 0, 0, 0, 0},								// numImages
 				0,																	// damageOnTouch
 				friendly,															// friendly			
 				untouchable,
@@ -109,10 +112,13 @@ public class Succubus extends Character
 		
 		timer++;
 		
-		ArrayList<Character> enemiesDetected = detectEnemy(characterList);
+		ArrayList<Character> enemiesDetected = detectEnemy(characterList, false);
 		
 		if(enemiesDetected.size() > 0)
 		{
+			if(enemiesDetected.get(0).getx() > locationX) facingRight = true;
+			else facingRight = false;
+			
 			if(timer > cooldown)
 			{
 				timer = 0;

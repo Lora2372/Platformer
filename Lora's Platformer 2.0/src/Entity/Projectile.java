@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import Audio.JukeBox;
+import GameState.MainMap;
 import Main.Content;
 import TileMap.TileMap;
 
@@ -23,12 +24,14 @@ public class Projectile extends MapObject
 	protected int explosionRadius;
 	protected String explosionSound;
 	
-	protected double aim;
-		
+	
+	protected MainMap mainMap;
+	
 	private boolean exploding;
 	
 	public Projectile(
-			TileMap tileMap, 
+			TileMap tileMap,
+			MainMap mainMap,
 			boolean right,
 			boolean up,
 			boolean down,
@@ -48,7 +51,7 @@ public class Projectile extends MapObject
 	{
 		super(tileMap);
 		
-		
+		this.mainMap = mainMap;
 		this.facingRight = right;
 		this.up = up;
 		this.down = down;
@@ -64,19 +67,16 @@ public class Projectile extends MapObject
 		this.explosionSound = explosionSound;
 		this.damage = damage;
 		
-		this.aim = aim;
+		this.rotation = aim;
 		
-		System.out.println("aim: " + aim + "\ndirectionX: " + Math.cos(aim) + "\ndirectionY: " + Math.sin(aim));
 		
-		this.directionX = Math.cos(aim) * 3;
-		this.directionY = Math.sin(aim) * 3;
+		this.directionX = Math.cos(aim) * 5;
+		this.directionY = Math.sin(aim) * 5;
 		
-//		if(right) directionX = this.moveSpeed;
-//		else directionX = -this.moveSpeed;
-//		
-//		if(down) directionY = this.moveSpeed;
-//		if(up) directionY = -this.moveSpeed;
+		System.out.println("directionX: " + directionX);
+		System.out.println("directionY: " + directionY);
 		
+		rotaded = true;
 		
 		hit = false;		
 
@@ -88,6 +88,8 @@ public class Projectile extends MapObject
 		animation.setDelay(70);
 			
 	}
+	
+	public boolean getHit() { return hit; }
 	
 	public void setProjectile() { }
 	
@@ -105,9 +107,12 @@ public class Projectile extends MapObject
 		this.directionY = directionY;
 	}
 	
+	
 	// Functions that figures out whether or not the fireball has hit something.
-	public void setHit(ArrayList<Character> characterList)
+	public void setHit()
 	{
+		ArrayList<Character> characterList = mainMap.getCharacterList();
+		
 		if(hit) return;
 		hit = true;
 				
@@ -150,13 +155,13 @@ public class Projectile extends MapObject
 
 		if(locationX > tileMap.getWidth() || locationX < 0 || locationY < 0 || locationY > tileMap.getHeight())
 		{
-			setHit(characterList);
+			setHit();
 		}
 		
 		
-		if((directionX == 0 || ((down || up) && directionY == 0)) && !hit)
+		if(directionX == 0)
 		{
-			setHit(characterList);
+			setHit();
 		}
 		
 		if(!exploding) animation.update();

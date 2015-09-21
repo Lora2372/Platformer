@@ -2,16 +2,19 @@ package Entity;
 
 import java.awt.Graphics2D;
 
+import Entity.Doodad.ElectricballExplosion;
 import Entity.Doodad.FireballLargeExplosion;
+import GameState.MainMap;
 import Main.Content;
 import TileMap.TileMap;
 
-public class FireballMedium extends Projectile
+public class ElectricBall extends Projectile
 {
-	protected FireballLargeExplosion fireballLargeExplosion;
+	protected ElectricballExplosion electricballExplosion;
 	
-	public FireballMedium(
-			TileMap tileMap, 
+	public ElectricBall(
+			TileMap tileMap,
+			MainMap mainMap,
 			boolean right, 
 			boolean up, 
 			boolean down, 
@@ -23,6 +26,7 @@ public class FireballMedium extends Projectile
 		
 		super(
 				tileMap, 															//Tile map
+				mainMap,
 				right, 																// Facing right
 				up,  																// Holding up arrow
 				down,  																// Holding down arrow
@@ -32,33 +36,33 @@ public class FireballMedium extends Projectile
 				60, 																// Projectile height
 				60, 																// Explosion width
 				60, 																// Explosion height
-				60, 																// Collision width
-				60, 																// Collision height
+				40, 																// Collision width
+				40, 																// Collision height
 				7.6, 																// Projectile speed
 				damage,																// Explosion damage
 				60, 																// Explosion radius
-				"FireballMedium"														// Explosion sound
+				"Electricball"														// Explosion sound
 			);
 	}
 	
 	public void setProjectile()
 	{
-		sprites = Content.FireballMedium[0];
+		sprites = Content.Electricball[0];
 	}
 	
 		public void explode(TileMap tilemap, double x, double y)
 		{
-			fireballLargeExplosion = new FireballLargeExplosion(tileMap, x, y);
+			electricballExplosion = new ElectricballExplosion(tileMap, x, y);
 		}
 		
 		public void updateExplosion()
 		{
-			if(fireballLargeExplosion != null)
+			if(electricballExplosion != null)
 			{
-				fireballLargeExplosion.animation.update();
-				if(fireballLargeExplosion.animation.hasPlayedOnce())
+				electricballExplosion.animation.update();
+				if(electricballExplosion.animation.hasPlayedOnce())
 				{
-					fireballLargeExplosion.removeMe();
+					electricballExplosion.removeMe();
 					remove = true;
 				}
 			}
@@ -66,6 +70,6 @@ public class FireballMedium extends Projectile
 		
 		public void drawExplosion(Graphics2D graphics)
 		{
-			fireballLargeExplosion.draw(graphics);
+			electricballExplosion.draw(graphics);
 		}
 }

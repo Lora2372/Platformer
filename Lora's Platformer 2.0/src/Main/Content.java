@@ -12,13 +12,15 @@ public class Content
 	public static BufferedImage[][] CartoonExplosion 		= load("/Sprites/Effects/CartoonExplosion.gif", 60, 60);
 	public static BufferedImage[][] FireballLargeExplosion 	= load("/Sprites/Effects/FireballLargeExplosion.png", 240, 240);
 	public static BufferedImage[][] FireballSmallExplosion 	= load("/Sprites/Effects/FireballSmallExplosion.png", 60, 60);
+	public static BufferedImage[][] ElectricballExplosion 	= load("/Sprites/Effects/ElectricballExplosion.png", 180, 180);
 	
 	// Projectiles
 	public static BufferedImage[][] FireballLarge 			= load("/Sprites/Effects/FireballLarge.png", 60, 60);
-	public static BufferedImage[][] FireballMedium			= load("/Sprites/Effects/FireballMedium.png", 60, 60);
+	public static BufferedImage[][] FireballMedium			= load("/Sprites/Effects/FireballMediumNew.png", 60, 60);
 	public static BufferedImage[][] FireballSmall 			= load("/Sprites/Effects/FireballSmall.png", 60, 60);
 	public static BufferedImage[][] FireballSwirling 		= load("/Sprites/Effects/FireballSwirling.png", 60, 60);
 	public static BufferedImage[][] FireballDouble 			= load("/Sprites/Effects/FireballDouble.png", 60, 60);
+	public static BufferedImage[][] Electricball			= load("/Sprites/Effects/Electricball.png", 60, 60);
 	
 	// Characters
 	public static BufferedImage[][] Slugger 				= load("/Sprites/Characters/slugger.gif", 60, 60);
@@ -60,6 +62,13 @@ public class Content
 		
 		JukeBox.load("/Sound/FireballLargeLaunch.mp3", "FireballLargeLaunch");
 		JukeBox.load("/Sound/FireballSmallLaunch.mp3", "FireballSmallLaunch");	
+		
+		JukeBox.load("/Sound/EnergyballChargeUp.mp3", "EnergyballChargeUp");
+		JukeBox.load("/Sound/ElectricballActive.mp3", "ElectricballActive");
+		
+		JukeBox.load("/Sound/ElectricballChargeUp.mp3", "ElectricballChargeUp");
+		JukeBox.load("/Sound/ElectricballLaunch.mp3", "ElectricballLaunch");
+		JukeBox.load("/Sound/ElectricballImpact.mp3", "ElectricballImpact");
 		
 		JukeBox.load("/Sound/Teleport.mp3", "teleport");
 		

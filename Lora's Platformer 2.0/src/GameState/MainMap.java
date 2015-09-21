@@ -100,8 +100,8 @@ public class MainMap extends GameState
 				{
 					if(projectiles.get(j).intersects(projectiles.get(k)))
 					{
-						projectiles.get(j).setHit(characterList);
-						projectiles.get(k).setHit(characterList);
+						projectiles.get(j).setHit();
+						projectiles.get(k).setHit();
 					}
 				}
 
@@ -117,7 +117,7 @@ public class MainMap extends GameState
 					
 					if(projectiles.get(j).intersects(character))
 					{
-						projectiles.get(j).setHit(characterList);
+						projectiles.get(j).setHit();
 					}	
 				}
 			}
@@ -235,6 +235,10 @@ public class MainMap extends GameState
 						gameover = true;
 
 						JukeBox.stop("Battle9");
+						JukeBox.stop("Dungeon1");
+						JukeBox.stop("MysteriousBattle");
+						JukeBox.stop("MysteriousConversation");
+						
 						JukeBox.play("GameOver");						
 						soundTimer = System.nanoTime();
 					}

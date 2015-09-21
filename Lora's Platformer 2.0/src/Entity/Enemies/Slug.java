@@ -45,6 +45,7 @@ public class Slug extends Character
 				0, 	 																// maxStamina
 				-1,		 															// staminaCounter
 				800,																// sightRange
+				60,
 				0,	 	 															// punchCost
 				0, 		 															// punchDamage
 				0,	 	 															// punchRange
@@ -59,6 +60,8 @@ public class Slug extends Character
 				20,		 															// smallFireballDamage
 				0,		 															// largeFireballManaCost
 				0, 																	// largeFireballDamage
+				30,																	// electricBallManaCost
+				70,																	// electricBallDamage
 				"/Sprites/Characters/slugger.gif",									// spritePath
 				new int[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},						// animationStates
 				new int[]{3},														// numImages
@@ -109,7 +112,7 @@ public class Slug extends Character
 		
 		timer++;
 		
-		ArrayList<Character> enemiesDetected = detectEnemy(characterList);
+		ArrayList<Character> enemiesDetected = detectEnemy(characterList, true);
 		
 		if(enemiesDetected.size() > 0)
 		{

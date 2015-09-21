@@ -1,6 +1,9 @@
 package Entity;
 
 import java.awt.Rectangle;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
+
 import Main.GamePanel;
 import TileMap.TileMap;
 
@@ -15,6 +18,8 @@ public abstract class MapObject
 	
 	protected boolean hidden;
 	
+	protected boolean rotaded;
+	protected double rotation;
 	
 	// Position and vector
 	protected double locationX;
@@ -168,6 +173,7 @@ public abstract class MapObject
 			{
 				// If they are there then we have to stop going upwards (otherwise we'll move through the wall).
 				directionY = 0;
+				setHit();
 				ytemp = currentRow * tileSize +collisionHeight / 2;
 			}
 			else
@@ -182,6 +188,7 @@ public abstract class MapObject
 			// Checking if we have landed on something
 			if(bottomLeft == 1 || bottomRight == 1)
 			{
+				setHit();
 				directionY = 0;
 				falling = false;
 				ytemp = (currentRow + 1) * tileSize - collisionHeight / 2;
@@ -236,6 +243,7 @@ public abstract class MapObject
 			}
 		}
 	}
+	public void setHit() { }
 	
 	public int getx() { return (int)locationX; }
 	public int gety() { return (int)locationY; }
@@ -282,6 +290,19 @@ public abstract class MapObject
 		setMapPosition();
 		
 		if(hidden) return;
+		
+//		if(rotaded)
+//		{
+//			AffineTransform affineTransform = AffineTransform.getRotateInstance(rotation, locationX, locationY);
+//			AffineTransformOp affineTransformOp = new AffineTransformOp(affineTransform, AffineTransformOp.TYPE_BILINEAR);
+//			graphics.drawImage(
+//					affineTransformOp.filter(
+//							animation.getImage(), null), 
+//							(int)(locationX + mapPositionX - width / 2), 
+//							(int)(locationY + mapPositionY - height / 2), null);
+//			return;
+//			
+//		}
 		
 		if(facingRight)
 		{

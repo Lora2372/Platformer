@@ -1,20 +1,13 @@
 package Entity;
 
 import java.util.ArrayList;
-
-
-
-
-
-
-
-
-
+import java.util.Random;
 
 import Audio.JukeBox;
 
 import javax.imageio.ImageIO;
 
+import Entity.Doodad.ElectricballChargeUp;
 import Entity.Doodad.FireballMediumChargeUp;
 import Entity.Doodad.SummoningEffect;
 import Entity.Player.ConversationBox;
@@ -35,6 +28,8 @@ public class Character extends MapObject
 	protected String name;
 	protected boolean player;
 	
+	protected ElectricBall electricball;
+	
 	protected BufferedImage[] portrait;
 	
 	protected double spawnX;
@@ -47,7 +42,10 @@ public class Character extends MapObject
 	protected int healthCounter;
 	protected int healthRegen;
 	
-	protected int sightRange;
+	protected int sightRangeX;
+	protected int sightRangeY;
+	
+	protected boolean tennisPlayer;
 	
 	protected boolean sexytime1;
 	protected boolean sexytime2;
@@ -88,12 +86,14 @@ public class Character extends MapObject
 	protected int fireballSmallDamage;
 	
 	// Medium fireabll
-	protected boolean fireballMediumCasting;
-	protected boolean fireballMediumDoneCasting;
-	protected boolean fireballMediumHolding;
+	protected boolean electricballCasting;
+	protected boolean electricballDoneCasting;
+	protected boolean electricballHolding;
 	
-	protected int fireballMediumManaCost;
-	protected int fireballMediumDamage;
+	protected int electricballManaCost;
+	protected int electricballDamage;
+	
+	// 
 	
 	// Large fireball
 	protected boolean fireballLargeCasting;
@@ -111,6 +111,9 @@ public class Character extends MapObject
 	protected int punchDamage;
 	protected int punchRange;
 	protected int punchCost;
+	
+	protected int tennisTimer = 40;
+	protected int tennisCooldown = 40;
 	
 	// Dash
 	protected boolean startDash;
@@ -140,28 +143,28 @@ public class Character extends MapObject
 	
 	
 //	protected static final int animationState[0]					= 0;
-//	protected static final int animationState[1]				= 1;
-//	protected static final int animationState[2]				= 2;
-//	protected static final int animationState[3]				= 3;
+//	protected static final int animationState[1]					= 1;
+//	protected static final int animationState[2]					= 2;
+//	protected static final int animationState[3]					= 3;
 //	
-//	protected static final int animationState[4]				= 4;
-//	protected static final int animationState[5]				= 5;
+//	protected static final int animationState[4]					= 4;
+//	protected static final int animationState[5]					= 5;
+//		
+//	protected static final int animationState[6]					= 6;
+//	protected static final int animationState[7] 					= 7;
 //	
-//	protected static final int animationState[6]				= 6;
-//	protected static final int animationState[7] 				= 7;
+//	protected static final int animationState[8]				 	= 8;
+//	protected static final int animationState[9] 					= 9;
 //	
-//	protected static final int animationState[8] 	= 8;
-//	protected static final int animationState[9] 		= 9;
+//	protected static final int animationState[10] 					= 10;
+//	protected static final int animationState[11]					= 11;
 //	
-//	protected static final int animationState[10] 	= 10;
-//	protected static final int animationState[11]		= 11;
-//	
-//	protected static final int animationState[12] 				= 12;
+//	protected static final int animationState[12] 					= 12;
 //	protected static final int animationState[13] 					= 13;
 //	protected static final int animationState[14]					= 14;
 //	
-//	protected static final int animationState[14]				= 14;
-//	protected static final int animationState[15] 			= 15;
+//	protected static final int animationState[14]					= 14;
+//	protected static final int animationState[15] 					= 15;
 	
 	// Constructor
 	public Character(
@@ -185,7 +188,8 @@ public class Character extends MapObject
 			int stamina,
 			int maxStamina,
 			int staminaRegen,
-			int sightRange,
+			int sightRangeX,
+			int sightRangeY,
 			int punchCost,
 			int punchDamage,			
 			int punchRange,
@@ -197,9 +201,11 @@ public class Character extends MapObject
 			int maxMana,
 			int manaRegen,
 			int fireballSmallManaCost,
-			int fireballSmallDamage,			
+			int fireballSmallDamage,	
 			int fireballLargeManaCost,
-			int fireballLargeDamage,					
+			int fireballLargeDamage,
+			int electricballManaCost,
+			int electricballDamage,
 			String spritePath,
 			int[] animationState,
 			int[] numFrames,
@@ -234,7 +240,8 @@ public class Character extends MapObject
 		this.stamina = stamina;
 		this.maxStamina = maxStamina;
 		this.staminaRegen = staminaRegen;
-		this.sightRange = sightRange;
+		this.sightRangeX = sightRangeX;
+		this.sightRangeY = sightRangeY;
 		this.punchCost = punchCost;
 		this.punchDamage = punchDamage;
 		this.punchRange = punchRange;
@@ -249,6 +256,8 @@ public class Character extends MapObject
 		this.fireballSmallDamage = fireballSmallDamage;
 		this.fireballLargeManaCost = fireballLargeManaCost;
 		this.fireballLargeDamage = fireballLargeDamage;
+		this.electricballManaCost = electricballManaCost;
+		this.electricballDamage = electricballDamage;
 		this.spritePath = spritePath;
 		this.animationState = animationState;
 		this.numFrames = numFrames;
@@ -310,40 +319,38 @@ public class Character extends MapObject
 	
 	public void calculateAim(Character character)
 	{
+		
+		double tempX = locationX;
+		double tempY = locationY;
+		
 		if(character == null)
 		{
 			if(facingRight)
 			{
+				tempX += 50;
 				if(up)
-					aim = 45;
+					tempY -= 25;
 				else if(down)
-					aim = 315;
-				else
-					aim = 0;
+					tempY += 25;					
 			}
 			else
 			{
+				tempX -= 50;
 				if(up)
-					aim = 135;
+					tempY -= 25;
 				else if(down)
-					aim = 225;
-				else
-					aim = 180;
-			}
+					tempY += 25;		}
 		}
 		else
 		{
-			
-			System.out.println("Character.locationY: " + character.locationY + "\nlocationY: " + locationY);
-			
-//			aim = Math.toDegrees(Math.atan2(character.locationY - locationY, character.locationX - locationX));
-//			if(aim < 0)
-//				aim += 360;
-			
-			aim = Math.atan2(character.locationY - locationY, character.locationX - locationX);
-			
+			tempX = character.locationX;
+			tempY = character.locationY;			
 		}
+		
+		aim = Math.atan2(tempY - locationY, tempX - locationX);
 	}
+	
+	public void setTennisPlayer(boolean b) { tennisPlayer = b; }
 	
 	public BufferedImage[] getPortrait() { return portrait;}
 	
@@ -820,7 +827,7 @@ public class Character extends MapObject
 		
 				calculateAim(null);
 				
-				FireballSmall fireball = new FireballSmall(tileMap, facingRight, up, down, aim, friendly, fireballSmallDamage);
+				FireballSmall fireball = new FireballSmall(tileMap, mainMap, facingRight, up, down, aim, friendly, fireballSmallDamage);
 				fireball.setPosition(locationX, locationY - 20);
 				mainMap.addProjectile(fireball);
 				
@@ -845,7 +852,7 @@ public class Character extends MapObject
 		//********************************************************************************
 		//*Medium fireball                                                                *
 		//********************************************************************************	
-		else if(fireballMediumCasting)
+		else if(electricballCasting)
 		{
 			
 			if(currentAction != animationState[8])
@@ -854,33 +861,46 @@ public class Character extends MapObject
 				animation.setFrames(sprites.get(animationState[8]));
 				animation.setDelay(300);
 				
-				FireballMediumChargeUp fireballMediumChargeUp = new FireballMediumChargeUp(tileMap, locationX, locationY - 20);
-				mainMap.addEffect(fireballMediumChargeUp);
+				ElectricballChargeUp electricballChargeUp = new ElectricballChargeUp(tileMap, locationX, locationY - 20);
+				mainMap.addEffect(electricballChargeUp);
 				
 				if(directionY == 0) directionX = 0;
-//				JukeBox.play("FireballMediumLaunch");				
+				JukeBox.play("ElectricballChargeUp");				
 			}
 			if(animation.hasPlayedOnce())
 			{
 
-				mana -= fireballMediumManaCost;
-				fireballMediumCasting = false;
-				fireballMediumDoneCasting = true;
+				mana -= electricballManaCost;
+				electricballCasting = false;
+				electricballDoneCasting = true;
 				
-				ArrayList<Character> enemiesDetected = detectEnemy(characterList);
-	
-				calculateAim(enemiesDetected.get(0));
+				ArrayList<Character> enemiesDetected = detectEnemy(characterList, false);
+				if(enemiesDetected != null)
+				{
+					if(enemiesDetected.size() > 0)
+					{
+						System.out.println("hm: " + enemiesDetected.get(0).name);
+						calculateAim(enemiesDetected.get(0));
+					}
+					else
+					{
+						System.out.println("No enemy found..");
+					}
+				}
 				
-				System.out.println("Enemy detected: " + enemiesDetected.get(0).name + "\naim: " + aim);
 				
-				FireballMedium fireball = new FireballMedium(tileMap, facingRight, up, down, aim, friendly, fireballMediumDamage);
-				fireball.setPosition(locationX, locationY - 20);
-				mainMap.addProjectile(fireball);
+				
+				
+				electricball = new ElectricBall(tileMap, mainMap, facingRight, up, down, aim, friendly, electricballDamage);
+				electricball.setPosition(locationX, locationY - 20);
+				mainMap.addProjectile(electricball);
 				
 				currentAction = animationState[9];
 				animation.setFrames(sprites.get(animationState[9]));
 				animation.setDelay(500);
 				
+				JukeBox.play("ElectricballActive");
+				JukeBox.play("ElectricballThrow");
 				
 				// Create new fireball stuff here
 			}
@@ -915,7 +935,7 @@ public class Character extends MapObject
 				fireballLargeDoneCasting = true;
 				
 				calculateAim(null);
-				FireballLarge fireball = new FireballLarge(tileMap, facingRight, up, down, aim, friendly, fireballLargeDamage);
+				FireballLarge fireball = new FireballLarge(tileMap, mainMap, facingRight, up, down, aim, friendly, fireballLargeDamage);
 				fireball.setPosition(locationX, locationY);
 				mainMap.addProjectile(fireball);
 				
@@ -1021,14 +1041,16 @@ public class Character extends MapObject
 		animation.update();
 		
 		// Set direction
-		if(inControl)
+		if(inControl && !flying)
 		{
 			if(right) facingRight = true;
 			if(left) facingRight = false;
 		}
 	}
 	
-	public ArrayList<Character> detectEnemy(ArrayList<Character> characterList)
+//	public ArrayList<Projectile> detectProjectiles
+	
+	public ArrayList<Character> detectEnemy(ArrayList<Character> characterList, boolean onlyInFrontOfYou)
 	{
 		ArrayList<Character> enemiesDetected = new ArrayList<Character>();
 		
@@ -1038,27 +1060,28 @@ public class Character extends MapObject
 			
 			if(character.getFriendly() != friendly && character.inControl)
 			{
-				if(facingRight)
+				
+				if(facingRight || !onlyInFrontOfYou)
 				{
 					if
 						(		
 							character.getx() > locationX &&
-							character.getx() < locationX + sightRange &&
-							character.gety() > locationY - height - sightRange /2 &&
-							character.gety() < locationY + height / 2 + sightRange / 2
+							character.getx() < locationX + sightRangeX &&
+							character.gety() > locationY - height - sightRangeY /2 &&
+							character.gety() < locationY + height / 2 + sightRangeY / 2
 						)
 					{
 						enemiesDetected.add(character);
 					}
 				}
-				else
+				if(!facingRight || !onlyInFrontOfYou)
 				{
 					if
 						(
 								character.getx() < locationX &&
-								character.getx() > locationX - sightRange &&
-								character.gety() > locationY - height - sightRange /2 &&
-								character.gety() < locationY + height / 2 + sightRange / 2
+								character.getx() > locationX - sightRangeX &&
+								character.gety() > locationY - height - sightRangeY /2 &&
+								character.gety() < locationY + height / 2 + sightRangeY / 2
 						)
 					{
 						enemiesDetected.add(character);
@@ -1085,10 +1108,11 @@ public class Character extends MapObject
 						projectile.gety() < locationY + height / 2
 				)
 				{
-					System.out.println("Turning!");
+					JukeBox.play(projectile.explosionSound + "Active");
+					System.out.println("Turning! Right");
 					System.out.println(projectile.getFriendly() + "\n-----------------");
 					projectile.setFacing(!projectile.getFacing());
-					projectile.setDirection(projectile.getDirectionX() * - 1, 0);
+					projectile.setDirection(projectile.getDirectionX() * - 1, projectile.getDirectionY() * -1);
 					projectile.setFriendly(!projectile.getFriendly());
 				}
 			}
@@ -1102,11 +1126,80 @@ public class Character extends MapObject
 						projectile.gety() < locationY + height / 2
 				)
 				{
-					System.out.println("Turning!");
+					JukeBox.play(projectile.explosionSound + "Active");
+					System.out.println("Turning! Left");
 					System.out.println(projectile.getFriendly() + "\n-----------------");
 					projectile.setFacing(!projectile.getFacing());
-					projectile.setDirection(projectile.getDirectionX() * - 1, 0);
+					projectile.setDirection(projectile.getDirectionX() * - 1, projectile.getDirectionY() * - 1);
 					projectile.setFriendly(!projectile.getFriendly());
+				}
+			}
+		}
+		else if(tennisPlayer)
+		{
+			tennisTimer++;
+			if(tennisTimer >= tennisCooldown * 10) tennisTimer = tennisCooldown;
+			
+			if(facingRight)
+			{
+				if
+				(
+						projectile.getx() > locationX &&
+						projectile.getx() < locationX + 100 &&
+						projectile.gety() > locationY - 60 &&
+						projectile.gety() < locationY + 60
+				)
+				{
+					System.out.println("tennisTimer: " + tennisTimer);
+
+					if(tennisTimer >= tennisCooldown)
+					{
+						tennisTimer = 0;
+						
+						Random randomizer = new Random();
+						int random2 = randomizer.nextInt((100 - 0) + 1);
+						if(random2 < 70)
+						{
+							JukeBox.play(projectile.explosionSound + "Active");
+							System.out.println("Smashing! (Right), " + random2);
+							startPunch = true;
+							projectile.setFacing(!projectile.getFacing());
+							projectile.setDirection(projectile.getDirectionX() * - 1, projectile.getDirectionY() * - 1);
+							projectile.setFriendly(!projectile.getFriendly());
+						}
+					}
+
+
+				}
+			}
+			else
+			{
+				if
+				(
+						projectile.getx() < locationX &&
+						projectile.getx() > locationX - 100 &&
+						projectile.gety() > locationY - 60 &&
+						projectile.gety() < locationY + 60
+				)
+				{
+					System.out.println("tennisTimer: " + tennisTimer);
+				
+					if(tennisTimer >= tennisCooldown)
+					{
+						tennisTimer = 0;
+					
+						Random randomizer = new Random();
+						int random2 = randomizer.nextInt((100 - 0) + 1);
+						if(random2 < 70)
+						{
+							JukeBox.play(projectile.explosionSound + "Active");
+							System.out.println("Smashing! (Left), " + random2);
+							startPunch = true;
+							projectile.setFacing(!projectile.getFacing());
+							projectile.setDirection(projectile.getDirectionX() * - 1, projectile.getDirectionY() * - 1);
+							projectile.setFriendly(!projectile.getFriendly());
+						}
+					}
 				}
 			}
 		}

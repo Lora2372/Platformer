@@ -3,7 +3,10 @@ package Entity.Enemies;
 import java.util.ArrayList;
 
 import TileMap.TileMap;
+import Audio.JukeBox;
 import Entity.Character;
+import Entity.ElectricBall;
+import Entity.Doodad.FireballMediumChargeUp;
 import GameState.MysteriousDungeon;
 import Main.Content;
 
@@ -16,6 +19,7 @@ public class Fiona extends Character
 	protected int moveCooldown;
 	protected boolean moving;
 	
+
 	
 	public Fiona(
 			TileMap tileMap,
@@ -33,10 +37,10 @@ public class Fiona extends Character
 				tileMap,  															// TileMap
 				100, 	 															// Width
 				100, 	 															// Height
-				100, 	 															// Collision width
-				100, 	 															// Collision height
-				0.1, 	 															// Move speed
-				1.0, 	 															// Max speed
+				80, 	 															// Collision width
+				80, 	 															// Collision height
+				0.5, 	 															// Move speed
+				5.0, 	 															// Max speed
 				0.4, 	 															// stopSpeed
 				0.3, 	 															// fallSpeed
 				8.0, 	 															// maxFallSpeed
@@ -44,13 +48,14 @@ public class Fiona extends Character
 				0.6, 	 															// stopJumpSpeed
 				facingRight,														// facingRight
 				true,  																// inControl
-				50,		 															// health
-				5, 		 															//maxHealth
+				500,		 															// health
+				500, 		 															//maxHealth
 				30,		 															// healthCounter
 				100,	 																// stamina
 				100, 	 																// maxStamina
 				30,		 															// staminaCounter
-				800,																// sightRange
+				2000,																// sightRange
+				2000,
 				0,	 	 															// punchCost
 				0, 		 															// punchDamage
 				0,	 	 															// punchRange
@@ -65,9 +70,11 @@ public class Fiona extends Character
 				20,		 															// smallFireballDamage
 				40,		 															// largeFireballManaCost
 				50, 																	// largeFireballDamage
+				30,																	// electricBallManaCost
+				70,																	// electricBallDamage
 				"/Sprites/Characters/Succubus.png",									// spritePath
-				new int[] {0,0,0,0,0,0,0,0,1,2,4,2,4,0,0,0,0},				// animationStates
-				new int[]{7, 2, 6, 2, 1, 4, 4, 1, 6},								// numImages
+				new int[] {0,0,0,0,1,2,0,0,1,2,1,2,3,0,0,0,0},						// animationStates
+				new int[]{7, 2, 2, 1, 2, 0, 0, 0, 0},								// numImages
 				0,																	// damageOnTouch
 				friendly,															// friendly			
 				untouchable,
@@ -80,17 +87,21 @@ public class Fiona extends Character
 				);
 		
 		timer = 0;
-		cooldown = 200;
+		cooldown = 600;
 		
 		flying = true;
 		
 		portrait = Content.PortraitLiadrin[0];
+		
+		setTennisPlayer(true);
 		
 		moveCooldown = 400;
 //		moving = true;
 //		right = true;
 //		up = true;
 	}
+	
+
 	
 	
 	
@@ -99,7 +110,7 @@ public class Fiona extends Character
 		if(!inControl) return;
 
 		
-		// GANNONDORF TENNIS SHIT SHIT!
+		// GANNONDORF TENNIS THIS SHIT!
 		// She will hug the corners, channel up a new energy ball spell,
 		// it will go towards the player, she's immune to all other attacks,
 		// bounce the ball back to her until one of you fail!
@@ -110,52 +121,81 @@ public class Fiona extends Character
 		//If the player moves to one corner, she moves to the other!
 		
 		
-
-		moveTimer++;
+		ArrayList<Character> enemiesDetected = detectEnemy(characterList, false);
 		
-		if(moveTimer > 500)
+		if(enemiesDetected != null)
 		{
-			moveTimer = 0;
-			if(up)
+			if(enemiesDetected.size() > 0)
 			{
-				down = true;
-				up = false;
-			}
-			else
-			{
-				down = false;
-				up = true;
-			}
-		}
-		
-		
-		for(int i = 0; i < characterList.size(); i++)
-		{
-			if(characterList.get(i).isPlayer())
-			{
-				if(characterList.get(i).getx() > locationX)
-					facingRight = true;
+				if(enemiesDetected.get(0).getx() > locationX) facingRight = true;
 				else facingRight = false;
-				break;
 			}
+
 		}
 		
-		timer++;
+//		if(moving)
+//		{
+//			ArrayList<Character> enemiesDetected = detectEnemy(characterList);
+//			
+//			if(enemiesDetected != null)
+//			{
+//				if(enemiesDetected.size() > 0)
+//				{
+//					Character enemy = enemiesDetected.get(0);
+//					
+//					if(!right && !left)
+//						right = true;
+//					
+//					if(enemy.getx() > locationX)
+//					{
+//
+//						if(right)
+//						{
+//							left = true;
+//							right = false;
+//						}
+//						
+//					}
+//					else
+//					{
+//						if(left)
+//						{
+//							left = false;
+//							right = true;
+//						}
+//					}
+//				}
+//			}
+//		}
+//		else
+//		{
+//			moveTimer++;
+//			if(moveTimer > moveCooldown)
+//			{
+//				moving = true;
+//				moveTimer = 0;
+//			}
+//		}
 		
-		ArrayList<Character> enemiesDetected = detectEnemy(characterList);
 		
-		if(enemiesDetected.size() > 0)
+
+		if(electricball == null || electricball.getHit())
 		{
+			timer++;
 			if(timer > cooldown)
 			{
+				right = false;
+				left = false;
+				
+				moving = false;
+				moveTimer = 0;
 				timer = 0;
-//				System.out.println("FIRE THE FIREBALL!");
-//				castingLargeFireball = true;
-				fireballMediumCasting = true;
+				electricballCasting = true;
 			}
 		}
+
+
 		
-		if(timer > cooldown * 10) timer = cooldown;
 	}
 	
 	

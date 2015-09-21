@@ -38,6 +38,7 @@ public class Player extends Character
 				100, 	 															// maxStamina
 				25,		 															// staminaCounter
 				800,																// sightRange
+				120,
 				5,	 	 															// punchCost
 				5, 		 															// punchDamage
 				80, 	 															// punchRange
@@ -52,6 +53,8 @@ public class Player extends Character
 				20,		 															// smallFireballDamage
 				40,		 															// largeFireballManaCost
 				50, 																// largeFireballDamage
+				30,																	// electricBallManaCost
+				70,																	// electricBallDamage
 				"/Sprites/Characters/Lora.png", 									// spritePath
 				new int[] {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,14,15},				// animationStates
 				new int[]{6, 6, 1, 5, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1},			// numImages

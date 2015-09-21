@@ -52,6 +52,7 @@ public class LiadrinFirstEncounter extends Character
 				100, 	 																// maxStamina
 				30,		 															// staminaCounter
 				800,																// sightRange
+				0,
 				0,	 	 															// punchCost
 				0, 		 															// punchDamage
 				0,	 	 															// punchRange
@@ -66,6 +67,8 @@ public class LiadrinFirstEncounter extends Character
 				20,		 															// smallFireballDamage
 				40,		 															// largeFireballManaCost
 				50, 																	// largeFireballDamage
+				30,																	// electricBallManaCost
+				70,																	// electricBallDamage
 				"/Sprites/Characters/Succubus.png",									// spritePath
 				new int[] {0,0,0,0,0,0,0,0,4,2,4,2,4,0,0,0,0},				// animationStates
 				new int[]{7, 2, 6, 2, 1, 4, 4, 1, 6},								// numImages

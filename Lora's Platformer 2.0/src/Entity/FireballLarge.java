@@ -5,6 +5,7 @@ package Entity;
 import java.awt.Graphics2D;
 
 import Entity.Doodad.FireballLargeExplosion;
+import GameState.MainMap;
 import Main.Content;
 import TileMap.TileMap;
 
@@ -13,7 +14,8 @@ public class FireballLarge extends Projectile
 	protected FireballLargeExplosion fireballLargeExplosion;
 
 	public FireballLarge(
-			TileMap tileMap, 
+			TileMap tileMap,
+			MainMap mainMap,
 			boolean right, 
 			boolean up, 
 			boolean down, 
@@ -25,6 +27,7 @@ public class FireballLarge extends Projectile
 		
 		super(
 				tileMap, 															//Tile map
+				mainMap,
 				right, 																// Facing right
 				up,  																// Holding up arrow
 				down,  																// Holding down arrow
