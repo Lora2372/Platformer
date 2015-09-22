@@ -42,18 +42,17 @@ public class MysteriousDungeon extends MainMap
 		
 		spawnTorch(109, 200);
 		
-		spawnTorch(109, 780);
+		spawnTorch(109, 480);
 		
-		spawnTorch(500, 780);
+		spawnTorch(500, 480);
 		
 		player.setPosition(109, 200);
 		player.setSpawnPoint(109, 200);
 		player.setSpawning(true);
 		
-		spawnSuccubus(1600, 780, false);
-		spawnSuccubus(1883, 240, false);
-		
-		spawnSlug(2551, 780, false);
+		spawnSuccubus(1600, 480, false);
+		spawnSuccubus(2000, 120, false);
+		spawnSuccubus(3000, 480, false);
 		
 		
 		fiona = new Fiona(tileMap,false,false,false,false, "Fiona", player.getx() + 200, player.gety(), this);
@@ -61,7 +60,7 @@ public class MysteriousDungeon extends MainMap
 		characterList.add(fiona);
 		fiona.setHidden(true);
 		
-		activatableShrine = new ActivatableShrineMysteriousDungeon(tileMap, gameStatemanager, this, 3840, 690, fiona);
+		activatableShrine = new ActivatableShrineMysteriousDungeon(tileMap, gameStatemanager, this, 3840, 480, fiona);
 		activatables.add(activatableShrine);
 		stuff.add(activatableShrine);
 		

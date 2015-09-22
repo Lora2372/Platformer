@@ -21,7 +21,7 @@ public class MenuState extends GameState
 			"Quit"
 		};
 	
-	private String title = "Lora's Platformer, KIRBY!";
+	private String title = "Lora's Platformer";
 	
 	
 	private Color titleColor;

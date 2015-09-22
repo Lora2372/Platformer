@@ -3,10 +3,13 @@ package Main;
 import java.awt.image.BufferedImage;
 import java.awt.*;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
+
 import GameState.GameStateManager;
 
 import java.awt.event.*;
+import java.io.IOException;
 
 @SuppressWarnings("serial")
 public class GamePanel 
@@ -17,7 +20,7 @@ public class GamePanel
 	public static final int WIDTH = 1200;
 	public static final int HEIGHT = 900;
 	
-	public static final String version = "0.1.022";
+	public static final String version = "0.1.023";
 		
 	// Game thread
 	private Thread thread;
@@ -53,25 +56,22 @@ public class GamePanel
 		}
 	}
 	
-	private void initialize()
+	public void run()
 	{
-		Content.loadContent();
+		
 		
 		image = new BufferedImage(
 				WIDTH,
 				HEIGHT,
 				BufferedImage.TYPE_INT_RGB);
 		graphics = (Graphics2D) image.getGraphics();
+		
+		draw();
+		drawToScreen();
+		
+		Content.loadContent();
 		running = true;
-		
-
 		gameStateManager = new GameStateManager();
-	}
-	
-	public void run()
-	{
-		initialize();
-		
 
 		
 		long start;
@@ -111,6 +111,30 @@ public class GamePanel
 	
 	private void draw()
 	{
+		if(running == null)
+		{
+			try 
+			{
+				BufferedImage loadingImage = ImageIO.read(
+						getClass().getResource(
+								"/Foregrounds/Loading.png"
+								)
+						);
+				
+				graphics.drawImage(loadingImage, 
+						(int)0, 
+						(int)0, 
+						GamePanel.WIDTH,
+						GamePanel.HEIGHT,
+						null);
+				
+			} 
+			catch (IOException e) 
+			{
+				e.printStackTrace();
+			}
+			return;
+		}
 		gameStateManager.draw(graphics);
 	}
 	
