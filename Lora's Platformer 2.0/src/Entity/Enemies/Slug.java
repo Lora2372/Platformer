@@ -65,6 +65,7 @@ public class Slug extends Character
 				"/Sprites/Characters/slugger.gif",									// spritePath
 				new int[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},						// animationStates
 				new int[]{3},														// numImages
+				new int[] { 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40  },
 				10,																	// damageOnTouch
 				friendly,															// friendly				
 				untouchable,

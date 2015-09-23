@@ -17,9 +17,64 @@ public class Fiona extends Character
 	
 	protected int moveTimer;
 	protected int moveCooldown;
-	protected boolean moving;
 	
-
+	protected int moving = 0; // 0 don't move, 1 = move left, 2 = move 3
+	
+	protected boolean isHit = false;
+	
+	protected String spritePath = "/Sprites/Characters/Succubus.png";
+	protected int[] animationStages = new int[]
+	{
+			0,								// Idle
+			0,								// Walking
+			0,								// Falling
+			0,								// Jumping
+			1,								// StartPunch
+			2,								// EndPunch
+			0,								// StartDash
+			0,								// EndDash
+			1,								// FireballSmallStart
+			2,								// FireballSmallEnd
+			1,								// FireballLargeStart
+			2,								// FireballLargeEnd
+			3,								// Flinch
+			0,								// Hover
+			0,								// Fly
+			0,								// Pose01
+			0								// Pose02
+	};
+	
+	protected int[] numImages = new int[]
+	{		
+			7,								// Fly/Idle
+			2,								// CastStart
+			2,								// CastEnd
+			1,								// Flinch
+			2								// Faint?
+	};
+	
+	protected int[] animationDelay = new int[]
+		{
+			400,							// Idle
+			400,								// Walking
+			400,								// Falling
+			400,								// Jumping
+			125,								// StartPunch
+			120,								// EndPunch
+			100,								// StartDash
+			100,								// EndDash
+			300,								// FireballSmallStart
+			300,								// FireballSmallEnd
+			300,								// FireballLargeStart
+			300,								// FireballLargeEnd
+			500,								// Flinch
+			400,								// Hover
+			400,								// Fly
+			400,								// Pose01
+			400									// Pose02
+		};
+	
+	
 	
 	public Fiona(
 			TileMap tileMap,
@@ -48,8 +103,8 @@ public class Fiona extends Character
 				0.6, 	 															// stopJumpSpeed
 				facingRight,														// facingRight
 				true,  																// inControl
-				500,		 															// health
-				500, 		 															//maxHealth
+				5000,		 															// health
+				5000, 		 															//maxHealth
 				30,		 															// healthCounter
 				100,	 																// stamina
 				100, 	 																// maxStamina
@@ -75,6 +130,7 @@ public class Fiona extends Character
 				"/Sprites/Characters/Succubus.png",									// spritePath
 				new int[] {0,0,0,0,1,2,0,0,1,2,1,2,3,0,0,0,0},						// animationStates
 				new int[]{7, 2, 2, 1, 2, 0, 0, 0, 0},								// numImages
+				new int[] { 400, 400, 400, 400, 125, 120, 100, 100, 100, 100, 100, 100, 500, 400, 400, 400, 400 }, // animationDelay
 				0,																	// damageOnTouch
 				friendly,															// friendly			
 				untouchable,
@@ -88,6 +144,7 @@ public class Fiona extends Character
 		
 		timer = 0;
 		cooldown = 600;
+		
 		
 		flying = true;
 		
@@ -103,13 +160,18 @@ public class Fiona extends Character
 	
 
 	
-	
+	public void iAmHit()
+	{
+		if(!isHit)
+		{
+			setStunned(5000);
+			isHit = true;
+		}
+	}
 	
 	public void updateAI(ArrayList<Character> characterList)
 	{
-		if(!inControl) return;
 
-		
 		// GANNONDORF TENNIS THIS SHIT!
 		// She will hug the corners, channel up a new energy ball spell,
 		// it will go towards the player, she's immune to all other attacks,
@@ -121,61 +183,73 @@ public class Fiona extends Character
 		//If the player moves to one corner, she moves to the other!
 		
 		
+		
+		if(isHit)
+		{
+			directionY += 0.1;
+
+			if(!stunned)
+			{
+				isHit = false;
+				flying = true;
+			}
+			
+			return;
+		}
+		
+		if(!inControl) return;
+
+		
 		ArrayList<Character> enemiesDetected = detectEnemy(characterList, false);
 		
 		if(enemiesDetected != null)
 		{
 			if(enemiesDetected.size() > 0)
 			{
-				if(enemiesDetected.get(0).getx() > locationX) facingRight = true;
+				Character enemy = enemiesDetected.get(0);
+				if(enemy.getx() > locationX) facingRight = true;
 				else facingRight = false;
+				
+				
+				if(locationY > 210)
+				{
+					directionY -= 0.1;
+					untouchable = true;
+				}
+				else
+				{
+					if(directionY != 0)
+					{
+						untouchable = false;
+						directionY = 0;
+						if(locationX > 3490) moving = 1;
+						else moving = 2;
+					}
+				}
 			}
 
 		}
-		
-//		if(moving)
-//		{
-//			ArrayList<Character> enemiesDetected = detectEnemy(characterList);
-//			
-//			if(enemiesDetected != null)
-//			{
-//				if(enemiesDetected.size() > 0)
-//				{
-//					Character enemy = enemiesDetected.get(0);
-//					
-//					if(!right && !left)
-//						right = true;
-//					
-//					if(enemy.getx() > locationX)
-//					{
-//
-//						if(right)
-//						{
-//							left = true;
-//							right = false;
-//						}
-//						
-//					}
-//					else
-//					{
-//						if(left)
-//						{
-//							left = false;
-//							right = true;
-//						}
-//					}
-//				}
-//			}
-//		}
-//		else
-//		{
-//			moveTimer++;
-//			if(moveTimer > moveCooldown)
-//			{
-//				moving = true;
-//				moveTimer = 0;
-//			}
-//		}
+		if(moving == 1)
+		{
+			if(locationX >= 3490)
+			{
+				left = true;
+			}
+			else 
+			{
+				left = false;
+				moving = 0;
+			}
+		}
+		else if(moving == 2)
+		{
+			if(locationX <= 4000) right = true;
+			else
+			{
+				right = false;
+				moving = 0;
+			}
+		}
 		
 		
 
@@ -187,7 +261,6 @@ public class Fiona extends Character
 				right = false;
 				left = false;
 				
-				moving = false;
 				moveTimer = 0;
 				timer = 0;
 				electricballCasting = true;

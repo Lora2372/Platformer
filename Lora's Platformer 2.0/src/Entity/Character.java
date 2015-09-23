@@ -68,7 +68,7 @@ public class Character extends MapObject
 	protected boolean removeMe;
 	
 	protected boolean dead;
-	protected boolean flinching;
+	protected boolean stunned;
 	protected long flinchTimer;
 	protected boolean inControl;
 	
@@ -134,6 +134,7 @@ public class Character extends MapObject
 	//  Animations 
 	protected ArrayList<BufferedImage[]> sprites;
 	protected int[] numFrames;
+	protected int[] animationDelay;
 	
 	protected boolean initializeSpawning;
 	protected boolean spawning;
@@ -209,6 +210,7 @@ public class Character extends MapObject
 			String spritePath,
 			int[] animationState,
 			int[] numFrames,
+			int[] animationDelay,
 			int damageOnTouch,
 			boolean friendly,
 			boolean untouchable,
@@ -261,6 +263,7 @@ public class Character extends MapObject
 		this.spritePath = spritePath;
 		this.animationState = animationState;
 		this.numFrames = numFrames;
+		this.animationDelay = animationDelay;
 		this.damageOnTouch = damageOnTouch;
 		this.friendly = friendly;
 		this.activatable = activatable;
@@ -269,6 +272,7 @@ public class Character extends MapObject
 		this.spawnY = spawnY;
 		this.mainMap = mainMap;
 		
+		if(name == "Lora") System.out.println("Running character");
 		
 		healthCounter = 0;
 		manaCounter = 0;
@@ -569,15 +573,18 @@ public class Character extends MapObject
 	public void hit(int damage)
 	{
 		System.out.println("Damage: " + damage);
-		if(dead || flinching) return;
+		if(dead) return;
 		health -= damage;
 		System.out.println(name + "'s health: " + health);
 		if( health < 0) health = 0;
 		if(health == 0) dead = true;
-		flinching = true;
+		iAmHit();
+		if(!stunned)setStunned(500);
 		inControl = false;
 		flinchTimer = System.nanoTime();
 	}
+	
+	public void iAmHit() { }
 	
 	public void update(ArrayList<Character> characterList)
 	{
@@ -659,7 +666,7 @@ public class Character extends MapObject
 				inControl = false;
 				currentAction = animationState[14];
 				animation.setFrames(sprites.get(animationState[14]));
-				animation.setDelay(3000);
+				animation.setDelay(animationDelay[14]);
 			}
 			
 			if(sexytime1 && animation.hasPlayedOnce())
@@ -684,7 +691,7 @@ public class Character extends MapObject
 				directionX = 0;
 				currentAction = animationState[15];
 				animation.setFrames(sprites.get(animationState[15]));
-				animation.setDelay(3000);
+				animation.setDelay(animationDelay[15]);
 			}
 			if(sexytime2 && animation.hasPlayedOnce())
 			{
@@ -693,33 +700,20 @@ public class Character extends MapObject
 			}
 
 		}
+		
+		
 		//********************************************************************************
 		//*Flinching	                                                                 *
 		//********************************************************************************
-		else if(flinching)
+		else if(stunned)
 		{
-			if(currentAction != animationState[12])
-			{
-				
-				
-				// Consider to keep or remove the loss of control of your character, should possibly
-				// restrict that to different sorts of crowd control rather than all types of damage.
-				
-				gliding = false;
-				left = false;
-				right = false;
-				
-				currentAction = animationState[12];
-				animation.setFrames(sprites.get(animationState[12]));
-				animation.setDelay(300);
-			}
 			if(animation.hasPlayedOnce())
 			{
-				flinching = false;
+				stunned = false;
 				inControl = true;
 			}
-				
 		}
+		
 		
 		
 		
@@ -732,7 +726,7 @@ public class Character extends MapObject
 			{
 				currentAction = animationState[4];
 				animation.setFrames(sprites.get(animationState[4]));
-				animation.setDelay(125);
+				animation.setDelay(animationDelay[4]);
 				
 				if(directionY == 0) directionX = 0;
 			}
@@ -745,7 +739,7 @@ public class Character extends MapObject
 				
 				currentAction = animationState[5];
 				animation.setFrames(sprites.get(animationState[5]));
-				animation.setDelay(120);
+				animation.setDelay(animationDelay[5]);
 			}
 		}
 		
@@ -768,7 +762,7 @@ public class Character extends MapObject
 			{
 				currentAction = animationState[6];
 				animation.setFrames(sprites.get(animationState[6]));
-				animation.setDelay(100);
+				animation.setDelay(animationDelay[6]);
 				if(directionY == 0) directionX = 0;
 				
 				saveFallSpeed = fallSpeed;
@@ -788,7 +782,7 @@ public class Character extends MapObject
 				
 				currentAction = animationState[7];
 				animation.setFrames(sprites.get(animationState[7]));
-				animation.setDelay(100);
+				animation.setDelay(animationDelay[7]);
 			}
 		}
 		else if(currentAction == animationState[7] && endDash)
@@ -814,7 +808,7 @@ public class Character extends MapObject
 			{
 				currentAction = animationState[8];
 				animation.setFrames(sprites.get(animationState[8]));
-				animation.setDelay(100);
+				animation.setDelay(animationDelay[8]);
 //				if(directionY == 0) directionX = 0;
 				JukeBox.play("FireballSmallLaunch");				
 			}
@@ -833,7 +827,7 @@ public class Character extends MapObject
 				
 				currentAction = animationState[9];
 				animation.setFrames(sprites.get(animationState[9]));
-				animation.setDelay(100);
+				animation.setDelay(animationDelay[9]);
 				
 				
 				// Create new fireball stuff here
@@ -859,7 +853,7 @@ public class Character extends MapObject
 			{
 				currentAction = animationState[8];
 				animation.setFrames(sprites.get(animationState[8]));
-				animation.setDelay(300);
+				animation.setDelay(animationDelay[8] * 3);
 				
 				ElectricballChargeUp electricballChargeUp = new ElectricballChargeUp(tileMap, locationX, locationY - 20);
 				mainMap.addEffect(electricballChargeUp);
@@ -879,7 +873,6 @@ public class Character extends MapObject
 				{
 					if(enemiesDetected.size() > 0)
 					{
-						System.out.println("hm: " + enemiesDetected.get(0).name);
 						calculateAim(enemiesDetected.get(0));
 					}
 					else
@@ -897,7 +890,7 @@ public class Character extends MapObject
 				
 				currentAction = animationState[9];
 				animation.setFrames(sprites.get(animationState[9]));
-				animation.setDelay(500);
+				animation.setDelay(animationDelay[9]);
 				
 				JukeBox.play("ElectricballActive");
 				JukeBox.play("ElectricballThrow");
@@ -906,11 +899,11 @@ public class Character extends MapObject
 			}
 		}
 		
-		else if(currentAction == animationState[9] && fireballSmallDoneCasting)
+		else if(currentAction == animationState[9] && electricballDoneCasting)
 		{
 			if (animation.hasPlayedOnce()) 
 			{
-				fireballSmallDoneCasting = false;
+				electricballDoneCasting = false;
 				inControl = true;
 			}
 		}
@@ -924,7 +917,7 @@ public class Character extends MapObject
 			{
 				currentAction = animationState[10];
 				animation.setFrames(sprites.get(animationState[10]));
-				animation.setDelay(100);
+				animation.setDelay(animationDelay[10]);
 				if(directionY == 0) directionX = 0;
 				JukeBox.play("FireballLargeLaunch");
 			}
@@ -941,7 +934,7 @@ public class Character extends MapObject
 				
 				currentAction = animationState[11];
 				animation.setFrames(sprites.get(animationState[11]));
-				animation.setDelay(100);
+				animation.setDelay(animationDelay[11]);
 				
 				
 				// Create new fireball stuff here
@@ -969,14 +962,14 @@ public class Character extends MapObject
 				{
 					currentAction = animationState[13];
 					animation.setFrames(sprites.get(animationState[13]));
-					animation.setDelay(100);
+					animation.setDelay(animationDelay[13]);
 				}
 			}
 			else if(currentAction != animationState[2])
 			{
 				currentAction = animationState[2];
 				animation.setFrames(sprites.get(animationState[2]));
-				animation.setDelay(100);
+				animation.setDelay(animationDelay[2]);
 			}
 		}
 				
@@ -993,7 +986,7 @@ public class Character extends MapObject
 				{
 					currentAction = animationState[14];
 					animation.setFrames(sprites.get(animationState[14]));
-					animation.setDelay(100);
+					animation.setDelay(animationDelay[14]);
 				}
 			}
 			//********************************************************************************
@@ -1003,7 +996,7 @@ public class Character extends MapObject
 			{
 				currentAction = animationState[3];
 				animation.setFrames(sprites.get(animationState[3]));
-				animation.setDelay(80);
+				animation.setDelay(animationDelay[3]);
 			}
 			
 
@@ -1019,7 +1012,7 @@ public class Character extends MapObject
 			{
 				currentAction = animationState[1];
 				animation.setFrames(sprites.get(animationState[1]));
-				animation.setDelay(40);
+				animation.setDelay(animationDelay[1]);
 			}
 
 		}
@@ -1034,7 +1027,7 @@ public class Character extends MapObject
 			{
 				currentAction = animationState[0];
 				animation.setFrames(sprites.get(animationState[0]));
-				animation.setDelay(400);
+				animation.setDelay(animationDelay[0]);
 			}
 		}
 		
@@ -1046,6 +1039,19 @@ public class Character extends MapObject
 			if(right) facingRight = true;
 			if(left) facingRight = false;
 		}
+	}
+	
+	public void setStunned(int stunDuration)
+	{
+		gliding = false;
+		left = false;
+		right = false;
+		
+		stunned = true;
+		
+		currentAction = animationState[12];
+		animation.setFrames(sprites.get(animationState[12]));
+		animation.setDelay(stunDuration);
 	}
 	
 //	public ArrayList<Projectile> detectProjectiles
@@ -1135,7 +1141,7 @@ public class Character extends MapObject
 				}
 			}
 		}
-		else if(tennisPlayer)
+		else if(tennisPlayer && inControl)
 		{
 			tennisTimer++;
 			if(tennisTimer >= tennisCooldown * 10) tennisTimer = tennisCooldown;
@@ -1213,7 +1219,7 @@ public class Character extends MapObject
 		{			
 			
 			Character character = characterList.get(i);
-			if(character.getFriendly() != friendly)
+			if(character.getFriendly() != friendly && !character.getUntouchable() && !character.getInvulnderable())
 			{
 				//********************************************************************************
 				//*Punching                                                                      *
@@ -1288,22 +1294,6 @@ public class Character extends MapObject
 
 			
 		} // End for loop		
-		
-		
-		
-//		for(int i = 0; i < projectiles.size(); i++)
-//		{
-//			System.out.println("Projectile: " + projectiles.get(i) + " collisionWidth: " + projectiles.get(i).collisionWidth);
-//			for(int j = 0; j < characterList.size(); j++)
-//			{
-//				if()
-//				if(projectiles.get(i).intersects(characterList.get(j)))
-//				{
-//					projectiles.get(i).setHit(characterList);
-//				}
-//			}
-//
-//		}
 	}
 	
 	

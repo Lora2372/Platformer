@@ -73,9 +73,6 @@ public class Projectile extends MapObject
 		this.directionX = Math.cos(aim) * 5;
 		this.directionY = Math.sin(aim) * 5;
 		
-		System.out.println("directionX: " + directionX);
-		System.out.println("directionY: " + directionY);
-		
 		rotaded = true;
 		
 		hit = false;		

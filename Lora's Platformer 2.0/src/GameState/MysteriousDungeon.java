@@ -60,7 +60,7 @@ public class MysteriousDungeon extends MainMap
 		characterList.add(fiona);
 		fiona.setHidden(true);
 		
-		activatableShrine = new ActivatableShrineMysteriousDungeon(tileMap, gameStatemanager, this, 3840, 480, fiona);
+		activatableShrine = new ActivatableShrineMysteriousDungeon(tileMap, gameStatemanager, this, 3760, 510, fiona);
 		activatables.add(activatableShrine);
 		stuff.add(activatableShrine);
 		
