@@ -48,6 +48,10 @@ public class MysteriousDungeon extends MainMap
 		
 		spawnTorch(500, 480);
 		
+		spawnTorch(3568, 410);
+		
+		spawnTorch(3930, 410);
+		
 		player.setPosition(109, 200);
 		player.setSpawnPoint(109, 200);
 		player.setSpawning(true);

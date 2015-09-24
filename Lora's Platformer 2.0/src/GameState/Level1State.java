@@ -57,6 +57,8 @@ public class Level1State extends MainMap
 		spawnSuccubus(2700, 1400, false);
 		spawnSuccubus(1339,1900, true);
 		spawnSuccubus(2252, 2170, true);
+		spawnSuccubus(1423, 650, true);
+		spawnSuccubus(3689, 1430, false);
 		
 		spawnChestCommon(989, 2250);
 		spawnChestUncommon(989 + 120, 2250);

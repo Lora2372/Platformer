@@ -407,6 +407,10 @@ public class MainMap extends GameState
 		}
 		else
 		{
+			if(player.getInConversation())
+			{
+				player.getConversationBox().progressConversation();
+			}
 			for(int i = 0; i < activatables.size(); i++)
 			{
 				if(player.intersects(activatables.get(i)))

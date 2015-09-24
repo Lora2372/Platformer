@@ -67,8 +67,8 @@ public class ActivatableSign extends Doodad
 		
 		if(!player.getConversationBox().inConversation()) 
 			startConversation();
-		else 
-			player.getConversationBox().progressConversation();
+//		else 
+//			player.getConversationBox().progressConversation();
 		
 		if(player.getConversationBox().getConversationTracker() >= conversation.length)
 		{

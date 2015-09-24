@@ -95,8 +95,8 @@ public class ActivatableShrineMysteriousDungeon extends Doodad
 		
 		if(!player.getConversationBox().inConversation())
 			startConversation(player);
-		else
-			player.getConversationBox().progressConversation();
+//		else
+//			player.getConversationBox().progressConversation();
 		
 		if(player.getConversationBox().getConversationTracker() == 2)
 		{
@@ -135,24 +135,25 @@ public class ActivatableShrineMysteriousDungeon extends Doodad
 				}
 				for(int i = 0; i < mysteriousDungeon.getStuff().size(); i++)
 				{
-					Doodad thing = mysteriousDungeon.getStuff().get(i);
+					Doodad currentDoodad = mysteriousDungeon.getStuff().get(i);
 					
-					if(thing == null)
+					if(currentDoodad == null)
 					{
 						System.out.println("Removing a doodad");
-						mysteriousDungeon.getStuff().remove(thing);
+						mysteriousDungeon.getStuff().remove(currentDoodad);
 						i--;
 					}
 					else
 					{
-						if(thing == this)
+						double tempX = currentDoodad.getx() - (tileMap.getWidth() - 20 * tileSize);
+						if(tempX > 0)
 						{
-							thing.setPosition(this.locationX - (tileMap.getWidth() - 20 * tileSize), this.locationY);
+							currentDoodad.setPosition(currentDoodad.getx() - (tileMap.getWidth() - 20 * tileSize), currentDoodad.gety());
 						}
 						else
 						{
-							mysteriousDungeon.getStuff().remove(thing);
-							thing = null;
+							mysteriousDungeon.getStuff().remove(currentDoodad);
+							currentDoodad = null;
 							i--;
 						}
 					}
