@@ -55,11 +55,10 @@ public class Content
 	};
 	
 	public static  void loadContent()
-	{
-		System.out.println("Loading sound files");
-		
+	{		
 		JukeBox.load("/Sound/jump.mp3", "jump");
 		
+		// Projectile sound effects
 		JukeBox.load("/Sound/FireballLargeLaunch.mp3", "FireballLargeLaunch");
 		JukeBox.load("/Sound/FireballSmallLaunch.mp3", "FireballSmallLaunch");	
 		
@@ -69,12 +68,15 @@ public class Content
 		JukeBox.load("/Sound/ElectricballChargeUp.mp3", "ElectricballChargeUp");
 		JukeBox.load("/Sound/ElectricballLaunch.mp3", "ElectricballLaunch");
 		JukeBox.load("/Sound/ElectricballImpact.mp3", "ElectricballImpact");
-		
-		JukeBox.load("/Sound/Teleport.mp3", "teleport");
-		
+
 		JukeBox.load("/Sound/FireballLargeImpact.mp3", "FireballLargeImpact");
 		JukeBox.load("/Sound/FireballSmallImpact.mp3", "FireballSmallImpact");
 		
+		// Spell sound effect
+		JukeBox.load("/Sound/Teleport.mp3", "teleport");
+		
+		
+		// Music
 		JukeBox.load("/Sound/Music/MusicMenu.mp3", "Menu");
 		JukeBox.load("/Sound/Music/MusicLevel1.mp3", "Level1");
 		JukeBox.load("/Sound/Music/MusicDungeon1.mp3", "Dungeon1");
@@ -83,9 +85,12 @@ public class Content
 		
 		JukeBox.load("/Sound/Music/GameOver.mp3",  "GameOver");
 		
+		// Doodad sound effect
 		JukeBox.load("/Sound/Doodads/OpenChestUncommon.mp3", "OpenChestUncommon");
 		JukeBox.load("/Sound/Doodads/OpenChestCommon.mp3", "OpenChestCommon");
 		JukeBox.load("/Sound/Doodads/OpenChestRare.mp3", "OpenChestRare");
+		
+		JukeBox.load("/Sound/Doodads/Close.mp3", "Close");
 
 
 	}

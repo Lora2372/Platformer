@@ -8,7 +8,6 @@ import Audio.JukeBox;
 import javax.imageio.ImageIO;
 
 import Entity.Doodad.ElectricballChargeUp;
-import Entity.Doodad.FireballMediumChargeUp;
 import Entity.Doodad.SummoningEffect;
 import Entity.Player.ConversationBox;
 import Entity.Player.Player;
@@ -71,6 +70,7 @@ public class Character extends MapObject
 	protected boolean stunned;
 	protected long flinchTimer;
 	protected boolean inControl;
+	protected boolean inConversation;
 	
 	protected String spritePath;
 	protected int[] animationState;
@@ -555,6 +555,8 @@ public class Character extends MapObject
 		
 	}
 	
+	public boolean getInConversation() { return inConversation; }
+	public void setInConversation(boolean b) { inConversation = b; }
 	
 	public void updateAI(ArrayList<Character> characterList){}
 	
@@ -611,7 +613,8 @@ public class Character extends MapObject
 		{
 			summoningEffect = null;
 			spawning = false;
-			inControl = true;
+			if(!inConversation)
+				inControl = true;
 		}
 		
 		if(locationX > tileMap.getWidth() || locationX < 0 || locationY > tileMap.getHeight())

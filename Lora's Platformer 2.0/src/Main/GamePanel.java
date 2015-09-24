@@ -17,10 +17,11 @@ public class GamePanel
 					implements Runnable, KeyListener
 {
 	// Dimensions
-	public static final int WIDTH = 1200;
-	public static final int HEIGHT = 900;
+	public static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	public static int WIDTH = 1200;
+	public static int HEIGHT = 900;
 	
-	public static final String version = "0.1.024";
+	public static final String version = "0.1.025";
 		
 	// Game thread
 	private Thread thread;
@@ -38,6 +39,10 @@ public class GamePanel
 	public GamePanel()
 	{
 		super();
+		
+		if(HEIGHT > screenSize.getHeight()) HEIGHT = (int) screenSize.getHeight();
+		if(WIDTH > screenSize.getWidth()) WIDTH = (int) screenSize.getWidth();
+		
 		setPreferredSize(
 				new Dimension(WIDTH, HEIGHT)
 				);

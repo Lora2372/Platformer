@@ -1,8 +1,6 @@
 package Entity;
 
 import java.awt.Rectangle;
-import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
 
 import Main.GamePanel;
 import TileMap.TileMap;

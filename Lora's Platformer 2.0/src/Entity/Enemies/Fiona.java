@@ -3,10 +3,7 @@ package Entity.Enemies;
 import java.util.ArrayList;
 
 import TileMap.TileMap;
-import Audio.JukeBox;
 import Entity.Character;
-import Entity.ElectricBall;
-import Entity.Doodad.FireballMediumChargeUp;
 import GameState.MysteriousDungeon;
 import Main.Content;
 
@@ -21,60 +18,7 @@ public class Fiona extends Character
 	protected int moving = 0; // 0 don't move, 1 = move left, 2 = move 3
 	
 	protected boolean isHit = false;
-	
-	protected String spritePath = "/Sprites/Characters/Succubus.png";
-	protected int[] animationStages = new int[]
-	{
-			0,								// Idle
-			0,								// Walking
-			0,								// Falling
-			0,								// Jumping
-			1,								// StartPunch
-			2,								// EndPunch
-			0,								// StartDash
-			0,								// EndDash
-			1,								// FireballSmallStart
-			2,								// FireballSmallEnd
-			1,								// FireballLargeStart
-			2,								// FireballLargeEnd
-			3,								// Flinch
-			0,								// Hover
-			0,								// Fly
-			0,								// Pose01
-			0								// Pose02
-	};
-	
-	protected int[] numImages = new int[]
-	{		
-			7,								// Fly/Idle
-			2,								// CastStart
-			2,								// CastEnd
-			1,								// Flinch
-			2								// Faint?
-	};
-	
-	protected int[] animationDelay = new int[]
-		{
-			400,							// Idle
-			400,								// Walking
-			400,								// Falling
-			400,								// Jumping
-			125,								// StartPunch
-			120,								// EndPunch
-			100,								// StartDash
-			100,								// EndDash
-			300,								// FireballSmallStart
-			300,								// FireballSmallEnd
-			300,								// FireballLargeStart
-			300,								// FireballLargeEnd
-			500,								// Flinch
-			400,								// Hover
-			400,								// Fly
-			400,								// Pose01
-			400									// Pose02
-		};
-	
-	
+
 	
 	public Fiona(
 			TileMap tileMap,
@@ -198,6 +142,7 @@ public class Fiona extends Character
 		}
 		
 		if(!inControl) return;
+		
 
 		
 		ArrayList<Character> enemiesDetected = detectEnemy(characterList, false);
@@ -222,7 +167,7 @@ public class Fiona extends Character
 					{
 						untouchable = false;
 						directionY = 0;
-						if(locationX > 3490) moving = 1;
+						if(locationX > 360) moving = 1;
 						else moving = 2;
 					}
 				}
@@ -231,7 +176,7 @@ public class Fiona extends Character
 		}
 		if(moving == 1)
 		{
-			if(locationX >= 3490)
+			if(locationX >= 360)
 			{
 				left = true;
 			}
@@ -243,7 +188,7 @@ public class Fiona extends Character
 		}
 		else if(moving == 2)
 		{
-			if(locationX <= 4000) right = true;
+			if(locationX <= 880) right = true;
 			else
 			{
 				right = false;

@@ -1,10 +1,12 @@
 package GameState;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
 import Audio.JukeBox;
+import Entity.Doodad.Doodad;
 import Entity.Doodad.Activatable.ActivatableShrineMysteriousDungeon;
 import Entity.Enemies.Fiona;
 import TileMap.Background;
@@ -55,6 +57,7 @@ public class MysteriousDungeon extends MainMap
 		spawnSuccubus(3000, 480, false);
 		
 		
+		
 		fiona = new Fiona(tileMap,false,false,false,false, "Fiona", player.getx() + 200, player.gety(), this);
 		enemies.add(fiona);
 		characterList.add(fiona);
@@ -70,6 +73,16 @@ public class MysteriousDungeon extends MainMap
 		doneInitializing = true;
 		bossEngaged = false;
 		bossDefeated = false;
+	}
+	
+	public ArrayList<Entity.Character> getCharacterList()
+	{
+		return characterList;
+	}
+	
+	public ArrayList<Doodad> getStuff()
+	{
+		return stuff;
 	}
 	
 	public void update()
@@ -97,10 +110,6 @@ public class MysteriousDungeon extends MainMap
 			JukeBox.loop("MysteriousBattle");
 			
 			fiona.inControl(true);
-		}
-		
-		
+		}	
 	}
-
-
 }

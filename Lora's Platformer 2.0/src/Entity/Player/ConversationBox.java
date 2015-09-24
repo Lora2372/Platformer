@@ -63,6 +63,12 @@ public class ConversationBox
 		
 		player.inControl(false);
 		player.invulnerable(true);
+		
+		if(otherPerson != null)
+			otherPerson.setInConversation(true);
+		
+		player.setInConversation(true);
+		
 	}
 	
 	public void endConversation()
@@ -72,6 +78,11 @@ public class ConversationBox
 		
 		player.inControl(true);
 		player.invulnerable(false);
+		
+		player.setInConversation(false);
+		
+		if(otherPerson != null)
+			otherPerson.setInConversation(false);
 	}
 	
 	
@@ -120,17 +131,20 @@ public class ConversationBox
 			tempIcon = sign.getPortrait();
 		}
 		
-		graphics.drawImage(
-				tempIcon[0],
-				(int) (locationX - 94),
-				(int) (locationY + 35),
-				null
-			);
-		
 		graphics.setFont(new Font("Arial", Font.PLAIN, 14));
 		
-		graphics.drawString(tempName, (int)locationX + 21, (int)locationY + 25);		
-		
+		if(whoTalks[conversationTracker] != 3)
+		{
+			graphics.drawImage(
+					tempIcon[0],
+					(int) (locationX - 94),
+					(int) (locationY + 35),
+					null
+				);
+			
+			graphics.drawString(tempName, (int)locationX + 21, (int)locationY + 25);	
+		}
+
 		String[] newString = conversation[conversationTracker].split("\n");
 		
 			
