@@ -1,6 +1,11 @@
 package Main;
 
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import javax.imageio.ImageIO;
 
@@ -54,26 +59,56 @@ public class Content
 		"Dungeon1"
 	};
 	
+	
 	public static  void loadContent()
-	{		
-		JukeBox.load("/Sound/jump.mp3", "jump");
+	{				
+		
+		// Character sound effects
+		
+		// Load female 1
+//		for(int i = 0; i < )
+		
+		InputStream inputStream = Content.class.getResourceAsStream("/Sound/Character Sounds");
+
+		BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+		
+		String soundFile;
+		String folder;
+		
+		try 
+		{
+			while ((folder = reader.readLine()) != null)
+			{
+				InputStream inputStreamFile = Content.class.getResourceAsStream("/Sound/Character Sounds/" + folder);
+				BufferedReader fileReader = new BufferedReader(new InputStreamReader(inputStreamFile));
+				while((soundFile = fileReader.readLine()) != null )
+				{
+					JukeBox.load("/Sound/Character Sounds/" + folder + "/" + soundFile, folder + soundFile.substring(0, soundFile.length() - 4));
+				}
+				
+			}
+		} catch (IOException e) 
+		{
+			e.printStackTrace();
+		}
+		
 		
 		// Projectile sound effects
-		JukeBox.load("/Sound/FireballLargeLaunch.mp3", "FireballLargeLaunch");
-		JukeBox.load("/Sound/FireballSmallLaunch.mp3", "FireballSmallLaunch");	
+		JukeBox.load("/Sound/Spell Effects/FireballLargeLaunch.mp3", "FireballLargeLaunch");
+		JukeBox.load("/Sound/Spell Effects/FireballSmallLaunch.mp3", "FireballSmallLaunch");	
 		
-		JukeBox.load("/Sound/EnergyballChargeUp.mp3", "EnergyballChargeUp");
-		JukeBox.load("/Sound/ElectricballActive.mp3", "ElectricballActive");
+		JukeBox.load("/Sound/Spell Effects/EnergyballChargeUp.mp3", "EnergyballChargeUp");
+		JukeBox.load("/Sound/Spell Effects/ElectricballActive.mp3", "ElectricballActive");
 		
-		JukeBox.load("/Sound/ElectricballChargeUp.mp3", "ElectricballChargeUp");
-		JukeBox.load("/Sound/ElectricballLaunch.mp3", "ElectricballLaunch");
-		JukeBox.load("/Sound/ElectricballImpact.mp3", "ElectricballImpact");
+		JukeBox.load("/Sound/Spell Effects/ElectricballChargeUp.mp3", "ElectricballChargeUp");
+		JukeBox.load("/Sound/Spell Effects/ElectricballLaunch.mp3", "ElectricballLaunch");
+		JukeBox.load("/Sound/Spell Effects/ElectricballImpact.mp3", "ElectricballImpact");
 
-		JukeBox.load("/Sound/FireballLargeImpact.mp3", "FireballLargeImpact");
-		JukeBox.load("/Sound/FireballSmallImpact.mp3", "FireballSmallImpact");
+		JukeBox.load("/Sound/Spell Effects/FireballLargeImpact.mp3", "FireballLargeImpact");
+		JukeBox.load("/Sound/Spell Effects/FireballSmallImpact.mp3", "FireballSmallImpact");
 		
 		// Spell sound effect
-		JukeBox.load("/Sound/Teleport.mp3", "teleport");
+		JukeBox.load("/Sound/Spell Effects/Teleport.mp3", "teleport");
 		
 		
 		// Music

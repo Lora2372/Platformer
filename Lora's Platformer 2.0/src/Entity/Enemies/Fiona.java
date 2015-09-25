@@ -1,8 +1,10 @@
 package Entity.Enemies;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import TileMap.TileMap;
+import Audio.JukeBox;
 import Entity.Character;
 import GameState.MysteriousDungeon;
 import Main.Content;
@@ -12,13 +14,14 @@ public class Fiona extends Character
 	protected int cooldown;
 	protected int timer;
 	
-	protected int moveTimer;
-	protected int moveCooldown;
+
 	
 	protected int moving = 0; // 0 don't move, 1 = move left, 2 = move 3
 	
 	protected boolean isHit = false;
 
+	protected int numberofGrunts;
+	
 	
 	public Fiona(
 			TileMap tileMap,
@@ -47,8 +50,8 @@ public class Fiona extends Character
 				0.6, 	 															// stopJumpSpeed
 				facingRight,														// facingRight
 				true,  																// inControl
-				5000,		 															// health
-				5000, 		 															//maxHealth
+				500,		 															// health
+				500, 		 															//maxHealth
 				30,		 															// healthCounter
 				100,	 																// stamina
 				100, 	 																// maxStamina
@@ -95,11 +98,9 @@ public class Fiona extends Character
 		portrait = Content.PortraitLiadrin[0];
 		
 		setTennisPlayer(true);
+				
+
 		
-		moveCooldown = 400;
-//		moving = true;
-//		right = true;
-//		up = true;
 	}
 	
 
@@ -109,9 +110,27 @@ public class Fiona extends Character
 		if(!isHit)
 		{
 			setStunned(5000);
+			JukeBox.play("FionaGrunt07");
 			isHit = true;
 		}
 	}
+	
+	public void playCastSound()
+	{
+		Random random = new Random();
+		int myRandom = random.nextInt((2 - 1) + 1) + 1;
+		JukeBox.play("FionaCast0" + myRandom);
+	}
+	
+	public void playPunchSound()
+	{
+		JukeBox.play("FionaPunch01");
+	}
+	
+//	public void playStunnedSound()
+//	{
+//		JukeBox.play("Grunt07");
+//	}
 	
 	public void updateAI(ArrayList<Character> characterList)
 	{
@@ -198,15 +217,11 @@ public class Fiona extends Character
 		
 		
 
-		if(electricball == null || electricball.getHit())
+		if( (electricball == null || electricball.getHit()) && directionX == 0 && directionY == 0)
 		{
 			timer++;
 			if(timer > cooldown)
-			{
-				right = false;
-				left = false;
-				
-				moveTimer = 0;
+			{	
 				timer = 0;
 				electricballCasting = true;
 			}

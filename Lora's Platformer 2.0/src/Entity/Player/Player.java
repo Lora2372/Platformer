@@ -1,13 +1,29 @@
 package Entity.Player;
 
 
+import java.util.Random;
+
+import Audio.JukeBox;
 import Entity.Character;
 import GameState.MainMap;
 import TileMap.TileMap;
 
 public class Player extends Character
 {
-	 
+	
+	protected int numberofAttackSounds;
+	protected int numberofHurtSounds;
+	protected int numberofJumpSounds;
+	
+	protected int[] numberofSounds;
+	
+	String[] soundTypes = new String[]
+	{
+		"Attack",
+		"Hurt",
+		"Jump"
+	};
+	
 	//  Animations 
 	
 	
@@ -75,7 +91,69 @@ public class Player extends Character
 		conversationbox = new ConversationBox(this);
 
 		
+		
+
+		
+		numberofSounds = new int[soundTypes.length];
+
+		
+		for(int i = 0; i < numberofSounds.length; i++)
+		{
+			int tempInt = 0;
+			while(JukeBox.checkIfClipExists("Female01Attack0" + (tempInt + 1)))
+			{
+				tempInt++;
+			}
+			numberofSounds[i] = tempInt;
+		}
 	}
+	
+	public void iAmHit()
+	{
+		Random random = new Random();
+		
+		int max = numberofSounds[1];
+		int min = 1;
+		
+		int myRandom = random.nextInt((max - min) + 1) + min;
+		JukeBox.play("Female01" + soundTypes[1] + "0" + myRandom);
+		System.out.println("Female01" + soundTypes[1] + "0" + myRandom);
+	}
+	
+	
+	public void playJumpSound()
+	{
+		Random random = new Random();
+		
+		int max = numberofSounds[2];
+		int min = 1;
+		
+		int myRandom = random.nextInt((max - min) + 1) + min;
+		JukeBox.play("Female01" + soundTypes[2] + "0" + myRandom);
+	}
+	
+	public void playCastSound()
+	{
+		Random random = new Random();
+		
+		int max = numberofSounds[0];
+		int min = 1;
+		
+		int myRandom = random.nextInt((max - min) + 1) + min;
+		JukeBox.play("Female01" + soundTypes[0] + "0" + myRandom);
+	}
+	
+	public void playPunchSound()
+	{
+		Random random = new Random();
+		
+		int max = numberofSounds[0];
+		int min = 1;
+		
+		int myRandom = random.nextInt((max - min) + 1) + min;
+		JukeBox.play("Female01" + soundTypes[0] + "0" + myRandom);
+	}
+	
 	
 	public ConversationBox getConversationBox()
 	{

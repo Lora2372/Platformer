@@ -47,6 +47,20 @@ public class JukeBox
 		{
 			e.printStackTrace();
 		}
+		
+		System.out.println("Added: " + n);
+	}
+	
+	public static boolean checkIfClipExists(String s)
+	{
+		if(clips.get(s) != null)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 	
 	public static void play(String s)

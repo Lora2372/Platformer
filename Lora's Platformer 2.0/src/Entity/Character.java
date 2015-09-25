@@ -533,7 +533,8 @@ public class Character extends MapObject
 		if(jumping && !falling && inControl && !flying)
 		{
 			// I'll leave the jump sound commented out until we find a better one.
-//			JukeBox.play("jump");			
+//			JukeBox.play("jump");
+			playJumpSound();
 			directionY = jumpStart;
 			falling = true;
 		}
@@ -587,6 +588,13 @@ public class Character extends MapObject
 	}
 	
 	public void iAmHit() { }
+	
+	public void playCastSound(){}
+	
+	public void playPunchSound(){}
+	
+	public void playJumpSound() { }
+	
 	
 	public void update(ArrayList<Character> characterList)
 	{
@@ -743,6 +751,7 @@ public class Character extends MapObject
 				currentAction = animationState[5];
 				animation.setFrames(sprites.get(animationState[5]));
 				animation.setDelay(animationDelay[5]);
+				playPunchSound();
 			}
 		}
 		
@@ -828,6 +837,8 @@ public class Character extends MapObject
 				fireball.setPosition(locationX, locationY - 20);
 				mainMap.addProjectile(fireball);
 				
+				playCastSound();
+				
 				currentAction = animationState[9];
 				animation.setFrames(sprites.get(animationState[9]));
 				animation.setDelay(animationDelay[9]);
@@ -881,6 +892,7 @@ public class Character extends MapObject
 					else
 					{
 						System.out.println("No enemy found..");
+						return;
 					}
 				}
 				
@@ -897,6 +909,7 @@ public class Character extends MapObject
 				
 				JukeBox.play("ElectricballActive");
 				JukeBox.play("ElectricballThrow");
+				playCastSound();
 				
 				// Create new fireball stuff here
 			}
@@ -934,6 +947,8 @@ public class Character extends MapObject
 				FireballLarge fireball = new FireballLarge(tileMap, mainMap, facingRight, up, down, aim, friendly, fireballLargeDamage);
 				fireball.setPosition(locationX, locationY);
 				mainMap.addProjectile(fireball);
+				
+				playCastSound();
 				
 				currentAction = animationState[11];
 				animation.setFrames(sprites.get(animationState[11]));
