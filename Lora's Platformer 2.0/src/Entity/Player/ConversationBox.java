@@ -55,7 +55,6 @@ public class ConversationBox
 			)
 	{
 		otherPerson = newOtherPerson;
-		sign = newSign;
 		conversation = newConversation;
 		conversationTracker = 0;
 		inConversation = true;
@@ -63,6 +62,8 @@ public class ConversationBox
 		
 		player.inControl(false);
 		player.invulnerable(true);
+		
+		if(newSign != null) sign = newSign;
 		
 		if(otherPerson != null)
 			otherPerson.setInConversation(true);

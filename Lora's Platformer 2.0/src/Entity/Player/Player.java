@@ -56,7 +56,7 @@ public class Player extends Character
 				800,																// sightRange
 				120,
 				5,	 	 															// punchCost
-				5, 		 															// punchDamage
+				1, 		 															// punchDamage
 				80, 	 															// punchRange
 				40,		 															// dashCost
 				40,		 															// dashDamage

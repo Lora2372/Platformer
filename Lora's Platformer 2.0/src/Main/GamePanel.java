@@ -21,7 +21,7 @@ public class GamePanel
 	public static int WIDTH = 1200;
 	public static int HEIGHT = 900;
 	
-	public static final String version = "0.1.027";
+	public static final String version = "0.1.028";
 		
 	// Game thread
 	private Thread thread;
@@ -40,7 +40,7 @@ public class GamePanel
 	{
 		super();
 		
-		if(HEIGHT > screenSize.getHeight()) HEIGHT = (int) screenSize.getHeight();
+		if(HEIGHT > screenSize.getHeight()) HEIGHT = (int) screenSize.getHeight() - 100;
 		if(WIDTH > screenSize.getWidth()) WIDTH = (int) screenSize.getWidth();
 		
 		setPreferredSize(
@@ -145,7 +145,6 @@ public class GamePanel
 	
 	private void drawToScreen()
 	{
-		
 		Graphics graphics2 = getGraphics();
 		graphics2.drawImage(image,0,0, null );
 		graphics2.dispose();

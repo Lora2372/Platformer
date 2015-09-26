@@ -5,14 +5,17 @@ import java.awt.image.*;
 
 import javax.imageio.ImageIO;
 
+import Main.GamePanel;
+
 public class HUD 
 {
 	private Player player;
 	
-	private BufferedImage[] image = new BufferedImage[5];
+	private BufferedImage[] image = new BufferedImage[6];
 	
 	
-	private Font font;
+	
+	private Entity.Character boss;
 	
 	public HUD(Player p)
 	{
@@ -43,12 +46,34 @@ public class HUD
 							)
 					);
 			
-			font = new Font("Arial", Font.PLAIN, 14);
+			image[4] = ImageIO.read(
+					getClass().getResource(
+							"/HUD/bossHealthBar.png"
+							)
+					);
+			
+			image[5] = ImageIO.read(
+					getClass().getResource(
+							"/HUD/bossHealthBarFrame.png"
+							)
+					);
+			
 		}catch(Exception e)
 		{
 			e.printStackTrace();
 		}
 	}
+	
+	public void addBoss(Entity.Character boss)
+	{
+		this.boss = boss;
+	}
+	
+	public void removeBoss()
+	{
+		this.boss = null;
+	}
+	
 	public void draw(Graphics2D g)
 	{
 		
@@ -92,20 +117,37 @@ public class HUD
 				10, 
 				null);
 		
-
 		
-		g.setFont(font);
-		g.drawString(
-				player.getHealth() + "/" + player.getMaxHealth(), 
-				30 , 
-				25
-				);
+		
+		
+		
+		if(boss != null)
+		{
+			int x = GamePanel.WIDTH / 4;
+			int y = GamePanel.HEIGHT - image[5].getHeight() - 30;
+			
+			int imageWidth = GamePanel.WIDTH / 2;
+			
+			
+			g.drawImage(image[5],
+					x,
+					y,
+					imageWidth,
+					image[5].getHeight(),
+					null
+					);
+			
+			t1 = boss.getHealth();
+			t2 = boss.getMaxHealth();
 
-		g.drawString(
-				player.getMana() / 100 + "/" + player.getMaxMana() / 100, 
-				30 , 
-				45
-				);
+			g.drawImage(image[4], 
+					x, 
+					y, 
+					(int)((t1/t2) * imageWidth),
+					image[4].getHeight(),
+					null);			
+		}
+		
 		
 	}
 	

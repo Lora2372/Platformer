@@ -69,6 +69,7 @@ public class MainMap extends GameState
 		hud = new HUD(player);
 	}
 	
+	public HUD getHUD() { return hud; }
 	
 	public void GameOverUpdate()
 	{
@@ -111,7 +112,7 @@ public class MainMap extends GameState
 			{
 				
 				Character character = characterList.get(i);
-				if(character.getFriendly() != projectiles.get(j).getFriendly() && !character.getUntouchable() && !character.getInvulnderable())
+				if(character.getFriendly() != projectiles.get(j).getFriendly() && !character.getUntouchable() && !character.getInvulnerable())
 				{
 					character.checkProjectile(projectile);
 					

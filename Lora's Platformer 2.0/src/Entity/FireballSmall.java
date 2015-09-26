@@ -39,7 +39,7 @@ public class FireballSmall extends Projectile
 				60, 																// Explosion height
 				40, 																// Collision width
 				40, 																// Collision height
-				7.6, 																// Projectile speed
+				5, 																// Projectile speed
 				damage,																// Explosion damage
 				60, 																// Explosion radius
 				"FireballSmall"														// Explosion sound

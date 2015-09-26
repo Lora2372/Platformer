@@ -10,6 +10,7 @@ import Entity.Doodad.Doodad;
 import Entity.Enemies.Fiona;
 import Entity.Player.Player;
 import GameState.GameStateManager;
+import GameState.MainMap;
 import GameState.MysteriousDungeon;
 import Main.GamePanel;
 
@@ -190,6 +191,7 @@ public class ActivatableShrineMysteriousDungeon extends Doodad
 			active = false;
 			removeMe = true;
 			fiona.inControl(true);
+			mysteriousDungeon.getHUD().addBoss(fiona);
 		}
 		
 

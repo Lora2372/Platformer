@@ -52,7 +52,7 @@ public class Fiona extends Character
 				true,  																// inControl
 				500,		 															// health
 				500, 		 															//maxHealth
-				30,		 															// healthCounter
+				0,		 															// healthRegen
 				100,	 																// stamina
 				100, 	 																// maxStamina
 				30,		 															// staminaCounter
@@ -107,10 +107,10 @@ public class Fiona extends Character
 	
 	public void iAmHit()
 	{
+		JukeBox.play("FionaGrunt07");
 		if(!isHit)
 		{
 			setStunned(5000);
-			JukeBox.play("FionaGrunt07");
 			isHit = true;
 		}
 	}
@@ -182,13 +182,20 @@ public class Fiona extends Character
 				}
 				else
 				{
+					
 					if(directionY != 0)
 					{
 						untouchable = false;
 						directionY = 0;
+						locationY = 210;
 						if(locationX > 360) moving = 1;
 						else moving = 2;
 					}
+				}
+				
+				if(locationY < 210)
+				{
+					locationY = 210;
 				}
 			}
 

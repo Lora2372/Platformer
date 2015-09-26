@@ -23,6 +23,12 @@ public class MysteriousDungeon extends MainMap
 	protected boolean bossEngaged;
 	protected boolean bossDefeated;
 	
+	protected boolean dungeonIntroduction;
+	
+	protected String[] conversation = new String[]
+			{
+				"Torches, someone must live here, or something..."
+			};
 	
 	public MysteriousDungeon(GameStateManager gameStatemanager) 
 	{
@@ -92,6 +98,32 @@ public class MysteriousDungeon extends MainMap
 	public void update()
 	{
 		super.update();
+		
+		if(!dungeonIntroduction)
+		{
+			if(player.getDirectionY() == 0 && player.gety() > 300)
+			{
+				if(!player.getConversationBox().inConversation())
+				{
+
+							int[] whoTalks = new int[]{0};
+							
+							player.getConversationBox().startConversation(player, null, null, conversation, whoTalks);
+				}
+				else
+				{
+					
+					if(player.getConversationBox().getConversationTracker() >= conversation.length)
+					{
+						player.getConversationBox().endConversation();
+						dungeonIntroduction = true;
+						JukeBox.play("Female01EnterDungeon");
+					}
+
+				}
+
+			}
+		}
 		
 		if(bossEngaged)
 		{

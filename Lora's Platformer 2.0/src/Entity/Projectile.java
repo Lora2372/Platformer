@@ -23,6 +23,7 @@ public class Projectile extends MapObject
 	protected int explosionRadius;
 	protected String explosionSound;
 	
+	protected double aim;
 	
 	protected MainMap mainMap;
 	
@@ -65,12 +66,12 @@ public class Projectile extends MapObject
 		this.explosionRadius = explosionRadius;
 		this.explosionSound = explosionSound;
 		this.damage = damage;
-		
+		this.aim = aim;
 		this.rotation = aim;
 		
 		
-		this.directionX = Math.cos(aim) * 5;
-		this.directionY = Math.sin(aim) * 5;
+		this.directionX = Math.cos(aim) * moveSpeed;
+		this.directionY = Math.sin(aim) * moveSpeed;
 		
 		rotaded = true;
 		
@@ -84,7 +85,7 @@ public class Projectile extends MapObject
 		animation.setDelay(70);
 			
 	}
-	
+		
 	public boolean getHit() { return hit; }
 	
 	public void setProjectile() { }

@@ -83,15 +83,22 @@ public class Content
 				BufferedReader fileReader = new BufferedReader(new InputStreamReader(inputStreamFile));
 				while((soundFile = fileReader.readLine()) != null )
 				{
-					JukeBox.load("/Sound/Character Sounds/" + folder + "/" + soundFile, folder + soundFile.substring(0, soundFile.length() - 4));
+					String tempString = (soundFile.substring(soundFile.length()-4, soundFile.length()));
+					if(tempString.equals(".mp3"))
+					{	
+						JukeBox.load("/Sound/Character Sounds/" + folder + "/" + soundFile, folder + soundFile.substring(0, soundFile.length() - 4));	
+					}
 				}
-				
+				fileReader.close();
 			}
+			
+			reader.close();
 		} catch (IOException e) 
 		{
 			e.printStackTrace();
 		}
 		
+
 		
 		// Projectile sound effects
 		JukeBox.load("/Sound/Spell Effects/FireballLargeLaunch.mp3", "FireballLargeLaunch");

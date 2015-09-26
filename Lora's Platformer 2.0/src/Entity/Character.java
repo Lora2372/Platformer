@@ -395,7 +395,7 @@ public class Character extends MapObject
 	public void invulnerable(boolean b) { invulnerable = b; }
 	
 	public boolean getUntouchable() { return untouchable; }
-	public boolean getInvulnderable() { return invulnerable; }
+	public boolean getInvulnerable() { return invulnerable; }
 	
 	public boolean getFalling() { return falling; }
 	public boolean getJumping() { return jumping; }
@@ -456,6 +456,9 @@ public class Character extends MapObject
 	public void setSexytime2() { sexytime2 = true; }
 	
 	public String getName() { return name; }
+	
+	public double getDirectionX() { return directionX; }
+	public double getDirectionY() { return directionY; }
 	
 	protected void getNextPosition()
 	{
@@ -637,7 +640,7 @@ public class Character extends MapObject
 		
 		// Regeneration
 		healthCounter++;
-		if(healthCounter > healthRegen && healthCounter != -1)
+		if(healthCounter > healthRegen && healthCounter != -1 && healthRegen != 0)
 		{
 			healthCounter = 0;
 			if(health < maxHealth) health++;
@@ -791,6 +794,8 @@ public class Character extends MapObject
 				
 				startDash = false;
 				endDash = true;
+				
+				playPunchSound();
 				
 				currentAction = animationState[7];
 				animation.setFrames(sprites.get(animationState[7]));
@@ -1118,6 +1123,15 @@ public class Character extends MapObject
 		return enemiesDetected;
 	}
 	
+	public void turnProjectile(Projectile projectile)
+	{
+		JukeBox.play(projectile.explosionSound + "Active");
+		
+		projectile.setFacing(!projectile.getFacing());
+		projectile.setDirection(projectile.getDirectionX() * - 1.05, projectile.getDirectionY() * -1.05);
+		projectile.setFriendly(!projectile.getFriendly());
+	}
+	
 	public void checkProjectile(Projectile projectile)
 	{
 		if(endPunch)
@@ -1132,12 +1146,7 @@ public class Character extends MapObject
 						projectile.gety() < locationY + height / 2
 				)
 				{
-					JukeBox.play(projectile.explosionSound + "Active");
-					System.out.println("Turning! Right");
-					System.out.println(projectile.getFriendly() + "\n-----------------");
-					projectile.setFacing(!projectile.getFacing());
-					projectile.setDirection(projectile.getDirectionX() * - 1, projectile.getDirectionY() * -1);
-					projectile.setFriendly(!projectile.getFriendly());
+					turnProjectile(projectile);
 				}
 			}
 			else
@@ -1150,12 +1159,7 @@ public class Character extends MapObject
 						projectile.gety() < locationY + height / 2
 				)
 				{
-					JukeBox.play(projectile.explosionSound + "Active");
-					System.out.println("Turning! Left");
-					System.out.println(projectile.getFriendly() + "\n-----------------");
-					projectile.setFacing(!projectile.getFacing());
-					projectile.setDirection(projectile.getDirectionX() * - 1, projectile.getDirectionY() * - 1);
-					projectile.setFriendly(!projectile.getFriendly());
+					turnProjectile(projectile);
 				}
 			}
 		}
@@ -1174,7 +1178,6 @@ public class Character extends MapObject
 						projectile.gety() < locationY + 60
 				)
 				{
-					System.out.println("tennisTimer: " + tennisTimer);
 
 					if(tennisTimer >= tennisCooldown)
 					{
@@ -1184,12 +1187,8 @@ public class Character extends MapObject
 						int random2 = randomizer.nextInt((100 - 0) + 1);
 						if(random2 < 70)
 						{
-							JukeBox.play(projectile.explosionSound + "Active");
-							System.out.println("Smashing! (Right), " + random2);
 							startPunch = true;
-							projectile.setFacing(!projectile.getFacing());
-							projectile.setDirection(projectile.getDirectionX() * - 1, projectile.getDirectionY() * - 1);
-							projectile.setFriendly(!projectile.getFriendly());
+							turnProjectile(projectile);
 						}
 					}
 
@@ -1206,8 +1205,6 @@ public class Character extends MapObject
 						projectile.gety() < locationY + 60
 				)
 				{
-					System.out.println("tennisTimer: " + tennisTimer);
-				
 					if(tennisTimer >= tennisCooldown)
 					{
 						tennisTimer = 0;
@@ -1216,12 +1213,8 @@ public class Character extends MapObject
 						int random2 = randomizer.nextInt((100 - 0) + 1);
 						if(random2 < 70)
 						{
-							JukeBox.play(projectile.explosionSound + "Active");
-							System.out.println("Smashing! (Left), " + random2);
 							startPunch = true;
-							projectile.setFacing(!projectile.getFacing());
-							projectile.setDirection(projectile.getDirectionX() * - 1, projectile.getDirectionY() * - 1);
-							projectile.setFriendly(!projectile.getFriendly());
+							turnProjectile(projectile);
 						}
 					}
 				}
@@ -1237,7 +1230,7 @@ public class Character extends MapObject
 		{			
 			
 			Character character = characterList.get(i);
-			if(character.getFriendly() != friendly && !character.getUntouchable() && !character.getInvulnderable())
+			if(character.getFriendly() != friendly && !character.getUntouchable() && !character.getInvulnerable())
 			{
 				//********************************************************************************
 				//*Punching                                                                      *
