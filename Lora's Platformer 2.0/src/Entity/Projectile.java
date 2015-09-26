@@ -16,11 +16,17 @@ public class Projectile extends MapObject
 	protected BufferedImage[] sprites;
 	
 	protected boolean friendly; 
+	
 	protected int explosionWidth;
 	protected int explosionHeight;
+	
 	protected String projectileType;
+	
 	protected int damage;
+	protected int manacost;
+	
 	protected int explosionRadius;
+	
 	protected String explosionSound;
 	
 	protected double aim;
@@ -45,6 +51,7 @@ public class Projectile extends MapObject
 			int collisionHeight,
 			double moveSpeed,
 			int damage,
+			int manacost,
 			int explosionRadius,
 			String explosionSound
 			) 
@@ -66,6 +73,7 @@ public class Projectile extends MapObject
 		this.explosionRadius = explosionRadius;
 		this.explosionSound = explosionSound;
 		this.damage = damage;
+		this.manacost = manacost;
 		this.aim = aim;
 		this.rotation = aim;
 		
@@ -85,7 +93,9 @@ public class Projectile extends MapObject
 		animation.setDelay(70);
 			
 	}
-		
+	
+	public int getCost() { return manacost; }
+	
 	public boolean getHit() { return hit; }
 	
 	public void setProjectile() { }

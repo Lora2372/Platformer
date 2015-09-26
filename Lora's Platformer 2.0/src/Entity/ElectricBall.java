@@ -39,6 +39,7 @@ public class ElectricBall extends Projectile
 				40, 																// Collision height
 				5, 																	// Projectile speed
 				damage,																// Explosion damage
+				50,
 				60, 																// Explosion radius
 				"Electricball"														// Explosion sound
 			);

@@ -17,6 +17,8 @@ public class Player extends Character
 	
 	protected int[] numberofSounds;
 	
+//	protected ArrayList<Projectile> a
+	
 	String[] soundTypes = new String[]
 	{
 		"Attack",

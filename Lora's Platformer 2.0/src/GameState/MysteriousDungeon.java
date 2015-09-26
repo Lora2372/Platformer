@@ -50,9 +50,10 @@ public class MysteriousDungeon extends MainMap
 		
 		spawnTorch(109, 200);
 		
-		spawnTorch(109, 480);
-		
-		spawnTorch(500, 480);
+		for(int i = 0; i < (3000 / (tileMap.getTileSize() * 10)); i++)
+		{
+			spawnTorch(109 + i * tileMap.getTileSize() * 10, 520);
+		}
 		
 		spawnTorch(3568, 410);
 		

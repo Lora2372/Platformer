@@ -2,6 +2,7 @@ package Entity.Player;
 
 import java.awt.*;
 import java.awt.image.*;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
@@ -11,9 +12,12 @@ public class HUD
 {
 	private Player player;
 	
-	private BufferedImage[] image = new BufferedImage[6];
+	private BufferedImage[] image = new BufferedImage[20];
 	
+	private ArrayList<BufferedImage> spellbarUsable = new ArrayList<BufferedImage>();
+	private ArrayList<BufferedImage> spellbarUnusable = new ArrayList<BufferedImage>();
 	
+	private ArrayList<Integer> spellcost = new ArrayList<Integer>();
 	
 	private Entity.Character boss;
 	
@@ -52,11 +56,87 @@ public class HUD
 							)
 					);
 			
+			
+			
 			image[5] = ImageIO.read(
 					getClass().getResource(
 							"/HUD/bossHealthBarFrame.png"
 							)
 					);
+			
+			
+			spellcost.add(player.getFireballSmallManaCost());
+			
+			BufferedImage tempImage = ImageIO.read(
+					getClass().getResource(
+							"/HUD/FireballSmallUsable.png"
+							)
+					);
+			spellbarUsable.add(tempImage);
+			
+			tempImage = ImageIO.read(
+					getClass().getResource(
+							"/HUD/FireballSmallUnusable.png"
+							)
+					);
+			spellbarUnusable.add(tempImage);
+
+			spellcost.add(player.getFireballLargeManaCost());
+
+			
+			
+			tempImage = ImageIO.read(
+					getClass().getResource(
+							"/HUD/FireballLargeUsable.png"
+							)
+					);
+			spellbarUsable.add(tempImage);
+			
+			tempImage = ImageIO.read(
+					getClass().getResource(
+							"/HUD/FireballLargeUnusable.png"
+							)
+					);
+			spellbarUnusable.add(tempImage);
+			
+			spellcost.add(player.getDashStaminaCost());
+
+			
+			
+			tempImage = ImageIO.read(
+					getClass().getResource(
+							"/HUD/DashUsable.png"
+							)
+					);
+			spellbarUsable.add(tempImage);
+			
+			tempImage = ImageIO.read(
+					getClass().getResource(
+							"/HUD/DashUnusable.png"
+							)
+					);
+			spellbarUnusable.add(tempImage);
+			
+			spellcost.add(player.getPunchStaminaCost());
+
+			
+			
+			tempImage = ImageIO.read(
+					getClass().getResource(
+							"/HUD/PunchUsable.png"
+							)
+					);
+			spellbarUsable.add(tempImage);
+			
+			tempImage = ImageIO.read(
+					getClass().getResource(
+							"/HUD/PunchUnusable.png"
+							)
+					);
+			spellbarUnusable.add(tempImage);
+
+
+			
 			
 		}catch(Exception e)
 		{
@@ -74,17 +154,13 @@ public class HUD
 		this.boss = null;
 	}
 	
-	public void draw(Graphics2D g)
+	public void draw(Graphics2D graphics)
 	{
 		
 		double t1 = player.getHealth();
 		double t2 = player.getMaxHealth();
 		
-		
-		
-		
-		
-		g.drawImage(image[1], 
+		graphics.drawImage(image[1], 
 				94, 
 				27, 
 				(int)((t1/t2) * image[1].getWidth()),
@@ -94,7 +170,7 @@ public class HUD
 		t1 = player.getStamina();
 		t2 = player.getMaxStamina();
 		
-		g.drawImage(image[3], 
+		graphics.drawImage(image[3], 
 				106, 
 				86, 
 				(int)((t1/t2) * image[3].getWidth()),
@@ -105,20 +181,34 @@ public class HUD
 		t1 = player.getMana();
 		t2 = player.getMaxMana();
 		
-		g.drawImage(image[2], 
+		graphics.drawImage(image[2], 
 				113, 
 				56, 
 				(int)((t1/t2) * image[2].getWidth()),
 				image[2].getHeight(),
 				null);
 		
-		g.drawImage(image[0], 
+		graphics.drawImage(image[0], 
 				0, 
 				10, 
 				null);
 		
 		
-		
+		if(!player.getInConversation())
+		{
+			int x = GamePanel.WIDTH / 2 - (spellbarUsable.get(0).getWidth() * 2);
+			int y = GamePanel.HEIGHT - spellbarUsable.get(0).getHeight() - 5;
+			
+			for(int i = 0; i < spellbarUsable.size(); i++)
+			{
+				if( (player.getMana() >= spellcost.get(i) && i < 2) || (player.getStamina() >= spellcost.get(i) && i >=2) )
+				{
+					graphics.drawImage(spellbarUsable.get(i), x + i * spellbarUsable.get(i).getWidth(), y, null);
+				}
+				else
+					graphics.drawImage(spellbarUnusable.get(i), x + i * spellbarUsable.get(i).getWidth(), y, null);
+			}
+		}
 		
 		
 		if(boss != null)
@@ -129,7 +219,7 @@ public class HUD
 			int imageWidth = GamePanel.WIDTH / 2;
 			
 			
-			g.drawImage(image[5],
+			graphics.drawImage(image[5],
 					x,
 					y,
 					imageWidth,
@@ -140,7 +230,7 @@ public class HUD
 			t1 = boss.getHealth();
 			t2 = boss.getMaxHealth();
 
-			g.drawImage(image[4], 
+			graphics.drawImage(image[4], 
 					x, 
 					y, 
 					(int)((t1/t2) * imageWidth),

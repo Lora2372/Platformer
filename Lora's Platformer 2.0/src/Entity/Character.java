@@ -367,6 +367,12 @@ public class Character extends MapObject
 	public int getStamina() { return stamina; }
 	public int getMaxStamina() { return maxStamina; }
 	
+	public int getFireballSmallManaCost() { return fireballSmallManaCost; }
+	public int getFireballLargeManaCost() { return fireballLargeManaCost; }
+	
+	public int getDashStaminaCost()  { return dashCost; }
+	public int getPunchStaminaCost() { return punchCost; }
+	
 	public boolean getActivatable() { return activatable; }
 	
 	public boolean getRemoveMe() { return removeMe; }

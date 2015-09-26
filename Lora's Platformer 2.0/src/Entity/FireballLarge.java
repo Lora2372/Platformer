@@ -39,8 +39,9 @@ public class FireballLarge extends Projectile
 				240, 																// Explosion height
 				40, 																// Collision width
 				40, 																// Collision height
-				5, 																// Projectile speed
+				5, 																	// Projectile speed
 				damage,																// Explosion damage
+				40,																	// manacost
 				240, 																// Explosion radius
 				"FireballLarge"														// Explosion sound
 			);
