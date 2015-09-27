@@ -28,31 +28,31 @@ public class HUD
 		try{
 			image[0] = ImageIO.read(
 					getClass().getResource(
-							"/HUD/playerBar.png"
+							"/HUD/PlayerBar.png"
 							)
 					);
 			
 			image[1] = ImageIO.read(
 					getClass().getResource(
-							"/HUD/healthBar.png"
+							"/HUD/HealthBar.png"
 							)
 					);
 			
 			image[2] = ImageIO.read(
 					getClass().getResource(
-							"/HUD/manaBar.png"
+							"/HUD/ManaBar.png"
 							)
 					);
 			
 			image[3] = ImageIO.read(
 					getClass().getResource(
-							"/HUD/staminaBar.png"
+							"/HUD/StaminaBar.png"
 							)
 					);
 			
 			image[4] = ImageIO.read(
 					getClass().getResource(
-							"/HUD/bossHealthBar.png"
+							"/HUD/BossHealthBar.png"
 							)
 					);
 			
@@ -60,7 +60,7 @@ public class HUD
 			
 			image[5] = ImageIO.read(
 					getClass().getResource(
-							"/HUD/bossHealthBarFrame.png"
+							"/HUD/BossHealthBarFrame.png"
 							)
 					);
 			
