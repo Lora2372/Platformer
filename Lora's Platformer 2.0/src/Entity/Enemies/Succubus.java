@@ -83,7 +83,6 @@ public class Succubus extends Unit
 		timer = 0;
 		cooldown = 300;
 		
-		setTennisPlayer(true);
 		
 		portrait = Content.PortraitLiadrin[0];
 	}
