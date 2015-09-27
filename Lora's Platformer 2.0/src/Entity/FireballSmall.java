@@ -33,16 +33,16 @@ public class FireballSmall extends Projectile
 				down,  																// Holding down arrow
 				angle,
 				friendly, 															// Whether the spell is friendly or hostile
-				60, 																// Projectile width
-				60, 																// Projectile height
-				60, 																// Explosion width
-				60, 																// Explosion height
-				40, 																// Collision width
-				40, 																// Collision height
+				45, 																// Projectile width
+				45, 																// Projectile height
+				45, 																// Explosion width
+				45, 																// Explosion height
+				30, 																// Collision width
+				30, 																// Collision height
 				5, 																	// Projectile speed
 				damage,																// Explosion damage
 				20,
-				60, 																// Explosion radius
+				30, 																// Explosion radius
 				"FireballSmall"														// Explosion sound
 			);
 	}
