@@ -505,7 +505,7 @@ public class MainMap extends GameState
 		Random randomizer = new Random();
 		int random = randomizer.nextInt((5 - 0) + 1 + 0);
 	
-		Slug slug = new Slug(tileMap, facingRight, false, false, false, names[random], x, y, this);
+		Slug slug = new Slug(tileMap, facingRight, false, false, false, "Steve", x, y, this);
 		characterList.add(slug);
 		enemies.add(slug);
 	}

@@ -122,9 +122,12 @@ public class Projectile extends MapObject
 		
 		if(hit) return;
 		hit = true;
+		
+		directionX = 0;
+		directionY = 0;
 				
-		collisionWidth = explosionRadius;
-		collisionHeight = explosionRadius;
+		collisionWidth = explosionRadius/2;
+		collisionHeight = explosionRadius/2;
 		for(int i = 0; i < characterList.size(); i++)
 		{
 			Unit character = characterList.get(i);

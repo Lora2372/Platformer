@@ -145,8 +145,12 @@ public class Fiona extends Unit
 		
 		//If the player moves to one corner, she moves to the other!
 		
-		
-		
+//		if(health < 0)
+//		{
+//			health = 1;
+//			player.
+//		}
+//		
 		if(isHit)
 		{
 			directionY += 0.1;
