@@ -34,19 +34,19 @@ public class HUD
 			
 			image[1] = ImageIO.read(
 					getClass().getResource(
-							"/HUD/HealthBar.png"
+							"/HUD/PlayerHealthBar.png"
 							)
 					);
 			
 			image[2] = ImageIO.read(
 					getClass().getResource(
-							"/HUD/ManaBar.png"
+							"/HUD/PlayerManaBar.png"
 							)
 					);
 			
 			image[3] = ImageIO.read(
 					getClass().getResource(
-							"/HUD/StaminaBar.png"
+							"/HUD/PlayerStaminaBar.png"
 							)
 					);
 			
