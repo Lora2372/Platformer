@@ -5,11 +5,11 @@ import java.util.Random;
 
 import TileMap.TileMap;
 import Audio.JukeBox;
-import Entity.Character;
+import Entity.Unit;
 import GameState.MainMap;
 import Main.Content;
 
-public class Succubus extends Character
+public class Succubus extends Unit
 {
 	protected int cooldown;
 	protected int timer;
@@ -83,6 +83,8 @@ public class Succubus extends Character
 		timer = 0;
 		cooldown = 300;
 		
+		setTennisPlayer(true);
+		
 		portrait = Content.PortraitLiadrin[0];
 	}
 	
@@ -103,7 +105,7 @@ public class Succubus extends Character
 		JukeBox.play("FionaPunch01");
 	}
 	
-	public void updateAI(ArrayList<Character> characterList)
+	public void updateAI(ArrayList<Unit> characterList)
 	{
 //		if(!friendly) return;
 		//System.out.println("dx: " + dx + ", turnTimer: " + turnTimer);
@@ -133,7 +135,7 @@ public class Succubus extends Character
 		
 		timer++;
 		
-		ArrayList<Character> enemiesDetected = detectEnemy(characterList, false);
+		ArrayList<Unit> enemiesDetected = detectEnemy(characterList, false);
 		
 		if(enemiesDetected.size() > 0)
 		{

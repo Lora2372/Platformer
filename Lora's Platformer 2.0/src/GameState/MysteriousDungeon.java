@@ -86,7 +86,7 @@ public class MysteriousDungeon extends MainMap
 		bossDefeated = false;
 	}
 	
-	public ArrayList<Entity.Character> getCharacterList()
+	public ArrayList<Entity.Unit> getCharacterList()
 	{
 		return characterList;
 	}

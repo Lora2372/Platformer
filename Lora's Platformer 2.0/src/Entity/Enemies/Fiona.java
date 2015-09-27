@@ -5,11 +5,11 @@ import java.util.Random;
 
 import TileMap.TileMap;
 import Audio.JukeBox;
-import Entity.Character;
+import Entity.Unit;
 import GameState.MysteriousDungeon;
 import Main.Content;
 
-public class Fiona extends Character
+public class Fiona extends Unit
 {
 	protected int cooldown;
 	protected int timer;
@@ -132,7 +132,7 @@ public class Fiona extends Character
 //		JukeBox.play("Grunt07");
 //	}
 	
-	public void updateAI(ArrayList<Character> characterList)
+	public void updateAI(ArrayList<Unit> characterList)
 	{
 
 		// GANNONDORF TENNIS THIS SHIT!
@@ -164,13 +164,13 @@ public class Fiona extends Character
 		
 
 		
-		ArrayList<Character> enemiesDetected = detectEnemy(characterList, false);
+		ArrayList<Unit> enemiesDetected = detectEnemy(characterList, false);
 		
 		if(enemiesDetected != null)
 		{
 			if(enemiesDetected.size() > 0)
 			{
-				Character enemy = enemiesDetected.get(0);
+				Unit enemy = enemiesDetected.get(0);
 				if(enemy.getx() > locationX) facingRight = true;
 				else facingRight = false;
 				

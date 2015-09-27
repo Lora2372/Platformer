@@ -118,7 +118,7 @@ public class Projectile extends MapObject
 	// Functions that figures out whether or not the fireball has hit something.
 	public void setHit()
 	{
-		ArrayList<Character> characterList = mainMap.getCharacterList();
+		ArrayList<Unit> characterList = mainMap.getCharacterList();
 		
 		if(hit) return;
 		hit = true;
@@ -127,7 +127,7 @@ public class Projectile extends MapObject
 		collisionHeight = explosionRadius;
 		for(int i = 0; i < characterList.size(); i++)
 		{
-			Character character = characterList.get(i);
+			Unit character = characterList.get(i);
 			if(character.getFriendly() != friendly)
 			{
 				if(this.intersects(character))
@@ -155,7 +155,7 @@ public class Projectile extends MapObject
 		return remove; 
 	}
 	
-	public void update(ArrayList<Character> characterList)
+	public void update(ArrayList<Unit> characterList)
 	{
 		checkTileMapCollision();
 		setPosition(xtemp, ytemp);

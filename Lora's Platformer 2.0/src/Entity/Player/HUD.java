@@ -19,7 +19,7 @@ public class HUD
 	
 	private ArrayList<Integer> spellcost = new ArrayList<Integer>();
 	
-	private Entity.Character boss;
+	private Entity.Unit boss;
 	
 	public HUD(Player p)
 	{
@@ -144,7 +144,7 @@ public class HUD
 		}
 	}
 	
-	public void addBoss(Entity.Character boss)
+	public void addBoss(Entity.Unit boss)
 	{
 		this.boss = boss;
 	}
@@ -214,7 +214,7 @@ public class HUD
 		if(boss != null)
 		{
 			int x = GamePanel.WIDTH / 4;
-			int y = GamePanel.HEIGHT - image[5].getHeight() - 30;
+			int y = GamePanel.HEIGHT - spellbarUsable.get(0).getHeight() - image[5].getHeight() - 10;
 			
 			int imageWidth = GamePanel.WIDTH / 2;
 			

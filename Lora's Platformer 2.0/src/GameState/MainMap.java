@@ -7,7 +7,7 @@ import java.awt.Graphics2D;
 import Main.GamePanel;
 import TileMap.*;
 import Entity.*;
-import Entity.Character;
+import Entity.Unit;
 import Entity.Enemies.*;
 import Entity.Doodad.*;
 import Entity.Doodad.Activatable.*;
@@ -27,9 +27,9 @@ public class MainMap extends GameState
 	protected GameOver gameoverScreen;
 	
 	protected Player player;
-	protected ArrayList<Character> characterList;
-	protected ArrayList<Character> enemies;
-	protected ArrayList<Character> allies;
+	protected ArrayList<Unit> characterList;
+	protected ArrayList<Unit> enemies;
+	protected ArrayList<Unit> allies;
 	protected ArrayList<Doodad> stuff;
 	protected ArrayList<Doodad> activatables;
 	protected ArrayList<Projectile> projectiles;
@@ -52,11 +52,11 @@ public class MainMap extends GameState
 	public void initialize()
 	{
 
-		characterList = new ArrayList<Character>();
-		enemies = new ArrayList<Character>();
+		characterList = new ArrayList<Unit>();
+		enemies = new ArrayList<Unit>();
 		stuff = new ArrayList<Doodad>();
 		activatables = new ArrayList<Doodad>();
-		allies = new ArrayList<Character>();
+		allies = new ArrayList<Unit>();
 		
 		projectiles = new ArrayList<Projectile>();
 		
@@ -111,7 +111,7 @@ public class MainMap extends GameState
 			for(int i = 0; i < characterList.size(); i++)
 			{
 				
-				Character character = characterList.get(i);
+				Unit character = characterList.get(i);
 				if(character.getFriendly() != projectiles.get(j).getFriendly() && !character.getUntouchable() && !character.getInvulnerable())
 				{
 					character.checkProjectile(projectile);
@@ -126,7 +126,7 @@ public class MainMap extends GameState
 		}
 	}
 	
-	public void addEnemy(Character enemy)
+	public void addEnemy(Unit enemy)
 	{
 		enemies.add(enemy);
 		characterList.add(enemy);
@@ -147,7 +147,7 @@ public class MainMap extends GameState
 		return projectiles;
 	}
 	
-	public ArrayList<Character> getCharacterList()
+	public ArrayList<Unit> getCharacterList()
 	{
 		return characterList;
 	}
@@ -185,7 +185,7 @@ public class MainMap extends GameState
 		{	
 			for(int i = 0; i < characterList.size(); i++)
 			{
-				Character character = characterList.get(i);
+				Unit character = characterList.get(i);
 				
 				if(character.getRemoveMe())
 				{
@@ -372,19 +372,30 @@ public class MainMap extends GameState
 	public void spawnSuccubus(double x, double y, boolean facingRight)
 	{
 		String[] succubiNames = new String[]
-				{
-					"Fiona",
+		{
 					"Rui",
 					"Domwena"
-				};
+		};
 		
 		Random randomizer = new Random();
-		int random2 = randomizer.nextInt((2 - 0) + 1 + 0);
+		int random2 = randomizer.nextInt((1 - 0) + 1 + 0);
 		
 		Succubus succubus = new Succubus(tileMap, facingRight,false, false, false, succubiNames[random2],x, y, this);
 		characterList.add(succubus);
 		enemies.add(succubus);
 		
+	}
+	
+	public void spawnWolf(double x, double y, boolean facingRight)
+	{
+		String[] wolfNames = new String[]
+		{
+			"Cookie"
+		};
+		
+		Wolf wolf = new Wolf(tileMap, facingRight, false, false, false, wolfNames[0], x, y, this);
+		characterList.add(wolf);
+		enemies.add(wolf);
 	}
 	
 

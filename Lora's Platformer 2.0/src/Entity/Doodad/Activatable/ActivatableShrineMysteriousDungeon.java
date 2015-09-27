@@ -104,7 +104,7 @@ public class ActivatableShrineMysteriousDungeon extends Doodad
 			{				
 				for(int i = 0; i < mysteriousDungeon.getCharacterList().size(); i++)
 				{
-					Entity.Character character = mysteriousDungeon.getCharacterList().get(i);
+					Entity.Unit character = mysteriousDungeon.getCharacterList().get(i);
 					if(character == null)
 					{
 						System.out.println("removing a character");

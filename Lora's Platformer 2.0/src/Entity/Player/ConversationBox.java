@@ -5,7 +5,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import Entity.Doodad.Doodad;
-import Entity.Character;
+import Entity.Unit;
 import Main.Content;
 import Main.GamePanel;
 
@@ -13,7 +13,7 @@ public class ConversationBox
 {
 	
 	private Player player;
-	private Character otherPerson;
+	private Unit otherPerson;
 	private Doodad sign;
 	private String[] conversation;
 	private int[] whoTalks;
@@ -48,7 +48,7 @@ public class ConversationBox
 	
 	public void startConversation(
 			Player newPlayer,
-			Character newOtherPerson, 
+			Unit newOtherPerson, 
 			Doodad newSign, 
 			String[] newConversation, 
 			int[] newWhoTalks

@@ -3,12 +3,12 @@ import java.util.ArrayList;
 
 import TileMap.TileMap;
 import Audio.JukeBox;
-import Entity.Character;
+import Entity.Unit;
 import Entity.Doodad.SummoningEffect;
 import Entity.Player.Player;
 import GameState.MainMap;
 import Main.Content;
-public class LiadrinFirstEncounter extends Character
+public class LiadrinFirstEncounter extends Unit
 {
 	
 	protected int[] whoTalks;
@@ -150,7 +150,7 @@ public class LiadrinFirstEncounter extends Character
 		}
 	}
 	
-	public void updateAI(ArrayList<Character> characterList)
+	public void updateAI(ArrayList<Unit> characterList)
 	{
 		if(summoningEffect != null)
 		{

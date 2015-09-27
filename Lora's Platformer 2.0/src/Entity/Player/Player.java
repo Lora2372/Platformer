@@ -4,11 +4,11 @@ package Entity.Player;
 import java.util.Random;
 
 import Audio.JukeBox;
-import Entity.Character;
+import Entity.Unit;
 import GameState.MainMap;
 import TileMap.TileMap;
 
-public class Player extends Character
+public class Player extends Unit
 {
 	
 	protected int numberofAttackSounds;
@@ -119,7 +119,6 @@ public class Player extends Character
 		
 		int myRandom = random.nextInt((max - min) + 1) + min;
 		JukeBox.play("Female01" + soundTypes[1] + "0" + myRandom);
-		System.out.println("Female01" + soundTypes[1] + "0" + myRandom);
 	}
 	
 	

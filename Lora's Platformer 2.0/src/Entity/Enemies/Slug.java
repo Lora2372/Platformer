@@ -3,10 +3,10 @@ package Entity.Enemies;
 import java.util.ArrayList;
 
 import TileMap.TileMap;
-import Entity.Character;
+import Entity.Unit;
 import GameState.MainMap;
 
-public class Slug extends Character
+public class Slug extends Unit
 {
 	protected int cooldown;
 	protected int timer;
@@ -65,7 +65,7 @@ public class Slug extends Character
 				"/Sprites/Characters/slugger.gif",									// spritePath
 				new int[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},						// animationStates
 				new int[]{3},														// numImages
-				new int[] { 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40  },
+				new int[] { 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40 },
 				10,																	// damageOnTouch
 				friendly,															// friendly				
 				untouchable,
@@ -89,7 +89,7 @@ public class Slug extends Character
 
 	
 	
-	public void updateAI(ArrayList<Character> characterList)
+	public void updateAI(ArrayList<Unit> characterList)
 	{
 		//System.out.println("directionX: " + directionX + ", turnTimer: " + turnTimer);
 
@@ -113,7 +113,7 @@ public class Slug extends Character
 		
 		timer++;
 		
-		ArrayList<Character> enemiesDetected = detectEnemy(characterList, true);
+		ArrayList<Unit> enemiesDetected = detectEnemy(characterList, true);
 		
 		if(enemiesDetected.size() > 0)
 		{

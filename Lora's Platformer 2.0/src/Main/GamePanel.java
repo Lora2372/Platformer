@@ -21,7 +21,7 @@ public class GamePanel
 	public static int WIDTH = 1200;
 	public static int HEIGHT = 900;
 	
-	public static final String version = "0.1.029";
+	public static final String version = "0.1.030";
 		
 	// Game thread
 	private Thread thread;
@@ -63,8 +63,6 @@ public class GamePanel
 	
 	public void run()
 	{
-		
-		
 		image = new BufferedImage(
 				WIDTH,
 				HEIGHT,
@@ -106,7 +104,6 @@ public class GamePanel
 				e.printStackTrace();
 			}
 		}
-		
 	}
 	
 	private void update()

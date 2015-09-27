@@ -60,6 +60,8 @@ public class Level1State extends MainMap
 		spawnSuccubus(1423, 650, true);
 		spawnSuccubus(3689, 1430, false);
 		
+		spawnWolf(853, 1680, true);
+		
 		spawnChestCommon(989, 2250);
 		spawnChestUncommon(989 + 120, 2250);
 		spawnChestRare(989 + 240, 2250);
