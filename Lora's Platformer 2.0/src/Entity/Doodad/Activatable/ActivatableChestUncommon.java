@@ -20,7 +20,7 @@ public class ActivatableChestUncommon extends Doodad
 				60,
 				60,
 				60,
-				"/Sprites/Doodads/ChestUncommon.png", 
+				"/Art/Sprites/Doodads/ChestUncommon.png", 
 				new int[] {0,1,2,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				new int[] {1, 4, 1},
 				false, 

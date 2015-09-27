@@ -15,7 +15,7 @@ public class FireballSmallExplosion extends Doodad
 				60,
 				60,
 				60,
-				"/Sprites/Effects/FireballSmallExplosion.png",
+				"/Art/Sprites/Effects/FireballSmallExplosion.png",
 				new int[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				new int[] {9},
 				true,

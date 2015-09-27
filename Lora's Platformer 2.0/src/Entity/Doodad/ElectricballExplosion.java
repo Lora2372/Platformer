@@ -15,7 +15,7 @@ public class ElectricballExplosion  extends Doodad
 				180,
 				180,
 				180,
-				"/Sprites/Effects/ElectricballExplosion.png",
+				"/Art/Sprites/Effects/ElectricballExplosion.png",
 				new int[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				new int[] {6},
 				true,

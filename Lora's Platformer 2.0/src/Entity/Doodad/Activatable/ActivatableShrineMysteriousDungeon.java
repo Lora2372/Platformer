@@ -62,7 +62,7 @@ public class ActivatableShrineMysteriousDungeon extends Doodad
 				180,
 				180,
 				180,
-				"/Sprites/Doodads/Shrine.png", 
+				"/Art/Sprites/Doodads/Shrine.png", 
 				new int[] {0,1,2,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				new int[] {1, 2, 1},
 				false, 
@@ -160,7 +160,7 @@ public class ActivatableShrineMysteriousDungeon extends Doodad
 				
 				JukeBox.stop("Dungeon1");
 				
-				tileMap.loadTiles(ImageIO.read(getClass().getResource("/Tilesets/LorasTileset.png")));
+				tileMap.loadTiles(ImageIO.read(getClass().getResource("/Art/Tilesets/LorasTileset.png")));
 				tileMap.loadMap("/Maps/MysteriousDungeonB.map");
 				tileMap.setPosition(0, 0);
 				

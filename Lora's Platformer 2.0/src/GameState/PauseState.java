@@ -34,7 +34,7 @@ public class PauseState extends GameState
 		
 		try
 		{
-			background = new Background(getClass().getResource("/Foregrounds/ScreenPaused.png"), 0);
+			background = new Background(getClass().getResource("/Art/HUD/Foregrounds/ScreenPaused.png"), 0);
 			background.setVector(0, 0);
 			
 			

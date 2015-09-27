@@ -28,31 +28,31 @@ public class HUD
 		try{
 			image[0] = ImageIO.read(
 					getClass().getResource(
-							"/HUD/PlayerBar.png"
+							"/Art/HUD/Bars/PlayerBar.png"
 							)
 					);
 			
 			image[1] = ImageIO.read(
 					getClass().getResource(
-							"/HUD/PlayerHealthBar.png"
+							"/Art/HUD/Bars/PlayerHealthBar.png"
 							)
 					);
 			
 			image[2] = ImageIO.read(
 					getClass().getResource(
-							"/HUD/PlayerManaBar.png"
+							"/Art/HUD/Bars/PlayerManaBar.png"
 							)
 					);
 			
 			image[3] = ImageIO.read(
 					getClass().getResource(
-							"/HUD/PlayerStaminaBar.png"
+							"/Art/HUD/Bars/PlayerStaminaBar.png"
 							)
 					);
 			
 			image[4] = ImageIO.read(
 					getClass().getResource(
-							"/HUD/BossHealthBar.png"
+							"/Art/HUD/Bars//BossHealthBar.png"
 							)
 					);
 			
@@ -60,7 +60,7 @@ public class HUD
 			
 			image[5] = ImageIO.read(
 					getClass().getResource(
-							"/HUD/BossHealthBarFrame.png"
+							"/Art/HUD/Bars/BossHealthBarFrame.png"
 							)
 					);
 			
@@ -69,14 +69,14 @@ public class HUD
 			
 			BufferedImage tempImage = ImageIO.read(
 					getClass().getResource(
-							"/HUD/FireballSmallUsable.png"
+							"/Art/HUD/SpellIcons/FireballSmallUsable.png"
 							)
 					);
 			spellbarUsable.add(tempImage);
 			
 			tempImage = ImageIO.read(
 					getClass().getResource(
-							"/HUD/FireballSmallUnusable.png"
+							"/Art/HUD/SpellIcons/FireballSmallUnusable.png"
 							)
 					);
 			spellbarUnusable.add(tempImage);
@@ -87,14 +87,14 @@ public class HUD
 			
 			tempImage = ImageIO.read(
 					getClass().getResource(
-							"/HUD/FireballLargeUsable.png"
+							"/Art/HUD/SpellIcons/FireballLargeUsable.png"
 							)
 					);
 			spellbarUsable.add(tempImage);
 			
 			tempImage = ImageIO.read(
 					getClass().getResource(
-							"/HUD/FireballLargeUnusable.png"
+							"/Art/HUD/SpellIcons/FireballLargeUnusable.png"
 							)
 					);
 			spellbarUnusable.add(tempImage);
@@ -105,14 +105,14 @@ public class HUD
 			
 			tempImage = ImageIO.read(
 					getClass().getResource(
-							"/HUD/DashUsable.png"
+							"/Art/HUD/SpellIcons/DashUsable.png"
 							)
 					);
 			spellbarUsable.add(tempImage);
 			
 			tempImage = ImageIO.read(
 					getClass().getResource(
-							"/HUD/DashUnusable.png"
+							"/Art/HUD/SpellIcons/DashUnusable.png"
 							)
 					);
 			spellbarUnusable.add(tempImage);
@@ -123,14 +123,14 @@ public class HUD
 			
 			tempImage = ImageIO.read(
 					getClass().getResource(
-							"/HUD/PunchUsable.png"
+							"/Art/HUD/SpellIcons/PunchUsable.png"
 							)
 					);
 			spellbarUsable.add(tempImage);
 			
 			tempImage = ImageIO.read(
 					getClass().getResource(
-							"/HUD/PunchUnusable.png"
+							"/Art/HUD/SpellIcons/PunchUnusable.png"
 							)
 					);
 			spellbarUnusable.add(tempImage);

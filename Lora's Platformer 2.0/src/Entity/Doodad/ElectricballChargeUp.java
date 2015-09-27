@@ -19,7 +19,7 @@ public class ElectricballChargeUp extends Doodad
 				60,
 				0,
 				0,
-				"/Sprites/Effects/ElectricballChargeUp.png", 
+				"/Art/Sprites/Effects/ElectricballChargeUp.png", 
 				new int[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				new int[] {3},
 				true, 

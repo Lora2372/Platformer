@@ -37,7 +37,7 @@ public class MenuState extends GameState
 		try
 		{
 //			backGround = new Background("/Backgrounds/menubg.gif", 1);
-			backGround = new Background(getClass().getResource("/Backgrounds/menubg.gif"), 1);
+			backGround = new Background(getClass().getResource("/Art/Backgrounds/MenuBackground.gif"), 1);
 			backGround.setVector(0.3, 0);
 			
 			titleColor = new Color(128, 0, 0);

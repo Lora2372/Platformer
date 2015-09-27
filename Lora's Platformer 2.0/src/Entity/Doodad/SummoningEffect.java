@@ -15,7 +15,7 @@ public class SummoningEffect extends Doodad
 				192,
 				0,
 				0,
-				"/Sprites/Effects/SummonEffect.png",
+				"/Art/Sprites/Effects/SummonEffect.png",
 				new int[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				new int[] {14},
 				true,

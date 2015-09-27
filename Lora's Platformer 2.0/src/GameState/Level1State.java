@@ -18,12 +18,12 @@ public class Level1State extends MainMap
 	
 		try
 		{						
-			tileMap.loadTiles(ImageIO.read(getClass().getResource("/Tilesets/LorasTileset.png")));
+			tileMap.loadTiles(ImageIO.read(getClass().getResource("/Art/Tilesets/LorasTileset.png")));
 			tileMap.loadMap("/Maps/LorasMap01018.map");
 			tileMap.setPosition(0, 0);
 			
-			background = new Background(getClass().getResource("/Backgrounds/Mountains5.png"), 0.1);
-			gameoverScreen = new GameOver(getClass().getResource("/Foregrounds/GameOver.png"));
+			background = new Background(getClass().getResource("/Art/Backgrounds/ForestMountainBackgroud.png"), 0.1);
+			gameoverScreen = new GameOver(getClass().getResource("/Art/HUD/Foregrounds/GameOver.png"));
 		}
 		catch(IOException e)
 		{

@@ -13,43 +13,43 @@ import Audio.JukeBox;
 public class Content 
 {
 	// HEAT-O, EXPLOSION!!!!!1!
-	public static BufferedImage[][] CartoonExplosion 		= load("/Sprites/Effects/CartoonExplosion.gif", 60, 60);
-	public static BufferedImage[][] FireballLargeExplosion 	= load("/Sprites/Effects/FireballLargeExplosion.png", 240, 240);
-	public static BufferedImage[][] FireballSmallExplosion 	= load("/Sprites/Effects/FireballSmallExplosion.png", 60, 60);
-	public static BufferedImage[][] ElectricballExplosion 	= load("/Sprites/Effects/ElectricballExplosion.png", 180, 180);
+	public static BufferedImage[][] CartoonExplosion 		= load("/Art/Sprites/Effects/CartoonExplosion.gif", 60, 60);
+	public static BufferedImage[][] FireballLargeExplosion 	= load("/Art/Sprites/Effects/FireballLargeExplosion.png", 240, 240);
+	public static BufferedImage[][] FireballSmallExplosion 	= load("/Art/Sprites/Effects/FireballSmallExplosion.png", 60, 60);
+	public static BufferedImage[][] ElectricballExplosion 	= load("/Art/Sprites/Effects/ElectricballExplosion.png", 180, 180);
 	
 	// Projectiles
-	public static BufferedImage[][] FireballLarge 			= load("/Sprites/Effects/FireballLarge.png", 60, 60);
-	public static BufferedImage[][] FireballMedium			= load("/Sprites/Effects/FireballMediumNew.png", 60, 60);
-	public static BufferedImage[][] FireballSmall 			= load("/Sprites/Effects/FireballSmall.png", 60, 60);
-	public static BufferedImage[][] FireballSwirling 		= load("/Sprites/Effects/FireballSwirling.png", 60, 60);
-	public static BufferedImage[][] FireballDouble 			= load("/Sprites/Effects/FireballDouble.png", 60, 60);
-	public static BufferedImage[][] Electricball			= load("/Sprites/Effects/Electricball.png", 60, 60);
+	public static BufferedImage[][] FireballLarge 			= load("/Art/Sprites/Effects/FireballLarge.png", 60, 60);
+	public static BufferedImage[][] FireballMedium			= load("/Art/Sprites/Effects/FireballMediumNew.png", 60, 60);
+	public static BufferedImage[][] FireballSmall 			= load("/Art/Sprites/Effects/FireballSmall.png", 60, 60);
+	public static BufferedImage[][] FireballSwirling 		= load("/Art/Sprites/Effects/FireballSwirling.png", 60, 60);
+	public static BufferedImage[][] FireballDouble 			= load("/Art/Sprites/Effects/FireballDouble.png", 60, 60);
+	public static BufferedImage[][] Electricball			= load("/Art/Sprites/Effects/Electricball.png", 60, 60);
 	
 	// Characters
-	public static BufferedImage[][] Slugger 				= load("/Sprites/Characters/slugger.gif", 60, 60);
-	public static BufferedImage[][] Succubus 				= load("/Sprites/Characters/Succubus.png", 100, 100);
-	public static BufferedImage[][] Player 					= load("/Sprites/Characters/Lora.png", 72, 120);
+	public static BufferedImage[][] Slugger 				= load("/Art/Sprites/Characters/slugger.gif", 60, 60);
+	public static BufferedImage[][] Succubus 				= load("/Art/Sprites/Characters/Succubus.png", 100, 100);
+	public static BufferedImage[][] Player 					= load("/Art/Sprites/Characters/Lora.png", 72, 120);
 	
 	
 	//Doodads
-	public static BufferedImage[][] Teleport 				= load("/Sprites/Effects/Teleport.png", 192, 192);
-	public static BufferedImage[][] Sign 					= load("/Sprites/Doodads/Sign.png", 50, 50);
-	public static BufferedImage[][] SignLeft 				= load("/Sprites/Doodads/SignLeft.png", 50, 50);
-	public static BufferedImage[][] SignRight 				= load("/Sprites/Doodads/SignRight.png", 50, 50);
-	public static BufferedImage[][] Mushroom1 				= load("/Sprites/Doodads/Mushroom01.png", 50, 50);
-	public static BufferedImage[][] Mushroom2 				= load("/Sprites/Doodads/Mushroom02.png", 50, 50);
-	public static BufferedImage[][] Torch 					= load("/Sprites/Doodads/Torch.png", 150, 150);
-	public static BufferedImage[][] Waterfall 				= load("/Sprites/Doodads/Waterfall.png", 192, 192);
+	public static BufferedImage[][] Teleport 				= load("/Art/Sprites/Effects/Teleport.png", 192, 192);
+	public static BufferedImage[][] Sign 					= load("/Art/Sprites/Doodads/Sign.png", 50, 50);
+	public static BufferedImage[][] SignLeft 				= load("/Art/Sprites/Doodads/SignLeft.png", 50, 50);
+	public static BufferedImage[][] SignRight 				= load("/Art/Sprites/Doodads/SignRight.png", 50, 50);
+	public static BufferedImage[][] Mushroom1 				= load("/Art/Sprites/Doodads/Mushroom01.png", 50, 50);
+	public static BufferedImage[][] Mushroom2 				= load("/Art/Sprites/Doodads/Mushroom02.png", 50, 50);
+	public static BufferedImage[][] Torch 					= load("/Art/Sprites/Doodads/Torch.png", 150, 150);
+	public static BufferedImage[][] Waterfall 				= load("/Art/Sprites/Doodads/Waterfall.png", 192, 192);
 
 	// Foreground
-	public static BufferedImage[][] GameOver				= load("/Foregrounds/GameOver.png", 544, 416);
-	public static BufferedImage[][] ConversationGUI			= load("/Foregrounds/Conversation GUI.png", 454, 138);
+	public static BufferedImage[][] GameOver				= load("/Art/HUD/Foregrounds/GameOver.png", 544, 416);
+	public static BufferedImage[][] ConversationGUI			= load("/Art/HUD/Foregrounds/Conversation GUI.png", 454, 138);
 	
 	// Portraits
-	public static BufferedImage[][] PortraitPlayer			=load("/Foregrounds/Portraits/PortraitPlayer.png", 94, 94);
-	public static BufferedImage[][] PortraitSign			=load("/Foregrounds/Portraits/PortraitSign.png", 94, 94);
-	public static BufferedImage[][] PortraitLiadrin			=load("/Foregrounds/Portraits/PortraitLiadrin.png", 94, 94);
+	public static BufferedImage[][] PortraitPlayer			=load("/Art/HUD/Portraits/PortraitPlayer.png", 94, 94);
+	public static BufferedImage[][] PortraitSign			=load("/Art/HUD/Portraits/PortraitSign.png", 94, 94);
+	public static BufferedImage[][] PortraitLiadrin			=load("/Art/HUD/Portraits/PortraitLiadrin.png", 94, 94);
 	
 	public static String[] mapMusic = new String[]
 	{

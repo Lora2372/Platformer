@@ -19,7 +19,7 @@ public class FireballMediumChargeUp extends Doodad
 				60,
 				0,
 				0,
-				"/Sprites/Effects/FireballMediumChargingUp.png", 
+				"/Art/Sprites/Effects/FireballMediumChargingUp.png", 
 				new int[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				new int[] {6},
 				true, 

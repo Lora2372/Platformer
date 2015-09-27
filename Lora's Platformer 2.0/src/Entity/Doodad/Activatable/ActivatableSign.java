@@ -32,7 +32,7 @@ public class ActivatableSign extends Doodad
 				50,
 				50,
 				50,
-				"/Sprites/Doodads/Sign.png", 
+				"/Art/Sprites/Doodads/Sign.png", 
 				new int[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				new int[] {1},
 				false, 

@@ -74,7 +74,7 @@ public class Fiona extends Unit
 				50, 																	// largeFireballDamage
 				30,																	// electricBallManaCost
 				70,																	// electricBallDamage
-				"/Sprites/Characters/Succubus.png",									// spritePath
+				"/Art/Sprites/Characters/Succubus.png",									// spritePath
 				new int[] {0,0,0,0,1,2,0,0,1,2,1,2,3,0,0,0,0},						// animationStates
 				new int[]{7, 2, 2, 1, 2, 0, 0, 0, 0},								// numImages
 				new int[] { 400, 400, 400, 400, 125, 120, 100, 100, 100, 100, 100, 100, 500, 400, 400, 400, 400 }, // animationDelay

@@ -23,7 +23,7 @@ public class ActivatableCave extends Doodad
 				360,
 				360,
 				360,
-				"/Sprites/Doodads/CaveEntrance.png", 
+				"/Art/Sprites/Doodads/CaveEntrance.png", 
 				new int[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				new int[] {1},
 				false, 

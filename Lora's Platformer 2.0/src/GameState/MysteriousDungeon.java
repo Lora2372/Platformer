@@ -36,12 +36,12 @@ public class MysteriousDungeon extends MainMap
 		
 		try
 		{
-			tileMap.loadTiles(ImageIO.read(getClass().getResource("/Tilesets/LorasTileset.png")));
+			tileMap.loadTiles(ImageIO.read(getClass().getResource("/Art/Tilesets/LorasTileset.png")));
 			tileMap.loadMap("/Maps/MysteriousDungeonA.map");
 			tileMap.setPosition(0, 0);
 			
-			background = new Background(getClass().getResource("/Backgrounds/RockCave.png"), 0.1);
-			gameoverScreen = new GameOver(getClass().getResource("/Foregrounds/GameOver.png"));
+			background = new Background(getClass().getResource("/Art/Backgrounds/UndergroundBackground.png"), 0.1);
+			gameoverScreen = new GameOver(getClass().getResource("/Art/HUD/Foregrounds/GameOver.png"));
 		}
 		catch(IOException e)
 		{

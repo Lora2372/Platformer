@@ -15,7 +15,7 @@ public class FireballLargeExplosion extends Doodad
 				240,
 				240,
 				240,
-				"/Sprites/Effects/FireballLargeExplosion.png",
+				"/Art/Sprites/Effects/FireballLargeExplosion.png",
 				new int[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				new int[] {9},
 				true,

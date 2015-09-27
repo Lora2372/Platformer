@@ -21,7 +21,7 @@ public class GamePanel
 	public static int WIDTH = 1200;
 	public static int HEIGHT = 900;
 	
-	public static final String version = "0.1.030.6";
+	public static final String version = "0.1.031";
 		
 	// Game thread
 	private Thread thread;
@@ -119,7 +119,7 @@ public class GamePanel
 			{
 				BufferedImage loadingImage = ImageIO.read(
 						getClass().getResource(
-								"/Foregrounds/Loading.png"
+								"/Art/HUD/Foregrounds/Loading.png"
 								)
 						);
 				

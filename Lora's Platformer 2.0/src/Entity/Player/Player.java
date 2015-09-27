@@ -73,7 +73,7 @@ public class Player extends Unit
 				50, 																// largeFireballDamage
 				30,																	// electricBallManaCost
 				70,																	// electricBallDamage
-				"/Sprites/Characters/Lora.png", 									// spritePath
+				"/Art/Sprites/Characters/Lora.png", 									// spritePath
 				new int[] {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,14,15},				// animationStates
 				new int[]{6, 6, 1, 5, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1},			// numImages
 				new int[] { 400, 40, 100, 80, 125, 120, 100, 100, 100, 100, 100, 100, 500, 100, 100, 3000, 3000 },
