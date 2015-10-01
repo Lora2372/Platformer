@@ -5,6 +5,7 @@ import java.util.Random;
 
 import TileMap.TileMap;
 import Audio.JukeBox;
+import Entity.EnergyballUnstable;
 import Entity.Unit;
 import GameState.MysteriousDungeon;
 import Main.Content;
@@ -14,7 +15,10 @@ public class Fiona extends Unit
 	protected int cooldown;
 	protected int timer;
 	
-
+	protected boolean energyballUnstableMode;
+	protected int energyballUnstableMoving;
+	protected int energyballUnstableTimer;
+	protected int energyballUnstableCooldown;
 	
 	protected int moving = 0; // 0 don't move, 1 = move left, 2 = move 3
 	
@@ -77,7 +81,7 @@ public class Fiona extends Unit
 				"/Art/Sprites/Characters/Succubus.png",									// spritePath
 				new int[] {0,0,0,0,1,2,0,0,1,2,1,2,3,0,0,0,0},						// animationStates
 				new int[]{7, 2, 2, 1, 2, 0, 0, 0, 0},								// numImages
-				new int[] { 400, 400, 400, 400, 125, 120, 100, 100, 100, 100, 100, 100, 500, 400, 400, 400, 400 }, // animationDelay
+				new int[] { 200, 200, 200, 200, 125, 120, 100, 100, 100, 100, 100, 100, 500, 200, 200, 200, 200 }, // animationDelay
 				0,																	// damageOnTouch
 				friendly,															// friendly			
 				untouchable,
@@ -145,12 +149,8 @@ public class Fiona extends Unit
 		
 		//If the player moves to one corner, she moves to the other!
 		
-//		if(health < 0)
-//		{
-//			health = 1;
-//			player.
-//		}
-//		
+	
+		
 		if(isHit)
 		{
 			directionY += 0.1;
@@ -226,6 +226,43 @@ public class Fiona extends Unit
 			}
 		}
 		
+		
+		if(energyballUnstableMode)
+		{
+			energyballUnstableTimer++;
+			
+			if(energyballUnstableTimer >= energyballUnstableCooldown)
+			{
+				energyballUnstableTimer = 0;
+				
+				double tempX = locationX;
+				double tempY = locationY + 100;
+				
+				
+				aim = Math.atan2(tempY - locationY, tempX - locationX);
+				EnergyballUnstable energyballUnstable = new EnergyballUnstable(tileMap, mainMap, facingRight, up, down, aim, friendly, energyballUnstableDamage);
+				energyballUnstable.setPosition(locationX, locationY - 20);
+				mainMap.addProjectile(energyballUnstable);
+			}
+			
+			if(energyballUnstableMoving == 0)
+			{
+				if(locationX >= 360)
+				{
+					left = true;
+					energyballUnstableMoving = 1;
+				}
+				else
+				{
+					left = false;
+				}
+				if(locationX <= 880)
+				{
+					right = true;
+					energyballUnstableMoving = 2;
+				}
+			}
+		}
 		
 
 		if( (electricball == null || electricball.getHit()) && directionX == 0 && directionY == 0)

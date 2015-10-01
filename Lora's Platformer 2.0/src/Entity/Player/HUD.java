@@ -213,10 +213,10 @@ public class HUD
 		
 		if(boss != null)
 		{
-			int x = GamePanel.WIDTH / 4;
-			int y = GamePanel.HEIGHT - spellbarUsable.get(0).getHeight() - image[5].getHeight() - 10;
+			int x = GamePanel.WIDTH / 5;
+			int y = 20;
 			
-			int imageWidth = GamePanel.WIDTH / 2;
+			int imageWidth = GamePanel.WIDTH / 4;
 			
 			
 			graphics.drawImage(image[5],

@@ -1,9 +1,9 @@
 package Entity;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-
 import Audio.JukeBox;
 import GameState.MainMap;
 import TileMap.TileMap;
@@ -126,8 +126,13 @@ public class Projectile extends MapObject
 		directionX = 0;
 		directionY = 0;
 				
-		collisionWidth = explosionRadius/2;
-		collisionHeight = explosionRadius/2;
+		collisionWidth = explosionRadius;
+		collisionHeight = explosionRadius;
+		
+		
+		
+		
+		
 		for(int i = 0; i < characterList.size(); i++)
 		{
 			Unit character = characterList.get(i);
@@ -180,6 +185,7 @@ public class Projectile extends MapObject
 		{
 			// Look into merging all explosions into one class later, to prevent repeating code further...
 			
+			
 			updateExplosion();
 			
 		}
@@ -204,10 +210,12 @@ public class Projectile extends MapObject
 	public void draw(Graphics2D graphics)
 	{	
 		setMapPosition();
-	
+			
 		if(exploding)
 		{
+			
 			drawExplosion(graphics);
+
 			return;
 		}
 		

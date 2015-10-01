@@ -7,11 +7,11 @@ import GameState.MainMap;
 import Main.Content;
 import TileMap.TileMap;
 
-public class Electricball extends Projectile
+public class EnergyballUnstable extends Projectile
 {
 	protected ElectricballExplosion electricballExplosion;
 	
-	public Electricball(
+	public EnergyballUnstable(
 			TileMap tileMap,
 			MainMap mainMap,
 			boolean right, 
@@ -41,7 +41,7 @@ public class Electricball extends Projectile
 				damage,																// Explosion damage
 				50,
 				60, 																// Explosion radius
-				"Electricball"														// Explosion sound
+				"EnergyballUnstable"														// Explosion sound
 			);
 	}
 	

@@ -30,7 +30,7 @@ public class Unit extends MapObject
 	
 	protected ArrayList<Unit> charactersHit = new ArrayList<Unit>();
 	
-	protected ElectricBall electricball;
+	protected Electricball electricball;
 	
 	protected BufferedImage[] portrait;
 	
@@ -80,6 +80,16 @@ public class Unit extends MapObject
 	
 	protected double saveFallSpeed;
 	
+	
+	// energyballUnstable
+	
+	protected boolean energyballUnstableCasting;
+	protected boolean energyballUnstableDoneCasting;
+	protected boolean energyballUnstableHolding;
+	
+	protected int energyballUnstableManaCost;
+	protected int energyballUnstableDamage;
+	
 	// Small fireball
 	protected boolean fireballSmallCasting;
 	protected boolean fireballSmallDoneCasting;
@@ -88,7 +98,7 @@ public class Unit extends MapObject
 	protected int fireballSmallManaCost;
 	protected int fireballSmallDamage;
 	
-	// Medium fireabll
+	// electricball
 	protected boolean electricballCasting;
 	protected boolean electricballDoneCasting;
 	protected boolean electricballHolding;
@@ -96,7 +106,6 @@ public class Unit extends MapObject
 	protected int electricballManaCost;
 	protected int electricballDamage;
 	
-	// 
 	
 	// Large fireball
 	protected boolean fireballLargeCasting;
@@ -828,6 +837,30 @@ public class Unit extends MapObject
 		}
 		
 		//********************************************************************************
+		//*energyballUnstable                                                                  *
+		//********************************************************************************	
+		else if(energyballUnstableCasting)
+		{
+			mana -= energyballUnstableManaCost;
+			energyballUnstableCasting = false;
+			energyballUnstableDoneCasting = true;
+			
+			
+			EnergyballUnstable energyballUnstable = new EnergyballUnstable(tileMap, mainMap, facingRight, up, down, aim, friendly, energyballUnstableDamage);
+			energyballUnstable.setPosition(locationX, locationY - 20);
+			mainMap.addProjectile(energyballUnstable);
+			
+			currentAction = animationState[0];
+			animation.setFrames(sprites.get(animationState[0]));
+			animation.setDelay(animationDelay[0]);
+			
+			JukeBox.play("ElectricballActive");
+			JukeBox.play("ElectricballThrow");
+			playCastSound();
+		}
+		
+		
+		//********************************************************************************
 		//*Small fireball                                                                *
 		//********************************************************************************	
 		else if(fireballSmallCasting)
@@ -875,7 +908,7 @@ public class Unit extends MapObject
 		}
 		
 		//********************************************************************************
-		//*Medium fireball                                                                *
+		//*electricball                                                                  *
 		//********************************************************************************	
 		else if(electricballCasting)
 		{
@@ -916,7 +949,7 @@ public class Unit extends MapObject
 				
 				
 				
-				electricball = new ElectricBall(tileMap, mainMap, facingRight, up, down, aim, friendly, electricballDamage);
+				electricball = new Electricball(tileMap, mainMap, facingRight, up, down, aim, friendly, electricballDamage);
 				electricball.setPosition(locationX, locationY - 20);
 				mainMap.addProjectile(electricball);
 				
@@ -927,8 +960,6 @@ public class Unit extends MapObject
 				JukeBox.play("ElectricballActive");
 				JukeBox.play("ElectricballThrow");
 				playCastSound();
-				
-				// Create new fireball stuff here
 			}
 		}
 		

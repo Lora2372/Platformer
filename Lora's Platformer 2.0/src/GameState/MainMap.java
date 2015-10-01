@@ -367,7 +367,24 @@ public class MainMap extends GameState
 		}
 	}
 	
+	public void spawnSlug(double x, double y, boolean facingRight)
+	{
+		String[] names = new String[]
+				{
+					"cookie",
+					"steven",
+					"morgan",
+					"tom",
+					"carl",
+					"john"				
+				};
+		Random randomizer = new Random();
+		int random = randomizer.nextInt((5 - 0) + 1 + 0);
 	
+		Slug slug = new Slug(tileMap, facingRight, false, false, false, "Steve", x, y, this);
+		characterList.add(slug);
+		enemies.add(slug);
+	}
 	
 	public void spawnSuccubus(double x, double y, boolean facingRight)
 	{
@@ -397,7 +414,6 @@ public class MainMap extends GameState
 		characterList.add(wolf);
 		enemies.add(wolf);
 	}
-	
 
 	public void spawnPlayer(double x, double y)
 	{
@@ -489,25 +505,6 @@ public class MainMap extends GameState
 		ActivatableChestRare activatableChesetRare = new ActivatableChestRare(tileMap, x, y);
 		activatables.add(activatableChesetRare);
 		stuff.add(activatableChesetRare);
-	}
-	
-	public void spawnSlug(double x, double y, boolean facingRight)
-	{
-		String[] names = new String[]
-				{
-					"cookie",
-					"steven",
-					"morgan",
-					"tom",
-					"carl",
-					"john"				
-				};
-		Random randomizer = new Random();
-		int random = randomizer.nextInt((5 - 0) + 1 + 0);
-	
-		Slug slug = new Slug(tileMap, facingRight, false, false, false, "Steve", x, y, this);
-		characterList.add(slug);
-		enemies.add(slug);
 	}
 	
 	public void GPS()
