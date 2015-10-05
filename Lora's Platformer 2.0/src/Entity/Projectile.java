@@ -1,9 +1,11 @@
 package Entity;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+
 import Audio.JukeBox;
 import GameState.MainMap;
 import TileMap.TileMap;
@@ -77,6 +79,7 @@ public class Projectile extends MapObject
 		this.aim = aim;
 		this.rotation = aim;
 		
+		rotation = aim;
 		
 		this.directionX = Math.cos(aim) * moveSpeed;
 		this.directionY = Math.sin(aim) * moveSpeed;
@@ -112,6 +115,8 @@ public class Projectile extends MapObject
 	{
 		this.directionX = directionX;
 		this.directionY = directionY;
+		
+		rotation += Math.PI;
 	}
 	
 	
@@ -218,6 +223,8 @@ public class Projectile extends MapObject
 
 			return;
 		}
+		
+
 		
 		super.draw(graphics);
 	}

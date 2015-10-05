@@ -367,6 +367,12 @@ public class MainMap extends GameState
 		}
 	}
 	
+	public int RNG(int min, int max)
+	{
+		Random random = new Random();
+		return random.nextInt((max - min) + min);
+	}
+	
 	public void spawnSlug(double x, double y, boolean facingRight)
 	{
 		String[] names = new String[]

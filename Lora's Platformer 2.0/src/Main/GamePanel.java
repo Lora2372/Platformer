@@ -19,9 +19,9 @@ public class GamePanel
 	// Dimensions
 	public static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	public static int WIDTH = 1200;
-	public static int HEIGHT = 600;
+	public static int HEIGHT = 900;
 	
-	public static final String version = "0.1.031.5";
+	public static final String version = "0.1.032";
 		
 	// Game thread
 	private Thread thread;

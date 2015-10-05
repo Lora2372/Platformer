@@ -25,6 +25,7 @@ public class Content
 	public static BufferedImage[][] FireballSwirling 		= load("/Art/Sprites/Effects/FireballSwirling.png", 60, 60);
 	public static BufferedImage[][] FireballDouble 			= load("/Art/Sprites/Effects/FireballDouble.png", 60, 60);
 	public static BufferedImage[][] Electricball			= load("/Art/Sprites/Effects/Electricball.png", 60, 60);
+	public static BufferedImage[][] Arcaneball				= load("/Art/Sprites/Effects/Arcaneball.png", 96, 96);
 	
 	// Characters
 	public static BufferedImage[][] Slugger 				= load("/Art/Sprites/Characters/slugger.gif", 60, 60);

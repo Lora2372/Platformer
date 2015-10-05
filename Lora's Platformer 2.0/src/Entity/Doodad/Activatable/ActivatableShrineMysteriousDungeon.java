@@ -90,6 +90,8 @@ public class ActivatableShrineMysteriousDungeon extends Doodad
 	
 	public void interact(Player player)
 	{
+		if(removeMe) return;
+		
 		if(player == null) this.player = player;
 		
 		if(!player.getConversationBox().inConversation())

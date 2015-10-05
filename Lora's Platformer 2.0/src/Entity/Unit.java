@@ -80,16 +80,6 @@ public class Unit extends MapObject
 	
 	protected double saveFallSpeed;
 	
-	
-	// energyballUnstable
-	
-	protected boolean energyballUnstableCasting;
-	protected boolean energyballUnstableDoneCasting;
-	protected boolean energyballUnstableHolding;
-	
-	protected int energyballUnstableManaCost;
-	protected int energyballUnstableDamage;
-	
 	// Small fireball
 	protected boolean fireballSmallCasting;
 	protected boolean fireballSmallDoneCasting;
@@ -97,6 +87,14 @@ public class Unit extends MapObject
 	
 	protected int fireballSmallManaCost;
 	protected int fireballSmallDamage;
+	
+	// Large fireball
+	protected boolean fireballLargeCasting;
+	protected boolean fireballLargeDoneCasting;
+	protected boolean fireballLargeHolding;
+	
+	protected int fireballLargeManaCost;
+	protected int fireballLargeDamage;
 	
 	// electricball
 	protected boolean electricballCasting;
@@ -106,14 +104,13 @@ public class Unit extends MapObject
 	protected int electricballManaCost;
 	protected int electricballDamage;
 	
+	// arcaneball
+	protected boolean arcaneballCasting;
+	protected boolean arcaneballDoneCasting;
+	protected boolean arcaneballHolding;
 	
-	// Large fireball
-	protected boolean fireballLargeCasting;
-	protected boolean fireballLargeDoneCasting;
-	protected boolean fireballLargeHolding;
-	
-	protected int fireballLargeManaCost;
-	protected int fireballLargeDamage;
+	protected int arcaneballManaCost;
+	protected int arcaneballDamage;
 	
 	// Punch
 	protected boolean startPunch;
@@ -219,6 +216,8 @@ public class Unit extends MapObject
 			int fireballLargeDamage,
 			int electricballManaCost,
 			int electricballDamage,
+			int arcaneballManaCost,
+			int arcaneballDamage,
 			String spritePath,
 			int[] animationState,
 			int[] numFrames,
@@ -272,6 +271,8 @@ public class Unit extends MapObject
 		this.fireballLargeDamage = fireballLargeDamage;
 		this.electricballManaCost = electricballManaCost;
 		this.electricballDamage = electricballDamage;
+		this.arcaneballManaCost = arcaneballManaCost;
+		this.arcaneballDamage = arcaneballDamage;
 		this.spritePath = spritePath;
 		this.animationState = animationState;
 		this.numFrames = numFrames;
@@ -837,18 +838,18 @@ public class Unit extends MapObject
 		}
 		
 		//********************************************************************************
-		//*energyballUnstable                                                                  *
+		//*arcaneball                                                                  *
 		//********************************************************************************	
-		else if(energyballUnstableCasting)
+		else if(arcaneballCasting)
 		{
-			mana -= energyballUnstableManaCost;
-			energyballUnstableCasting = false;
-			energyballUnstableDoneCasting = true;
+			mana -= arcaneballManaCost;
+			arcaneballCasting = false;
+			arcaneballDoneCasting = true;
 			
 			
-			EnergyballUnstable energyballUnstable = new EnergyballUnstable(tileMap, mainMap, facingRight, up, down, aim, friendly, energyballUnstableDamage);
-			energyballUnstable.setPosition(locationX, locationY - 20);
-			mainMap.addProjectile(energyballUnstable);
+			Arcaneball arcaneball = new Arcaneball(tileMap, mainMap, facingRight, up, down, aim, friendly, arcaneballDamage);
+			arcaneball.setPosition(locationX, locationY - 20);
+			mainMap.addProjectile(arcaneball);
 			
 			currentAction = animationState[0];
 			animation.setFrames(sprites.get(animationState[0]));

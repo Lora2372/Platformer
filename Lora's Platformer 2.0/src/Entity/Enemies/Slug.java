@@ -62,6 +62,8 @@ public class Slug extends Unit
 				0, 																	// largeFireballDamage
 				30,																	// electricBallManaCost
 				70,																	// electricBallDamage
+				0,
+				0,
 				"/Art/Sprites/Characters/slugger.gif",									// spritePath
 				new int[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},						// animationStates
 				new int[]{3},														// numImages

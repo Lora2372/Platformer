@@ -7,11 +7,11 @@ import GameState.MainMap;
 import Main.Content;
 import TileMap.TileMap;
 
-public class EnergyballUnstable extends Projectile
+public class Arcaneball extends Projectile
 {
 	protected ElectricballExplosion electricballExplosion;
 	
-	public EnergyballUnstable(
+	public Arcaneball(
 			TileMap tileMap,
 			MainMap mainMap,
 			boolean right, 
@@ -31,23 +31,23 @@ public class EnergyballUnstable extends Projectile
 				down,  																// Holding down arrow
 				angle,
 				friendly, 															// Whether the spell is friendly or hostile
-				60, 																// Projectile width
-				60, 																// Projectile height
+				96, 																// Projectile width
+				96, 																// Projectile height
 				60, 																// Explosion width
 				60, 																// Explosion height
-				40, 																// Collision width
-				40, 																// Collision height
+				96, 																// Collision width
+				60, 																// Collision height
 				5, 																	// Projectile speed
 				damage,																// Explosion damage
 				50,
-				60, 																// Explosion radius
-				"EnergyballUnstable"														// Explosion sound
+				96, 																// Explosion radius
+				"Electricball"														// Explosion sound
 			);
 	}
 	
 	public void setProjectile()
 	{
-		sprites = Content.Electricball[0];
+		sprites = Content.Arcaneball[0];
 	}
 	
 		public void explode(TileMap tilemap, double x, double y)

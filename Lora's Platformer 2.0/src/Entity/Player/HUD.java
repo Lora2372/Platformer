@@ -213,11 +213,11 @@ public class HUD
 		
 		if(boss != null)
 		{
-			int x = GamePanel.WIDTH / 5;
-			int y = 20;
 			
 			int imageWidth = GamePanel.WIDTH / 4;
 			
+			int x = GamePanel.WIDTH / 2 - imageWidth / 2;
+			int y = 20;
 			
 			graphics.drawImage(image[5],
 					x,

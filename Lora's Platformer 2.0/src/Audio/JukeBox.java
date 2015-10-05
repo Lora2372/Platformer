@@ -55,6 +55,7 @@ public class JukeBox
 	{
 		if(clips.get(s) != null)
 		{
+			System.out.println(s + " exists.");
 			return true;
 		}
 		else

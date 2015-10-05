@@ -19,12 +19,14 @@ public class Player extends Unit
 	
 //	protected ArrayList<Projectile> a
 	
-	String[] soundTypes = new String[]
-	{
-		"Attack",
-		"Hurt",
-		"Jump"
-	};
+	public enum soundTypes { Attack, Hurt, Jump }
+	
+//	String[] soundTypes = new String[]
+//	{
+//		"Attack",
+//		"Hurt",
+//		"Jump"
+//	};
 	
 	//  Animations 
 	
@@ -73,6 +75,8 @@ public class Player extends Unit
 				50, 																// largeFireballDamage
 				30,																	// electricBallManaCost
 				70,																	// electricBallDamage
+				0,
+				0,
 				"/Art/Sprites/Characters/Lora.png", 									// spritePath
 				new int[] {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,14,15},				// animationStates
 				new int[]{6, 6, 1, 5, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1},			// numImages
@@ -93,16 +97,13 @@ public class Player extends Unit
 		conversationbox = new ConversationBox(this);
 
 		
-		
-
-		
-		numberofSounds = new int[soundTypes.length];
+		numberofSounds = new int[soundTypes.values().length];
 
 		
 		for(int i = 0; i < numberofSounds.length; i++)
 		{
 			int tempInt = 0;
-			while(JukeBox.checkIfClipExists("Female01Attack0" + (tempInt + 1)))
+			while(JukeBox.checkIfClipExists("Female01" + soundTypes.values()[i] + "0" + (tempInt + 1)))
 			{
 				tempInt++;
 			}
@@ -118,7 +119,7 @@ public class Player extends Unit
 		int min = 1;
 		
 		int myRandom = random.nextInt((max - min) + 1) + min;
-		JukeBox.play("Female01" + soundTypes[1] + "0" + myRandom);
+		JukeBox.play("Female01" + soundTypes.Hurt + "0" + myRandom);
 	}
 	
 	
@@ -130,7 +131,7 @@ public class Player extends Unit
 		int min = 1;
 		
 		int myRandom = random.nextInt((max - min) + 1) + min;
-		JukeBox.play("Female01" + soundTypes[2] + "0" + myRandom);
+		JukeBox.play("Female01" + soundTypes.Jump + "0" + myRandom);
 	}
 	
 	public void playCastSound()
@@ -141,7 +142,7 @@ public class Player extends Unit
 		int min = 1;
 		
 		int myRandom = random.nextInt((max - min) + 1) + min;
-		JukeBox.play("Female01" + soundTypes[0] + "0" + myRandom);
+		JukeBox.play("Female01" + soundTypes.Attack + "0" + myRandom);
 	}
 	
 	public void playPunchSound()
@@ -152,7 +153,7 @@ public class Player extends Unit
 		int min = 1;
 		
 		int myRandom = random.nextInt((max - min) + 1) + min;
-		JukeBox.play("Female01" + soundTypes[0] + "0" + myRandom);
+		JukeBox.play("Female01" + soundTypes.Attack + "0" + myRandom);
 	}
 	
 	

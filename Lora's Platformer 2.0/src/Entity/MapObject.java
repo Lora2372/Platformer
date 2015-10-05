@@ -1,6 +1,8 @@
 package Entity;
 
 import java.awt.Rectangle;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 
 import Main.GamePanel;
 import TileMap.TileMap;
@@ -289,18 +291,24 @@ public abstract class MapObject
 		
 		if(hidden) return;
 		
-//		if(rotaded)
-//		{
-//			AffineTransform affineTransform = AffineTransform.getRotateInstance(rotation, locationX, locationY);
-//			AffineTransformOp affineTransformOp = new AffineTransformOp(affineTransform, AffineTransformOp.TYPE_BILINEAR);
-//			graphics.drawImage(
-//					affineTransformOp.filter(
-//							animation.getImage(), null), 
-//							(int)(locationX + mapPositionX - width / 2), 
-//							(int)(locationY + mapPositionY - height / 2), null);
-//			return;
-//			
-//		}
+		if(rotaded)
+		{
+			
+			double rotationX = width / 2;
+			double rotationY = height / 2;
+			AffineTransform tx = AffineTransform.getRotateInstance(rotation + Math.PI, rotationX, rotationY);
+			AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
+			
+			
+			graphics.drawImage(
+					op.filter(animation.getImage(), null),
+							(int)(locationX + mapPositionX - width / 2), 
+							(int)(locationY + mapPositionY - height / 2),
+							null
+							);
+			return;
+			
+		}
 		
 		if(facingRight)
 		{

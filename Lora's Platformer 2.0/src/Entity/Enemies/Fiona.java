@@ -5,7 +5,7 @@ import java.util.Random;
 
 import TileMap.TileMap;
 import Audio.JukeBox;
-import Entity.EnergyballUnstable;
+import Entity.Arcaneball;
 import Entity.Unit;
 import GameState.MysteriousDungeon;
 import Main.Content;
@@ -15,16 +15,28 @@ public class Fiona extends Unit
 	protected int cooldown;
 	protected int timer;
 	
-	protected boolean energyballUnstableMode;
-	protected int energyballUnstableMoving;
-	protected int energyballUnstableTimer;
-	protected int energyballUnstableCooldown;
+	protected boolean arcaneballMode;
+	protected int arcaneballMoving;
+	protected int arcaneballTimer;
+	protected int arcaneballCooldown;
 	
 	protected int moving = 0; // 0 don't move, 1 = move left, 2 = move 3
 	
 	protected boolean isHit = false;
 
-	protected int numberofGrunts;
+	protected int[] numberofSounds;
+	
+	
+	public enum soundTypes { Attack, Hurt, Jump, Chargeup}
+	
+//	String[] soundTypes = new String[]
+//	{
+//		"Attack",
+//		"Hurt",
+//		"Jump"
+//	};
+	
+	
 	
 	
 	public Fiona(
@@ -78,6 +90,8 @@ public class Fiona extends Unit
 				50, 																	// largeFireballDamage
 				30,																	// electricBallManaCost
 				70,																	// electricBallDamage
+				0,
+				40,
 				"/Art/Sprites/Characters/Succubus.png",									// spritePath
 				new int[] {0,0,0,0,1,2,0,0,1,2,1,2,3,0,0,0,0},						// animationStates
 				new int[]{7, 2, 2, 1, 2, 0, 0, 0, 0},								// numImages
@@ -94,8 +108,10 @@ public class Fiona extends Unit
 				);
 		
 		timer = 0;
-		cooldown = 600;
+		cooldown = 300;
 		
+		arcaneballTimer = 30;
+		arcaneballCooldown = 30;
 		
 		flying = true;
 		
@@ -104,14 +120,31 @@ public class Fiona extends Unit
 		setTennisPlayer(true);
 				
 
+		numberofSounds = new int[soundTypes.values().length];
+
 		
+		for(int i = 0; i < numberofSounds.length; i++)
+		{
+			int tempInt = 0;
+			while(JukeBox.checkIfClipExists("Fiona" + soundTypes.values()[i] + "0" + (tempInt + 1)))
+			{
+				tempInt++;
+			}
+			numberofSounds[i] = tempInt;
+		}
 	}
 	
 
 	
 	public void iAmHit()
 	{
-		JukeBox.play("FionaGrunt07");
+		Random random = new Random();
+		
+		int max = numberofSounds[1];
+		int min = 1;
+		
+		int myRandom = random.nextInt((max - min) + 1) + min;
+		JukeBox.play("Fiona" + soundTypes.Hurt + "0" + myRandom);
 		if(!isHit)
 		{
 			setStunned(5000);
@@ -119,16 +152,39 @@ public class Fiona extends Unit
 		}
 	}
 	
+	
+	
+	public void playJumpSound()
+	{
+		Random random = new Random();
+		
+		int max = numberofSounds[2];
+		int min = 1;
+		
+		int myRandom = random.nextInt((max - min) + 1) + min;
+		JukeBox.play("Fiona" + soundTypes.Jump + "0" + myRandom);
+	}
+	
 	public void playCastSound()
 	{
 		Random random = new Random();
-		int myRandom = random.nextInt((2 - 1) + 1) + 1;
-		JukeBox.play("FionaCast0" + myRandom);
+		
+		int max = numberofSounds[0];
+		int min = 1;
+		
+		int myRandom = random.nextInt((max - min) + 1) + min;
+		JukeBox.play("Fiona" + soundTypes.Attack + "0" + myRandom);
 	}
 	
 	public void playPunchSound()
 	{
-		JukeBox.play("FionaPunch01");
+		Random random = new Random();
+		
+		int max = numberofSounds[0];
+		int min = 1;
+		
+		int myRandom = random.nextInt((max - min) + 1) + min;
+		JukeBox.play("Fiona" + soundTypes.Attack + "0" + myRandom);
 	}
 	
 //	public void playStunnedSound()
@@ -204,6 +260,8 @@ public class Fiona extends Unit
 			}
 
 		}
+		
+		
 		if(moving == 1)
 		{
 			if(locationX >= 360)
@@ -227,30 +285,31 @@ public class Fiona extends Unit
 		}
 		
 		
-		if(energyballUnstableMode)
+		if(arcaneballMode && !stunned)
 		{
-			energyballUnstableTimer++;
+			arcaneballTimer++;
 			
-			if(energyballUnstableTimer >= energyballUnstableCooldown)
+			if(arcaneballTimer >= arcaneballCooldown)
 			{
-				energyballUnstableTimer = 0;
+				arcaneballTimer = 0;
 				
 				double tempX = locationX;
 				double tempY = locationY + 100;
 				
 				
 				aim = Math.atan2(tempY - locationY, tempX - locationX);
-				EnergyballUnstable energyballUnstable = new EnergyballUnstable(tileMap, mainMap, facingRight, up, down, aim, friendly, energyballUnstableDamage);
-				energyballUnstable.setPosition(locationX, locationY - 20);
-				mainMap.addProjectile(energyballUnstable);
+				Arcaneball arcaneball = new Arcaneball(tileMap, mainMap, facingRight, up, down, aim, friendly, arcaneballDamage);
+				arcaneball.setPosition(locationX, locationY - 20);
+				mainMap.addProjectile(arcaneball);
 			}
 			
-			if(energyballUnstableMoving == 0)
+			if(arcaneballMoving == 0)
 			{
+				JukeBox.play("FionaChargeup02");
 				if(locationX >= 360)
 				{
 					left = true;
-					energyballUnstableMoving = 1;
+					arcaneballMoving = 1;
 				}
 				else
 				{
@@ -259,8 +318,19 @@ public class Fiona extends Unit
 				if(locationX <= 880)
 				{
 					right = true;
-					energyballUnstableMoving = 2;
+					arcaneballMoving = 2;
 				}
+			}
+			else if(directionX == 0)
+			{
+				System.out.println("Unstable mode, disabled..");
+				arcaneballMode = false;
+				arcaneballMoving = 0;
+				right = false;
+				left = false;
+				
+				if(locationX > 360) moving = 1;
+				else moving = 2;
 			}
 		}
 		
@@ -271,6 +341,17 @@ public class Fiona extends Unit
 			if(timer > cooldown)
 			{	
 				timer = 0;
+				
+				if(mainMap.RNG(1, 2) == 1)
+				{
+					JukeBox.play("FionaChargeup01");
+					this.setStunned(1000);
+					
+					arcaneballMode = true;
+					System.out.println("Unstable mode engaged.");
+					return;
+				}
+				
 				electricballCasting = true;
 			}
 		}
