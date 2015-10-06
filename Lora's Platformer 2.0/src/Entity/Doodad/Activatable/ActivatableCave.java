@@ -19,10 +19,10 @@ public class ActivatableCave extends Doodad
 		super(tileMap, 
 				spawnX, 
 				spawnY, 
-				360, 
-				360,
-				360,
-				360,
+				100, 
+				96,
+				100,
+				96,
 				"/Art/Sprites/Doodads/CaveEntrance.png", 
 				new int[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				new int[] {1},
@@ -38,7 +38,17 @@ public class ActivatableCave extends Doodad
 	
 	public void interact(Player player)
 	{
-		gameStateManager.setState(2);
+		if(gameStateManager.getState() == 1)
+		{
+			System.out.println("Loading MysteriousDungeon");
+			gameStateManager.setState(2);
+		}
+		else if(gameStateManager.getState() == 2)
+		{
+			System.out.println("Should be loading deep woods");
+			gameStateManager.setState(3);
+		}
+			
 	}
 	
 	public void activateSound() 

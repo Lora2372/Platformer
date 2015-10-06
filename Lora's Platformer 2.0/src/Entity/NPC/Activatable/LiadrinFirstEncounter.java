@@ -24,6 +24,7 @@ public class LiadrinFirstEncounter extends Unit
 			boolean friendly,
 			boolean untouchable,
 			boolean invulnerable,
+			boolean unkillable,
 			String name,
 			double spawnX,
 			double spawnY,
@@ -79,6 +80,7 @@ public class LiadrinFirstEncounter extends Unit
 				friendly,															// friendly				
 				untouchable,
 				invulnerable,
+				unkillable,
 				true,
 				name,
 				spawnX,

@@ -119,7 +119,7 @@ public class MenuState extends GameState
 		if(currentChoice == 0)
 		{
 			// Start
-			gameStateManager.setState(GameStateManager.LEVEL1STATE);
+			gameStateManager.setState(GameStateManager.LorasCavern);
 		}
 		if(currentChoice == 1)
 		{

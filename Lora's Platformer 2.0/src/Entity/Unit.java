@@ -226,6 +226,7 @@ public class Unit extends MapObject
 			boolean friendly,
 			boolean untouchable,
 			boolean invulnerable,
+			boolean unkillable,
 			boolean activatable,
 			String name,
 			double spawnX,
@@ -281,6 +282,9 @@ public class Unit extends MapObject
 		this.friendly = friendly;
 		this.activatable = activatable;
 		this.name = name;
+		this.invulnerable = invulnerable;
+		this.untouchable = untouchable;
+		this.unkillable = unkillable;
 		this.spawnX = spawnX;
 		this.spawnY = spawnY;
 		this.mainMap = mainMap;
@@ -597,12 +601,15 @@ public class Unit extends MapObject
 	
 	public void hit(int damage)
 	{
-		System.out.println("Damage: " + damage);
 		if(dead) return;
 		health -= damage;
-		System.out.println(name + "'s health: " + health);
-		if( health < 0) health = 0;
-		if(health == 0) dead = true;
+		if( health < 0)health = 0;
+		if(health == 0 && !unkillable)
+		{
+			System.out.println(name + " has died.");
+			System.out.println("Unkillable: " + unkillable);
+			dead = true;
+		}
 		iAmHit();
 		if(!stunned)setStunned(500);
 		inControl = false;
@@ -799,9 +806,7 @@ public class Unit extends MapObject
 				animation.setFrames(sprites.get(animationState[6]));
 				animation.setDelay(animationDelay[6]);
 				if(directionY == 0) directionX = 0;
-				
-				saveFallSpeed = fallSpeed;
-				fallSpeed = 0;
+
 				directionY = 0;
 			}
 			
@@ -827,7 +832,6 @@ public class Unit extends MapObject
 			if(animation.hasPlayedOnce())
 			{
 				directionX = 0;
-				fallSpeed = saveFallSpeed;
 								
 				charactersHit = new ArrayList<Unit>();
 				
@@ -1113,7 +1117,10 @@ public class Unit extends MapObject
 		gliding = false;
 		left = false;
 		right = false;
-		
+		startDash = false;
+		endDash = false;
+		jumping = false;
+				
 		stunned = true;
 		
 		currentAction = animationState[12];

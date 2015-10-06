@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import TileMap.Background;
+import TileMap.GameOver;
 import TileMap.TileMap;
 import Audio.JukeBox;
 import Entity.Doodad.Doodad;
@@ -20,6 +22,7 @@ public class ActivatableShrineMysteriousDungeon extends Doodad
 	protected Player player;
 	
 	protected boolean startConveration;
+	protected boolean used;
 	
 	protected Fiona fiona;
 	
@@ -81,20 +84,16 @@ public class ActivatableShrineMysteriousDungeon extends Doodad
 	
 	public void startConversation(Player player)
 	{
-		System.out.println("Engaging conversation");
+		used = true;
 		player.getConversationBox().startConversation(player, fiona, null, conversation, whoTalks);
-
-		
-
 	}
 	
 	public void interact(Player player)
 	{
-		if(removeMe) return;
 		
 		if(player == null) this.player = player;
 		
-		if(!player.getConversationBox().inConversation())
+		if(!player.getConversationBox().inConversation() && !used)
 			startConversation(player);
 //		else
 //			player.getConversationBox().progressConversation();
@@ -140,7 +139,6 @@ public class ActivatableShrineMysteriousDungeon extends Doodad
 					
 					if(currentDoodad == null)
 					{
-						System.out.println("Removing a doodad");
 						mysteriousDungeon.getStuff().remove(currentDoodad);
 						i--;
 					}
@@ -165,8 +163,6 @@ public class ActivatableShrineMysteriousDungeon extends Doodad
 				tileMap.loadTiles(ImageIO.read(getClass().getResource("/Art/Tilesets/LorasTileset.png")));
 				tileMap.loadMap("/Maps/MysteriousDungeonB.map");
 				tileMap.setPosition(0, 0);
-				
-				
 			}
 			catch(IOException e)
 			{
@@ -189,9 +185,9 @@ public class ActivatableShrineMysteriousDungeon extends Doodad
 			player.getConversationBox().endConversation();
 			startConveration = true;
 			active = false;
-			removeMe = true;
+			used = true;
 			fiona.inControl(true);
-			mysteriousDungeon.getHUD().addBoss(fiona);
+			player.getHUD().addBoss(fiona);
 		}
 		
 

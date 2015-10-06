@@ -75,9 +75,9 @@ public abstract class MapObject
 	protected double stopJumpSpeed;
 	protected double dashSpeed;
 	
-	protected boolean untouchable;
-	protected boolean invulnerable;
-	
+	protected boolean untouchable; // Attacks ignore you.
+	protected boolean invulnerable; // Attacks are able to hit you but you won't take damage.
+	protected boolean unkillable; // Attacks can hit you and you can take damage, but you won't die.
 	
 	public void setHidden(boolean b) { hidden = b; }
 	

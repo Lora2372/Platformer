@@ -7,6 +7,7 @@ import javax.imageio.ImageIO;
 
 import Audio.JukeBox;
 import Entity.Doodad.Doodad;
+import Entity.Doodad.Activatable.ActivatableCave;
 import Entity.Doodad.Activatable.ActivatableShrineMysteriousDungeon;
 import Entity.Enemies.Fiona;
 import TileMap.Background;
@@ -55,9 +56,9 @@ public class MysteriousDungeon extends MainMap
 			spawnTorch(109 + i * tileMap.getTileSize() * 10, 520);
 		}
 		
-		spawnTorch(3568, 410);
+		spawnTorch(3508, 410);
 		
-		spawnTorch(3930, 410);
+		spawnTorch(3928, 410);
 		
 		player.setPosition(109, 200);
 		player.setSpawnPoint(109, 200);
@@ -69,12 +70,12 @@ public class MysteriousDungeon extends MainMap
 		
 		
 		
-		fiona = new Fiona(tileMap,false,false,false,false, "Fiona", player.getx() + 200, player.gety(), this);
+		fiona = new Fiona(tileMap,false,false,false,false, true, "Fiona", player.getx() + 200, player.gety(), this, player);
 		enemies.add(fiona);
 		characterList.add(fiona);
 		fiona.setHidden(true);
 		
-		activatableShrine = new ActivatableShrineMysteriousDungeon(tileMap, gameStatemanager, this, 3760, 510, fiona);
+		activatableShrine = new ActivatableShrineMysteriousDungeon(tileMap, gameStatemanager, this, 3730, 510, fiona);
 		activatables.add(activatableShrine);
 		stuff.add(activatableShrine);
 		
@@ -86,6 +87,8 @@ public class MysteriousDungeon extends MainMap
 		bossDefeated = false;
 	}
 	
+	
+	
 	public ArrayList<Entity.Unit> getCharacterList()
 	{
 		return characterList;
@@ -95,6 +98,8 @@ public class MysteriousDungeon extends MainMap
 	{
 		return stuff;
 	}
+	
+	public void setDefeated(boolean b) { bossDefeated = b; }
 	
 	public void update()
 	{
@@ -128,13 +133,18 @@ public class MysteriousDungeon extends MainMap
 		
 		if(bossEngaged)
 		{
-			if(fiona.isDead())
+			if(bossDefeated)
 			{
 				bossEngaged = false;
-				bossDefeated = true;
 				JukeBox.stop("MysteriousBattle");
 				JukeBox.loop("Dungeon1");
 				
+				ActivatableCave activatableCave = new ActivatableCave(tileMap, gameStateManager, 1468, 550);
+				stuff.add(activatableCave);
+				activatables.add(activatableCave);
+				
+				spawnTorch(1348, 410);
+				spawnTorch(1588, 410);
 				
 			}
 		}

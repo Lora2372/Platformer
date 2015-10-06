@@ -17,6 +17,7 @@ public class Slug extends Unit
 			boolean friendly,
 			boolean untouchable,
 			boolean invulnerable,
+			boolean unkillable,
 			String name,
 			double spawnX,
 			double spawnY,
@@ -72,6 +73,7 @@ public class Slug extends Unit
 				friendly,															// friendly				
 				untouchable,
 				invulnerable,
+				unkillable,
 				false,
 				name,
 				spawnX,

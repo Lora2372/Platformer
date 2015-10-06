@@ -17,6 +17,8 @@ public class Player extends Unit
 	
 	protected int[] numberofSounds;
 	
+	protected HUD hud;
+	
 //	protected ArrayList<Projectile> a
 	
 	public enum soundTypes { Attack, Hurt, Jump }
@@ -34,7 +36,7 @@ public class Player extends Unit
 	// Animation actions, these are enums similar to the GameState, we use them to determine the index of the sprite animation
 	
 	// Constructor
-	public Player(TileMap tileMap, String name, double spawnX, double spawnY, MainMap level1state)
+	public Player(TileMap tileMap, String name, double spawnX, double spawnY, MainMap mainMap)
 	{
 		super(
 				tileMap,  															// TileMap
@@ -83,19 +85,21 @@ public class Player extends Unit
 				new int[] { 400, 40, 100, 80, 125, 120, 100, 100, 100, 100, 100, 100, 500, 100, 100, 3000, 3000 },
 				0,																	// damageOnTouch
 				true,																// friendly
-				true,
+				false,
+				false,
 				false,
 				false,
 				name,
 				spawnX,
 				spawnY,
-				level1state
+				mainMap
 				
 				);
 		System.out.println("Running player");
 		player = true;
 		conversationbox = new ConversationBox(this);
 
+		hud = new HUD(this);
 		
 		numberofSounds = new int[soundTypes.values().length];
 
@@ -110,6 +114,8 @@ public class Player extends Unit
 			numberofSounds[i] = tempInt;
 		}
 	}
+	
+	public HUD getHUD() { return hud; }
 	
 	public void iAmHit()
 	{

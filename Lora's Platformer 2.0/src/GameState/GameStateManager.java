@@ -14,10 +14,12 @@ public class GameStateManager
 	private GameState[] gameStates;
 	private int currentState;
 	
-	public static final int NUMGAMESTATES = 3;
+	public static final int NUMGAMESTATES = 4;
 	public static final int MENUSTATE = 0;
-	public static final int LEVEL1STATE = 1;
-	public static final int LEVEL2STATE = 2;
+	public static final int LorasCavern = 1;
+	public static final int MysteriousDungeon = 2;
+	public static final int DeepWoods = 3;
+	
 	
 	public GameStateManager() 
 	{
@@ -36,22 +38,35 @@ public class GameStateManager
 	
 	private void loadState(int state) 
 	{
-		JukeBox.loop(Content.mapMusic[state]);
 		if(state == MENUSTATE)
 		{				
 			gameStates[state] = new MenuState(this);
-
+			JukeBox.loop("Menu");
 		}
-		if(state == LEVEL1STATE)
+		else if(state == LorasCavern)
+		{
+			JukeBox.loop("Level1");
 			gameStates[state] = new Level1State(this);
-		
-		if(state == LEVEL2STATE)
-			gameStates[state] = new MysteriousDungeon(this);
+		}
+		else if(state == MysteriousDungeon)
+		{
+			JukeBox.loop("Dungeon1");
+			gameStates[state] = new MysteriousDungeon(this);			
+		}
+		else if(state == DeepWoods)
+		{
+			System.out.println("new DeepWoods");
+			JukeBox.loop("DeepWoods");
+			gameStates[state] = new DeepWoods(this);			
+		}
 	}
 	
 	private void unloadState(int state) 
 	{
-		JukeBox.stop(Content.mapMusic[state]);
+		for(int i = 0; i < Content.mapMusic.values().length; i++)
+		{
+			JukeBox.stop(Content.mapMusic.values()[i] + "");
+		}
 		gameStates[state] = null;
 	}
 	
@@ -62,6 +77,8 @@ public class GameStateManager
 		loadState(currentState);
 	}
 	
+	public int getState() { return currentState; }
+	
 	public void update() 
 	{
 		try {
@@ -71,10 +88,7 @@ public class GameStateManager
 				
 				if(options){ helpstate.update(); }
 				return;
-			}
-			
-
-			
+			}			
 			gameStates[currentState].update();
 		} catch(Exception e) {}
 	}
@@ -108,15 +122,5 @@ public class GameStateManager
 	public void keyReleased(int k) 
 	{
 		gameStates[currentState].keyReleased(k);
-	}
-	
+	}	
 }
-
-
-
-
-
-
-
-
-

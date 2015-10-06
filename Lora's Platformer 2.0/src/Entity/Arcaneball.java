@@ -35,7 +35,7 @@ public class Arcaneball extends Projectile
 				96, 																// Projectile height
 				60, 																// Explosion width
 				60, 																// Explosion height
-				96, 																// Collision width
+				80, 																// Collision width
 				60, 																// Collision height
 				5, 																	// Projectile speed
 				damage,																// Explosion damage

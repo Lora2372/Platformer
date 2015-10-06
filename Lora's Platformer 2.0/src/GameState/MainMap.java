@@ -3,7 +3,6 @@ package GameState;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-
 import Main.GamePanel;
 import TileMap.*;
 import Entity.*;
@@ -13,12 +12,9 @@ import Entity.Doodad.*;
 import Entity.Doodad.Activatable.*;
 import Entity.Player.*;
 import Audio.JukeBox;
-
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Random;
-
-
 
 public class MainMap extends GameState
 {
@@ -33,7 +29,6 @@ public class MainMap extends GameState
 	protected ArrayList<Doodad> stuff;
 	protected ArrayList<Doodad> activatables;
 	protected ArrayList<Projectile> projectiles;
-	protected HUD hud;
 	protected boolean doneInitializing;
 	
 	protected long soundTimer;
@@ -63,13 +58,14 @@ public class MainMap extends GameState
 		soundTimer = 0;
 		
 		tileMap = new TileMap(60);
-		System.out.println("Player created");
-		player = new Player(tileMap, "Lora", 200, 200, this);
+
+		if(player == null)
+		{
+			System.out.println("Player created");
+			player = new Player(tileMap, "Lora", 200, 200, this);
+		}
 		characterList.add(player);
-		hud = new HUD(player);
 	}
-	
-	public HUD getHUD() { return hud; }
 	
 	public void GameOverUpdate()
 	{
@@ -210,7 +206,6 @@ public class MainMap extends GameState
 				{
 					if(character != player)
 					{
-						System.out.println(character.getName() + " has died.");
 						if(!characterList.get(i).getFriendly())
 						{
 							for(int z = 0; z < enemies.size(); z++)
@@ -361,9 +356,9 @@ public class MainMap extends GameState
 		}
 		
 		// Draw HUD		
-		if(hud != null)
+		if(player.getHUD() != null)
 		{
-			hud.draw(graphics);			
+			player.getHUD().draw(graphics);			
 		}
 	}
 	
@@ -373,8 +368,10 @@ public class MainMap extends GameState
 		return random.nextInt((max - min) + min);
 	}
 	
-	public void spawnSlug(double x, double y, boolean facingRight)
+	public void spawnSlug(double x, double y, boolean facingRight, String name)
 	{
+		
+		
 		String[] names = new String[]
 				{
 					"cookie",
@@ -384,10 +381,16 @@ public class MainMap extends GameState
 					"carl",
 					"john"				
 				};
-		Random randomizer = new Random();
-		int random = randomizer.nextInt((5 - 0) + 1 + 0);
+		
+		if(name == null)
+		{
+			Random randomizer = new Random();
+			int random = randomizer.nextInt((5 - 0) + 1 + 0);
+			name = names[random];
+		}
+
 	
-		Slug slug = new Slug(tileMap, facingRight, false, false, false, "Steve", x, y, this);
+		Slug slug = new Slug(tileMap, facingRight, false, false, false, false, name, x, y, this);
 		characterList.add(slug);
 		enemies.add(slug);
 	}
@@ -403,7 +406,7 @@ public class MainMap extends GameState
 		Random randomizer = new Random();
 		int random2 = randomizer.nextInt((1 - 0) + 1 + 0);
 		
-		Succubus succubus = new Succubus(tileMap, facingRight,false, false, false, succubiNames[random2],x, y, this);
+		Succubus succubus = new Succubus(tileMap, facingRight,false, false, false, false, succubiNames[random2],x, y, this);
 		characterList.add(succubus);
 		enemies.add(succubus);
 		
@@ -416,7 +419,7 @@ public class MainMap extends GameState
 			"Cookie"
 		};
 		
-		Wolf wolf = new Wolf(tileMap, facingRight, false, false, false, wolfNames[0], x, y, this);
+		Wolf wolf = new Wolf(tileMap, facingRight, false, false, false, false, wolfNames[0], x, y, this);
 		characterList.add(wolf);
 		enemies.add(wolf);
 	}
@@ -545,7 +548,7 @@ public class MainMap extends GameState
 		
 		if( k == KeyEvent.VK_M)player.setPosition(player.getx() + 200, player.gety()); 
 
-		if(k == KeyEvent.VK_P) spawnSlug(player.getx(), player.gety(), player.getFacingRight()); 
+		if(k == KeyEvent.VK_P) spawnSlug(player.getx(), player.gety(), player.getFacingRight(), null); 
 		if(k == KeyEvent.VK_O) spawnSuccubus(player.getx(), player.gety(), player.getFacingRight()); 
 		if(k == KeyEvent.VK_I) spawnWaterfall(player.getx(), player.gety()); 
 		if(k == KeyEvent.VK_U) spawnSummonEffect(player.getx(), player.gety()); 

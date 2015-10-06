@@ -28,6 +28,7 @@ public class ConversationBox
 	
 	private BufferedImage[] sprites;
 	
+	private boolean conversationLocked;
 	
 	
 	public ConversationBox(Player player)
@@ -45,6 +46,8 @@ public class ConversationBox
 	
 	public boolean inConversation() { return inConversation; }
 	
+	public boolean conversationLocked() { return conversationLocked; }
+	public void lockConversation(boolean b) { conversationLocked = b; }
 	
 	public void startConversation(
 			Player newPlayer,
@@ -89,6 +92,7 @@ public class ConversationBox
 	
 	public void progressConversation()
 	{
+		if(conversationLocked) return;
 		conversationTracker++;
 	}
 	

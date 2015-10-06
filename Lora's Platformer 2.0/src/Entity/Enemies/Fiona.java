@@ -1,12 +1,18 @@
 package Entity.Enemies;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
+
+import javax.imageio.ImageIO;
 
 import TileMap.TileMap;
 import Audio.JukeBox;
 import Entity.Arcaneball;
 import Entity.Unit;
+import Entity.Doodad.SummoningEffect;
+import Entity.Player.Conversation;
+import Entity.Player.Player;
 import GameState.MysteriousDungeon;
 import Main.Content;
 
@@ -21,11 +27,19 @@ public class Fiona extends Unit
 	protected int arcaneballCooldown;
 	
 	protected int moving = 0; // 0 don't move, 1 = move left, 2 = move 3
+	protected int leftX = 240;
+	protected int rightX = 940;
 	
 	protected boolean isHit = false;
 
 	protected int[] numberofSounds;
 	
+	protected boolean defeated;
+	protected boolean used;
+	protected boolean conversationOver;
+	protected int conversationProgress = 0;
+	
+	protected Player player;
 	
 	public enum soundTypes { Attack, Hurt, Jump, Chargeup}
 	
@@ -37,7 +51,7 @@ public class Fiona extends Unit
 //	};
 	
 	
-	
+	protected MysteriousDungeon mysteriousDungeon;
 	
 	public Fiona(
 			TileMap tileMap,
@@ -45,10 +59,12 @@ public class Fiona extends Unit
 			boolean friendly,
 			boolean untouchable,
 			boolean invulnerable,
+			boolean unkillable,
 			String name,
 			double spawnX,
 			double spawnY,
-			MysteriousDungeon mainMap
+			MysteriousDungeon mysteriousDungeon,
+			Player player
 			) 
 	{
 		super(
@@ -100,13 +116,16 @@ public class Fiona extends Unit
 				friendly,															// friendly			
 				untouchable,
 				invulnerable,
+				unkillable,
 				false,
 				name,
 				spawnX,
 				spawnY,
-				mainMap
+				mysteriousDungeon
 				);
 		
+		this.player = player;
+		this.mysteriousDungeon = mysteriousDungeon;
 		timer = 0;
 		cooldown = 300;
 		
@@ -192,6 +211,28 @@ public class Fiona extends Unit
 //		JukeBox.play("Grunt07");
 //	}
 	
+	public void castArcaneBall()
+	{
+		double tempX = locationX;
+		double tempY = locationY + 100;
+		
+		
+		aim = Math.atan2(tempY - locationY, tempX - locationX);
+		Arcaneball arcaneball = new Arcaneball(tileMap, mainMap, facingRight, up, down, aim, friendly, arcaneballDamage);
+		arcaneball.setPosition(locationX, locationY - 20);
+		mainMap.addProjectile(arcaneball);
+	}
+	
+	public void startConversation()
+	{
+		JukeBox.stop("MysteriousBattle");
+		JukeBox.loop("MysteriousConversation");
+		used = true;
+		System.out.println("Engaging conversation");
+		player.getConversationBox().startConversation(player, this, null, Conversation.fionaDefeated, Conversation.fionaDefeatedWhoTalks);
+	}
+	
+	
 	public void updateAI(ArrayList<Unit> characterList)
 	{
 
@@ -205,7 +246,58 @@ public class Fiona extends Unit
 		
 		//If the player moves to one corner, she moves to the other!
 		
-	
+		if(used)
+		{
+			if(!conversationOver)
+			{
+				if(player.getConversationBox().getConversationTracker() == 3)
+				{
+					if(summoningEffect == null && conversationProgress == 0)
+					{
+						summoningEffect = new SummoningEffect(tileMap, locationX, locationY);
+						mainMap.addEffect(summoningEffect);
+						JukeBox.play("teleport");
+						player.getHUD().removeBoss();
+						player.getConversationBox().lockConversation(true);
+						conversationProgress = 1;
+					}
+				}
+				
+				if(player.getConversationBox().getConversationTracker() == 5 && conversationProgress != 3)
+				{
+					conversationProgress = 3;
+					JukeBox.play("Close.mp3");
+					JukeBox.loop("Dungeon1");
+					JukeBox.stop("MysteriousConversation");
+					try 
+					{
+						tileMap.loadTiles(ImageIO.read(getClass().getResource("/Art/Tilesets/LorasTileset.png")));
+					} 
+					catch (IOException e) 
+					{
+						e.printStackTrace();
+					}
+					tileMap.loadMap("/Maps/MysteriousDungeonC.map");
+					tileMap.setPosition(0, 0);
+					mysteriousDungeon.setDefeated(true);
+				}
+				
+				if(player.getConversationBox().getConversationTracker() >= Conversation.fionaDefeated.length)
+				{
+					player.getConversationBox().endConversation();
+				}
+			}
+		}
+		if(summoningEffect != null)
+		{
+			if(summoningEffect.removeMe())
+			{
+				summoningEffect = null;
+				player.getConversationBox().lockConversation(false);
+				hidden = true;
+				conversationProgress = 2;
+			}
+		}
 		
 		if(isHit)
 		{
@@ -217,10 +309,21 @@ public class Fiona extends Unit
 				flying = true;
 			}
 			
+			if(health <= 0)
+			{
+				defeated = true;
+				health = 1;
+				if(!used)
+				{
+					startConversation();
+				}
+				
+			}
+			
 			return;
 		}
 		
-		if(!inControl) return;
+		if(!inControl || defeated) return;
 		
 
 		
@@ -248,7 +351,7 @@ public class Fiona extends Unit
 						untouchable = false;
 						directionY = 0;
 						locationY = 210;
-						if(locationX > 360) moving = 1;
+						if(locationX > leftX) moving = 1;
 						else moving = 2;
 					}
 				}
@@ -264,7 +367,7 @@ public class Fiona extends Unit
 		
 		if(moving == 1)
 		{
-			if(locationX >= 360)
+			if(locationX >= leftX)
 			{
 				left = true;
 			}
@@ -276,7 +379,7 @@ public class Fiona extends Unit
 		}
 		else if(moving == 2)
 		{
-			if(locationX <= 880) right = true;
+			if(locationX <= rightX) right = true;
 			else
 			{
 				right = false;
@@ -293,20 +396,13 @@ public class Fiona extends Unit
 			{
 				arcaneballTimer = 0;
 				
-				double tempX = locationX;
-				double tempY = locationY + 100;
-				
-				
-				aim = Math.atan2(tempY - locationY, tempX - locationX);
-				Arcaneball arcaneball = new Arcaneball(tileMap, mainMap, facingRight, up, down, aim, friendly, arcaneballDamage);
-				arcaneball.setPosition(locationX, locationY - 20);
-				mainMap.addProjectile(arcaneball);
+				castArcaneBall();
 			}
 			
 			if(arcaneballMoving == 0)
 			{
 				JukeBox.play("FionaChargeup02");
-				if(locationX >= 360)
+				if(locationX >= leftX)
 				{
 					left = true;
 					arcaneballMoving = 1;
@@ -315,7 +411,7 @@ public class Fiona extends Unit
 				{
 					left = false;
 				}
-				if(locationX <= 880)
+				if(locationX <= rightX)
 				{
 					right = true;
 					arcaneballMoving = 2;
@@ -323,13 +419,15 @@ public class Fiona extends Unit
 			}
 			else if(directionX == 0)
 			{
+				castArcaneBall();
+				
 				System.out.println("Unstable mode, disabled..");
 				arcaneballMode = false;
 				arcaneballMoving = 0;
 				right = false;
 				left = false;
 				
-				if(locationX > 360) moving = 1;
+				if(locationX > leftX) moving = 1;
 				else moving = 2;
 			}
 		}

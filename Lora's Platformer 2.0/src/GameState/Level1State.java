@@ -32,13 +32,8 @@ public class Level1State extends MainMap
 		
 		spawnTorch(800, 1600);
 		spawnTorch(1850,1400);
-		
-		
 
 		spawnEnemies();
-
-
-		
 		
 		player.setPosition(720, 2200);
 		player.setSpawnPoint(720, 2200);
@@ -47,12 +42,11 @@ public class Level1State extends MainMap
 //		JukeBox.loop("Battle9");
 		
 		doneInitializing = true;
-	
 	}
 	
 	public void spawnEnemies()
 	{
-		spawnSlug(1690, 1600, false);
+		spawnSlug(1690, 1600, false, "Steve");
 		
 		spawnSuccubus(2700, 1400, false);
 		spawnSuccubus(1339,1900, true);
@@ -68,13 +62,13 @@ public class Level1State extends MainMap
 		
 		spawnChestRare(1923, 1170);
 		
-		ActivatableCave activatableCave = new ActivatableCave(tileMap, gameStateManager, 3614, 2300);
+		ActivatableCave activatableCave = new ActivatableCave(tileMap, gameStateManager, 3614, 2340);
 		stuff.add(activatableCave);
 		activatables.add(activatableCave);
 		
 		spawnChestUncommon(1712, 2610);
 		
-		LiadrinFirstEncounter liadrinFirstEncounter = new LiadrinFirstEncounter(tileMap, false, true, false, true, "Liadrin", 2680, 1800, this);
+		LiadrinFirstEncounter liadrinFirstEncounter = new LiadrinFirstEncounter(tileMap, false, true, false, true, true, "Liadrin", 2680, 1800, this);
 		characterList.add(liadrinFirstEncounter);
 		allies.add(liadrinFirstEncounter);
 		

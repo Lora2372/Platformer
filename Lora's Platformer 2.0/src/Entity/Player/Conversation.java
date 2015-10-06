@@ -1,31 +1,32 @@
-//package Entity.Player;
-//
-//import Entity.Doodad.Doodad;
-//
-//public class Conversation 
-//{
-//	protected Character character;
-//	protected Doodad doodad;
-//	protected String[] conversation;
-//	protected int[] whoTalks;
-//	
-//	public Conversation(
-//			Character character, 
-//			Doodad doodad, 
-//			String[] conversation, 
-//			int[] whoTalks
-//			)
-//	{
-//		this.character = character;
-//		this.doodad = doodad;
-//		this.conversation = conversation;
-//		this.whoTalks = whoTalks;
-//	}
-//	
-//	public Character getCharacter() { return character; }
-//	public Doodad getDoodad() { return doodad; }
-//	public String[] getConversation() { return conversation; }
-//	public int[] getWhoTalks() { return whoTalks; }
-//	
-//	
-//}
+package Entity.Player;
+
+
+public class Conversation 
+{
+	public static String[] fionaDefeated = new String[]
+	{
+		"Ugh...",
+		"Ready to talk about this?",
+		"I'll kill you for this...",
+		"...",
+		"Damn it, she escaped!",
+		"...",
+		"At least the door opened..."
+	};
+	
+	public static int[] fionaDefeatedWhoTalks = new int[]
+	{
+		1,
+		0,
+		1,
+		3,
+		0,
+		3,
+		0
+	};
+	
+	public Conversation()
+	{
+
+	}
+}

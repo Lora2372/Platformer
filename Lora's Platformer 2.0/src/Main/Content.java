@@ -52,22 +52,20 @@ public class Content
 	public static BufferedImage[][] PortraitSign			=load("/Art/HUD/Portraits/PortraitSign.png", 94, 94);
 	public static BufferedImage[][] PortraitLiadrin			=load("/Art/HUD/Portraits/PortraitLiadrin.png", 94, 94);
 	
-	public static String[] mapMusic = new String[]
-	{
-		"Menu",
-		"Level1",
-		"Dungeon1"
-	};
+	public static enum mapMusic 
+	{ 
+		Menu,
+		Level1,
+		Dungeon1,
+		MysteriousBattle,
+		MysteriousConversation,
+		DeepWoods
+	}
 	
 	
 	public static  void loadContent()
 	{				
-		
-		// Character sound effects
-		
-		// Load female 1
-//		for(int i = 0; i < )
-		
+				
 		InputStream inputStream = Content.class.getResourceAsStream("/Sound/Character Sounds");
 
 		BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
@@ -98,8 +96,6 @@ public class Content
 			e.printStackTrace();
 		}
 		
-
-		
 		// Projectile sound effects
 		JukeBox.load("/Sound/Spell Effects/FireballLargeLaunch.mp3", "FireballLargeLaunch");
 		JukeBox.load("/Sound/Spell Effects/FireballSmallLaunch.mp3", "FireballSmallLaunch");	
@@ -110,20 +106,20 @@ public class Content
 		JukeBox.load("/Sound/Spell Effects/ElectricballChargeUp.mp3", "ElectricballChargeUp");
 		JukeBox.load("/Sound/Spell Effects/ElectricballLaunch.mp3", "ElectricballLaunch");
 		JukeBox.load("/Sound/Spell Effects/ElectricballImpact.mp3", "ElectricballImpact");
-
+		
 		JukeBox.load("/Sound/Spell Effects/FireballLargeImpact.mp3", "FireballLargeImpact");
 		JukeBox.load("/Sound/Spell Effects/FireballSmallImpact.mp3", "FireballSmallImpact");
 		
 		// Spell sound effect
 		JukeBox.load("/Sound/Spell Effects/Teleport.mp3", "teleport");
 		
-		
 		// Music
-		JukeBox.load("/Sound/Music/MusicMenu.mp3", "Menu");
-		JukeBox.load("/Sound/Music/MusicLevel1.mp3", "Level1");
-		JukeBox.load("/Sound/Music/MusicDungeon1.mp3", "Dungeon1");
+		JukeBox.load("/Sound/Music/Menu.mp3", "Menu");
+		JukeBox.load("/Sound/Music/LorasCavern.mp3", "Level1");
+		JukeBox.load("/Sound/Music/MysteriousDungeon.mp3", "Dungeon1");
 		JukeBox.load("/Sound/Music/MysteriousConversation.mp3", "MysteriousConversation");
 		JukeBox.load("/Sound/Music/MysteriousBattle.mp3", "MysteriousBattle");
+		JukeBox.load("/Sound/Music/DeepWoods.mp3", "DeepWoods");
 		
 		JukeBox.load("/Sound/Music/GameOver.mp3",  "GameOver");
 		
@@ -133,7 +129,6 @@ public class Content
 		JukeBox.load("/Sound/Doodads/OpenChestRare.mp3", "OpenChestRare");
 		
 		JukeBox.load("/Sound/Doodads/Close.mp3", "Close");
-
 
 	}
 	
