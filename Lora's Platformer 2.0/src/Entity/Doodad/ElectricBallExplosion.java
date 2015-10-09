@@ -3,9 +3,9 @@ package Entity.Doodad;
 import Main.Content;
 import TileMap.TileMap;
 
-public class ElectricBallRExplosion  extends Doodad
+public class ElectricBallExplosion  extends Doodad
 {
-	public ElectricBallRExplosion(TileMap tileMap, double x, double y )
+	public ElectricBallExplosion(TileMap tileMap, double x, double y )
 	{
 		super
 		(

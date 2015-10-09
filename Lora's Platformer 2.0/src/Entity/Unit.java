@@ -7,7 +7,7 @@ import Audio.JukeBox;
 
 import javax.imageio.ImageIO;
 
-import Entity.Doodad.ElectricBallRChargeUp;
+import Entity.Doodad.ElectricBallChargeUp;
 import Entity.Doodad.SummoningEffect;
 import Entity.Player.ConversationBox;
 import Entity.Player.Player;
@@ -30,7 +30,7 @@ public class Unit extends MapObject
 	
 	protected ArrayList<Unit> charactersHit = new ArrayList<Unit>();
 	
-	protected ElectricBallR electricBall;
+	protected ElectricBall electricBall;
 	
 	protected BufferedImage[] portrait;
 	
@@ -639,7 +639,7 @@ public class Unit extends MapObject
 			summoningEffect = new SummoningEffect(tileMap, locationX, locationY);
 			initializeSpawning = false;
 			spawning = true;
-			JukeBox.play("teleport");
+			JukeBox.play("Teleport");
 		}
 		
 		if(summoningEffect != null && !summoningEffect.animation.hasPlayedOnce())
@@ -856,7 +856,7 @@ public class Unit extends MapObject
 			arcaneBallDoneCasting = true;
 			
 			
-			ArcaneBallR arcaneBall = new ArcaneBallR(tileMap, mainMap, facingRight, up, down, aim, friendly, arcaneBallDamage);
+			ArcaneBall arcaneBall = new ArcaneBall(tileMap, mainMap, facingRight, up, down, aim, friendly, arcaneBallDamage);
 			arcaneBall.setPosition(locationX, locationY - 20);
 			mainMap.addProjectile(arcaneBall);
 			
@@ -893,7 +893,7 @@ public class Unit extends MapObject
 		
 				calculateAim(null);
 				
-				FireBallRSmall fireBall = new FireBallRSmall(tileMap, mainMap, facingRight, up, down, aim, friendly, fireBallSmallDamage);
+				FireBallSmall fireBall = new FireBallSmall(tileMap, mainMap, facingRight, up, down, aim, friendly, fireBallSmallDamage);
 				fireBall.setPosition(locationX, locationY - 20);
 				mainMap.addProjectile(fireBall);
 				
@@ -929,7 +929,7 @@ public class Unit extends MapObject
 				animation.setFrames(sprites.get(animationState[8]));
 				animation.setDelay(animationDelay[8] * 3);
 				
-				ElectricBallRChargeUp electricBallChargeUp = new ElectricBallRChargeUp(tileMap, locationX, locationY - 20);
+				ElectricBallChargeUp electricBallChargeUp = new ElectricBallChargeUp(tileMap, locationX, locationY - 20);
 				mainMap.addEffect(electricBallChargeUp);
 				
 				if(directionY == 0) directionX = 0;
@@ -959,7 +959,7 @@ public class Unit extends MapObject
 				
 				
 				
-				electricBall = new ElectricBallR(tileMap, mainMap, facingRight, up, down, aim, friendly, electricBallDamage);
+				electricBall = new ElectricBall(tileMap, mainMap, facingRight, up, down, aim, friendly, electricBallDamage);
 				electricBall.setPosition(locationX, locationY - 20);
 				mainMap.addProjectile(electricBall);
 				
@@ -1002,7 +1002,7 @@ public class Unit extends MapObject
 				fireBallLargeDoneCasting = true;
 				
 				calculateAim(null);
-				FireBallRLarge fireBall = new FireBallRLarge(tileMap, mainMap, facingRight, up, down, aim, friendly, fireBallLargeDamage);
+				FireBallLarge fireBall = new FireBallLarge(tileMap, mainMap, facingRight, up, down, aim, friendly, fireBallLargeDamage);
 				fireBall.setPosition(locationX, locationY);
 				mainMap.addProjectile(fireBall);
 				

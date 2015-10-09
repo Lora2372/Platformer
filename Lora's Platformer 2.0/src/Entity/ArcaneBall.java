@@ -2,16 +2,16 @@ package Entity;
 
 import java.awt.Graphics2D;
 
-import Entity.Doodad.ElectricBallRExplosion;
+import Entity.Doodad.ElectricBallExplosion;
 import GameState.MainMap;
 import Main.Content;
 import TileMap.TileMap;
 
-public class ArcaneBallR extends Projectile
+public class ArcaneBall extends Projectile
 {
-	protected ElectricBallRExplosion electricballExplosion;
+	protected ElectricBallExplosion electricballExplosion;
 	
-	public ArcaneBallR(
+	public ArcaneBall(
 			TileMap tileMap,
 			MainMap mainMap,
 			boolean right, 
@@ -52,7 +52,7 @@ public class ArcaneBallR extends Projectile
 	
 		public void explode(TileMap tilemap, double x, double y)
 		{
-			electricballExplosion = new ElectricBallRExplosion(tileMap, x, y);
+			electricballExplosion = new ElectricBallExplosion(tileMap, x, y);
 		}
 		
 		public void updateExplosion()

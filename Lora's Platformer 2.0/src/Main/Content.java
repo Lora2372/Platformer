@@ -1,6 +1,11 @@
 package Main;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.net.URL;
+import java.util.Enumeration;
+import java.util.jar.JarFile;
+
 import javax.imageio.ImageIO;
 
 import Audio.JukeBox;
@@ -70,47 +75,8 @@ public class Content
 		DeepWoods
 	}
 	
-	
-	public static void loadContent()
-	{				
-//		System.out.println("Please read this");	
-//		File file = new File("/Sound/CharacterSounds");
-//		System.out.println("filePath: " + Content.class.getResource(name));
-//		InputStream inputStream = new java.io.ByteArrayInputStream(file.getPath().getBytes(StandardCharsets.UTF_8));	
-//		System.out.println("hm: " + inputStream);
-//		BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-//		String cookie = "";
-////		File file = new File(Content.class.getResource(cookie));
-//		System.out.println("hm2: " + reader);
-//		String soundFile;
-//		String folder;
-//		
-//		try 
-//		{
-//			while ((folder = reader.readLine()) != null)
-//			{
-//				System.out.println("Found a file: " + folder);
-//				file = new File("/Sound/CharacterSounds/" + folder);
-//				InputStream inputStreamFile = new java.io.ByteArrayInputStream(file.getPath().getBytes(StandardCharsets.UTF_8));
-//				BufferedReader fileReader = new BufferedReader(new InputStreamReader(inputStreamFile));
-//				while((soundFile = fileReader.readLine()) != null )
-//				{
-//					System.out.println("soundFile: " + soundFile);
-//					String tempString = (soundFile.substring(soundFile.length()-4, soundFile.length()));
-//					if(tempString.equals(".mp3"))
-//					{	
-//						JukeBox.load("/Sound/CharacterSounds/" + folder + "/" + soundFile, folder + soundFile.substring(0, soundFile.length() - 4));	
-//					}
-//				}
-//				fileReader.close();
-//			}
-//			
-//			reader.close();
-//		} catch (IOException e) 
-//		{
-//			e.printStackTrace();
-//		}
-				
+	public static void runningWithinEclipseLoad()
+	{
 		for(int i = 1; i <= 6; i++)
 		{
 			JukeBox.load("/Sound/CharacterSounds/Female01/Attack0" + i + ".mp3", "Female01Attack0" + i);
@@ -164,12 +130,12 @@ public class Content
 		JukeBox.load("/Sound/SpellEffects/FireBallSmallImpact.mp3", "FireBallSmallImpact");
 		
 		// Spell sound effect
-		JukeBox.load("/Sound/SpellEffects/Teleport.mp3", "teleport");
+		JukeBox.load("/Sound/SpellEffects/Teleport.mp3", "Teleport");
 		
 		// Music
 		JukeBox.load("/Sound/Music/Menu.mp3", "Menu");
-		JukeBox.load("/Sound/Music/LorasCavern.mp3", "Level1");
-		JukeBox.load("/Sound/Music/MysteriousDungeon.mp3", "Dungeon1");
+		JukeBox.load("/Sound/Music/LorasCavern.mp3", "LorasCavern");
+		JukeBox.load("/Sound/Music/MysteriousDungeon.mp3", "MysteriousDUngeon");
 		JukeBox.load("/Sound/Music/MysteriousConversation.mp3", "MysteriousConversation");
 		JukeBox.load("/Sound/Music/MysteriousBattle.mp3", "MysteriousBattle");
 		JukeBox.load("/Sound/Music/DeepWoods.mp3", "DeepWoods");
@@ -182,7 +148,85 @@ public class Content
 		JukeBox.load("/Sound/Doodads/OpenChestRare.mp3", "OpenChestRare");
 		
 		JukeBox.load("/Sound/Doodads/Close.mp3", "Close");
+	}
+	
+	public static void loadContent()
+	{				
+		
+		
+		try
+		{
+			if(Content.class.getResource(Content.class.getSimpleName() + ".class").getFile().startsWith("/"))
+			{
+				System.out.println("Running within Eclipse.");
+				runningWithinEclipseLoad();
+			}
+			
+			else
+			{
+				String path = Content.class.getResource(Content.class.getSimpleName() + ".class").getFile();
+				path = ClassLoader.getSystemClassLoader().getResource(path).getFile();
+				String jarFileName = new File(path.substring(0, path.lastIndexOf('!'))).getName();
+				URL location = Content.class.getProtectionDomain().getCodeSource().getLocation();
+				
+				JarFile jarFile = new JarFile(location.getPath() + "/" + jarFileName);
+				for(@SuppressWarnings("rawtypes")
+				Enumeration enumeration = jarFile.entries(); enumeration.hasMoreElements();)
+				{
+					String fileName = enumeration.nextElement().toString();
+					if(fileName.substring(fileName.length()-4, fileName.length()).equals(".mp3"))
+					{
+						char[] charArray = fileName.toCharArray();
+						
+						int tempInt = charArray.length - 1;
+						String tempString = "";
+						int stopAtTwo = 0;
+						int start = 0;
+						int end = 0;
+						while(stopAtTwo != 2 || tempInt < 0)
+						{
+							if(charArray[tempInt] == '/')
+							{
+								stopAtTwo++;
+								if(stopAtTwo == 1)
+									end = tempInt;
+								else
+									start = tempInt + 1;
+							}
+							
+							tempString += charArray[tempInt];
+							tempInt--;
+							if(tempInt < 0)
+								tempString = null;
+						}
+						if(tempString != null)
+						{
+							
+							tempString = new StringBuilder(tempString).reverse().toString();
 
+							if(start != 0 && end != 0)
+							{
+								String folderName = fileName.substring(start, end);
+								fileName = "/" + fileName;
+								System.out.println("tempString: " + tempString);
+								if(folderName.equals("Doodads") || folderName.equals("Music") || folderName.equals("SpellEffects"))
+									JukeBox.load(fileName, fileName.substring(end + 2, fileName.length() - 4));
+								else
+								{
+									System.out.println("It's happening!: " + fileName.substring(start + 1, end + 1) + fileName.substring(end + 2, fileName.length() -4));
+									JukeBox.load(fileName, fileName.substring(start + 1, end + 1) + fileName.substring(end + 2, fileName.length() - 4));
+								}			
+							}	
+						}
+					}
+				}
+				jarFile.close();	
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
 	
 	public static BufferedImage[][] load(String filePath, int width, int height)

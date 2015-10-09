@@ -69,14 +69,14 @@ public class HUD
 			
 			BufferedImage tempImage = ImageIO.read(
 					getClass().getResource(
-							"/Art/HUD/SpellIcons/FireBallSmallUsable.png"
+							"/Art/HUD/SpellIcons/FireBallRSmallUsable.png"
 							)
 					);
 			spellbarUsable.add(tempImage);
 			
 			tempImage = ImageIO.read(
 					getClass().getResource(
-							"/Art/HUD/SpellIcons/FireBallSmallUnusable.png"
+							"/Art/HUD/SpellIcons/FireBallRSmallUnusable.png"
 							)
 					);
 			spellbarUnusable.add(tempImage);
@@ -87,14 +87,14 @@ public class HUD
 			
 			tempImage = ImageIO.read(
 					getClass().getResource(
-							"/Art/HUD/SpellIcons/FireBallLargeUsable.png"
+							"/Art/HUD/SpellIcons/FireBallRLargeUsable.png"
 							)
 					);
 			spellbarUsable.add(tempImage);
 			
 			tempImage = ImageIO.read(
 					getClass().getResource(
-							"/Art/HUD/SpellIcons/FireBallLargeUnusable.png"
+							"/Art/HUD/SpellIcons/FireBallRLargeUnusable.png"
 							)
 					);
 			spellbarUnusable.add(tempImage);

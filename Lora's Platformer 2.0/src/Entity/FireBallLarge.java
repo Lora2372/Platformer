@@ -4,16 +4,16 @@ package Entity;
 
 import java.awt.Graphics2D;
 
-import Entity.Doodad.FireBallRLargeExplosion;
+import Entity.Doodad.FireBallLargeExplosion;
 import GameState.MainMap;
 import Main.Content;
 import TileMap.TileMap;
 
-public class FireBallRLarge extends Projectile
+public class FireBallLarge extends Projectile
 {
-	protected FireBallRLargeExplosion fireBallLargeExplosion;
+	protected FireBallLargeExplosion fireBallLargeExplosion;
 
-	public FireBallRLarge(
+	public FireBallLarge(
 			TileMap tileMap,
 			MainMap mainMap,
 			boolean right, 
@@ -54,7 +54,7 @@ public class FireBallRLarge extends Projectile
 	
 	public void explode(TileMap tilemap, double x, double y)
 	{
-		fireBallLargeExplosion = new FireBallRLargeExplosion(tileMap, x, y);
+		fireBallLargeExplosion = new FireBallLargeExplosion(tileMap, x, y);
 	}
 	
 	public void updateExplosion()

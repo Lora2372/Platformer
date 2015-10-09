@@ -45,17 +45,16 @@ public class GameStateManager
 		}
 		else if(state == LorasCavern)
 		{
-			JukeBox.loop("Level1");
+			JukeBox.loop("LorasCavern");
 			gameStates[state] = new Level1State(this);
 		}
 		else if(state == MysteriousDungeon)
 		{
-			JukeBox.loop("Dungeon1");
+			JukeBox.loop("MysteriousDungeon");
 			gameStates[state] = new MysteriousDungeon(this);			
 		}
 		else if(state == DeepWoods)
 		{
-			System.out.println("new DeepWoods");
 			JukeBox.loop("DeepWoods");
 			gameStates[state] = new DeepWoods(this);			
 		}

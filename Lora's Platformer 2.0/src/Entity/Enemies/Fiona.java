@@ -8,7 +8,7 @@ import javax.imageio.ImageIO;
 
 import TileMap.TileMap;
 import Audio.JukeBox;
-import Entity.ArcaneBallR;
+import Entity.ArcaneBall;
 import Entity.Unit;
 import Entity.Doodad.SummoningEffect;
 import Entity.Player.Conversation;
@@ -218,7 +218,7 @@ public class Fiona extends Unit
 		
 		
 		aim = Math.atan2(tempY - locationY, tempX - locationX);
-		ArcaneBallR arcaneBall = new ArcaneBallR(tileMap, mainMap, facingRight, up, down, aim, friendly, arcaneBallDamage);
+		ArcaneBall arcaneBall = new ArcaneBall(tileMap, mainMap, facingRight, up, down, aim, friendly, arcaneBallDamage);
 		arcaneBall.setPosition(locationX, locationY - 20);
 		mainMap.addProjectile(arcaneBall);
 	}

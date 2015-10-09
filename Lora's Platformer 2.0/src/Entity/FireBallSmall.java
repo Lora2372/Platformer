@@ -1,22 +1,24 @@
 package Entity;
 
+
+
 import java.awt.Graphics2D;
 
-import Entity.Doodad.ElectricBallRExplosion;
+import Entity.Doodad.FireBallSmallExplosion;
 import GameState.MainMap;
 import Main.Content;
 import TileMap.TileMap;
 
-public class ElectricBallR extends Projectile
+public class FireBallSmall extends Projectile
 {
-	protected ElectricBallRExplosion electricBallExplosion;
+	protected FireBallSmallExplosion fireBallSmallExplosion;
 	
-	public ElectricBallR(
+	public FireBallSmall(
 			TileMap tileMap,
 			MainMap mainMap,
 			boolean right, 
 			boolean up, 
-			boolean down, 
+			boolean down,
 			double angle,
 			boolean friendly,
 			int damage
@@ -31,38 +33,38 @@ public class ElectricBallR extends Projectile
 				down,  																// Holding down arrow
 				angle,
 				friendly, 															// Whether the spell is friendly or hostile
-				60, 																// Projectile width
-				60, 																// Projectile height
-				60, 																// Explosion width
-				60, 																// Explosion height
-				40, 																// Collision width
-				40, 																// Collision height
+				45, 																// Projectile width
+				45, 																// Projectile height
+				45, 																// Explosion width
+				45, 																// Explosion height
+				30, 																// Collision width
+				30, 																// Collision height
 				5, 																	// Projectile speed
 				damage,																// Explosion damage
-				50,
-				60, 																// Explosion radius
-				"ElectricBall"														// Explosion sound
+				20,
+				30, 																// Explosion radius
+				"FireBallSmall"														// Explosion sound
 			);
 	}
 	
 	public void setProjectile()
 	{
-		sprites = Content.ElectricBall[0];
+		sprites = Content.FireBallSmall[0];
 	}
 	
 		public void explode(TileMap tilemap, double x, double y)
 		{
-			electricBallExplosion = new ElectricBallRExplosion(tileMap, x, y);
+			fireBallSmallExplosion = new FireBallSmallExplosion(tileMap, x, y);
 		}
 		
 		public void updateExplosion()
 		{
-			if(electricBallExplosion != null)
+			if(fireBallSmallExplosion != null)
 			{
-				electricBallExplosion.animation.update();
-				if(electricBallExplosion.animation.hasPlayedOnce())
+				fireBallSmallExplosion.animation.update();
+				if(fireBallSmallExplosion.animation.hasPlayedOnce())
 				{
-					electricBallExplosion.removeMe();
+					fireBallSmallExplosion.removeMe();
 					remove = true;
 				}
 			}
@@ -70,6 +72,6 @@ public class ElectricBallR extends Projectile
 		
 		public void drawExplosion(Graphics2D graphics)
 		{
-			electricBallExplosion.draw(graphics);
+			fireBallSmallExplosion.draw(graphics);
 		}
 }

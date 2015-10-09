@@ -3,10 +3,10 @@ package Entity.Doodad;
 import Main.Content;
 import TileMap.TileMap;
 
-public class ElectricBallRChargeUp extends Doodad
+public class ElectricBallChargeUp extends Doodad
 {
 
-	public ElectricBallRChargeUp(
+	public ElectricBallChargeUp(
 			TileMap tileMap, 
 			double spawnX,
 			double spawnY
