@@ -1,5 +1,6 @@
 package Entity.Doodad;
 
+import Main.Content;
 import TileMap.TileMap;
 
 public class Torch extends Doodad
@@ -19,14 +20,16 @@ public class Torch extends Doodad
 				150,
 				150,
 				150,
-				"/Art/Sprites/Doodads/Torch.png",
-				new int[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				new int[] {8},
 				true,
 				true,
 				false,
 				false,
-				false
+				false,
+				"Torch"
 				);
+	}
+	public void setDoodad(int currentAction)
+	{
+		sprites = Content.Torch[0];
 	}
 }

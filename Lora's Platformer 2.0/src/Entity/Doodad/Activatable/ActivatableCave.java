@@ -4,6 +4,7 @@ import TileMap.TileMap;
 import Entity.Doodad.Doodad;
 import Entity.Player.Player;
 import GameState.GameStateManager;
+import Main.Content;
 
 public class ActivatableCave extends Doodad
 {
@@ -23,17 +24,20 @@ public class ActivatableCave extends Doodad
 				96,
 				100,
 				96,
-				"/Art/Sprites/Doodads/CaveEntrance.png", 
-				new int[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				new int[] {1},
 				false, 
 				true, 
 				false,
 				true,
-				false
+				false,
+				"CaveEntrance"
 				);
 		
 		this.gameStateManager = gameStateManager;
+	}
+	
+	public void setDoodad(int currentAction)
+	{
+		sprites = Content.CaveEntrance[0];
 	}
 	
 	public void interact(Player player)

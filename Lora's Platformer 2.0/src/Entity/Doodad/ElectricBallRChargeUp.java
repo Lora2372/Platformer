@@ -1,11 +1,12 @@
 package Entity.Doodad;
 
+import Main.Content;
 import TileMap.TileMap;
 
-public class FireballMediumChargeUp extends Doodad
+public class ElectricBallRChargeUp extends Doodad
 {
 
-	public FireballMediumChargeUp(
+	public ElectricBallRChargeUp(
 			TileMap tileMap, 
 			double spawnX,
 			double spawnY
@@ -19,15 +20,16 @@ public class FireballMediumChargeUp extends Doodad
 				60,
 				0,
 				0,
-				"/Art/Sprites/Effects/FireballMediumChargingUp.png", 
-				new int[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				new int[] {6},
 				true, 
 				true, 
 				true,
 				false,
-				false
+				false,
+				"ElectricballChargeUp"
 				);
 	}
-	
+	public void setDoodad(int currentAction)
+	{
+		sprites = Content.ElectricBallChargeUp[0];
+	}
 }

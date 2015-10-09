@@ -56,17 +56,17 @@ public class Level1State extends MainMap
 		
 		spawnWolf(853, 1680, true);
 		
-		spawnChestCommon(989, 2250);
-		spawnChestUncommon(989 + 120, 2250);
-		spawnChestRare(989 + 240, 2250);
+		spawnChest(989, 2250, "Common");
+		spawnChest(989 + 120, 2250, "Uncommon");
+		spawnChest(989 + 240, 2250, "Rare");
 		
-		spawnChestRare(1923, 1170);
+		spawnChest(1923, 1170, "Rare");
 		
 		ActivatableCave activatableCave = new ActivatableCave(tileMap, gameStateManager, 3614, 2340);
 		stuff.add(activatableCave);
 		activatables.add(activatableCave);
 		
-		spawnChestUncommon(1712, 2610);
+		spawnChest(1712, 2610, "Uncommon");
 		
 		LiadrinFirstEncounter liadrinFirstEncounter = new LiadrinFirstEncounter(tileMap, false, true, false, true, true, "Liadrin", 2680, 1800, this);
 		characterList.add(liadrinFirstEncounter);

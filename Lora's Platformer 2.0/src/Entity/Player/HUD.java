@@ -52,7 +52,7 @@ public class HUD
 			
 			image[4] = ImageIO.read(
 					getClass().getResource(
-							"/Art/HUD/Bars//BossHealthBar.png"
+							"/Art/HUD/Bars/BossHealthBar.png"
 							)
 					);
 			
@@ -65,36 +65,36 @@ public class HUD
 					);
 			
 			
-			spellcost.add(player.getFireballSmallManaCost());
+			spellcost.add(player.getFireBallSmallManaCost());
 			
 			BufferedImage tempImage = ImageIO.read(
 					getClass().getResource(
-							"/Art/HUD/SpellIcons/FireballSmallUsable.png"
+							"/Art/HUD/SpellIcons/FireBallSmallUsable.png"
 							)
 					);
 			spellbarUsable.add(tempImage);
 			
 			tempImage = ImageIO.read(
 					getClass().getResource(
-							"/Art/HUD/SpellIcons/FireballSmallUnusable.png"
+							"/Art/HUD/SpellIcons/FireBallSmallUnusable.png"
 							)
 					);
 			spellbarUnusable.add(tempImage);
 
-			spellcost.add(player.getFireballLargeManaCost());
+			spellcost.add(player.getFireBallLargeManaCost());
 
 			
 			
 			tempImage = ImageIO.read(
 					getClass().getResource(
-							"/Art/HUD/SpellIcons/FireballLargeUsable.png"
+							"/Art/HUD/SpellIcons/FireBallLargeUsable.png"
 							)
 					);
 			spellbarUsable.add(tempImage);
 			
 			tempImage = ImageIO.read(
 					getClass().getResource(
-							"/Art/HUD/SpellIcons/FireballLargeUnusable.png"
+							"/Art/HUD/SpellIcons/FireBallLargeUnusable.png"
 							)
 					);
 			spellbarUnusable.add(tempImage);

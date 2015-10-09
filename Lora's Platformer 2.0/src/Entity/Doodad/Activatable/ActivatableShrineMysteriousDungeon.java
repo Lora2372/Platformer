@@ -4,8 +4,6 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import TileMap.Background;
-import TileMap.GameOver;
 import TileMap.TileMap;
 import Audio.JukeBox;
 import Entity.Doodad.Doodad;
@@ -13,6 +11,7 @@ import Entity.Enemies.Fiona;
 import Entity.Player.Player;
 import GameState.GameStateManager;
 import GameState.MysteriousDungeon;
+import Main.Content;
 
 public class ActivatableShrineMysteriousDungeon extends Doodad
 {
@@ -65,19 +64,22 @@ public class ActivatableShrineMysteriousDungeon extends Doodad
 				180,
 				180,
 				180,
-				"/Art/Sprites/Doodads/Shrine.png", 
-				new int[] {0,1,2,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				new int[] {1, 2, 1},
 				false, 
 				true, 
 				false,
 				true,
-				false
+				false,
+				"ActivatableShrineMysteriousDungeon"
 				);
 		
 		this.fiona = fiona;
 		this.gameStateManager = gameStateManager;
 		this.mysteriousDungeon = mysteriousDungeon;
+	}
+	
+	public void setDoodad(int currentAction)
+	{
+		sprites = Content.Shrine[0];
 	}
 	
 	public boolean getStartConversation() { return startConveration; }

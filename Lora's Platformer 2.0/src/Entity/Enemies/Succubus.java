@@ -60,10 +60,10 @@ public class Succubus extends Unit
 				100,		 															// mana
 				100,		 															// maxMana
 				30,		 															// manaCounter
-				20,		 															// smallFireballManaCost
-				20,		 															// smallFireballDamage
-				40,		 															// largeFireballManaCost
-				50, 																	// largeFireballDamage
+				20,		 															// smallFireBallManaCost
+				20,		 															// smallFireBallDamage
+				40,		 															// largeFireBallManaCost
+				50, 																	// largeFireBallDamage
 				30,																	// electricBallManaCost
 				70,																	// electricBallDamage
 				0,
@@ -149,7 +149,7 @@ public class Succubus extends Unit
 			{
 				timer = 0;
 //				System.out.println("FIRE THE FIREBALL!");
-				fireballLargeCasting = true;
+				fireBallLargeCasting = true;
 			}
 		}
 		

@@ -2,13 +2,8 @@ package Entity.Doodad;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-
-import javax.imageio.ImageIO;
-
 import Main.Content;
 import TileMap.TileMap;
-import Entity.Animation;
 import Entity.MapObject;
 import Entity.Player.Player;
 
@@ -21,7 +16,7 @@ public class Doodad extends MapObject
 	
 	protected BufferedImage[] portrait;
 	
-	protected ArrayList<BufferedImage[]> sprites;
+	protected BufferedImage[] sprites;
 	
 	protected boolean runOnce;
 	protected boolean removeMe;
@@ -29,7 +24,7 @@ public class Doodad extends MapObject
 	protected boolean active;
 	protected boolean spent;
 	
-	protected String name;
+	protected String doodadType;
 	
 	public Doodad(
 			TileMap tileMap, 
@@ -39,23 +34,18 @@ public class Doodad extends MapObject
 			int height,
 			int collisionWidth,
 			int collisionHeight,
-			String spritePath,
-			int[] animationState,
-			int[] numFrames,
 			boolean untouchable,
 			boolean invulnerable,
 			boolean runOnce,
 			boolean activatable,
-			boolean active
+			boolean active,
+			String doodadType
 			)
 	{
 		super(tileMap);
 		
 		this.width = width;
 		this.height = height;
-		this.spritePath = spritePath;
-		this.animationState = animationState;
-		this.numFrames = numFrames;
 		this.untouchable = untouchable;
 		this.invulnerable = invulnerable;
 		this.runOnce = runOnce;
@@ -63,54 +53,21 @@ public class Doodad extends MapObject
 		this.active = active;
 		this.collisionHeight = collisionHeight;
 		this.collisionWidth = collisionWidth;
-		
+		this.doodadType = doodadType;
 		locationX = spawnX;
 		locationY = spawnY;
 		
-		try{
-			BufferedImage spritesheet = ImageIO.read(
-					getClass().getResource(
-							 spritePath)
-					);
-			
-			sprites = new ArrayList<BufferedImage[]>();
-			
-			for(int i = 0; i < numFrames.length; i++)
-			{
-				BufferedImage[] bufferedImage =
-						new BufferedImage[numFrames[i]];
-				for(int z = 0; z < numFrames[i]; z++)
-				{
-					bufferedImage[z] = spritesheet.getSubimage(
-							z * width,
-							i * height,
-							width,
-							height
-							);
-				}
-				
-				sprites.add(bufferedImage);
-			}
-			
-		}catch(Exception e)
-		{
-			e.printStackTrace();
-		}
 		
 		setPosition(spawnX, spawnY);
-		
-		animation = new Animation();
-		
+		currentAction = 0;
+		setDoodad(currentAction);
+		animation.setFrames(sprites);
+		animation.setDelay(100);
 		portrait = Content.PortraitSign[0];
 		
-//		currentAction = 0;
-//		animation.setFrames(sprites.get(0));
-		currentAction = animationState[0];
-		animation.setFrames(sprites.get(animationState[0]));
-		animation.setDelay(100);
-
-		
 	}
+	
+	public void setDoodad(int currentAction) { }
 	
 	public BufferedImage[] getPortrait() { return portrait; }
 	
@@ -135,7 +92,8 @@ public class Doodad extends MapObject
 				if(currentAction!= 1)
 				{
 					currentAction = animationState[1];
-					animation.setFrames(sprites.get(animationState[1]));
+					setDoodad(currentAction);
+					animation.setFrames(sprites);
 					animation.setDelay(60);
 					activateSound();
 				}
@@ -144,16 +102,14 @@ public class Doodad extends MapObject
 					if(currentAction != animationState[2])
 					{
 						currentAction = animationState[2];
-						animation.setFrames(sprites.get(animationState[2]));
+						setDoodad(currentAction);
+						animation.setFrames(sprites);
 						animation.setDelay(1000);
 						spent = true;
 					}
 				}
 			}
 		}
-
-		
-		
 		
 		if(!animation.hasPlayedOnce()) return;
 		
@@ -183,13 +139,13 @@ public class Doodad extends MapObject
 		);
 	}
 
-	public void setName(String newName)
+	public void setDoodadType(String newDoodadType)
 	{
-		name = newName;
+		doodadType = newDoodadType;
 	}
 	
-	public String getName()
+	public String getDoodadType()
 	{
-		return name;
+		return doodadType;
 	}
 }

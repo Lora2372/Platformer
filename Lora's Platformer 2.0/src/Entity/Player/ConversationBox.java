@@ -132,7 +132,7 @@ public class ConversationBox
 		
 		if(whoTalks[conversationTracker] == 2)
 		{
-			tempName = sign.getName();
+			tempName = sign.getDoodadType();
 			tempIcon = sign.getPortrait();
 		}
 		

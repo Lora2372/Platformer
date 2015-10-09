@@ -8,7 +8,7 @@ import javax.imageio.ImageIO;
 
 import TileMap.TileMap;
 import Audio.JukeBox;
-import Entity.Arcaneball;
+import Entity.ArcaneBallR;
 import Entity.Unit;
 import Entity.Doodad.SummoningEffect;
 import Entity.Player.Conversation;
@@ -21,10 +21,10 @@ public class Fiona extends Unit
 	protected int cooldown;
 	protected int timer;
 	
-	protected boolean arcaneballMode;
-	protected int arcaneballMoving;
-	protected int arcaneballTimer;
-	protected int arcaneballCooldown;
+	protected boolean arcaneBallMode;
+	protected int arcaneBallMoving;
+	protected int arcaneBallTimer;
+	protected int arcaneBallCooldown;
 	
 	protected int moving = 0; // 0 don't move, 1 = move left, 2 = move 3
 	protected int leftX = 240;
@@ -100,10 +100,10 @@ public class Fiona extends Unit
 				100,		 															// mana
 				100,		 															// maxMana
 				30,		 															// manaCounter
-				20,		 															// smallFireballManaCost
-				20,		 															// smallFireballDamage
-				40,		 															// largeFireballManaCost
-				50, 																	// largeFireballDamage
+				20,		 															// smallFireBallManaCost
+				20,		 															// smallFireBallDamage
+				40,		 															// largeFireBallManaCost
+				50, 																	// largeFireBallDamage
 				30,																	// electricBallManaCost
 				70,																	// electricBallDamage
 				0,
@@ -129,8 +129,8 @@ public class Fiona extends Unit
 		timer = 0;
 		cooldown = 300;
 		
-		arcaneballTimer = 30;
-		arcaneballCooldown = 30;
+		arcaneBallTimer = 30;
+		arcaneBallCooldown = 30;
 		
 		flying = true;
 		
@@ -218,9 +218,9 @@ public class Fiona extends Unit
 		
 		
 		aim = Math.atan2(tempY - locationY, tempX - locationX);
-		Arcaneball arcaneball = new Arcaneball(tileMap, mainMap, facingRight, up, down, aim, friendly, arcaneballDamage);
-		arcaneball.setPosition(locationX, locationY - 20);
-		mainMap.addProjectile(arcaneball);
+		ArcaneBallR arcaneBall = new ArcaneBallR(tileMap, mainMap, facingRight, up, down, aim, friendly, arcaneBallDamage);
+		arcaneBall.setPosition(locationX, locationY - 20);
+		mainMap.addProjectile(arcaneBall);
 	}
 	
 	public void startConversation()
@@ -237,9 +237,9 @@ public class Fiona extends Unit
 	{
 
 		// GANNONDORF TENNIS THIS SHIT!
-		// She will hug the corners, channel up a new energy ball spell,
+		// She will hug the corners, channel up a new energy Ball spell,
 		// it will go towards the player, she's immune to all other attacks,
-		// bounce the ball back to her until one of you fail!
+		// bounce the Ball back to her until one of you fail!
 		// She will also have another attack that you
 		// can not bounce back, you need to avoid this attack,
 		// this as to not make it too easy for the player as they need to move!
@@ -388,24 +388,24 @@ public class Fiona extends Unit
 		}
 		
 		
-		if(arcaneballMode && !stunned)
+		if(arcaneBallMode && !stunned)
 		{
-			arcaneballTimer++;
+			arcaneBallTimer++;
 			
-			if(arcaneballTimer >= arcaneballCooldown)
+			if(arcaneBallTimer >= arcaneBallCooldown)
 			{
-				arcaneballTimer = 0;
+				arcaneBallTimer = 0;
 				
 				castArcaneBall();
 			}
 			
-			if(arcaneballMoving == 0)
+			if(arcaneBallMoving == 0)
 			{
 				JukeBox.play("FionaChargeup02");
 				if(locationX >= leftX)
 				{
 					left = true;
-					arcaneballMoving = 1;
+					arcaneBallMoving = 1;
 				}
 				else
 				{
@@ -414,7 +414,7 @@ public class Fiona extends Unit
 				if(locationX <= rightX)
 				{
 					right = true;
-					arcaneballMoving = 2;
+					arcaneBallMoving = 2;
 				}
 			}
 			else if(directionX == 0)
@@ -422,8 +422,8 @@ public class Fiona extends Unit
 				castArcaneBall();
 				
 				System.out.println("Unstable mode, disabled..");
-				arcaneballMode = false;
-				arcaneballMoving = 0;
+				arcaneBallMode = false;
+				arcaneBallMoving = 0;
 				right = false;
 				left = false;
 				
@@ -433,7 +433,7 @@ public class Fiona extends Unit
 		}
 		
 
-		if( (electricball == null || electricball.getHit()) && directionX == 0 && directionY == 0)
+		if( (electricBall == null || electricBall.getHit()) && directionX == 0 && directionY == 0)
 		{
 			timer++;
 			if(timer > cooldown)
@@ -445,12 +445,12 @@ public class Fiona extends Unit
 					JukeBox.play("FionaChargeup01");
 					this.setStunned(1000);
 					
-					arcaneballMode = true;
+					arcaneBallMode = true;
 					System.out.println("Unstable mode engaged.");
 					return;
 				}
 				
-				electricballCasting = true;
+				electricBallCasting = true;
 			}
 		}
 

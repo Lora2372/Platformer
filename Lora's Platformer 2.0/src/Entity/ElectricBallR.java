@@ -2,16 +2,16 @@ package Entity;
 
 import java.awt.Graphics2D;
 
-import Entity.Doodad.ElectricballExplosion;
+import Entity.Doodad.ElectricBallRExplosion;
 import GameState.MainMap;
 import Main.Content;
 import TileMap.TileMap;
 
-public class Electricball extends Projectile
+public class ElectricBallR extends Projectile
 {
-	protected ElectricballExplosion electricballExplosion;
+	protected ElectricBallRExplosion electricBallExplosion;
 	
-	public Electricball(
+	public ElectricBallR(
 			TileMap tileMap,
 			MainMap mainMap,
 			boolean right, 
@@ -41,28 +41,28 @@ public class Electricball extends Projectile
 				damage,																// Explosion damage
 				50,
 				60, 																// Explosion radius
-				"Electricball"														// Explosion sound
+				"ElectricBall"														// Explosion sound
 			);
 	}
 	
 	public void setProjectile()
 	{
-		sprites = Content.Electricball[0];
+		sprites = Content.ElectricBall[0];
 	}
 	
 		public void explode(TileMap tilemap, double x, double y)
 		{
-			electricballExplosion = new ElectricballExplosion(tileMap, x, y);
+			electricBallExplosion = new ElectricBallRExplosion(tileMap, x, y);
 		}
 		
 		public void updateExplosion()
 		{
-			if(electricballExplosion != null)
+			if(electricBallExplosion != null)
 			{
-				electricballExplosion.animation.update();
-				if(electricballExplosion.animation.hasPlayedOnce())
+				electricBallExplosion.animation.update();
+				if(electricBallExplosion.animation.hasPlayedOnce())
 				{
-					electricballExplosion.removeMe();
+					electricBallExplosion.removeMe();
 					remove = true;
 				}
 			}
@@ -70,6 +70,6 @@ public class Electricball extends Projectile
 		
 		public void drawExplosion(Graphics2D graphics)
 		{
-			electricballExplosion.draw(graphics);
+			electricBallExplosion.draw(graphics);
 		}
 }

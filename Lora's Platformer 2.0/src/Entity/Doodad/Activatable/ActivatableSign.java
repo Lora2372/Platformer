@@ -1,6 +1,7 @@
 package Entity.Doodad.Activatable;
 
 
+import Main.Content;
 import TileMap.TileMap;
 import Entity.Doodad.Doodad;
 import Entity.Player.Player;
@@ -32,22 +33,25 @@ public class ActivatableSign extends Doodad
 				50,
 				50,
 				50,
-				"/Art/Sprites/Doodads/Sign.png", 
-				new int[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				new int[] {1},
 				false, 
 				true, 
 				false,
 				true,
-				false
+				false,
+				"ActivatableSign"
 				);
 		
-		setName("Sign");
+		setDoodadType("Sign");
 		
 		this.conversation = conversation;
 		
 		this.whoTalks = whoTalks;
 		
+	}
+	
+	public void setDoodad(int currentAction)
+	{
+		sprites = Content.Sign[0];
 	}
 	
 	public void startConversation()

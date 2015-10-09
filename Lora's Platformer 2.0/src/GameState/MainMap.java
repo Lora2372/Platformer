@@ -3,15 +3,17 @@ package GameState;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+
 import Main.GamePanel;
+import Main.JSONWriter;
 import TileMap.*;
 import Entity.*;
-import Entity.Unit;
 import Entity.Enemies.*;
 import Entity.Doodad.*;
 import Entity.Doodad.Activatable.*;
 import Entity.Player.*;
 import Audio.JukeBox;
+
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Random;
@@ -161,7 +163,7 @@ public class MainMap extends GameState
 			return;
 		}
 		
-		// Update fireballs
+		// Update fireBalls
 		if(projectiles != null)
 		{
 			for(int i = 0; i < projectiles.size(); i++)
@@ -349,7 +351,7 @@ public class MainMap extends GameState
 			}
 		}
 		
-		// Draw fireballs
+		// Draw fireBalls
 		for(int i = 0; i < projectiles.size(); i++)
 		{
 			projectiles.get(i).draw(graphics);
@@ -495,25 +497,11 @@ public class MainMap extends GameState
 		stuff.add(activatableSign);
 	}
 	
-	public void spawnChestCommon(double x, double y)
+	public void spawnChest(double x, double y, String chestType)
 	{
-		ActivatableChestCommon activatableChestCommon = new ActivatableChestCommon(tileMap, x, y);
+		ActivatableChest activatableChestCommon = new ActivatableChest(tileMap, x, y, chestType);
 		activatables.add(activatableChestCommon);
 		stuff.add(activatableChestCommon);
-	}
-	
-	public void spawnChestUncommon(double x, double y)
-	{
-		ActivatableChestUncommon activatableChestUncommon = new ActivatableChestUncommon(tileMap, x, y);
-		activatables.add(activatableChestUncommon);
-		stuff.add(activatableChestUncommon);
-	}
-	
-	public void spawnChestRare(double x, double y)
-	{
-		ActivatableChestRare activatableChesetRare = new ActivatableChestRare(tileMap, x, y);
-		activatables.add(activatableChesetRare);
-		stuff.add(activatableChesetRare);
 	}
 	
 	public void GPS()
@@ -539,12 +527,18 @@ public class MainMap extends GameState
 		if(k == KeyEvent.VK_SPACE) player.setJumping(true);
 		if(k == KeyEvent.VK_E) interact();
 		
-		if(k == KeyEvent.VK_A) player.setCastingSmallFireball();
-		if(k == KeyEvent.VK_S) player.setCastingLargeFireball();
+		if(k == KeyEvent.VK_A) player.setCastingSmallFireBall();
+		if(k == KeyEvent.VK_S) player.setCastingLargeFireBall();
 		if(k == KeyEvent.VK_F) player.setPunching();
 		if(k == KeyEvent.VK_D) player.setDashing(true);
 		if(k == KeyEvent.VK_V) player.setSexytime1();
 		if(k == KeyEvent.VK_B) player.setSexytime2();
+		
+		if(k== KeyEvent.VK_J)
+		{
+			JSONWriter eh = new JSONWriter();
+			eh.writeFile();
+		}
 		
 		if( k == KeyEvent.VK_M)player.setPosition(player.getx() + 200, player.gety()); 
 
@@ -565,8 +559,8 @@ public class MainMap extends GameState
 		if(k == KeyEvent.VK_UP) player.setUp(false);
 		if(k == KeyEvent.VK_E) player.setGliding(false);
 		
-		if(k == KeyEvent.VK_A) player.setCastingSmallFireball();
-		if(k == KeyEvent.VK_S) player.setCastingLargeFireball();
+		if(k == KeyEvent.VK_A) player.setCastingSmallFireBall();
+		if(k == KeyEvent.VK_S) player.setCastingLargeFireBall();
 		if(k == KeyEvent.VK_Z) player.setPunching();
 	}
 	

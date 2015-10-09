@@ -28,7 +28,7 @@ public class Animation
 	
 	public void setDelay(long d) { delay = d; }
 	
-	// In case we need to be able to sed the frame ourselves
+	// In case we need to be able to set the frame ourselves
 	public void setFrame(int i) { currentFrame = i; }
 	
 	// Handles the logic of whether or not to move on to the next frame.

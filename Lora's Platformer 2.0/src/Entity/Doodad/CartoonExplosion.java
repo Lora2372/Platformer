@@ -1,5 +1,6 @@
 package Entity.Doodad;
 
+import Main.Content;
 import TileMap.TileMap;
 
 public class CartoonExplosion extends Doodad
@@ -15,14 +16,17 @@ public class CartoonExplosion extends Doodad
 				60,
 				60,
 				60,
-				"/Art/Sprites/Effects/CartoonExplosion.gif",
-				new int[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				new int[] {6},
 				true,
 				true,
 				true,
 				false,
-				false
+				false,
+				"CartoonExplosion"
 		);
+	}
+	
+	public void setDoodad(int currentAction)
+	{
+		sprites = Content.CartoonExplosion[0];
 	}
 }

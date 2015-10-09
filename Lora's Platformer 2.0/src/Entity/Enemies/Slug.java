@@ -57,10 +57,10 @@ public class Slug extends Unit
 				0,		 															// mana
 				0,		 															// maxMana
 				-1,		 															// manaCounter
-				0,		 															// smallFireballManaCost
-				20,		 															// smallFireballDamage
-				0,		 															// largeFireballManaCost
-				0, 																	// largeFireballDamage
+				0,		 															// smallFireBallManaCost
+				20,		 															// smallFireBallDamage
+				0,		 															// largeFireBallManaCost
+				0, 																	// largeFireBallDamage
 				30,																	// electricBallManaCost
 				70,																	// electricBallDamage
 				0,
@@ -125,7 +125,7 @@ public class Slug extends Unit
 			{
 				timer = 0;
 //				System.out.println("FIRE THE FIREBALL!");
-				fireballSmallCasting = true;
+				fireBallSmallCasting = true;
 			}
 		}
 		

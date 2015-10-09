@@ -1,5 +1,6 @@
 package Entity.Doodad;
 
+import Main.Content;
 import TileMap.TileMap;
 
 public class SummoningEffect extends Doodad
@@ -15,15 +16,17 @@ public class SummoningEffect extends Doodad
 				192,
 				0,
 				0,
-				"/Art/Sprites/Effects/SummonEffect.png",
-				new int[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				new int[] {14},
 				true,
 				true,
 				true,
 				false,
-				false
+				false,
+				"SummoningEffect"
 				
 		);
+	}
+	public void setDoodad(int currentAction)
+	{
+		sprites = Content.Teleport[0];
 	}
 }

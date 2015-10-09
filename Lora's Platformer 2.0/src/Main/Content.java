@@ -1,11 +1,6 @@
 package Main;
 
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
 import javax.imageio.ImageIO;
 
 import Audio.JukeBox;
@@ -14,18 +9,19 @@ public class Content
 {
 	// HEAT-O, EXPLOSION!!!!!1!
 	public static BufferedImage[][] CartoonExplosion 		= load("/Art/Sprites/Effects/CartoonExplosion.gif", 60, 60);
-	public static BufferedImage[][] FireballLargeExplosion 	= load("/Art/Sprites/Effects/FireballLargeExplosion.png", 240, 240);
-	public static BufferedImage[][] FireballSmallExplosion 	= load("/Art/Sprites/Effects/FireballSmallExplosion.png", 60, 60);
-	public static BufferedImage[][] ElectricballExplosion 	= load("/Art/Sprites/Effects/ElectricballExplosion.png", 180, 180);
+	public static BufferedImage[][] FireBallLargeExplosion 	= load("/Art/Sprites/Effects/FireBallLargeExplosion.png", 240, 240);
+	public static BufferedImage[][] FireBallSmallExplosion 	= load("/Art/Sprites/Effects/FireBallSmallExplosion.png", 60, 60);
+	public static BufferedImage[][] ElectricBallExplosion 	= load("/Art/Sprites/Effects/ElectricBallExplosion.png", 180, 180);
 	
 	// Projectiles
-	public static BufferedImage[][] FireballLarge 			= load("/Art/Sprites/Effects/FireballLarge.png", 60, 60);
-	public static BufferedImage[][] FireballMedium			= load("/Art/Sprites/Effects/FireballMediumNew.png", 60, 60);
-	public static BufferedImage[][] FireballSmall 			= load("/Art/Sprites/Effects/FireballSmall.png", 45, 45);
-	public static BufferedImage[][] FireballSwirling 		= load("/Art/Sprites/Effects/FireballSwirling.png", 60, 60);
-	public static BufferedImage[][] FireballDouble 			= load("/Art/Sprites/Effects/FireballDouble.png", 60, 60);
-	public static BufferedImage[][] Electricball			= load("/Art/Sprites/Effects/Electricball.png", 60, 60);
-	public static BufferedImage[][] Arcaneball				= load("/Art/Sprites/Effects/Arcaneball.png", 96, 96);
+	public static BufferedImage[][] FireBallLarge 			= load("/Art/Sprites/Effects/FireBallLarge.png", 60, 60);
+	public static BufferedImage[][] FireBallMedium			= load("/Art/Sprites/Effects/FireBallMediumNew.png", 60, 60);
+	public static BufferedImage[][] FireBallSmall 			= load("/Art/Sprites/Effects/FireBallSmall.png", 45, 45);
+	public static BufferedImage[][] FireBallSwirling 		= load("/Art/Sprites/Effects/FireBallSwirling.png", 60, 60);
+	public static BufferedImage[][] FireBallDouble 			= load("/Art/Sprites/Effects/FireBallDouble.png", 60, 60);
+	public static BufferedImage[][] ElectricBall			= load("/Art/Sprites/Effects/ElectricBall.png", 60, 60);
+	public static BufferedImage[][] ElectricBallChargeUp	= load("/Art/Sprites/Effects/ElectricBallChargeUp.png", 60, 60);
+	public static BufferedImage[][] ArcaneBall				= load("/Art/Sprites/Effects/ArcaneBall.png", 96, 96);
 	
 	// Characters
 	public static BufferedImage[][] Slugger 				= load("/Art/Sprites/Characters/slugger.gif", 60, 60);
@@ -42,7 +38,19 @@ public class Content
 	public static BufferedImage[][] Mushroom2 				= load("/Art/Sprites/Doodads/Mushroom02.png", 50, 50);
 	public static BufferedImage[][] Torch 					= load("/Art/Sprites/Doodads/Torch.png", 150, 150);
 	public static BufferedImage[][] Waterfall 				= load("/Art/Sprites/Doodads/Waterfall.png", 192, 192);
-
+	public static BufferedImage[][] ChestCommonClosed 		= load("/Art/Sprites/Doodads/ChestCommonClosed.png", 60, 60);
+	public static BufferedImage[][] ChestCommonOpening 		= load("/Art/Sprites/Doodads/ChestCommonOpening.png", 60, 60);
+	public static BufferedImage[][] ChestCommonOpened 		= load("/Art/Sprites/Doodads/ChestCommonOpened.png", 60, 60);
+	public static BufferedImage[][] ChestUncommonClosed 	= load("/Art/Sprites/Doodads/ChestUncommonClosed.png", 60, 60);
+	public static BufferedImage[][] ChestUncommonOpening 	= load("/Art/Sprites/Doodads/ChestUncommonOpening.png", 60, 60);
+	public static BufferedImage[][] ChestUncommonOpened 	= load("/Art/Sprites/Doodads/ChestUncommonOpened.png", 60, 60);
+	public static BufferedImage[][] ChestRareClosed 		= load("/Art/Sprites/Doodads/ChestRareClosed.png", 60, 60);
+	public static BufferedImage[][] ChestRareOpening 		= load("/Art/Sprites/Doodads/ChestRareOpening.png", 60, 60);
+	public static BufferedImage[][] ChestRareOpened 		= load("/Art/Sprites/Doodads/ChestRareOpened.png", 60, 60);
+	public static BufferedImage[][] CaveEntrance			= load("/Art/Sprites/Doodads/CaveEntrance.png", 100, 96);
+	public static BufferedImage[][] Shrine					= load("/Art/Sprites/Doodads/Shrine.png", 146, 156);
+	
+	
 	// Foreground
 	public static BufferedImage[][] GameOver				= load("/Art/HUD/Foregrounds/GameOver.png", 544, 416);
 	public static BufferedImage[][] ConversationGUI			= load("/Art/HUD/Foregrounds/Conversation GUI.png", 454, 138);
@@ -63,55 +71,100 @@ public class Content
 	}
 	
 	
-	public static  void loadContent()
+	public static void loadContent()
 	{				
+//		System.out.println("Please read this");	
+//		File file = new File("/Sound/CharacterSounds");
+//		System.out.println("filePath: " + Content.class.getResource(name));
+//		InputStream inputStream = new java.io.ByteArrayInputStream(file.getPath().getBytes(StandardCharsets.UTF_8));	
+//		System.out.println("hm: " + inputStream);
+//		BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+//		String cookie = "";
+////		File file = new File(Content.class.getResource(cookie));
+//		System.out.println("hm2: " + reader);
+//		String soundFile;
+//		String folder;
+//		
+//		try 
+//		{
+//			while ((folder = reader.readLine()) != null)
+//			{
+//				System.out.println("Found a file: " + folder);
+//				file = new File("/Sound/CharacterSounds/" + folder);
+//				InputStream inputStreamFile = new java.io.ByteArrayInputStream(file.getPath().getBytes(StandardCharsets.UTF_8));
+//				BufferedReader fileReader = new BufferedReader(new InputStreamReader(inputStreamFile));
+//				while((soundFile = fileReader.readLine()) != null )
+//				{
+//					System.out.println("soundFile: " + soundFile);
+//					String tempString = (soundFile.substring(soundFile.length()-4, soundFile.length()));
+//					if(tempString.equals(".mp3"))
+//					{	
+//						JukeBox.load("/Sound/CharacterSounds/" + folder + "/" + soundFile, folder + soundFile.substring(0, soundFile.length() - 4));	
+//					}
+//				}
+//				fileReader.close();
+//			}
+//			
+//			reader.close();
+//		} catch (IOException e) 
+//		{
+//			e.printStackTrace();
+//		}
 				
-		InputStream inputStream = Content.class.getResourceAsStream("/Sound/Character Sounds");
-
-		BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-		
-		String soundFile;
-		String folder;
-		
-		try 
+		for(int i = 1; i <= 6; i++)
 		{
-			while ((folder = reader.readLine()) != null)
-			{
-				InputStream inputStreamFile = Content.class.getResourceAsStream("/Sound/Character Sounds/" + folder);
-				BufferedReader fileReader = new BufferedReader(new InputStreamReader(inputStreamFile));
-				while((soundFile = fileReader.readLine()) != null )
-				{
-					String tempString = (soundFile.substring(soundFile.length()-4, soundFile.length()));
-					if(tempString.equals(".mp3"))
-					{	
-						JukeBox.load("/Sound/Character Sounds/" + folder + "/" + soundFile, folder + soundFile.substring(0, soundFile.length() - 4));	
-					}
-				}
-				fileReader.close();
-			}
-			
-			reader.close();
-		} catch (IOException e) 
-		{
-			e.printStackTrace();
+			JukeBox.load("/Sound/CharacterSounds/Female01/Attack0" + i + ".mp3", "Female01Attack0" + i);
 		}
 		
+		JukeBox.load("/Sound/CharacterSounds/Female01/EnterDungeon.mp3", "Female01EnterDungeon");
+		
+		for(int i = 1; i <= 7; i++)
+		{
+			JukeBox.load("/Sound/CharacterSounds/Female01/Hurt0" + i + ".mp3", "Female01Hurt0" + i);
+		}
+		
+		for(int i = 1; i <= 6; i++)
+		{
+			JukeBox.load("/Sound/CharacterSounds/Female01/Jump0" + i + ".mp3", "Female01Jump0" + i);
+		}
+		
+		for(int i = 1; i <= 4; i++)
+		{
+			JukeBox.load("/Sound/CharacterSounds/Female01/Loot0" + i + ".mp3", "Female01Loot0" + i);
+		}
+		
+		for(int i = 1; i <= 6; i++)
+		{
+			JukeBox.load("/Sound/CharacterSounds/Fiona/Attack0" + i + ".mp3", "FionaAttack0" + i);
+		}
+		
+		JukeBox.load("/Sound/CharacterSounds/Fiona/Chargeup01.mp3", "FionaChargeup01");
+		JukeBox.load("/Sound/CharacterSounds/Fiona/Chargeup02.mp3", "FionaChargeup02");
+		
+		for(int i = 1; i <= 9; i++)
+		{
+			JukeBox.load("/Sound/CharacterSounds/Fiona/Hurt0" + i + ".mp3", "FionaHurt0" + i);
+		}
+
+
+		
 		// Projectile sound effects
-		JukeBox.load("/Sound/Spell Effects/FireballLargeLaunch.mp3", "FireballLargeLaunch");
-		JukeBox.load("/Sound/Spell Effects/FireballSmallLaunch.mp3", "FireballSmallLaunch");	
+		JukeBox.load("/Sound/SpellEffects/FireBallLargeLaunch.mp3", "FireBallLargeLaunch");
+		System.out.println("Are you reading this?");	
+		JukeBox.load("/Sound/SpellEffects/FireBallSmallLaunch.mp3", "FireBallSmallLaunch");	
 		
-		JukeBox.load("/Sound/Spell Effects/EnergyballChargeUp.mp3", "EnergyballChargeUp");
-		JukeBox.load("/Sound/Spell Effects/ElectricballActive.mp3", "ElectricballActive");
+		JukeBox.load("/Sound/SpellEffects/EnergyBallChargeUp.mp3", "EnergyBallChargeUp");
+		JukeBox.load("/Sound/SpellEffects/ElectricBallActive.mp3", "ElectricBallActive");
 		
-		JukeBox.load("/Sound/Spell Effects/ElectricballChargeUp.mp3", "ElectricballChargeUp");
-		JukeBox.load("/Sound/Spell Effects/ElectricballLaunch.mp3", "ElectricballLaunch");
-		JukeBox.load("/Sound/Spell Effects/ElectricballImpact.mp3", "ElectricballImpact");
+		JukeBox.load("/Sound/SpellEffects/ElectricBallChargeUp.mp3", "ElectricBallChargeUp");
+		JukeBox.load("/Sound/SpellEffects/ElectricBallLaunch.mp3", "ElectricBallLaunch");
+		JukeBox.load("/Sound/SpellEffects/ElectricBallImpact.mp3", "ElectricBallImpact");
 		
-		JukeBox.load("/Sound/Spell Effects/FireballLargeImpact.mp3", "FireballLargeImpact");
-		JukeBox.load("/Sound/Spell Effects/FireballSmallImpact.mp3", "FireballSmallImpact");
+		JukeBox.load("/Sound/SpellEffects/FireBallLargeImpact.mp3", "FireBallLargeImpact");
+		JukeBox.load("/Sound/SpellEffects/FireBallSmallImpact.mp3", "FireBallSmallImpact");
 		
 		// Spell sound effect
-		JukeBox.load("/Sound/Spell Effects/Teleport.mp3", "teleport");
+		JukeBox.load("/Sound/SpellEffects/Teleport.mp3", "teleport");
 		
 		// Music
 		JukeBox.load("/Sound/Music/Menu.mp3", "Menu");

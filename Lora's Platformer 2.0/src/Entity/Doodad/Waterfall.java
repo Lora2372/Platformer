@@ -1,5 +1,6 @@
 package Entity.Doodad;
 
+import Main.Content;
 import TileMap.TileMap;
 
 public class Waterfall extends Doodad
@@ -19,14 +20,16 @@ public class Waterfall extends Doodad
 				192,
 				192,
 				192,
-				"/Art/Sprites/Doodads/Waterfall.png",
-				new int[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				new int[] {4},
 				true,
 				true,
 				false,
 				false,
-				false
+				false,
+				"Waterfall"
 				);
+	}
+	public void setDoodad(int currentAction)
+	{
+		sprites = Content.Waterfall[0];
 	}
 }

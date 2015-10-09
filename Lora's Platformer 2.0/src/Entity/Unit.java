@@ -7,7 +7,7 @@ import Audio.JukeBox;
 
 import javax.imageio.ImageIO;
 
-import Entity.Doodad.ElectricballChargeUp;
+import Entity.Doodad.ElectricBallRChargeUp;
 import Entity.Doodad.SummoningEffect;
 import Entity.Player.ConversationBox;
 import Entity.Player.Player;
@@ -30,7 +30,7 @@ public class Unit extends MapObject
 	
 	protected ArrayList<Unit> charactersHit = new ArrayList<Unit>();
 	
-	protected Electricball electricball;
+	protected ElectricBallR electricBall;
 	
 	protected BufferedImage[] portrait;
 	
@@ -80,37 +80,37 @@ public class Unit extends MapObject
 	
 	protected double saveFallSpeed;
 	
-	// Small fireball
-	protected boolean fireballSmallCasting;
-	protected boolean fireballSmallDoneCasting;
-	protected boolean fireballSmallHolding;
+	// Small fireBall
+	protected boolean fireBallSmallCasting;
+	protected boolean fireBallSmallDoneCasting;
+	protected boolean fireBallSmallHolding;
 	
-	protected int fireballSmallManaCost;
-	protected int fireballSmallDamage;
+	protected int fireBallSmallManaCost;
+	protected int fireBallSmallDamage;
 	
-	// Large fireball
-	protected boolean fireballLargeCasting;
-	protected boolean fireballLargeDoneCasting;
-	protected boolean fireballLargeHolding;
+	// Large fireBall
+	protected boolean fireBallLargeCasting;
+	protected boolean fireBallLargeDoneCasting;
+	protected boolean fireBallLargeHolding;
 	
-	protected int fireballLargeManaCost;
-	protected int fireballLargeDamage;
+	protected int fireBallLargeManaCost;
+	protected int fireBallLargeDamage;
 	
-	// electricball
-	protected boolean electricballCasting;
-	protected boolean electricballDoneCasting;
-	protected boolean electricballHolding;
+	// electricBall
+	protected boolean electricBallCasting;
+	protected boolean electricBallDoneCasting;
+	protected boolean electricBallHolding;
 	
-	protected int electricballManaCost;
-	protected int electricballDamage;
+	protected int electricBallManaCost;
+	protected int electricBallDamage;
 	
-	// arcaneball
-	protected boolean arcaneballCasting;
-	protected boolean arcaneballDoneCasting;
-	protected boolean arcaneballHolding;
+	// arcaneBall
+	protected boolean arcaneBallCasting;
+	protected boolean arcaneBallDoneCasting;
+	protected boolean arcaneBallHolding;
 	
-	protected int arcaneballManaCost;
-	protected int arcaneballDamage;
+	protected int arcaneBallManaCost;
+	protected int arcaneBallDamage;
 	
 	// Punch
 	protected boolean startPunch;
@@ -210,14 +210,14 @@ public class Unit extends MapObject
 			int mana, 
 			int maxMana,
 			int manaRegen,
-			int fireballSmallManaCost,
-			int fireballSmallDamage,	
-			int fireballLargeManaCost,
-			int fireballLargeDamage,
-			int electricballManaCost,
-			int electricballDamage,
-			int arcaneballManaCost,
-			int arcaneballDamage,
+			int fireBallSmallManaCost,
+			int fireBallSmallDamage,	
+			int fireBallLargeManaCost,
+			int fireBallLargeDamage,
+			int electricBallManaCost,
+			int electricBallDamage,
+			int arcaneBallManaCost,
+			int arcaneBallDamage,
 			String spritePath,
 			int[] animationState,
 			int[] numFrames,
@@ -266,14 +266,14 @@ public class Unit extends MapObject
 		this.mana = mana;
 		this.maxMana = maxMana;
 		this.manaRegen = manaRegen;
-		this.fireballSmallManaCost = fireballSmallManaCost;
-		this.fireballSmallDamage = fireballSmallDamage;
-		this.fireballLargeManaCost = fireballLargeManaCost;
-		this.fireballLargeDamage = fireballLargeDamage;
-		this.electricballManaCost = electricballManaCost;
-		this.electricballDamage = electricballDamage;
-		this.arcaneballManaCost = arcaneballManaCost;
-		this.arcaneballDamage = arcaneballDamage;
+		this.fireBallSmallManaCost = fireBallSmallManaCost;
+		this.fireBallSmallDamage = fireBallSmallDamage;
+		this.fireBallLargeManaCost = fireBallLargeManaCost;
+		this.fireBallLargeDamage = fireBallLargeDamage;
+		this.electricBallManaCost = electricBallManaCost;
+		this.electricBallDamage = electricBallDamage;
+		this.arcaneBallManaCost = arcaneBallManaCost;
+		this.arcaneBallDamage = arcaneBallDamage;
 		this.spritePath = spritePath;
 		this.animationState = animationState;
 		this.numFrames = numFrames;
@@ -384,8 +384,8 @@ public class Unit extends MapObject
 	public int getStamina() { return stamina; }
 	public int getMaxStamina() { return maxStamina; }
 	
-	public int getFireballSmallManaCost() { return fireballSmallManaCost; }
-	public int getFireballLargeManaCost() { return fireballLargeManaCost; }
+	public int getFireBallSmallManaCost() { return fireBallSmallManaCost; }
+	public int getFireBallLargeManaCost() { return fireBallLargeManaCost; }
 	
 	public int getDashStaminaCost()  { return dashCost; }
 	public int getPunchStaminaCost() { return punchCost; }
@@ -423,25 +423,25 @@ public class Unit extends MapObject
 	public boolean getFalling() { return falling; }
 	public boolean getJumping() { return jumping; }
 	
-	public void setCastingSmallFireball()
+	public void setCastingSmallFireBall()
 	{
-		if(mana > fireballSmallManaCost && inControl && !fireballSmallHolding && inControl)
+		if(mana > fireBallSmallManaCost && inControl && !fireBallSmallHolding && inControl)
 		{
-			fireballSmallCasting = true;
+			fireBallSmallCasting = true;
 			inControl = false;			
 		}
 	}
-	public void releaseSmallFireball() { fireballSmallHolding = false; }
+	public void releaseSmallFireBall() { fireBallSmallHolding = false; }
 	
-	public void setCastingLargeFireball()
+	public void setCastingLargeFireBall()
 	{
-		if(mana > fireballLargeManaCost && inControl && !fireballLargeHolding && inControl)
+		if(mana > fireBallLargeManaCost && inControl && !fireBallLargeHolding && inControl)
 		{
-			fireballLargeCasting = true;
+			fireBallLargeCasting = true;
 			inControl = false;			
 		}
 	}
-	public void releaseLargeFireball() { fireballLargeHolding = false; }
+	public void releaseLargeFireBall() { fireBallLargeHolding = false; }
 	
 	public boolean getEndPunch() { return endPunch; }
 	
@@ -753,10 +753,6 @@ public class Unit extends MapObject
 				inControl = true;
 			}
 		}
-		
-		
-		
-		
 		//********************************************************************************
 		//*Regular punch                                                                 *
 		//********************************************************************************
@@ -820,7 +816,16 @@ public class Unit extends MapObject
 				startDash = false;
 				endDash = true;
 				
-				playPunchSound();
+				System.out.println("Attempting to play sound");
+				try
+				{
+					playPunchSound();	
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}
+				System.out.println("Did it play?");
 				
 				currentAction = animationState[7];
 				animation.setFrames(sprites.get(animationState[7]));
@@ -842,33 +847,33 @@ public class Unit extends MapObject
 		}
 		
 		//********************************************************************************
-		//*arcaneball                                                                  *
+		//*arcaneBall                                                                  *
 		//********************************************************************************	
-		else if(arcaneballCasting)
+		else if(arcaneBallCasting)
 		{
-			mana -= arcaneballManaCost;
-			arcaneballCasting = false;
-			arcaneballDoneCasting = true;
+			mana -= arcaneBallManaCost;
+			arcaneBallCasting = false;
+			arcaneBallDoneCasting = true;
 			
 			
-			Arcaneball arcaneball = new Arcaneball(tileMap, mainMap, facingRight, up, down, aim, friendly, arcaneballDamage);
-			arcaneball.setPosition(locationX, locationY - 20);
-			mainMap.addProjectile(arcaneball);
+			ArcaneBallR arcaneBall = new ArcaneBallR(tileMap, mainMap, facingRight, up, down, aim, friendly, arcaneBallDamage);
+			arcaneBall.setPosition(locationX, locationY - 20);
+			mainMap.addProjectile(arcaneBall);
 			
 			currentAction = animationState[0];
 			animation.setFrames(sprites.get(animationState[0]));
 			animation.setDelay(animationDelay[0]);
 			
-			JukeBox.play("ElectricballActive");
-			JukeBox.play("ElectricballThrow");
+			JukeBox.play("ElectricBallActive");
+			JukeBox.play("ElectricBallThrow");
 			playCastSound();
 		}
 		
 		
 		//********************************************************************************
-		//*Small fireball                                                                *
+		//*Small fireBall                                                                *
 		//********************************************************************************	
-		else if(fireballSmallCasting)
+		else if(fireBallSmallCasting)
 		{
 			
 			if(currentAction != animationState[8])
@@ -877,20 +882,20 @@ public class Unit extends MapObject
 				animation.setFrames(sprites.get(animationState[8]));
 				animation.setDelay(animationDelay[8]);
 //				if(directionY == 0) directionX = 0;
-				JukeBox.play("FireballSmallLaunch");				
+				JukeBox.play("FireBallSmallLaunch");				
 			}
 			if(animation.hasPlayedOnce())
 			{
 
-				mana -= fireballSmallManaCost;
-				fireballSmallCasting = false;
-				fireballSmallDoneCasting = true;
+				mana -= fireBallSmallManaCost;
+				fireBallSmallCasting = false;
+				fireBallSmallDoneCasting = true;
 		
 				calculateAim(null);
 				
-				FireballSmall fireball = new FireballSmall(tileMap, mainMap, facingRight, up, down, aim, friendly, fireballSmallDamage);
-				fireball.setPosition(locationX, locationY - 20);
-				mainMap.addProjectile(fireball);
+				FireBallRSmall fireBall = new FireBallRSmall(tileMap, mainMap, facingRight, up, down, aim, friendly, fireBallSmallDamage);
+				fireBall.setPosition(locationX, locationY - 20);
+				mainMap.addProjectile(fireBall);
 				
 				playCastSound();
 				
@@ -899,23 +904,23 @@ public class Unit extends MapObject
 				animation.setDelay(animationDelay[9]);
 				
 				
-				// Create new fireball stuff here
+				// Create new fireBall stuff here
 			}
 		}
 		
-		else if(currentAction == animationState[9] && fireballSmallDoneCasting)
+		else if(currentAction == animationState[9] && fireBallSmallDoneCasting)
 		{
 			if (animation.hasPlayedOnce()) 
 			{
-				fireballSmallDoneCasting = false;
+				fireBallSmallDoneCasting = false;
 				inControl = true;
 			}
 		}
 		
 		//********************************************************************************
-		//*electricball                                                                  *
+		//*electricBall                                                                  *
 		//********************************************************************************	
-		else if(electricballCasting)
+		else if(electricBallCasting)
 		{
 			
 			if(currentAction != animationState[8])
@@ -924,18 +929,18 @@ public class Unit extends MapObject
 				animation.setFrames(sprites.get(animationState[8]));
 				animation.setDelay(animationDelay[8] * 3);
 				
-				ElectricballChargeUp electricballChargeUp = new ElectricballChargeUp(tileMap, locationX, locationY - 20);
-				mainMap.addEffect(electricballChargeUp);
+				ElectricBallRChargeUp electricBallChargeUp = new ElectricBallRChargeUp(tileMap, locationX, locationY - 20);
+				mainMap.addEffect(electricBallChargeUp);
 				
 				if(directionY == 0) directionX = 0;
-				JukeBox.play("ElectricballChargeUp");				
+				JukeBox.play("ElectricBallChargeUp");				
 			}
 			if(animation.hasPlayedOnce())
 			{
 
-				mana -= electricballManaCost;
-				electricballCasting = false;
-				electricballDoneCasting = true;
+				mana -= electricBallManaCost;
+				electricBallCasting = false;
+				electricBallDoneCasting = true;
 				
 				ArrayList<Unit> enemiesDetected = detectEnemy(characterList, false);
 				if(enemiesDetected != null)
@@ -954,33 +959,33 @@ public class Unit extends MapObject
 				
 				
 				
-				electricball = new Electricball(tileMap, mainMap, facingRight, up, down, aim, friendly, electricballDamage);
-				electricball.setPosition(locationX, locationY - 20);
-				mainMap.addProjectile(electricball);
+				electricBall = new ElectricBallR(tileMap, mainMap, facingRight, up, down, aim, friendly, electricBallDamage);
+				electricBall.setPosition(locationX, locationY - 20);
+				mainMap.addProjectile(electricBall);
 				
 				currentAction = animationState[9];
 				animation.setFrames(sprites.get(animationState[9]));
 				animation.setDelay(animationDelay[9]);
 				
-				JukeBox.play("ElectricballActive");
-				JukeBox.play("ElectricballThrow");
+				JukeBox.play("ElectricBallActive");
+				JukeBox.play("ElectricBallThrow");
 				playCastSound();
 			}
 		}
 		
-		else if(currentAction == animationState[9] && electricballDoneCasting)
+		else if(currentAction == animationState[9] && electricBallDoneCasting)
 		{
 			if (animation.hasPlayedOnce()) 
 			{
-				electricballDoneCasting = false;
+				electricBallDoneCasting = false;
 				inControl = true;
 			}
 		}
 		
 		//********************************************************************************
-		//*Large fireball                                                                *
+		//*Large fireBall                                                                *
 		//********************************************************************************	
-		else if(fireballLargeCasting)
+		else if(fireBallLargeCasting)
 		{
 			if(currentAction != animationState[10])
 			{
@@ -988,18 +993,18 @@ public class Unit extends MapObject
 				animation.setFrames(sprites.get(animationState[10]));
 				animation.setDelay(animationDelay[10]);
 				if(directionY == 0) directionX = 0;
-				JukeBox.play("FireballLargeLaunch");
+				JukeBox.play("FireBallLargeLaunch");
 			}
 			if(animation.hasPlayedOnce())
 			{
-				mana -= fireballLargeManaCost;
-				fireballLargeCasting = false;
-				fireballLargeDoneCasting = true;
+				mana -= fireBallLargeManaCost;
+				fireBallLargeCasting = false;
+				fireBallLargeDoneCasting = true;
 				
 				calculateAim(null);
-				FireballLarge fireball = new FireballLarge(tileMap, mainMap, facingRight, up, down, aim, friendly, fireballLargeDamage);
-				fireball.setPosition(locationX, locationY);
-				mainMap.addProjectile(fireball);
+				FireBallRLarge fireBall = new FireBallRLarge(tileMap, mainMap, facingRight, up, down, aim, friendly, fireBallLargeDamage);
+				fireBall.setPosition(locationX, locationY);
+				mainMap.addProjectile(fireBall);
 				
 				playCastSound();
 				
@@ -1008,15 +1013,15 @@ public class Unit extends MapObject
 				animation.setDelay(animationDelay[11]);
 				
 				
-				// Create new fireball stuff here
+				// Create new fireBall stuff here
 			}
 		}
 		
-		else if(currentAction == animationState[11] && fireballLargeDoneCasting)
+		else if(currentAction == animationState[11] && fireBallLargeDoneCasting)
 		{
 			if (animation.hasPlayedOnce()) 
 			{
-				fireballLargeDoneCasting = false;
+				fireBallLargeDoneCasting = false;
 				inControl = true;
 			}
 		}	
