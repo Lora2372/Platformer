@@ -4,6 +4,7 @@ import Main.Content;
 import TileMap.TileMap;
 import Audio.JukeBox;
 import Entity.Doodad.Doodad;
+import Entity.Player.Player;
 
 public class ActivatableChest extends Doodad
 {
@@ -61,6 +62,11 @@ public class ActivatableChest extends Doodad
 			else if(currentAction == 2)
 				sprites = Content.ChestRareOpened[0];
 		}
+	}
+	
+	public void interact(Player player)
+	{
+		active = true;
 	}
 	
 	public void activateSound() 

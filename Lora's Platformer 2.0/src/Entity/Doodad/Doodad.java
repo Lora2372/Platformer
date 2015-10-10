@@ -91,7 +91,7 @@ public class Doodad extends MapObject
 			{
 				if(currentAction!= 1)
 				{
-					currentAction = animationState[1];
+					currentAction = 1;
 					setDoodad(currentAction);
 					animation.setFrames(sprites);
 					animation.setDelay(60);
@@ -99,9 +99,9 @@ public class Doodad extends MapObject
 				}
 				if(animation.hasPlayedOnce())
 				{
-					if(currentAction != animationState[2])
+					if(currentAction != 2)
 					{
-						currentAction = animationState[2];
+						currentAction = 2;
 						setDoodad(currentAction);
 						animation.setFrames(sprites);
 						animation.setDelay(1000);

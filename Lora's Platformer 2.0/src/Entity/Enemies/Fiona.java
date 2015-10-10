@@ -266,8 +266,8 @@ public class Fiona extends Unit
 				if(player.getConversationBox().getConversationTracker() == 5 && conversationProgress != 3)
 				{
 					conversationProgress = 3;
-					JukeBox.play("Close.mp3");
-					JukeBox.loop("Dungeon1");
+					JukeBox.play("Close");
+					JukeBox.loop("MysteriousDungeon");
 					JukeBox.stop("MysteriousConversation");
 					try 
 					{

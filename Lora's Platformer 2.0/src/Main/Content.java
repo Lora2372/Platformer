@@ -68,8 +68,8 @@ public class Content
 	public static enum mapMusic 
 	{ 
 		Menu,
-		Level1,
-		Dungeon1,
+		LorasCavern,
+		MysteriousDungeon,
 		MysteriousBattle,
 		MysteriousConversation,
 		DeepWoods
@@ -135,7 +135,7 @@ public class Content
 		// Music
 		JukeBox.load("/Sound/Music/Menu.mp3", "Menu");
 		JukeBox.load("/Sound/Music/LorasCavern.mp3", "LorasCavern");
-		JukeBox.load("/Sound/Music/MysteriousDungeon.mp3", "MysteriousDUngeon");
+		JukeBox.load("/Sound/Music/MysteriousDungeon.mp3", "MysteriousDungeon");
 		JukeBox.load("/Sound/Music/MysteriousConversation.mp3", "MysteriousConversation");
 		JukeBox.load("/Sound/Music/MysteriousBattle.mp3", "MysteriousBattle");
 		JukeBox.load("/Sound/Music/DeepWoods.mp3", "DeepWoods");

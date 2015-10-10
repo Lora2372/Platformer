@@ -160,7 +160,7 @@ public class ActivatableShrineMysteriousDungeon extends Doodad
 					}
 				}
 				
-				JukeBox.stop("Dungeon1");
+				JukeBox.stop("MysteriousDungeon");
 				
 				tileMap.loadTiles(ImageIO.read(getClass().getResource("/Art/Tilesets/LorasTileset.png")));
 				tileMap.loadMap("/Maps/MysteriousDungeonB.map");

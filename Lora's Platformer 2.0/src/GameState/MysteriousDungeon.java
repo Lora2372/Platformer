@@ -137,7 +137,7 @@ public class MysteriousDungeon extends MainMap
 			{
 				bossEngaged = false;
 				JukeBox.stop("MysteriousBattle");
-				JukeBox.loop("Dungeon1");
+				JukeBox.loop("MysteriousDungeon");
 				
 				ActivatableCave activatableCave = new ActivatableCave(tileMap, gameStateManager, 1468, 550);
 				stuff.add(activatableCave);
