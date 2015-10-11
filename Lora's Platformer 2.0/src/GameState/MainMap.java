@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import Main.GamePanel;
-import Main.JSONWriter;
 import TileMap.*;
 import Entity.*;
 import Entity.Enemies.*;
@@ -38,11 +37,15 @@ public class MainMap extends GameState
 	protected boolean gameover;
 	
 	public MainMap(
-			GameStateManager gameStatemanager
+			GameStateManager gameStatemanager,
+			TileMap tileMap,
+			Player player
 			
 			)
 	{
 		this.gameStateManager = gameStatemanager;
+		this.tileMap = tileMap;
+		this.player = player;
 		initialize();
 	}
 	
@@ -56,16 +59,19 @@ public class MainMap extends GameState
 		allies = new ArrayList<Unit>();
 		
 		projectiles = new ArrayList<Projectile>();
-		
 		soundTimer = 0;
 		
-		tileMap = new TileMap(60);
-
+		if(tileMap == null)
+		{
+			System.out.println("The tileMap is null");
+		}
+		
 		if(player == null)
 		{
 			System.out.println("Player created");
-			player = new Player(tileMap, "Lora", 200, 200, this);
+			player = new Player("Lora2", tileMap);
 		}
+		player.setMainMap(this);
 		characterList.add(player);
 	}
 	
@@ -504,6 +510,13 @@ public class MainMap extends GameState
 		stuff.add(activatableChestCommon);
 	}
 	
+	public void spawnStatueSave(double x, double y)
+	{
+		StatueSave statueSave = new StatueSave(tileMap, x, y);
+		activatables.add(statueSave);
+		stuff.add(statueSave);
+	}
+	
 	public void GPS()
 	{
 //		spawnEnemies();
@@ -533,12 +546,6 @@ public class MainMap extends GameState
 		if(k == KeyEvent.VK_D) player.setDashing(true);
 		if(k == KeyEvent.VK_V) player.setSexytime1();
 		if(k == KeyEvent.VK_B) player.setSexytime2();
-		
-		if(k== KeyEvent.VK_J)
-		{
-			JSONWriter eh = new JSONWriter();
-			eh.writeFile();
-		}
 		
 		if( k == KeyEvent.VK_M)player.setPosition(player.getx() + 200, player.gety()); 
 
