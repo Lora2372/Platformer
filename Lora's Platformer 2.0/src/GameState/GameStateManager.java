@@ -1,7 +1,9 @@
 package GameState;
 
 import Audio.JukeBox;
+import Entity.Player.Player;
 import Main.Content;
+import TileMap.TileMap;
 
 public class GameStateManager 
 {
@@ -20,6 +22,8 @@ public class GameStateManager
 	public static final int MysteriousDungeon = 2;
 	public static final int DeepWoods = 3;
 	
+	protected Player player;
+	protected TileMap tileMap;
 	
 	public GameStateManager() 
 	{
@@ -30,8 +34,10 @@ public class GameStateManager
 		
 		currentState = MENUSTATE;
 		loadState(currentState);
-		
 	}
+	
+	public void setPlayer(Player player) { this.player = player; }
+	public void setTileMap(TileMap tileMap) { this.tileMap = tileMap; }
 	
 	public void pause(boolean b) { paused = b; } 
 	public void options(boolean b) { options = b; }
@@ -46,17 +52,17 @@ public class GameStateManager
 		else if(state == LorasCavern)
 		{
 			JukeBox.loop("LorasCavern");
-			gameStates[state] = new Level1State(this);
+			gameStates[state] = new LorasCavern(this, tileMap, player);
 		}
 		else if(state == MysteriousDungeon)
 		{
 			JukeBox.loop("MysteriousDungeon");
-			gameStates[state] = new MysteriousDungeon(this);			
+			gameStates[state] = new MysteriousDungeon(this, tileMap, player);			
 		}
 		else if(state == DeepWoods)
 		{
 			JukeBox.loop("DeepWoods");
-			gameStates[state] = new DeepWoods(this);			
+			gameStates[state] = new DeepWoods(this, tileMap, player);			
 		}
 	}
 	

@@ -54,7 +54,7 @@ public class Content
 	public static BufferedImage[][] ChestRareOpened 		= load("/Art/Sprites/Doodads/ChestRareOpened.png", 60, 60);
 	public static BufferedImage[][] CaveEntrance			= load("/Art/Sprites/Doodads/CaveEntrance.png", 100, 96);
 	public static BufferedImage[][] Shrine					= load("/Art/Sprites/Doodads/Shrine.png", 146, 156);
-	
+	public static BufferedImage[][] StatueSave				= load("/Art/Sprites/Doodads/StatueSave.png", 48, 100);
 	
 	// Foreground
 	public static BufferedImage[][] GameOver				= load("/Art/HUD/Foregrounds/GameOver.png", 544, 416);
@@ -146,6 +146,7 @@ public class Content
 		JukeBox.load("/Sound/Doodads/OpenChestUncommon.mp3", "OpenChestUncommon");
 		JukeBox.load("/Sound/Doodads/OpenChestCommon.mp3", "OpenChestCommon");
 		JukeBox.load("/Sound/Doodads/OpenChestRare.mp3", "OpenChestRare");
+		JukeBox.load("/Sound/Doodads/Save.mp3", "Save");
 		
 		JukeBox.load("/Sound/Doodads/Close.mp3", "Close");
 	}

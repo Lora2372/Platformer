@@ -1,16 +1,24 @@
 package GameState;
 
 import java.io.IOException;
+
 import javax.imageio.ImageIO;
+import Entity.Player.Player;
 import TileMap.Background;
 import TileMap.GameOver;
+import TileMap.TileMap;
 
 public class DeepWoods extends MainMap
 {
 	
-	public DeepWoods(GameStateManager gameStatemanager) 
+	public DeepWoods(GameStateManager gameStatemanager,
+			TileMap tileMap,
+			Player player
+			) 
 	{
-		super(gameStatemanager);
+		super(gameStatemanager, 
+				tileMap,
+				player);
 		
 		try
 		{
@@ -26,11 +34,21 @@ public class DeepWoods extends MainMap
 			e.printStackTrace();
 		}
 		
-		
-		player.setPosition(400, 200);
-		player.setSpawnPoint(400, 200);
+		player.setTileMap(tileMap);
+		player.setCurrentMap("DeepWoods");
+
+		if(!player.getLoaded())
+		{
+			player.setPosition(400, 200);
+			player.setSpawnPoint(400, 200);
+		}
+		else
+		{
+			player.setLoaded(false);
+			player.setPosition(player.getSpawnX(), player.getSpawnY());
+		}
 		player.setSpawning(true);
-		
+				
 		doneInitializing = true;
 	}
 }

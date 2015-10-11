@@ -338,6 +338,13 @@ public class Unit extends MapObject
 		animation.setDelay(400);
 	}
 	
+	public void setMainMap(MainMap mainMap) 
+	{ 
+		this.mainMap = mainMap; 
+	}
+	
+	public TileMap getTileMap() { return tileMap; }
+	
 	public void calculateAim(Unit character)
 	{
 		
@@ -596,8 +603,10 @@ public class Unit extends MapObject
 	public boolean isDead() { return dead; }
 	
 	public boolean getSpawning() { return spawning; };
-	
 	public void setSpawning(boolean b) { initializeSpawning = b; }
+	
+	public double getSpawnX() { return spawnX; }
+	public double getSpawnY() { return spawnY; }
 	
 	public void hit(int damage)
 	{
@@ -896,7 +905,7 @@ public class Unit extends MapObject
 				FireBallSmall fireBall = new FireBallSmall(tileMap, mainMap, facingRight, up, down, aim, friendly, fireBallSmallDamage);
 				fireBall.setPosition(locationX, locationY - 20);
 				mainMap.addProjectile(fireBall);
-				
+				System.out.println("Say what now?");
 				playCastSound();
 				
 				currentAction = animationState[9];

@@ -10,8 +10,10 @@ import Entity.Doodad.Doodad;
 import Entity.Doodad.Activatable.ActivatableCave;
 import Entity.Doodad.Activatable.ActivatableShrineMysteriousDungeon;
 import Entity.Enemies.Fiona;
+import Entity.Player.Player;
 import TileMap.Background;
 import TileMap.GameOver;
+import TileMap.TileMap;
 
 public class MysteriousDungeon extends MainMap
 {
@@ -31,9 +33,14 @@ public class MysteriousDungeon extends MainMap
 				"Torches, someone must live here, or something..."
 			};
 	
-	public MysteriousDungeon(GameStateManager gameStatemanager) 
+	public MysteriousDungeon(GameStateManager gameStatemanager,
+			TileMap tileMap,
+			Player player
+			) 
 	{
-		super(gameStatemanager);
+		super(gameStatemanager, 
+				tileMap,
+				player);
 		
 		try
 		{
@@ -60,17 +67,30 @@ public class MysteriousDungeon extends MainMap
 		
 		spawnTorch(3928, 410);
 		
-		player.setPosition(109, 200);
-		player.setSpawnPoint(109, 200);
+
+		player.setCurrentMap("MysteriousDungeon");
+
+		if(!player.getLoaded())
+		{
+			player.setPosition(109, 200);
+			player.setSpawnPoint(109, 200);
+		}
+		else
+		{
+			dungeonIntroduction = true;
+			player.setLoaded(false);
+			player.setPosition(player.getSpawnX(), player.getSpawnY());
+		}
 		player.setSpawning(true);
-		
+				
 		spawnSuccubus(1600, 480, false);
 		spawnSuccubus(2000, 120, false);
 		spawnSuccubus(3000, 480, false);
 		
+		spawnStatueSave(3045, 530);
+
 		
-		
-		fiona = new Fiona(tileMap,false,false,false,false, true, "Fiona", player.getx() + 200, player.gety(), this, player);
+		fiona = new Fiona(tileMap,false,false,false,false, true, "Fiona", 400, 200, this, player);
 		enemies.add(fiona);
 		characterList.add(fiona);
 		fiona.setHidden(true);

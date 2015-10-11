@@ -5,7 +5,6 @@ import java.util.Random;
 
 import Audio.JukeBox;
 import Entity.Unit;
-import GameState.MainMap;
 import TileMap.TileMap;
 
 public class Player extends Unit
@@ -19,16 +18,13 @@ public class Player extends Unit
 	
 	protected HUD hud;
 	
+	protected boolean loaded = false;
+	
 //	protected ArrayList<Projectile> a
 	
 	public enum soundTypes { Attack, Hurt, Jump }
 	
-//	String[] soundTypes = new String[]
-//	{
-//		"Attack",
-//		"Hurt",
-//		"Jump"
-//	};
+	protected String currentMap;
 	
 	//  Animations 
 	
@@ -36,10 +32,10 @@ public class Player extends Unit
 	// Animation actions, these are enums similar to the GameState, we use them to determine the index of the sprite animation
 	
 	// Constructor
-	public Player(TileMap tileMap, String name, double spawnX, double spawnY, MainMap mainMap)
+	public Player(String name, TileMap tileMap)
 	{
 		super(
-				tileMap,  															// TileMap
+				tileMap,															// TileMap
 				72, 	 															// Width
 				120, 	 															// Height
 				50, 	 															// Collision width
@@ -90,9 +86,9 @@ public class Player extends Unit
 				false,
 				false,
 				name,
-				spawnX,
-				spawnY,
-				mainMap
+				0,
+				0,
+				null
 				
 				);
 		System.out.println("Running player");
@@ -114,6 +110,12 @@ public class Player extends Unit
 			numberofSounds[i] = tempInt;
 		}
 	}
+	
+	public String getCurrentMap() { return currentMap; }
+	public void setCurrentMap(String newMap) { currentMap = newMap; }
+	
+	public boolean getLoaded() { return loaded; }
+	public void setLoaded(boolean loaded) { this.loaded = loaded; }
 	
 	public HUD getHUD() { return hud; }
 	
@@ -142,6 +144,7 @@ public class Player extends Unit
 	
 	public void playCastSound()
 	{
+		System.out.println("Playing cast sound");
 		Random random = new Random();
 		
 		int max = numberofSounds[0];
@@ -149,6 +152,7 @@ public class Player extends Unit
 		
 		int myRandom = random.nextInt((max - min) + 1) + min;
 		JukeBox.play("Female01" + soundTypes.Attack + "0" + myRandom);
+		System.out.println("Did it play?");
 	}
 	
 	public void playPunchSound()

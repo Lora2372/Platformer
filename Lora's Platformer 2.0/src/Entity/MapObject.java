@@ -84,6 +84,15 @@ public abstract class MapObject
 	// Constructor
 	public MapObject(TileMap tileMap)
 	{
+		if(tileMap == null) return;
+		this.tileMap = tileMap;
+		tileSize = tileMap.getTileSize();
+		animation = new Animation();
+		setPosition(locationX, locationY);
+	}
+	
+	public void setTileMap(TileMap tileMap)
+	{
 		this.tileMap = tileMap;
 		tileSize = tileMap.getTileSize();
 		animation = new Animation();

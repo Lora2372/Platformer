@@ -5,8 +5,11 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.JOptionPane;
 
+import Entity.Player.*;
 import Main.GamePanel;
+import Main.JSONReader;
 import TileMap.Background;
+import TileMap.TileMap;
 
 public class MenuState extends GameState
 {
@@ -16,7 +19,8 @@ public class MenuState extends GameState
 	
 	private String[] options =
 		{
-			"Start",
+			"New Game",
+			"Load Game",
 			"Help",
 			"Quit"
 		};
@@ -29,11 +33,17 @@ public class MenuState extends GameState
 	
 	private Font font;
 	
+	protected Player player;
+	protected TileMap tileMap;
 	
 	public MenuState(GameStateManager gameStateManager)
 	{
 		this.gameStateManager = gameStateManager;
+		tileMap = new TileMap(60);
+		player = new Player("Lora", tileMap);
 		
+		gameStateManager.setPlayer(player);
+		gameStateManager.setTileMap(tileMap);
 		try
 		{
 //			backGround = new Background("/Backgrounds/menubg.gif", 1);
@@ -118,10 +128,36 @@ public class MenuState extends GameState
 	{
 		if(currentChoice == 0)
 		{
-			// Start
+			// New Game
 			gameStateManager.setState(GameStateManager.LorasCavern);
+
+
 		}
-		if(currentChoice == 1)
+		else if(currentChoice == 1)
+		{
+			// Load Game
+			
+			gameStateManager.setState(GameStateManager.LorasCavern);
+			if(JSONReader.load(player))
+			{
+				player.setLoaded(true);
+				String currentMap = player.getCurrentMap();
+				if(currentMap.equals("LorasCavern"))
+					gameStateManager.setState(GameStateManager.LorasCavern);
+				else if(currentMap.equals("MysteriousDungeon"))
+					gameStateManager.setState(GameStateManager.MysteriousDungeon);
+				else if(currentMap.equals("DeepWoods"))
+					gameStateManager.setState(GameStateManager.DeepWoods);
+//				gameStateManager.setState(GameStateManager.);
+			}
+			else
+			{
+				System.out.println("Couldn't find it.");
+				gameStateManager.setState(GameStateManager.LorasCavern);
+				
+			}
+		}
+		if(currentChoice == 2)
 		{
 			// Help
 			String message = "Disclaimer, the following help section is still under construction to be vastly improved in the hopefully near future...\n"
@@ -147,7 +183,7 @@ public class MenuState extends GameState
 			JOptionPane.showMessageDialog(null, message);
 		}
 		
-		if(currentChoice == 2)
+		if(currentChoice == 3)
 		{
 			// Quit
 			System.exit(0);

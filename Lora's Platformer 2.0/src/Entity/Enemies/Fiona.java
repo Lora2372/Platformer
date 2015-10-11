@@ -43,14 +43,6 @@ public class Fiona extends Unit
 	
 	public enum soundTypes { Attack, Hurt, Jump, Chargeup}
 	
-//	String[] soundTypes = new String[]
-//	{
-//		"Attack",
-//		"Hurt",
-//		"Jump"
-//	};
-	
-	
 	protected MysteriousDungeon mysteriousDungeon;
 	
 	public Fiona(
@@ -433,7 +425,7 @@ public class Fiona extends Unit
 		}
 		
 
-		if( (electricBall == null || electricBall.getHit()) && directionX == 0 && directionY == 0)
+		if( !hidden &&((electricBall == null || electricBall.getHit()) && directionX == 0 && directionY == 0))
 		{
 			timer++;
 			if(timer > cooldown)
