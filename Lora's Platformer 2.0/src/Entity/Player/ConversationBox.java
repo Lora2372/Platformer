@@ -139,6 +139,12 @@ public class ConversationBox
 			tempIcon = sign.getPortrait();
 		}
 		
+		if(whoTalks[conversationTracker] == 4)
+		{
+			tempName = "Guide";
+			tempIcon = Content.PortraitLiadrin[0];
+		}
+		
 		graphics.setFont(new Font("Arial", Font.PLAIN, 14));
 		
 		if(whoTalks[conversationTracker] != 3)
@@ -152,6 +158,8 @@ public class ConversationBox
 			
 			graphics.drawString(tempName, (int)locationX + 21, (int)locationY + 25);	
 		}
+		
+
 
 		String[] newString = conversation[conversationTracker].split("\n");
 		
