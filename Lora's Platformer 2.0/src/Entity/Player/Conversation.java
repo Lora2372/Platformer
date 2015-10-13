@@ -29,12 +29,17 @@ public class Conversation
 	public static String[] tutorialWelcomeMessage = new String[]
 	{
 		"Greetings, and welcome to the tutorial!\nPlease press E.",
-		"Good! That's exactly how you progress a conversation,\nnow how about you try moving with the arrow keys?"
+		"Good! That's exactly how you progress a conversation!\n",
+		"During a conversation you are unable to move or act\n"
+		+ "you must therefor end a conversation before you can\n"
+		+ "start doing so.",
+		"This is the last frame until this dialog ends, when\n"
+		+ "it does, try moving around with the arrow keys."
 	};
 	
 	public static int[] tutorialWelcomeMessageWhoTalks = new int[]
 	{
-		4, 4
+		4, 4, 4, 4
 	};
 	
 	public static String[] tutorialMoveMessage = new String[]

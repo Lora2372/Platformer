@@ -6,7 +6,6 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import Audio.JukeBox;
-import Entity.Doodad.BlackSquare;
 import GameState.MainMap;
 import TileMap.TileMap;
 
