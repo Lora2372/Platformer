@@ -834,7 +834,6 @@ public class Unit extends MapObject
 				startDash = false;
 				endDash = true;
 				
-				System.out.println("Attempting to play sound");
 				try
 				{
 					playPunchSound();	
@@ -843,7 +842,6 @@ public class Unit extends MapObject
 				{
 					e.printStackTrace();
 				}
-				System.out.println("Did it play?");
 				
 				currentAction = animationState[7];
 				animation.setFrames(sprites.get(animationState[7]));

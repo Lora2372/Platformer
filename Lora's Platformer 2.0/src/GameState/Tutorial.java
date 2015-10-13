@@ -59,7 +59,9 @@ public class Tutorial extends MainMap
 			player.setPosition(player.getSpawnX(), player.getSpawnY());
 		}
 		player.setSpawning(true);
-				
+		
+		
+		
 		doneInitializing = true;
 	}
 	
@@ -78,8 +80,12 @@ public class Tutorial extends MainMap
 			}
 
 			if(!player.getFalling())
-				player.setSpawnPoint(player.getx() - 100, player.gety() - 50);
-				
+				if(player.getx() < 2500)
+					player.setSpawnPoint(1420, player.gety() - 50);
+				else
+					player.setSpawnPoint(4000, 320);
+					
+					
 			if(tutorialProgress == 0 && !player.getFalling())
 				if(!player.getInConversation())
 					player.getConversationBox().startConversation(player, null, null, 
@@ -87,6 +93,7 @@ public class Tutorial extends MainMap
 							Conversation.tutorialWelcomeMessageWhoTalks);
 			
 			if(tutorialProgress == 1)
+				if(player.getx() - 400 > 200 || player.getx() - 400 < -200)
 				if(player.getLeft() || player.getRight() && !player.getInConversation())
 					player.getConversationBox().startConversation(player, null, null, 
 							Conversation.tutorialMoveMessage, 

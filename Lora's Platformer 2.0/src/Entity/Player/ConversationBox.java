@@ -116,6 +116,7 @@ public class ConversationBox
 				null
 			);
 		
+		player.inControl(false);
 		
 		String tempName = "";
 		
