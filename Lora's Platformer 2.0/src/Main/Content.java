@@ -55,9 +55,7 @@ public class Content
 	public static BufferedImage[][] CaveEntrance			= load("/Art/Sprites/Doodads/CaveEntrance.png", 100, 96);
 	public static BufferedImage[][] Shrine					= load("/Art/Sprites/Doodads/Shrine.png", 146, 156);
 	public static BufferedImage[][] StatueSave				= load("/Art/Sprites/Doodads/StatueSave.png", 48, 100);
-	
-	public static BufferedImage[][] BlackSquare				= load("/Art/Sprites/Doodads/BlackSquare.png", 240, 240);
-	
+		
 	// Foreground
 	public static BufferedImage[][] GameOver				= load("/Art/HUD/Foregrounds/GameOver.png", 544, 416);
 	public static BufferedImage[][] ConversationGUI			= load("/Art/HUD/Foregrounds/Conversation GUI.png", 454, 138);

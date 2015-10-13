@@ -160,7 +160,6 @@ public class ConversationBox
 		}
 		
 
-
 		String[] newString = conversation[conversationTracker].split("\n");
 		
 			
