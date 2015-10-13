@@ -16,11 +16,12 @@ public class GameStateManager
 	private GameState[] gameStates;
 	private int currentState;
 	
-	public static final int NUMGAMESTATES = 4;
+	public static final int NUMGAMESTATES = 5;
 	public static final int MENUSTATE = 0;
-	public static final int LorasCavern = 1;
-	public static final int MysteriousDungeon = 2;
-	public static final int DeepWoods = 3;
+	public static final int TutorialState = 1;
+	public static final int LorasCavern = 2;
+	public static final int MysteriousDungeon = 3;
+	public static final int DeepWoods = 4;
 	
 	protected Player player;
 	protected TileMap tileMap;
@@ -44,10 +45,15 @@ public class GameStateManager
 	
 	private void loadState(int state) 
 	{
-		if(state == MENUSTATE)
-		{				
-			gameStates[state] = new MenuState(this);
+		if(state == TutorialState)
+		{
+			JukeBox.loop("Tutorial");
+			gameStates[state] = new Tutorial(this, tileMap, player);
+		}
+		else if(state == MENUSTATE)
+		{		
 			JukeBox.loop("Menu");
+			gameStates[state] = new MenuState(this);
 		}
 		else if(state == LorasCavern)
 		{
@@ -126,6 +132,7 @@ public class GameStateManager
 	
 	public void keyReleased(int k) 
 	{
-		gameStates[currentState].keyReleased(k);
+		if(gameStates[currentState] != null)
+			gameStates[currentState].keyReleased(k);
 	}	
 }

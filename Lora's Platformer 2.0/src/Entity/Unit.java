@@ -429,6 +429,15 @@ public class Unit extends MapObject
 	
 	public boolean getFalling() { return falling; }
 	public boolean getJumping() { return jumping; }
+	public boolean getLeft() { return left; }
+	public boolean getRight() { return right; }
+	public boolean getUp() { return up; }
+	public boolean getDown() { return down; }
+	public boolean getFireBallSmallDoneCasting() { return fireBallSmallDoneCasting; }
+	public boolean getFireBallLargeDoneCasting() { return fireBallLargeDoneCasting; }
+	public boolean getPunching() { return endPunch; }
+	public boolean getDashing() { return endDash; }
+
 	
 	public void setCastingSmallFireBall()
 	{
@@ -607,7 +616,7 @@ public class Unit extends MapObject
 	
 	public double getSpawnX() { return spawnX; }
 	public double getSpawnY() { return spawnY; }
-	
+		
 	public void hit(int damage)
 	{
 		if(dead) return;
@@ -905,7 +914,6 @@ public class Unit extends MapObject
 				FireBallSmall fireBall = new FireBallSmall(tileMap, mainMap, facingRight, up, down, aim, friendly, fireBallSmallDamage);
 				fireBall.setPosition(locationX, locationY - 20);
 				mainMap.addProjectile(fireBall);
-				System.out.println("Say what now?");
 				playCastSound();
 				
 				currentAction = animationState[9];

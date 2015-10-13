@@ -55,7 +55,7 @@ public class LorasCavern extends MainMap
 		else
 		{
 			player.setLoaded(false);
-			player.setPosition(player.getSpawnX(), player.getSpawnY());
+
 		}
 
 		player.setSpawning(true);

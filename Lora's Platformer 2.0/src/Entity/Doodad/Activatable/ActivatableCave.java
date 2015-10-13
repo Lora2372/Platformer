@@ -42,16 +42,11 @@ public class ActivatableCave extends Doodad
 	
 	public void interact(Player player)
 	{
-		if(gameStateManager.getState() == 1)
-		{
-			System.out.println("Loading MysteriousDungeon");
-			gameStateManager.setState(2);
-		}
-		else if(gameStateManager.getState() == 2)
-		{
-			System.out.println("Should be loading deep woods");
-			gameStateManager.setState(3);
-		}
+		if(gameStateManager.getState() == GameStateManager.LorasCavern)
+			gameStateManager.setState(GameStateManager.MysteriousDungeon);
+		
+		else if(gameStateManager.getState() == GameStateManager.MysteriousDungeon)
+			gameStateManager.setState(GameStateManager.DeepWoods);
 			
 	}
 	

@@ -47,12 +47,10 @@ public class JukeBox
 		{
 			e.printStackTrace();
 		}
-		System.out.println("added: " + n);
 	}
 	
 	public static boolean checkIfClipExists(String s)
 	{
-		System.out.println("clip s: " + s);
 		if(clips.get(s) != null)
 		{
 			return true;

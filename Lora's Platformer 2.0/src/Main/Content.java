@@ -68,6 +68,7 @@ public class Content
 	public static enum mapMusic 
 	{ 
 		Menu,
+		Tutorial,
 		LorasCavern,
 		MysteriousDungeon,
 		MysteriousBattle,
@@ -139,7 +140,8 @@ public class Content
 		JukeBox.load("/Sound/Music/MysteriousConversation.mp3", "MysteriousConversation");
 		JukeBox.load("/Sound/Music/MysteriousBattle.mp3", "MysteriousBattle");
 		JukeBox.load("/Sound/Music/DeepWoods.mp3", "DeepWoods");
-		
+		JukeBox.load("/Sound/Music/Tutorial.mp3", "Tutorial");
+				
 		JukeBox.load("/Sound/Music/GameOver.mp3",  "GameOver");
 		
 		// Doodad sound effect

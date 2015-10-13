@@ -101,7 +101,10 @@ public class ConversationBox
 		return conversationTracker;
 	}
 	
-
+	public int getConversationLength()
+	{
+		return conversation.length;
+	}
 	
 	public void draw(Graphics graphics)
 	{

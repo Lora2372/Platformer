@@ -91,7 +91,6 @@ public class Player extends Unit
 				null
 				
 				);
-		System.out.println("Running player");
 		player = true;
 		conversationbox = new ConversationBox(this);
 
@@ -144,7 +143,6 @@ public class Player extends Unit
 	
 	public void playCastSound()
 	{
-		System.out.println("Playing cast sound");
 		Random random = new Random();
 		
 		int max = numberofSounds[0];
@@ -152,7 +150,6 @@ public class Player extends Unit
 		
 		int myRandom = random.nextInt((max - min) + 1) + min;
 		JukeBox.play("Female01" + soundTypes.Attack + "0" + myRandom);
-		System.out.println("Did it play?");
 	}
 	
 	public void playPunchSound()

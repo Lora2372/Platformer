@@ -25,7 +25,8 @@ public class Conversation
 		0
 	};
 	
-	public Conversation()
+	
+	public static void loadConversation()
 	{
 
 	}

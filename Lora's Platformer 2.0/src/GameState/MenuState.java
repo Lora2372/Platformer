@@ -19,6 +19,7 @@ public class MenuState extends GameState
 	
 	private String[] options =
 		{
+			"Tutorial",
 			"New Game",
 			"Load Game",
 			"Help",
@@ -46,7 +47,6 @@ public class MenuState extends GameState
 		gameStateManager.setTileMap(tileMap);
 		try
 		{
-//			backGround = new Background("/Backgrounds/menubg.gif", 1);
 			backGround = new Background(getClass().getResource("/Art/Backgrounds/MenuBackground.gif"), 1);
 			backGround.setVector(0.3, 0);
 			
@@ -57,10 +57,6 @@ public class MenuState extends GameState
 					50);
 			
 			font = new Font("Arial", Font.PLAIN, 28);
-			
-			
-			
-			
 		}
 		catch(Exception e)
 		{
@@ -68,7 +64,6 @@ public class MenuState extends GameState
 		}
 		
 	}
-	
 	
 	public void initialize()
 	{
@@ -128,12 +123,16 @@ public class MenuState extends GameState
 	{
 		if(currentChoice == 0)
 		{
-			// New Game
-			gameStateManager.setState(GameStateManager.LorasCavern);
-
+			// Tutorial
+			gameStateManager.setState(GameStateManager.TutorialState);
 
 		}
 		else if(currentChoice == 1)
+		{
+			// New Game
+			gameStateManager.setState(GameStateManager.LorasCavern);
+		}
+		else if(currentChoice == 2)
 		{
 			// Load Game
 			
@@ -141,6 +140,9 @@ public class MenuState extends GameState
 			if(JSONReader.load(player))
 			{
 				player.setLoaded(true);
+				player.setPosition(player.getSpawnX(), player.getSpawnY());
+				player.setSpawnPoint(player.getSpawnX(), player.getSpawnY());
+				
 				String currentMap = player.getCurrentMap();
 				if(currentMap.equals("LorasCavern"))
 					gameStateManager.setState(GameStateManager.LorasCavern);
@@ -157,7 +159,7 @@ public class MenuState extends GameState
 				
 			}
 		}
-		if(currentChoice == 2)
+		if(currentChoice == 3)
 		{
 			// Help
 			String message = "Disclaimer, the following help section is still under construction to be vastly improved in the hopefully near future...\n"
@@ -183,7 +185,7 @@ public class MenuState extends GameState
 			JOptionPane.showMessageDialog(null, message);
 		}
 		
-		if(currentChoice == 3)
+		if(currentChoice == 4)
 		{
 			// Quit
 			System.exit(0);
