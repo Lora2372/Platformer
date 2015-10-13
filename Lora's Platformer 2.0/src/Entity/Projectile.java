@@ -1,7 +1,6 @@
 package Entity;
 
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -133,29 +132,13 @@ public class Projectile extends MapObject
 		collisionWidth = explosionRadius;
 		collisionHeight = explosionRadius;
 		
-		double x1 = locationX;
-		double x2 = locationX + collisionWidth;
-		double y1 = locationY;
-		double y2 = locationY + collisionHeight;
-		
-		
 		for(int i = 0; i < characterList.size(); i++)
 		{
 			Unit character = characterList.get(i);
 
-			double x3 = character.getx();
-			double x4 = x3 + character.collisionWidth;
-			
-			double y3 = character.gety();
-			double y4 = y3 + character.collisionHeight;
-
-
-			
 			if(character.getFriendly() != friendly)
-			{
-//				if(x3 < x2 && y3 < y2 && x1 < x4 && y1 < y4)
-//					character.hit(damage);
-			}
+				if(character.intersects(this))
+					character.hit(damage);
 		}
 		
 		JukeBox.play(explosionSound + "Impact");
