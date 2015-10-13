@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import Audio.JukeBox;
 import Entity.Enemies.Succubus;
 import Entity.Player.Player;
 import TileMap.Background;
@@ -29,7 +30,7 @@ public class Tutorial extends MainMap
 		try
 		{
 			tileMap.loadTiles(ImageIO.read(getClass().getResource("/Art/Tilesets/LorasTileset.png")));
-			tileMap.loadMap("/Maps/Tutorial.map");
+			tileMap.loadMap("/Maps/TutorialA.map");
 			tileMap.setPosition(0, 0);
 			
 			background = new Background(getClass().getResource("/Art/Backgrounds/DeepWoods01.png"), 0.1);
@@ -168,7 +169,7 @@ public class Tutorial extends MainMap
 			if(tutorialProgress == 11)
 				if(!player.getInConversation())
 				{
-					succubus = new Succubus(tileMap, false, false, false, false, false, "Rui", player.getx() + 500, player.gety(), this);
+					succubus = new Succubus(tileMap, false, false, false, false, false, "Rui", 3500, player.gety(), this);
 					enemies.add(succubus);
 					characterList.add(succubus);
 					
@@ -180,14 +181,32 @@ public class Tutorial extends MainMap
 				}
 			
 			if(tutorialProgress == 12)
-				if(succubus.isDead() && !player.getInConversation())
+				if(succubus.isDead())
+					if(!player.getInConversation())
 					player.getConversationBox().startConversation(player, null, null, new String[] {
-							"Good job!\n"
-							+ "That's the end of the tutorial for now, I'll expand on it later.",
-							"Bummer..."
-					}, new int[] { 3, 0 });
+							"Good job!",
+							"Did you hear that? It looks like the way forward jus opened up.\n"
+							+ "Why don't you enter the temple so see what awaits you inside?"
+					}, new int[] { 3, 3 });
+					else
+						if(player.getConversationBox().getConversationTracker() == 1)
+						{
+							JukeBox.play("Close");
+							tileMap.loadMap("/Maps/TutorialB.map");
+						}
+
+
 			if(tutorialProgress == 13)
-				gameStateManager.setState(GameStateManager.MENUSTATE);
+			{
+				if(!player.getInConversation() && player.getx() > 3800)
+					player.getConversationBox().startConversation(player, null, null, new String[] {
+							"This hole is much larger than the last one...",
+							"Yes, you would never be able to cross it with a normal jump.",
+							"Fortunately, you also know how to glide through the air,\n"
+							+ "whenever you are in the air, try holding down E to\n"
+							+ "start gliding!"
+					}, new int[] { 0, 3, 3, 3 });
+			}
 
 		}
 		catch(Exception e)
