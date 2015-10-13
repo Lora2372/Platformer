@@ -194,7 +194,7 @@ public class Conversation
 		"This hole is much larger than the last one...",
 		"Yes, you would never be able to cross it with a normal jump.",
 		"Fortunately, you also know how to glide through the air,\n"
-		+ "whenever you are in the air, try holding down E to\n"
+		+ "whenever you are in the air, try holding down R to\n"
 		+ "start gliding!"
 	};
 	
@@ -205,12 +205,13 @@ public class Conversation
 	
 	public static String[] tutorialHoleLargePassedMessage = new String[]
 	{
-		"Great work!"
+		"Great work!",
+		"This is sadly the end of the tutorial at the moment."
 	};
 	
 	public static int[] tutorialHoleLargePassedMessageWhoTalks = new int[]
 	{
-		4
+		4, 4
 	};
 
 	

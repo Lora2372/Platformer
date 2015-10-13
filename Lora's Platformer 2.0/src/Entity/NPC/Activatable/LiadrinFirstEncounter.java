@@ -138,7 +138,8 @@ public class LiadrinFirstEncounter extends Unit
 	{
 		this.player = player;
 		
-		if(!player.getConversationBox().inConversation())startConversation();
+		if(!player.getConversationBox().inConversation() && summoningEffect == null)
+			startConversation();
 //		else player.getConversationBox().progressConversation();
 		
 		if(player.getConversationBox().getConversationTracker() >= conversation.length)
@@ -149,7 +150,7 @@ public class LiadrinFirstEncounter extends Unit
 			
 			summoningEffect = new SummoningEffect(tileMap, locationX, locationY);
 			mainMap.addEffect(summoningEffect);
-			JukeBox.play("teleport");
+			JukeBox.play("Teleport");
 			
 		}
 	}

@@ -248,7 +248,7 @@ public class Fiona extends Unit
 					{
 						summoningEffect = new SummoningEffect(tileMap, locationX, locationY);
 						mainMap.addEffect(summoningEffect);
-						JukeBox.play("teleport");
+						JukeBox.play("Teleport");
 						player.getHUD().removeBoss();
 						player.getConversationBox().lockConversation(true);
 						conversationProgress = 1;

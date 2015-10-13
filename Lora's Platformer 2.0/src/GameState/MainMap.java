@@ -446,32 +446,23 @@ public class MainMap extends GameState
 	
 	public void interact()
 	{
-		if(player.getFalling() || player.getJumping())
+		if(player.getInConversation())
 		{
-			player.setGliding(true);
+			player.getConversationBox().progressConversation();
 		}
-		else
+		for(int i = 0; i < activatables.size(); i++)
 		{
-			if(player.getInConversation())
+			if(player.intersects(activatables.get(i)))
 			{
-				player.getConversationBox().progressConversation();
+				activatables.get(i).interact(player);
 			}
-			for(int i = 0; i < activatables.size(); i++)
+		}
+		
+		for(int i = 0; i < allies.size(); i++)
+		{
+			if(player.intersects(allies.get(i)) && allies.get(i).getActivatable())
 			{
-				if(player.intersects(activatables.get(i)))
-				{
-					activatables.get(i).interact(player);
-				}
-			}
-			
-			for(int i = 0; i < allies.size(); i++)
-			{
-				if(player.intersects(allies.get(i)) && allies.get(i).getActivatable())
-				{
-					
-					allies.get(i).interact(player);
-					
-				}
+				allies.get(i).interact(player);
 			}
 		}
 	}
@@ -539,6 +530,7 @@ public class MainMap extends GameState
 		if(k == KeyEvent.VK_UP) player.setUp(true);
 		if(k == KeyEvent.VK_SPACE) player.setJumping(true);
 		if(k == KeyEvent.VK_E) interact();
+		if(k == KeyEvent.VK_R)player.setGliding(true); 
 		
 		if(k == KeyEvent.VK_A) player.setCastingSmallFireBall();
 		if(k == KeyEvent.VK_S) player.setCastingLargeFireBall();
@@ -564,7 +556,7 @@ public class MainMap extends GameState
 		if(k == KeyEvent.VK_DOWN) player.setDown(false);
 		if(k == KeyEvent.VK_SPACE) player.setJumping(false);
 		if(k == KeyEvent.VK_UP) player.setUp(false);
-		if(k == KeyEvent.VK_E) player.setGliding(false);
+		if(k == KeyEvent.VK_R) player.setGliding(false);
 		
 		if(k == KeyEvent.VK_A) player.setCastingSmallFireBall();
 		if(k == KeyEvent.VK_S) player.setCastingLargeFireBall();

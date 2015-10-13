@@ -142,7 +142,7 @@ public class ConversationBox
 		
 		if(whoTalks[conversationTracker] == 4)
 		{
-			tempName = "Guide";
+			tempName = "Liadrin";
 			tempIcon = Content.PortraitLiadrin[0];
 		}
 		
