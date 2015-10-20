@@ -214,6 +214,18 @@ public class Conversation
 		4, 4
 	};
 
+	public static String[] mysteriousDungeonDirectionMessage = new String[]
+	{
+		"Up: Guarded treasure\n"
+		+ "Down: No treasure",
+		"Well, I guess I need to make a choice..."
+	};
+	
+	public static int[] mysteriousDungeonDirectionMessageWhoTalks = new int[]
+	{
+		2, 0
+	};
+
 	
 	
 	public static void loadConversation()

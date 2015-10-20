@@ -104,7 +104,7 @@ public class Content
 		{
 			JukeBox.load("/Sound/CharacterSounds/Fiona/Attack0" + i + ".mp3", "FionaAttack0" + i);
 		}
-		
+				
 		JukeBox.load("/Sound/CharacterSounds/Fiona/Chargeup01.mp3", "FionaChargeup01");
 		JukeBox.load("/Sound/CharacterSounds/Fiona/Chargeup02.mp3", "FionaChargeup02");
 		
@@ -114,6 +114,16 @@ public class Content
 		}
 
 
+		
+		for(int i = 1; i <= 4; i++)
+		{
+			JukeBox.load("/Sound/CharacterSounds/Succubus/Attack0" + i + ".mp3", "SuccubusAttack0" + i);
+		}
+
+		for(int i = 1; i <= 3; i++)
+		{
+			JukeBox.load("/Sound/CharacterSounds/Succubus/Hurt0" + i + ".mp3", "SuccubusHurt0" + i);
+		}
 		
 		// Projectile sound effects
 		JukeBox.load("/Sound/SpellEffects/FireBallLargeLaunch.mp3", "FireBallLargeLaunch");
@@ -216,7 +226,6 @@ public class Content
 									JukeBox.load(fileName, fileName.substring(end + 2, fileName.length() - 4));
 								else
 								{
-									System.out.println("It's happening!: " + fileName.substring(start + 1, end + 1) + fileName.substring(end + 2, fileName.length() -4));
 									JukeBox.load(fileName, fileName.substring(start + 1, end + 1) + fileName.substring(end + 2, fileName.length() - 4));
 								}			
 							}	

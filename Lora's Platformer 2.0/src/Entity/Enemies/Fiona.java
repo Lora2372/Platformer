@@ -32,7 +32,7 @@ public class Fiona extends Unit
 	
 	protected boolean isHit = false;
 
-	protected int[] numberofSounds;
+
 	
 	protected boolean defeated;
 	protected boolean used;
@@ -41,6 +41,7 @@ public class Fiona extends Unit
 	
 	protected Player player;
 	
+	protected int[] numberofSounds;
 	public enum soundTypes { Attack, Hurt, Jump, Chargeup}
 	
 	protected MysteriousDungeon mysteriousDungeon;

@@ -10,6 +10,7 @@ import Entity.Doodad.Doodad;
 import Entity.Doodad.Activatable.ActivatableCave;
 import Entity.Doodad.Activatable.ActivatableShrineMysteriousDungeon;
 import Entity.Enemies.Fiona;
+import Entity.Player.Conversation;
 import Entity.Player.Player;
 import TileMap.Background;
 import TileMap.GameOver;
@@ -58,16 +59,17 @@ public class MysteriousDungeon extends MainMap
 		
 		spawnTorch(109, 200);
 		
-		for(int i = 0; i < (3000 / (tileMap.getTileSize() * 10)); i++)
-		{
-			spawnTorch(109 + i * tileMap.getTileSize() * 10, 520);
-		}
 		
 		spawnTorch(3508, 410);
 		
 		spawnTorch(3928, 410);
 		
+		spawnStatueSave(250, 530);
+		
+		spawnChest(800, 630, "Common");
 
+		spawnSign(400, 575, Conversation.mysteriousDungeonDirectionMessage, Conversation.mysteriousDungeonDirectionMessageWhoTalks);
+		
 		player.setCurrentMap("MysteriousDungeon");
 
 		if(!player.getLoaded())
@@ -83,9 +85,9 @@ public class MysteriousDungeon extends MainMap
 		}
 		player.setSpawning(true);
 				
-		spawnSuccubus(1600, 480, false);
-		spawnSuccubus(2000, 120, false);
-		spawnSuccubus(3000, 480, false);
+		spawnSuccubus(937, 190, false);
+		spawnSuccubus(2320, 1030, false);
+		spawnSuccubus(2833, 550, false);
 		
 		spawnStatueSave(3045, 530);
 
@@ -95,7 +97,7 @@ public class MysteriousDungeon extends MainMap
 		characterList.add(fiona);
 		fiona.setHidden(true);
 		
-		activatableShrine = new ActivatableShrineMysteriousDungeon(tileMap, gameStatemanager, this, 3730, 510, fiona);
+		activatableShrine = new ActivatableShrineMysteriousDungeon(tileMap, gameStatemanager, this, 3730, 530, fiona);
 		activatables.add(activatableShrine);
 		stuff.add(activatableShrine);
 		

@@ -4,6 +4,7 @@ import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 
+import Entity.Doodad.SummoningEffect;
 import Main.GamePanel;
 import TileMap.TileMap;
 
@@ -20,6 +21,13 @@ public abstract class MapObject
 	
 	protected boolean rotaded;
 	protected double rotation;
+	
+	protected boolean flying;
+	protected boolean gliding;
+	protected boolean spawning;
+	protected boolean initializeSpawning;
+	protected SummoningEffect summoningEffect;
+	protected boolean inControl;
 	
 	// Position and vector
 	protected double locationX;
@@ -148,6 +156,104 @@ public abstract class MapObject
 		bottomRight = tileMap.getType(bottomTile, rightTile);		
 	}
 	
+	
+	protected void getNextPosition()
+	{
+		if(spawning) return;
+		// Movement
+		if(left && inControl)
+		{
+
+			directionX -= moveSpeed;
+			if(directionX < -maxSpeed)
+			{
+				directionX = -maxSpeed;
+			}
+		}
+		else if(right && inControl)
+		{
+
+			directionX += moveSpeed;
+			if(directionX > maxSpeed)
+			{
+				directionX = maxSpeed;
+			}
+		}
+		else
+		{
+			if(directionX > 0)
+			{
+				directionX -= stopSpeed;
+				if(directionX < 0)
+				{
+					directionX = 0;
+				}
+			}
+			else if(directionX < 0)
+			{
+				directionX += stopSpeed;
+				if(directionX > 0)
+				{
+					directionX = 0;
+				}
+			}
+		}
+		
+		// Cannot move while attacking
+		//Might implement this later
+		
+		if(flying)
+		{
+			if(down)
+			{
+				directionY += moveSpeed;
+				if(directionY > maxSpeed) directionY = maxSpeed; 
+			}
+			else if(up)
+			{
+				directionY -= moveSpeed;
+				if(directionY*-1 > maxSpeed) directionY = maxSpeed*-1;
+			}
+			
+			if(right)
+			{
+				directionX += moveSpeed;
+				if(directionX > maxSpeed) directionX = maxSpeed;
+			}
+			else if(left)
+			{
+				directionX -= moveSpeed;
+				if(directionX*-1 > maxSpeed) directionX = maxSpeed*-1;
+			}
+			
+		}
+		
+		
+		// Jumping
+		if(jumping && !falling && inControl && !flying)
+		{
+			// I'll leave the jump sound commented out until we find a better one.
+//			JukeBox.play("jump");
+			playJumpSound();
+			directionY = jumpStart;
+			falling = true;
+		}
+		
+		// Falling
+//		System.out.println("character name: " + getName() + ", falling: " + falling);
+		if( (falling || swimming) && !flying)
+		{
+			if(directionY > 0 && gliding) directionY += fallSpeed * 0.1;
+			else directionY += fallSpeed;
+		
+			if(directionY > 0) jumping = false;
+			if(directionY < 0 && !jumping) directionY += stopJumpSpeed;
+			
+			if(directionY > maxFallSpeed) directionY = maxFallSpeed;
+		}
+	}
+	
+	public void playJumpSound() { }
 	
 	public void checkTileMapCollision()
 	{

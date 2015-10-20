@@ -6,6 +6,7 @@ import java.util.Random;
 import TileMap.TileMap;
 import Audio.JukeBox;
 import Entity.Unit;
+import Entity.Enemies.Fiona.soundTypes;
 import GameState.MainMap;
 import Main.Content;
 
@@ -13,6 +14,9 @@ public class Succubus extends Unit
 {
 	protected int cooldown;
 	protected int timer;
+	
+	protected int[] numberofSounds;
+	public enum soundTypes { Attack, Hurt, Jump, Chargeup}
 	
 	public Succubus(
 			TileMap tileMap,
@@ -89,23 +93,64 @@ public class Succubus extends Unit
 		
 		
 		portrait = Content.PortraitLiadrin[0];
+		
+		
+		numberofSounds = new int[soundTypes.values().length];
+		
+		for(int i = 0; i < numberofSounds.length; i++)
+		{
+			int tempInt = 0;
+			while(JukeBox.checkIfClipExists("Succubus" + soundTypes.values()[i] + "0" + (tempInt + 1)))
+			{
+				tempInt++;
+			}
+			numberofSounds[i] = tempInt;
+		}
+		
 	}
 	
 	public void iAmHit()
 	{
-		JukeBox.play("FionaGrunt07");
+		try
+		{
+			Random random = new Random();
+			
+			int max = numberofSounds[1];
+			int min = 1;
+			
+			int myRandom = random.nextInt((max - min) + 1) + min;
+			JukeBox.play("Succubus" + soundTypes.Hurt + "0" + myRandom);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+
+
+		setStunned(2000);
+		
 	}
 	
 	public void playCastSound()
 	{
 		Random random = new Random();
-		int myRandom = random.nextInt((2 - 1) + 1) + 1;
-		JukeBox.play("FionaCast0" + myRandom);
+		
+		int max = numberofSounds[0];
+		int min = 1;
+		
+		int myRandom = random.nextInt((max - min) + 1) + min;
+		JukeBox.play("Succubus" + soundTypes.Attack + "0" + myRandom);
 	}
 	
 	public void playPunchSound()
 	{
-		JukeBox.play("FionaPunch01");
+		Random random = new Random();
+		
+		int max = numberofSounds[0];
+		int min = 1;
+		
+		int myRandom = random.nextInt((max - min) + 1) + min;
+		JukeBox.play("Succubus" + soundTypes.Attack + "0" + myRandom);
 	}
 	
 	public void updateAI(ArrayList<Unit> characterList)
