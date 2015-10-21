@@ -12,6 +12,11 @@ import javax.imageio.ImageIO;
 import Entity.Doodad.*;
 import Entity.Player.ConversationBox;
 import Entity.Player.Player;
+import Entity.Projectile.ArcaneBall;
+import Entity.Projectile.ElectricBall;
+import Entity.Projectile.FireBallLarge;
+import Entity.Projectile.FireBallSmall;
+import Entity.Projectile.Projectile;
 import GameState.MainMap;
 import Main.Content;
 import TileMap.TileMap;
@@ -1092,7 +1097,7 @@ public class Unit extends MapObject
 	
 	public void turnProjectile(Projectile projectile)
 	{
-		JukeBox.play(projectile.projectileType + "Active");
+		JukeBox.play(projectile.getProjectileType() + "Active");
 		
 		projectile.setFacing(!projectile.getFacing());
 		projectile.setDirection(projectile.getDirectionX() * - 1.05, projectile.getDirectionY() * -1.05);

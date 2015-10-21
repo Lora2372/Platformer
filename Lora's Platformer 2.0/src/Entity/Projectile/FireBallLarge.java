@@ -1,10 +1,10 @@
-package Entity;
+package Entity.Projectile;
 
 
 
 import java.awt.Graphics2D;
 
-import Entity.Doodad.FireBallLargeExplosion;
+import Entity.Explosion.FireBallLargeExplosion;
 import GameState.MainMap;
 import Main.Content;
 import TileMap.TileMap;
@@ -52,23 +52,24 @@ public class FireBallLarge extends Projectile
 		sprites = Content.FireBallLarge[0];
 	}
 	
-	public void explode(TileMap tilemap, double x, double y)
+	public void explode()
 	{
-		fireBallLargeExplosion = new FireBallLargeExplosion(tileMap, x, y);
+		fireBallLargeExplosion = new FireBallLargeExplosion(tileMap, mainMap, locationX, locationY, friendly);
+		mainMap.addExplosion(fireBallLargeExplosion);
 	}
 	
-	public void updateExplosion()
-	{
-		if(fireBallLargeExplosion != null)
-		{
-			fireBallLargeExplosion.animation.update();
-			if(fireBallLargeExplosion.animation.hasPlayedOnce())
-			{
-				fireBallLargeExplosion.removeMe();
-				remove = true;
-			}
-		}
-	}
+//	public void updateExplosion()
+//	{
+//		if(fireBallLargeExplosion != null)
+//		{
+//			fireBallLargeExplosion.animation.update();
+//			if(fireBallLargeExplosion.animation.hasPlayedOnce())
+//			{
+//				fireBallLargeExplosion.removeMe();
+//				remove = true;
+//			}
+//		}
+//	}
 	
 	public void drawExplosion(Graphics2D graphics)
 	{

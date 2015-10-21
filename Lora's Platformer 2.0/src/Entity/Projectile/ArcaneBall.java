@@ -1,15 +1,15 @@
-package Entity;
+package Entity.Projectile;
 
 import java.awt.Graphics2D;
 
-import Entity.Doodad.ElectricBallExplosion;
+import Entity.Explosion.ElectricBallExplosion;
 import GameState.MainMap;
 import Main.Content;
 import TileMap.TileMap;
 
 public class ArcaneBall extends Projectile
 {
-	protected ElectricBallExplosion electricballExplosion;
+	protected ElectricBallExplosion eletricBallExplosion;
 	
 	public ArcaneBall(
 			TileMap tileMap,
@@ -50,26 +50,27 @@ public class ArcaneBall extends Projectile
 		sprites = Content.ArcaneBall[0];
 	}
 	
-		public void explode(TileMap tilemap, double x, double y)
+		public void explode()
 		{
-			electricballExplosion = new ElectricBallExplosion(tileMap, x, y);
+			eletricBallExplosion = new ElectricBallExplosion(tileMap, mainMap, locationX, locationY, friendly);
+			mainMap.addExplosion(eletricBallExplosion);
 		}
 		
-		public void updateExplosion()
-		{
-			if(electricballExplosion != null)
-			{
-				electricballExplosion.animation.update();
-				if(electricballExplosion.animation.hasPlayedOnce())
-				{
-					electricballExplosion.removeMe();
-					remove = true;
-				}
-			}
-		}
+//		public void updateExplosion()
+//		{
+//			if(eletricBallExplosion != null)
+//			{
+//				eletricBallExplosion.animation.update();
+//				if(eletricBallExplosion.animation.hasPlayedOnce())
+//				{
+//					eletricBallExplosion.removeMe();
+//					remove = true;
+//				}
+//			}
+//		}
 		
 		public void drawExplosion(Graphics2D graphics)
 		{
-			electricballExplosion.draw(graphics);
+			eletricBallExplosion.draw(graphics);
 		}
 }

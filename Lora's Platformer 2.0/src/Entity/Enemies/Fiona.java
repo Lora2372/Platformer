@@ -8,11 +8,11 @@ import javax.imageio.ImageIO;
 
 import TileMap.TileMap;
 import Audio.JukeBox;
-import Entity.ArcaneBall;
 import Entity.Unit;
 import Entity.Doodad.SummoningEffect;
 import Entity.Player.Conversation;
 import Entity.Player.Player;
+import Entity.Projectile.ArcaneBall;
 import GameState.MysteriousDungeon;
 import Main.Content;
 

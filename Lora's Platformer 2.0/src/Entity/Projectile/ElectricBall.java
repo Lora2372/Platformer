@@ -1,8 +1,8 @@
-package Entity;
+package Entity.Projectile;
 
 import java.awt.Graphics2D;
 
-import Entity.Doodad.ElectricBallExplosion;
+import Entity.Explosion.ElectricBallExplosion;
 import GameState.MainMap;
 import Main.Content;
 import TileMap.TileMap;
@@ -50,23 +50,24 @@ public class ElectricBall extends Projectile
 		sprites = Content.ElectricBall[0];
 	}
 	
-		public void explode(TileMap tilemap, double x, double y)
-		{
-			electricBallExplosion = new ElectricBallExplosion(tileMap, x, y);
-		}
+	public void explode()
+	{
+		electricBallExplosion = new ElectricBallExplosion(tileMap, mainMap, locationX, locationY, friendly);
+		mainMap.addExplosion(electricBallExplosion);
+	}
 		
-		public void updateExplosion()
-		{
-			if(electricBallExplosion != null)
-			{
-				electricBallExplosion.animation.update();
-				if(electricBallExplosion.animation.hasPlayedOnce())
-				{
-					electricBallExplosion.removeMe();
-					remove = true;
-				}
-			}
-		}
+//		public void updateExplosion()
+//		{
+//			if(electricBallExplosion != null)
+//			{
+//				electricBallExplosion.animation.update();
+//				if(electricBallExplosion.animation.hasPlayedOnce())
+//				{
+//					electricBallExplosion.removeMe();
+//					remove = true;
+//				}
+//			}
+//		}
 		
 		public void drawExplosion(Graphics2D graphics)
 		{

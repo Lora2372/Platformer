@@ -8,9 +8,12 @@ import Main.GamePanel;
 import TileMap.*;
 import Entity.*;
 import Entity.Enemies.*;
+import Entity.Explosion.CartoonExplosion;
+import Entity.Explosion.Explosion;
 import Entity.Doodad.*;
 import Entity.Doodad.Activatable.*;
 import Entity.Player.*;
+import Entity.Projectile.Projectile;
 import Audio.JukeBox;
 
 import java.awt.event.KeyEvent;
@@ -30,6 +33,7 @@ public class MainMap extends GameState
 	protected ArrayList<Doodad> stuff;
 	protected ArrayList<Doodad> activatables;
 	protected ArrayList<Projectile> projectiles;
+	protected ArrayList<Explosion> explosions;
 	protected boolean doneInitializing;
 	
 	protected long soundTimer;
@@ -59,6 +63,7 @@ public class MainMap extends GameState
 		allies = new ArrayList<Unit>();
 		
 		projectiles = new ArrayList<Projectile>();
+		explosions = new ArrayList<Explosion>();
 		soundTimer = 0;
 		
 		if(tileMap == null)
@@ -146,9 +151,19 @@ public class MainMap extends GameState
 		projectiles.add(projectile);
 	}
 	
+	public void addExplosion(Explosion explosion)
+	{
+		explosions.add(explosion);
+	}
+	
 	public ArrayList<Projectile> getProjectiles()
 	{
 		return projectiles;
+	}
+	
+	public ArrayList<Explosion> getExplosions()
+	{
+		return explosions;
 	}
 	
 	public ArrayList<Unit> getCharacterList()
@@ -183,6 +198,19 @@ public class MainMap extends GameState
 			}
 		}
 		checkProjectiles();
+		
+		if(explosions != null)
+		{
+			for(int i = 0; i < explosions.size(); i++)
+			{
+				explosions.get(i).update(characterList);
+				if(explosions.get(i).shouldRemove())
+				{
+					explosions.remove(i);
+					i--;
+				}
+			}
+		}
 		
 		
 		if(characterList != null)
@@ -225,8 +253,8 @@ public class MainMap extends GameState
 								}
 							}
 						}
-						CartoonExplosion cartoonExplosion = new CartoonExplosion(tileMap, characterList.get(i).getx(), characterList.get(i).gety());
-						stuff.add(cartoonExplosion);
+						CartoonExplosion cartoonExplosion = new CartoonExplosion(tileMap, this, characterList.get(i).getx(), characterList.get(i).gety(), false);
+						explosions.add(cartoonExplosion);
 						
 						characterList.remove(i);
 						i--;
@@ -361,6 +389,11 @@ public class MainMap extends GameState
 		for(int i = 0; i < projectiles.size(); i++)
 		{
 			projectiles.get(i).draw(graphics);
+		}
+		
+		for(int i = 0; i < explosions.size(); i++)
+		{
+			explosions.get(i).draw(graphics);
 		}
 		
 		// Draw HUD		
