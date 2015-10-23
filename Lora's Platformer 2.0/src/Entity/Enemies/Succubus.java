@@ -2,11 +2,9 @@ package Entity.Enemies;
 
 import java.util.ArrayList;
 import java.util.Random;
-
 import TileMap.TileMap;
 import Audio.JukeBox;
 import Entity.Unit;
-import Entity.Enemies.Fiona.soundTypes;
 import GameState.MainMap;
 import Main.Content;
 

@@ -3,7 +3,6 @@ package Entity;
 import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
-
 import Entity.Doodad.SummoningEffect;
 import Main.GamePanel;
 import TileMap.TileMap;
@@ -127,15 +126,15 @@ public abstract class MapObject
 	}
 	
 	public boolean intersects(Rectangle rectangle)
-	{
+	{		
 		return getRectangle().intersects(rectangle);
 	}
 	
 	public Rectangle getRectangle()
 	{		
 		return new Rectangle(				
-				(int)locationX - collisionWidth,
-				(int)locationY - collisionHeight,
+				(int)locationX - collisionWidth / 2,
+				(int)locationY - collisionHeight / 2,
 				collisionWidth,
 				collisionHeight
 				);

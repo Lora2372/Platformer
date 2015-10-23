@@ -5,9 +5,7 @@ import java.io.File;
 import java.net.URL;
 import java.util.Enumeration;
 import java.util.jar.JarFile;
-
 import javax.imageio.ImageIO;
-
 import Audio.JukeBox;
 
 public class Content 
@@ -27,6 +25,7 @@ public class Content
 	public static BufferedImage[][] ElectricBall			= load("/Art/Sprites/Effects/ElectricBall.png", 60, 60);
 	public static BufferedImage[][] ElectricBallChargeUp	= load("/Art/Sprites/Effects/ElectricBallChargeUp.png", 60, 60);
 	public static BufferedImage[][] ArcaneBall				= load("/Art/Sprites/Effects/ArcaneBall.png", 96, 96);
+
 	
 	// Characters
 	public static BufferedImage[][] Slugger 				= load("/Art/Sprites/Characters/slugger.gif", 60, 60);
@@ -59,6 +58,7 @@ public class Content
 	// Foreground
 	public static BufferedImage[][] GameOver				= load("/Art/HUD/Foregrounds/GameOver.png", 544, 416);
 	public static BufferedImage[][] ConversationGUI			= load("/Art/HUD/Foregrounds/Conversation GUI.png", 454, 138);
+	public static BufferedImage[][] ConversationGUIEndConversation = load("/Art/HUD/Foregrounds/ConversationGUIEndConversation.png", 206, 35);
 	
 	// Portraits
 	public static BufferedImage[][] PortraitPlayer			=load("/Art/HUD/Portraits/PortraitPlayer.png", 94, 94);
@@ -164,9 +164,7 @@ public class Content
 	}
 	
 	public static void loadContent()
-	{				
-		
-		
+	{						
 		try
 		{
 			if(Content.class.getResource(Content.class.getSimpleName() + ".class").getFile().startsWith("/"))

@@ -18,6 +18,7 @@ public class ConversationBox
 	private String[] conversation;
 	private int[] whoTalks;
 	
+	protected BufferedImage[] endConversation;
 	
 	private int conversationTracker;
 	
@@ -31,9 +32,14 @@ public class ConversationBox
 	private boolean conversationLocked;
 	
 	
+	protected String endConversationString;
+
 	public ConversationBox(Player player)
 	{
 		sprites = Content.ConversationGUI[0];
+		endConversation = Content.ConversationGUIEndConversation[0];
+		
+		endConversationString = "End conversation";
 		
 		inConversation = false;
 		
@@ -144,7 +150,7 @@ public class ConversationBox
 		{
 			tempName = "Liadrin";
 			tempIcon = Content.PortraitLiadrin[0];
-		}
+		}	
 		
 		graphics.setFont(new Font("Arial", Font.PLAIN, 14));
 		
@@ -158,6 +164,28 @@ public class ConversationBox
 				);
 			
 			graphics.drawString(tempName, (int)locationX + 21, (int)locationY + 25);	
+		}
+			
+		
+		if(conversationTracker == conversation.length - 1)
+		{
+			int tempX = (int) locationX + 454;
+			int tempY = (int) locationY + 98;
+			
+			int stringLength = graphics.getFontMetrics().stringWidth(endConversationString);
+			
+			graphics.drawImage(
+					endConversation[0], 
+					tempX, 
+					tempY,
+					stringLength + 20,
+					35,
+					null);
+			
+
+			
+			graphics.drawString(endConversationString, tempX + 12, tempY + 20);
+			
 		}
 		
 

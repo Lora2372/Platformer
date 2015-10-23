@@ -123,35 +123,13 @@ public class Projectile extends MapObject
 	// Functions that figures out whether or not the fireball has hit something.
 	public void setHit()
 	{
-		ArrayList<Unit> characterList = mainMap.getCharacterList();
-		
 		if(hit) return;
 		hit = true;
 		
-		directionX = 0;
-		directionY = 0;
-				
-		collisionWidth = explosionRadius;
-		collisionHeight = explosionRadius;
-		
-		for(int i = 0; i < characterList.size(); i++)
-		{
-			Unit character = characterList.get(i);
-
-			if(character.getFriendly() != friendly)
-				if(character.intersects(this))
-					character.hit(damage);
-		}
-		
 		JukeBox.play(explosionSound + "Impact");
 		
-		height = explosionHeight;
-		width = explosionWidth;
-		
 		explode();
-		
-		directionX = 0;
-		directionY = 0;
+
 		remove = true;
 	}
 	

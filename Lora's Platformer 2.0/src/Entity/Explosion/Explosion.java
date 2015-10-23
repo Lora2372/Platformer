@@ -3,8 +3,6 @@ package Entity.Explosion;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-
-import Audio.JukeBox;
 import Entity.MapObject;
 import Entity.Unit;
 import GameState.MainMap;
@@ -12,6 +10,8 @@ import TileMap.TileMap;
 
 public class Explosion extends MapObject
 {
+	
+	protected ArrayList<Unit> unitsHit;
 	
 	protected boolean remove;
 	protected BufferedImage[] sprites;
@@ -53,13 +53,12 @@ public class Explosion extends MapObject
 		this.damage = damage;	
 		this.unkillable = true;
 		this.invulnerable = true;
-		this.untouchable = true;
+		this.untouchable = false;
 		this.locationX = locationX;
 		this.locationY = locationY;
 		this.facingRight = true;
-		
-		// Load sprites
-		
+
+		unitsHit = new ArrayList<Unit>();
 		
 		setExplosion();
 		animation.setFrames(sprites);		
@@ -74,28 +73,6 @@ public class Explosion extends MapObject
 	public void setFriendly(boolean b) { friendly = b;};
 	
 	
-	// Functions that figures out whether or not the fireball has hit something.
-	public void setHit()
-	{
-		ArrayList<Unit> characterList = mainMap.getCharacterList();
-		
-		
-		for(int i = 0; i < characterList.size(); i++)
-		{
-			Unit character = characterList.get(i);
-
-			if(character.getFriendly() != friendly)
-				if(character.intersects(this))
-					character.hit(damage);
-		}
-		
-		JukeBox.play(explosionType + "Impact");
-		
-		height = explosionHeight;
-		width = explosionWidth;
-		
-	}
-	
 	public boolean shouldRemove() 
 	{
 		return remove; 
@@ -106,11 +83,37 @@ public class Explosion extends MapObject
 		checkTileMapCollision();
 		setPosition(xtemp, ytemp);
 		
+		
+		System.out.println("collisionWidth: " + collisionWidth + "\ncollisionHeight: " + collisionHeight);
+		
+		for(int i = 0; i < characterList.size(); i++)
+		{
+			Unit character = characterList.get(i);
+			if(!unitsHit.contains(character))
+			{
+				unitsHit.add(character);
+				if(character.getFriendly() != friendly)
+					if(character.intersects(this))
+						character.hit(damage);
+			}
+		}
+		
+		
 		animation.update();
 		
 		if(animation.hasPlayedOnce())
 			remove = true;
 	}
+	
+	public boolean interescts(MapObject object)
+	{
+		
+		
+		
+		
+		return false;
+	}
+	
 	
 	public void draw(Graphics2D graphics)
 	{				
