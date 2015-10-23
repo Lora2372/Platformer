@@ -33,6 +33,9 @@ public class ConversationBox
 	
 	
 	protected String endConversationString;
+	
+	protected int conversationBoxWidth = 454;
+	protected int conversationBoxHeight = 138;
 
 	public ConversationBox(Player player)
 	{
@@ -188,16 +191,35 @@ public class ConversationBox
 			
 		}
 		
-
-		String[] newString = conversation[conversationTracker].split("\n");
+		String[] myString = conversation[conversationTracker].split(" ");
+		int tempX = 0;
+		int line = 0;
+		for(int i = 0; i < myString.length; i++)
+		{
+			int tempInt = graphics.getFontMetrics().stringWidth(myString[i]);
+			
+			
+			if( (tempX + tempInt > conversationBoxWidth -40) || myString[i].equals("\n"))
+			{
+				line++;
+				tempX = 0;
+				
+			}
+			graphics.drawString(myString[i], (int)locationX + 21 + tempX, (int)locationY + 70 + 20 * line);
+			
+			tempX += tempInt + 3;
+		}
+		
+		
+//		String[] newString = conversation[conversationTracker].split("\n");
 		
 			
 
-		for(int i = 0; i < newString.length; i++)
-		{
-			graphics.drawString(newString[i], (int)locationX + 21, (int)locationY + 70 + i*20);			
-		}
-		
+//		for(int i = 0; i < newString.length; i++)
+//		{
+//			graphics.drawString(newString[i], (int)locationX + 21, (int)locationY + 70 + i*20);			
+//		}
+//		
 		
 		
 

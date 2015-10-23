@@ -28,12 +28,12 @@ public class Conversation
 	
 	public static String[] tutorialWelcomeMessage = new String[]
 	{
-		"Greetings, and welcome to the tutorial!\nPlease press E.",
-		"Good! That's exactly how you progress a conversation!\n",
-		"During a conversation you are unable to move or act\n"
-		+ "you must therefor end a conversation before you can\n"
+		"Greetings, and welcome to the tutorial! Please press E.",
+		"Good! That's exactly how you progress a conversation! ",
+		"During a conversation you are unable to move or act "
+		+ "you must therefor end a conversation before you can "
 		+ "start doing so.",
-		"This is the last frame until this dialog ends, when\n"
+		"This is the last frame until this dialog ends, when "
 		+ "it does, try moving around with the arrow keys."
 	};
 	
@@ -54,7 +54,7 @@ public class Conversation
 	
 	public static String[] tutorialJumpMessage = new String[]
 	{
-		"Nice one!\nThose are the basic movements you can do.\n"
+		"Nice one! Those are the basic movements you can do. "
 		+ "Why don't you try exploring the map for a bit, see what we can find." 
 	};
 	
@@ -65,7 +65,7 @@ public class Conversation
 	
 	public static String[] tutorialHoleSmallMessage = new String[]
 	{
-		"Hold up, see that hole up ahead? Try jumping over it!\n",
+		"Hold up, see that hole up ahead? Try jumping over it! ",
 		"Shouldn't be too hard..."
 	};
 	
@@ -107,8 +107,8 @@ public class Conversation
 	
 	public static String[] tutorialFireBallLargeMessage = new String[]
 	{
-		"Excellent, that's a small fireball. See how the blue bar in the upper\n"
-				+ "left corner dropped a bit? That's your mana bar, all spells\n"
+		"Excellent, that's a small fireball. See how the blue bar in the upper "
+				+ "left corner dropped a bit? That's your mana bar, all spells "
 				+ "consume mana.",
 				"Don't worry though, it will regenerate back up automatically.",
 				"Hey, why don't you try holding the up arrow whilst pressing S?"
@@ -121,11 +121,11 @@ public class Conversation
 
 	public static String[] tutorialDashMessage = new String[]
 	{
-		"Nice one, not only did you cast a large fireball which is more\n"
+		"Nice one, not only did you cast a large fireball which is more "
 				+ "powerful, you also aimed it!", 
-				"You can do the same thing with the small fireball, and you can\n"
+				"You can do the same thing with the small fireball, and you can "
 				+ "even aim it downwards by holding down the down arrow.",
-				"Play around with it a bit if you want, when you feel ready to\n"
+				"Play around with it a bit if you want, when you feel ready to "
 				+ "proceed, press the D button."
 	};
 	
@@ -138,13 +138,13 @@ public class Conversation
 	
 	public static String[] tutorialPunchMessage = new String[]
 	{
-		"That's a dash attack, as you could see it will allow you to dash\n"
-				+ "forward, dealing damage to all enemies that you pass along the\n"
+		"That's a dash attack, as you could see it will allow you to dash "
+				+ "forward, dealing damage to all enemies that you pass along the "
 				+ "way!",
-				"You might also have noticed that the yellow bar decreased as you\n"
-				+ "used dash, that's the stamina bar, all your physical attacks\n"
+				"You might also have noticed that the yellow bar decreased as you "
+				+ "used dash, that's the stamina bar, all your physical attacks "
 				+ "drain your stamina.",
-				"Don't worry though, just as with your mana, your stamina will\n"
+				"Don't worry though, just as with your mana, your stamina will "
 				+ "regenerate automatically. For our final attack, try pressing F."
 	};
 	
@@ -156,8 +156,8 @@ public class Conversation
 
 	public static String[] tutorialPunchDoneMessage = new String[]
 	{
-		"Simple, isn't it?\n"
-				+ "The punch is quite useful if you get up close to your enemy to beat\n"
+		"Simple, isn't it? "
+				+ "The punch is quite useful if you get up close to your enemy to beat "
 				+ "the living shit out of them."
 	};
 	
@@ -168,7 +168,7 @@ public class Conversation
 	
 	public static String[] tutorialEnemySuccubusMessage = new String[]
 	{
-		"Watch out, it looks like an enemy has appeared right in front of you!\n"
+		"Watch out, it looks like an enemy has appeared right in front of you! "
 				+ "Try using the attacks you just learnt to defeat it!"
 	};
 	
@@ -180,7 +180,7 @@ public class Conversation
 	public static String[] tutorialTempleEnterMessage = new String[]
 	{
 		"Good job!",
-		"Did you hear that? It looks like the way forward jus opened up.\n"
+		"Did you hear that? It looks like the way forward just opened up. "
 		+ "Why don't you enter the temple so see what awaits you inside?"
 	};
 	
@@ -193,8 +193,8 @@ public class Conversation
 	{
 		"This hole is much larger than the last one...",
 		"Yes, you would never be able to cross it with a normal jump.",
-		"Fortunately, you also know how to glide through the air,\n"
-		+ "whenever you are in the air, try holding down R to\n"
+		"Fortunately, you also know how to glide through the air, "
+		+ "whenever you are in the air, try holding down R to "
 		+ "start gliding!"
 	};
 	
@@ -216,7 +216,7 @@ public class Conversation
 
 	public static String[] mysteriousDungeonDirectionMessage = new String[]
 	{
-		"Up: Guarded treasure\n"
+		"Up: Guarded treasure \n "
 		+ "Down: No treasure",
 		"Well, I guess I need to make a choice..."
 	};

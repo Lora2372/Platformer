@@ -127,7 +127,6 @@ public class Content
 		
 		// Projectile sound effects
 		JukeBox.load("/Sound/SpellEffects/FireBallLargeLaunch.mp3", "FireBallLargeLaunch");
-		System.out.println("Are you reading this?");	
 		JukeBox.load("/Sound/SpellEffects/FireBallSmallLaunch.mp3", "FireBallSmallLaunch");	
 		
 		JukeBox.load("/Sound/SpellEffects/EnergyBallChargeUp.mp3", "EnergyBallChargeUp");

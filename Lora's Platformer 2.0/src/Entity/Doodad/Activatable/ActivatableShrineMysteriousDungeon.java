@@ -33,15 +33,15 @@ public class ActivatableShrineMysteriousDungeon extends Doodad
 	protected String conversation[] = new String[]
 			{
 			"The Shrine glows faintly, there's something written on it.",
-			"Read what it says?\n- Yes\n- No",
+			"Read what it says? \n - Yes \n - No",
 			"...",
 			"...",
 			"Well look who I found, rummaging through my sanctum...",						// 1
 			"Liadrin?!",																	// 0
-			"Liadrin?\n"
-			+ "...\n"
-			+ "No that's not quite right, I'm Fiona.\n",									// 1		
-			"But enough about that, since you're here, \nthat can only mean one thing.",		// 1
+			"Liadrin? "
+			+ "... "
+			+ "No that's not quite right, I'm Fiona. ",									// 1		
+			"But enough about that, since you're here, that can only mean one thing.",		// 1
 			"...?",																			// 0
 			"Play ignorant if you wish, it shan't stop me!",								// 1
 			"Wait!..."																		// 0
