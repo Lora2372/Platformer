@@ -19,9 +19,6 @@ public class Projectile extends MapObject
 	
 	protected boolean friendly; 
 	
-	protected int explosionWidth;
-	protected int explosionHeight;
-	
 	protected String projectileType;
 	
 	protected int damage;
@@ -45,8 +42,6 @@ public class Projectile extends MapObject
 			boolean friendly,
 			int projectileWidth, 
 			int projectileHeight,
-			int explosionWidth,
-			int explosionHeight,
 			int collisionWidth,
 			int collisionHeight,
 			double moveSpeed,
@@ -65,8 +60,6 @@ public class Projectile extends MapObject
 		this.friendly = friendly;
 		this.width = projectileWidth;
 		this.height = projectileHeight;
-		this.explosionWidth = explosionWidth;
-		this.explosionHeight = explosionHeight;
 		this.collisionWidth = collisionWidth;
 		this.collisionHeight = collisionHeight;
 		this.moveSpeed = moveSpeed;
@@ -160,16 +153,6 @@ public class Projectile extends MapObject
 	public void explode()
 	{
 
-	}
-	
-	public void updateExplosion()
-	{
-		
-	}
-	
-	public void drawExplosion(Graphics2D graphics)
-	{
-		
 	}
 	
 	public void draw(Graphics2D graphics)

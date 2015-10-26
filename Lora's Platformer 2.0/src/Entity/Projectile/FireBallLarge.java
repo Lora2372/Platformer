@@ -1,9 +1,5 @@
 package Entity.Projectile;
 
-
-
-import java.awt.Graphics2D;
-
 import Entity.Explosion.FireBallLargeExplosion;
 import GameState.MainMap;
 import Main.Content;
@@ -35,8 +31,6 @@ public class FireBallLarge extends Projectile
 				friendly, 															// Whether the spell is friendly or hostile
 				60, 																// Projectile width
 				60, 																// Projectile height
-				240, 																// Explosion width
-				240, 																// Explosion height
 				40, 																// Collision width
 				40, 																// Collision height
 				5, 																	// Projectile speed
@@ -57,23 +51,4 @@ public class FireBallLarge extends Projectile
 		fireBallLargeExplosion = new FireBallLargeExplosion(tileMap, mainMap, locationX, locationY, friendly);
 		mainMap.addExplosion(fireBallLargeExplosion);
 	}
-	
-//	public void updateExplosion()
-//	{
-//		if(fireBallLargeExplosion != null)
-//		{
-//			fireBallLargeExplosion.animation.update();
-//			if(fireBallLargeExplosion.animation.hasPlayedOnce())
-//			{
-//				fireBallLargeExplosion.removeMe();
-//				remove = true;
-//			}
-//		}
-//	}
-	
-	public void drawExplosion(Graphics2D graphics)
-	{
-		fireBallLargeExplosion.draw(graphics);
-	}
-		
 }

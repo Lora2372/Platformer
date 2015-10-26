@@ -569,6 +569,8 @@ public class MainMap extends GameState
 		if(k == KeyEvent.VK_S) player.setCastingLargeFireBall();
 		if(k == KeyEvent.VK_F) player.setPunching();
 		if(k == KeyEvent.VK_D) player.setDashing(true);
+		
+		
 		if(k == KeyEvent.VK_V) player.setSexytime1();
 		if(k == KeyEvent.VK_B) player.setSexytime2();
 		

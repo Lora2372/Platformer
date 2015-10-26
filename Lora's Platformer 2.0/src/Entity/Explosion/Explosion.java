@@ -82,10 +82,7 @@ public class Explosion extends MapObject
 	{
 		checkTileMapCollision();
 		setPosition(xtemp, ytemp);
-		
-		
-		System.out.println("collisionWidth: " + collisionWidth + "\ncollisionHeight: " + collisionHeight);
-		
+			
 		for(int i = 0; i < characterList.size(); i++)
 		{
 			Unit character = characterList.get(i);

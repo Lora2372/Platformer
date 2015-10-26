@@ -12,14 +12,14 @@ public class Content
 {
 	// HEAT-O, EXPLOSION!!!!!1!
 	public static BufferedImage[][] CartoonExplosion 		= load("/Art/Sprites/Effects/CartoonExplosion.gif", 60, 60);
-	public static BufferedImage[][] FireBallLargeExplosion 	= load("/Art/Sprites/Effects/FireBallLargeExplosion.png", 240, 240);
-	public static BufferedImage[][] FireBallSmallExplosion 	= load("/Art/Sprites/Effects/FireBallSmallExplosion.png", 60, 60);
+	public static BufferedImage[][] FireBallLargeExplosion 	= load("/Art/Sprites/Effects/FireBallLargeExplosion.png", 512, 512);
+	public static BufferedImage[][] FireBallSmallExplosion 	= load("/Art/Sprites/Effects/FireBallLargeExplosion.png", 512, 512);
 	public static BufferedImage[][] ElectricBallExplosion 	= load("/Art/Sprites/Effects/ElectricBallExplosion.png", 180, 180);
 	
 	// Projectiles
 	public static BufferedImage[][] FireBallLarge 			= load("/Art/Sprites/Effects/FireBallLarge.png", 60, 60);
 	public static BufferedImage[][] FireBallMedium			= load("/Art/Sprites/Effects/FireBallMediumNew.png", 60, 60);
-	public static BufferedImage[][] FireBallSmall 			= load("/Art/Sprites/Effects/FireBallSmall.png", 45, 45);
+	public static BufferedImage[][] FireBallSmall 			= load("/Art/Sprites/Effects/FireBallSmall.png", 35, 35);
 	public static BufferedImage[][] FireBallSwirling 		= load("/Art/Sprites/Effects/FireBallSwirling.png", 60, 60);
 	public static BufferedImage[][] FireBallDouble 			= load("/Art/Sprites/Effects/FireBallDouble.png", 60, 60);
 	public static BufferedImage[][] ElectricBall			= load("/Art/Sprites/Effects/ElectricBall.png", 60, 60);

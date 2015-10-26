@@ -1,7 +1,5 @@
 package Entity.Projectile;
 
-import java.awt.Graphics2D;
-
 import Entity.Explosion.ElectricBallExplosion;
 import GameState.MainMap;
 import Main.Content;
@@ -33,8 +31,6 @@ public class ElectricBall extends Projectile
 				friendly, 															// Whether the spell is friendly or hostile
 				60, 																// Projectile width
 				60, 																// Projectile height
-				60, 																// Explosion width
-				60, 																// Explosion height
 				40, 																// Collision width
 				40, 																// Collision height
 				5, 																	// Projectile speed
@@ -55,22 +51,4 @@ public class ElectricBall extends Projectile
 		electricBallExplosion = new ElectricBallExplosion(tileMap, mainMap, locationX, locationY, friendly);
 		mainMap.addExplosion(electricBallExplosion);
 	}
-		
-//		public void updateExplosion()
-//		{
-//			if(electricBallExplosion != null)
-//			{
-//				electricBallExplosion.animation.update();
-//				if(electricBallExplosion.animation.hasPlayedOnce())
-//				{
-//					electricBallExplosion.removeMe();
-//					remove = true;
-//				}
-//			}
-//		}
-		
-		public void drawExplosion(Graphics2D graphics)
-		{
-			electricBallExplosion.draw(graphics);
-		}
 }

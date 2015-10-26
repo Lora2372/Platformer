@@ -418,6 +418,8 @@ public abstract class MapObject
 					op.filter(animation.getImage(), null),
 							(int)(locationX + mapPositionX - width / 2), 
 							(int)(locationY + mapPositionY - height / 2),
+							width,
+							height,
 							null
 							);
 			return;
@@ -442,7 +444,9 @@ public abstract class MapObject
 					animation.getImage(),
 					(int) (locationX + mapPositionX - width / 2),
 					(int) (locationY + mapPositionY - height / 2),
-							null
+					width,
+					height,
+					null
 					);
 		}
 	}

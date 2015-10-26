@@ -140,6 +140,13 @@ public class Unit extends MapObject
 	protected int dashRange;
 	protected int dashCost;
 	
+	// Magic Shield
+	protected boolean magicShieldCasting;
+	protected boolean magicShieldDoneCasting;
+	protected boolean magicShieldHolding;
+	
+	protected int magicShieldManaCost;
+	
 	//  Animations 
 	protected ArrayList<BufferedImage[]> sprites;
 	protected int[] numFrames;
@@ -433,13 +440,14 @@ public class Unit extends MapObject
 	public boolean getDown() { return down; }
 	public boolean getFireBallSmallDoneCasting() { return fireBallSmallDoneCasting; }
 	public boolean getFireBallLargeDoneCasting() { return fireBallLargeDoneCasting; }
+	public boolean getMagicShieldDoneCasting() { return magicShieldDoneCasting; }
 	public boolean getPunching() { return endPunch; }
 	public boolean getDashing() { return endDash; }
 
 	
 	public void setCastingSmallFireBall()
 	{
-		if(mana > fireBallSmallManaCost && inControl && !fireBallSmallHolding && inControl)
+		if(mana > fireBallSmallManaCost && inControl && !fireBallSmallHolding)
 		{
 			fireBallSmallCasting = true;
 			inControl = false;			
@@ -449,7 +457,7 @@ public class Unit extends MapObject
 	
 	public void setCastingLargeFireBall()
 	{
-		if(mana > fireBallLargeManaCost && inControl && !fireBallLargeHolding && inControl)
+		if(mana > fireBallLargeManaCost && inControl && !fireBallLargeHolding)
 		{
 			fireBallLargeCasting = true;
 			inControl = false;			
@@ -457,11 +465,21 @@ public class Unit extends MapObject
 	}
 	public void releaseLargeFireBall() { fireBallLargeHolding = false; }
 	
+	
+	public void setCastingMagicShield()
+	{
+		if(mana > magicShieldManaCost && inControl && !magicShieldHolding)
+		{
+			magicShieldCasting = true;
+			inControl = false;
+		}
+	}
+	
 	public boolean getEndPunch() { return endPunch; }
 	
 	public void setPunching()
 	{
-		if(stamina > punchCost && inControl && !holdingPunch && inControl)
+		if(stamina > punchCost && inControl && !holdingPunch)
 		{
 			startPunch = true;
 			inControl = false;
@@ -488,6 +506,8 @@ public class Unit extends MapObject
 	{
 		if(inControl) gliding = b;
 	}
+	
+	
 	
 	public void setSexytime1() { sexytime1 = true; }
 	public void setSexytime2() { sexytime2 = true; }
@@ -941,6 +961,50 @@ public class Unit extends MapObject
 				inControl = true;
 			}
 		}	
+		
+//		//********************************************************************************
+//		//*Large fireBall                                                                *
+//		//********************************************************************************	
+//		else if(magicShieldCasting)
+//		{
+//			if(currentAction != animationState[10])
+//			{
+//				currentAction = animationState[10];
+//				animation.setFrames(sprites.get(animationState[10]));
+//				animation.setDelay(animationDelay[10]);
+//				if(directionY == 0) directionX = 0;
+//				JukeBox.play("FireBallLargeLaunch");
+//			}
+//			if(animation.hasPlayedOnce())
+//			{
+//				mana -= magicShieldManaCost;
+//				magicShieldCasting = false;
+//				magicShieldDoneCasting = true;
+//				
+//				calculateAim(null);
+//				FireBallLarge fireBall = new FireBallLarge(tileMap, mainMap, facingRight, up, down, aim, friendly, magicShieldDamage);
+//				fireBall.setPosition(locationX, locationY);
+//				mainMap.addProjectile(fireBall);
+//				
+//				playCastSound();
+//				
+//				currentAction = animationState[11];
+//				animation.setFrames(sprites.get(animationState[11]));
+//				animation.setDelay(animationDelay[11]);
+//				
+//				
+//				// Create new fireBall stuff here
+//			}
+//		}
+//		
+//		else if(currentAction == animationState[11] && magicShieldDoneCasting)
+//		{
+//			if (animation.hasPlayedOnce()) 
+//			{
+//				magicShieldDoneCasting = false;
+//				inControl = true;
+//			}
+//		}
 		
 		//********************************************************************************
 		//*Gliding                                                                       *
