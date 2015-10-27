@@ -56,6 +56,7 @@ public class PauseState extends GameState
 	
 	public void update()
 	{
+		System.out.println("updating pause");
 		background.update();
 	}
 	

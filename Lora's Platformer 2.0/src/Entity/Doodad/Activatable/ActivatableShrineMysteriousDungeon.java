@@ -10,7 +10,7 @@ import Entity.Doodad.Doodad;
 import Entity.Enemies.Fiona;
 import Entity.Player.Player;
 import GameState.GameStateManager;
-import GameState.MysteriousDungeon;
+import GameState.Maps.MysteriousDungeon;
 import Main.Content;
 
 public class ActivatableShrineMysteriousDungeon extends Doodad

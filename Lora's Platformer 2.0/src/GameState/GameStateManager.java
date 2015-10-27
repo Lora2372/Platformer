@@ -2,6 +2,11 @@ package GameState;
 
 import Audio.JukeBox;
 import Entity.Player.Player;
+import GameState.Inventory.InventoryState;
+import GameState.Maps.DeepWoods;
+import GameState.Maps.LorasCavern;
+import GameState.Maps.MysteriousDungeon;
+import GameState.Maps.Tutorial;
 import Main.Content;
 import TileMap.TileMap;
 
@@ -9,8 +14,10 @@ public class GameStateManager
 {
 	protected PauseState pausestate;
 	protected HelpState helpstate;
+	protected InventoryState inventorystate;
 	
 	protected boolean paused;
+	protected boolean browsingInventory;
 	protected boolean options;
 	
 	private GameState[] gameStates;
@@ -30,6 +37,7 @@ public class GameStateManager
 	{
 		pausestate = new PauseState(this);
 		helpstate = new HelpState(this);
+		inventorystate = new InventoryState(this);
 		
 		gameStates = new GameState[NUMGAMESTATES];
 		
@@ -40,7 +48,10 @@ public class GameStateManager
 	public void setPlayer(Player player) { this.player = player; }
 	public void setTileMap(TileMap tileMap) { this.tileMap = tileMap; }
 	
-	public void pause(boolean b) { paused = b; } 
+	public void browsingInventory(boolean b) { browsingInventory = b; }
+	public boolean getBrowsingInventory() { return browsingInventory; }
+	public void pause(boolean b) { paused = b; }
+	public boolean getPaused() { return paused; }
 	public void options(boolean b) { options = b; }
 	
 	private void loadState(int state) 
@@ -95,7 +106,10 @@ public class GameStateManager
 		try {
 			if(paused)
 			{
-				pausestate.update();
+				if(browsingInventory)
+					inventorystate.update();
+				else
+					pausestate.update();
 				
 				if(options){ helpstate.update(); }
 				return;
@@ -110,7 +124,11 @@ public class GameStateManager
 		{
 			if(paused)
 			{
-				pausestate.draw(graphics);
+				if(browsingInventory)
+					inventorystate.draw(graphics);
+				else				
+					pausestate.draw(graphics);
+				
 				if(options) helpstate.draw(graphics);
 				return;
 			}
@@ -122,8 +140,13 @@ public class GameStateManager
 	{
 		if(paused)
 		{
-			if(!options)pausestate.keyPressed(k);
-			else helpstate.keyPressed(k);
+			if(browsingInventory)
+				inventorystate.keyPressed(k);
+			else 
+			if
+				(!options)pausestate.keyPressed(k);
+			else 
+				helpstate.keyPressed(k);
 			
 			return;		
 		}

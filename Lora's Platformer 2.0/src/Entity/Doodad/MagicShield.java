@@ -16,20 +16,20 @@ public class MagicShield extends Doodad
 				tileMap, 
 				spawnX, 
 				spawnY, 
-				60, 
-				60,
-				0,
-				0,
-				true, 
+				192, 
+				192,
+				192,
+				192,
+				false, 
 				true, 
 				true,
 				false,
 				false,
-				"ElectricballChargeUp"
+				"MagicShield"
 				);
 	}
 	public void setDoodad(int currentAction)
 	{
-		sprites = Content.ElectricBallChargeUp[0];
+		sprites = Content.MagicShield[0];
 	}
 }

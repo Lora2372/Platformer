@@ -1,4 +1,4 @@
-package GameState;
+package GameState.Maps;
 
 import java.io.IOException;
 
@@ -8,6 +8,8 @@ import Audio.JukeBox;
 import Entity.Enemies.Succubus;
 import Entity.Player.Conversation;
 import Entity.Player.Player;
+import GameState.GameStateManager;
+import GameState.MainMap;
 import TileMap.Background;
 import TileMap.GameOver;
 import TileMap.TileMap;

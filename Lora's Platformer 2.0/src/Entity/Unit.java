@@ -2,13 +2,8 @@ package Entity;
 
 import java.util.ArrayList;
 import java.util.Random;
-
 import Audio.JukeBox;
-
 import javax.imageio.ImageIO;
-
-
-
 import Entity.Doodad.*;
 import Entity.Player.ConversationBox;
 import Entity.Player.Player;
@@ -20,7 +15,6 @@ import Entity.Projectile.Projectile;
 import GameState.MainMap;
 import Main.Content;
 import TileMap.TileMap;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -293,9 +287,7 @@ public class Unit extends MapObject
 		this.spawnX = spawnX;
 		this.spawnY = spawnY;
 		this.mainMap = mainMap;
-		
-		if(name == "Lora") System.out.println("Running character");
-		
+				
 		healthCounter = 0;
 		manaCounter = 0;
 		staminaCounter = 0;
@@ -545,8 +537,6 @@ public class Unit extends MapObject
 		if( health < 0)health = 0;
 		if(health == 0 && !unkillable)
 		{
-			System.out.println(name + " has died.");
-			System.out.println("Unkillable: " + unkillable);
 			dead = true;
 		}
 		iAmHit();
@@ -570,9 +560,7 @@ public class Unit extends MapObject
 		getNextPosition();
 		checkTileMapCollision();
 		setPosition(xtemp, ytemp);
-		
-//		System.out.println(name + "'s health: " + health);
-		
+				
 		if(initializeSpawning)
 		{
 			summoningEffect = new SummoningEffect(tileMap, locationX, locationY);
@@ -595,7 +583,6 @@ public class Unit extends MapObject
 		
 		if(locationX > tileMap.getWidth() || locationX < 0 || locationY > tileMap.getHeight())
 		{
-			System.out.println("spawnX: " + spawnX + ", spawnY: " + spawnY);
 			setPosition(spawnX, spawnY);
 			initializeSpawning = true;
 			directionX = 0;
@@ -887,12 +874,9 @@ public class Unit extends MapObject
 					}
 					else
 					{
-						System.out.println("No enemy found..");
 						return;
 					}
 				}
-				
-				
 				
 				
 				electricBall = new ElectricBall(tileMap, mainMap, facingRight, up, down, aim, friendly, electricBallDamage);
@@ -947,9 +931,6 @@ public class Unit extends MapObject
 				currentAction = animationState[11];
 				animation.setFrames(sprites.get(animationState[11]));
 				animation.setDelay(animationDelay[11]);
-				
-				
-				// Create new fireBall stuff here
 			}
 		}
 		
@@ -962,49 +943,44 @@ public class Unit extends MapObject
 			}
 		}	
 		
-//		//********************************************************************************
-//		//*Large fireBall                                                                *
-//		//********************************************************************************	
-//		else if(magicShieldCasting)
-//		{
-//			if(currentAction != animationState[10])
-//			{
-//				currentAction = animationState[10];
-//				animation.setFrames(sprites.get(animationState[10]));
-//				animation.setDelay(animationDelay[10]);
-//				if(directionY == 0) directionX = 0;
-//				JukeBox.play("FireBallLargeLaunch");
-//			}
-//			if(animation.hasPlayedOnce())
-//			{
-//				mana -= magicShieldManaCost;
-//				magicShieldCasting = false;
-//				magicShieldDoneCasting = true;
-//				
-//				calculateAim(null);
-//				FireBallLarge fireBall = new FireBallLarge(tileMap, mainMap, facingRight, up, down, aim, friendly, magicShieldDamage);
-//				fireBall.setPosition(locationX, locationY);
-//				mainMap.addProjectile(fireBall);
-//				
-//				playCastSound();
-//				
-//				currentAction = animationState[11];
-//				animation.setFrames(sprites.get(animationState[11]));
-//				animation.setDelay(animationDelay[11]);
-//				
-//				
-//				// Create new fireBall stuff here
-//			}
-//		}
-//		
-//		else if(currentAction == animationState[11] && magicShieldDoneCasting)
-//		{
-//			if (animation.hasPlayedOnce()) 
-//			{
-//				magicShieldDoneCasting = false;
-//				inControl = true;
-//			}
-//		}
+		//********************************************************************************
+		//*Magic Shield                                                                  *
+		//********************************************************************************	
+		else if(magicShieldCasting)
+		{
+			if(currentAction != animationState[10])
+			{
+				currentAction = animationState[10];
+				animation.setFrames(sprites.get(animationState[10]));
+				animation.setDelay(animationDelay[10]);
+				if(directionY == 0) directionX = 0;
+				JukeBox.play("FireBallLargeLaunch");
+			}
+			if(animation.hasPlayedOnce())
+			{
+				mana -= magicShieldManaCost;
+				magicShieldCasting = false;
+				magicShieldDoneCasting = true;
+				
+				MagicShield magicShield = new MagicShield(tileMap, locationX, locationY);
+				mainMap.addEffect(magicShield);
+				
+				playCastSound();
+				
+				currentAction = animationState[11];
+				animation.setFrames(sprites.get(animationState[11]));
+				animation.setDelay(animationDelay[11]);
+			}
+		}
+		
+		else if(currentAction == animationState[11] && magicShieldDoneCasting)
+		{
+			if (animation.hasPlayedOnce()) 
+			{
+				magicShieldDoneCasting = false;
+				inControl = true;
+			}
+		}
 		
 		//********************************************************************************
 		//*Gliding                                                                       *
@@ -1113,8 +1089,6 @@ public class Unit extends MapObject
 		animation.setDelay(stunDuration);
 	}
 	
-//	public ArrayList<Projectile> detectProjectiles
-	
 	public ArrayList<Unit> detectEnemy(ArrayList<Unit> characterList, boolean onlyInFrontOfYou)
 	{
 		ArrayList<Unit> enemiesDetected = new ArrayList<Unit>();
@@ -1153,20 +1127,12 @@ public class Unit extends MapObject
 					}
 				}
 			}
-			
 		}
 		
 		return enemiesDetected;
 	}
 	
-	public void turnProjectile(Projectile projectile)
-	{
-		JukeBox.play(projectile.getProjectileType() + "Active");
-		
-		projectile.setFacing(!projectile.getFacing());
-		projectile.setDirection(projectile.getDirectionX() * - 1.05, projectile.getDirectionY() * -1.05);
-		projectile.setFriendly(!projectile.getFriendly());
-	}
+
 	
 	public void checkProjectile(Projectile projectile)
 	{
@@ -1182,7 +1148,7 @@ public class Unit extends MapObject
 						projectile.gety() < locationY + height / 2
 				)
 				{
-					turnProjectile(projectile);
+					projectile.bounce();
 				}
 			}
 			else
@@ -1195,7 +1161,7 @@ public class Unit extends MapObject
 						projectile.gety() < locationY + height / 2
 				)
 				{
-					turnProjectile(projectile);
+					projectile.bounce();
 				}
 			}
 		}
@@ -1224,11 +1190,9 @@ public class Unit extends MapObject
 						if(random2 < 70)
 						{
 							startPunch = true;
-							turnProjectile(projectile);
+							projectile.bounce();
 						}
 					}
-
-
 				}
 			}
 			else
@@ -1250,7 +1214,7 @@ public class Unit extends MapObject
 						if(random2 < 70)
 						{
 							startPunch = true;
-							turnProjectile(projectile);
+							projectile.bounce();
 						}
 					}
 				}
@@ -1341,13 +1305,8 @@ public class Unit extends MapObject
 					}
 				}
 			}
-			
-
-			
 		} // End for loop		
 	}
-	
-	
 	
 	public void draw(Graphics2D graphics)
 	{
@@ -1374,6 +1333,5 @@ public class Unit extends MapObject
 				conversationbox.draw(graphics);
 			}
 		}
-
 	}
 }

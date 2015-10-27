@@ -13,7 +13,7 @@ import Entity.Doodad.SummoningEffect;
 import Entity.Player.Conversation;
 import Entity.Player.Player;
 import Entity.Projectile.ArcaneBall;
-import GameState.MysteriousDungeon;
+import GameState.Maps.MysteriousDungeon;
 import Main.Content;
 
 public class Fiona extends Unit
@@ -221,7 +221,6 @@ public class Fiona extends Unit
 		JukeBox.stop("MysteriousBattle");
 		JukeBox.loop("MysteriousConversation");
 		used = true;
-		System.out.println("Engaging conversation");
 		player.getConversationBox().startConversation(player, this, null, Conversation.fionaDefeated, Conversation.fionaDefeatedWhoTalks);
 	}
 	
@@ -414,7 +413,6 @@ public class Fiona extends Unit
 			{
 				castArcaneBall();
 				
-				System.out.println("Unstable mode, disabled..");
 				arcaneBallMode = false;
 				arcaneBallMoving = 0;
 				right = false;
@@ -439,7 +437,6 @@ public class Fiona extends Unit
 					this.setStunned(1000);
 					
 					arcaneBallMode = true;
-					System.out.println("Unstable mode engaged.");
 					return;
 				}
 				

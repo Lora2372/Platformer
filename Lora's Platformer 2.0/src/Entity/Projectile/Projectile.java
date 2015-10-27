@@ -25,9 +25,7 @@ public class Projectile extends MapObject
 	protected int manacost;
 	
 	protected int explosionRadius;
-	
-	protected String explosionSound;
-	
+		
 	protected double aim;
 	
 	protected MainMap mainMap;
@@ -48,7 +46,7 @@ public class Projectile extends MapObject
 			int damage,
 			int manacost,
 			int explosionRadius,
-			String explosionSound
+			String projectileType
 			) 
 	{
 		super(tileMap);
@@ -64,7 +62,7 @@ public class Projectile extends MapObject
 		this.collisionHeight = collisionHeight;
 		this.moveSpeed = moveSpeed;
 		this.explosionRadius = explosionRadius;
-		this.explosionSound = explosionSound;
+		this.projectileType = projectileType;
 		this.damage = damage;
 		this.manacost = manacost;
 		this.aim = aim;
@@ -119,11 +117,20 @@ public class Projectile extends MapObject
 		if(hit) return;
 		hit = true;
 		
-		JukeBox.play(explosionSound + "Impact");
+		JukeBox.play(projectileType + "Impact");
 		
 		explode();
 
 		remove = true;
+	}
+	
+	public void bounce()
+	{
+		JukeBox.play(projectileType + "Active");
+		
+		setFacing(!facingRight);
+		setDirection(directionX * - 1.05, directionY * -1.05);
+		setFriendly(!friendly);
 	}
 	
 	public boolean shouldRemove() 

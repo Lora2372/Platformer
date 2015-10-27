@@ -132,6 +132,18 @@ public class MainMap extends GameState
 				}
 			}
 			
+			for(int i = 0; i < stuff.size(); i++)
+			{
+				Doodad thing = stuff.get(i);
+				if(thing.getDoodadType().equals("MagicShield"))
+				{
+					if(projectiles.get(j).intersects(thing))
+					{
+						projectiles.get(j).bounce();
+					}
+				}
+			}
+			
 		}
 	}
 	
@@ -552,7 +564,14 @@ public class MainMap extends GameState
 	{
 		if(k == KeyEvent.VK_ESCAPE) 
 		{
-			gameStateManager.paused = !gameStateManager.paused;			
+			gameStateManager.paused = !gameStateManager.getPaused();
+			gameStateManager.browsingInventory(false);
+		}
+		
+		if(k == KeyEvent.VK_B)
+		{
+			gameStateManager.browsingInventory = !gameStateManager.getBrowsingInventory();
+			gameStateManager.pause(gameStateManager.getBrowsingInventory());
 		}
 		
 		if(gameStateManager.paused) return;
@@ -569,10 +588,8 @@ public class MainMap extends GameState
 		if(k == KeyEvent.VK_S) player.setCastingLargeFireBall();
 		if(k == KeyEvent.VK_F) player.setPunching();
 		if(k == KeyEvent.VK_D) player.setDashing(true);
+		if(k == KeyEvent.VK_G) player.setCastingMagicShield();
 		
-		
-		if(k == KeyEvent.VK_V) player.setSexytime1();
-		if(k == KeyEvent.VK_B) player.setSexytime2();
 		
 		if( k == KeyEvent.VK_M)player.setPosition(player.getx() + 200, player.gety()); 
 

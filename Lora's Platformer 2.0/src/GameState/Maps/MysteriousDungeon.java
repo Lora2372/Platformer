@@ -1,4 +1,4 @@
-package GameState;
+package GameState.Maps;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,6 +12,8 @@ import Entity.Doodad.Activatable.ActivatableShrineMysteriousDungeon;
 import Entity.Enemies.Fiona;
 import Entity.Player.Conversation;
 import Entity.Player.Player;
+import GameState.GameStateManager;
+import GameState.MainMap;
 import TileMap.Background;
 import TileMap.GameOver;
 import TileMap.TileMap;

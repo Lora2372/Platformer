@@ -1,9 +1,11 @@
-package GameState;
+package GameState.Maps;
 
 
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import Entity.Player.*;
+import GameState.GameStateManager;
+import GameState.MainMap;
 import Entity.Doodad.Activatable.*;
 import Entity.NPC.Activatable.*;
 import TileMap.Background;
@@ -72,9 +74,7 @@ public class LorasCavern extends MainMap
 		spawnSuccubus(2252, 2170, true);
 		spawnSuccubus(1423, 650, true);
 		spawnSuccubus(3689, 1430, false);
-		
-		spawnWolf(853, 1680, true);
-		
+				
 		spawnChest(989, 2250, "Common");
 		spawnChest(989 + 120, 2250, "Uncommon");
 		spawnChest(989 + 240, 2250, "Rare");
