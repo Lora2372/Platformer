@@ -6,6 +6,8 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
+
 import GameState.GameState;
 import GameState.GameStateManager;
 import Main.Content;
@@ -16,20 +18,49 @@ public class InventoryState extends GameState
 {
 	private Background background;
 	
-
+	private ArrayList<InventorySlot> inventorySlots;
 	
 	private String title = "Inventory";
 	private Color titleColor;
 	private Font titleFont;
 	private Font font;
 	
-	protected int numberOfSlots = 9;
+	protected int numberOfColumns = 3;
+	protected int numberOfRows = 3;
+	protected int numberOfSlots = numberOfColumns * numberOfRows;
 	
-	protected int selectedSlot = 1;
+	protected int selectedSlot = 0;
+	
+	int inventoryBackgroundWidth = 500;
+	int inventoryBackgroundHeight = 500;
+
+	int inventoryBackgroundLocationX = GamePanel.WIDTH / 2 - inventoryBackgroundWidth / 2;
+	int inventoryBackgroundLocationY = GamePanel.HEIGHT / 2 - inventoryBackgroundHeight / 2;
+	
+	int inventorySlotWidth = 60;
+	int inventorySlotHeight = 60;
+	
 	
 	public InventoryState(GameStateManager gameStateManager)
 	{
 		this.gameStateManager = gameStateManager;
+		
+		inventorySlots = new ArrayList<InventorySlot>();
+		
+		for(int i = 0; i < numberOfRows ; i++)
+		{
+			for(int j = 0; j < numberOfColumns; j++)
+			{
+				int inventorySlotLocationX = inventoryBackgroundLocationX + 60 * j;
+				int inventorySlotLocationY = inventoryBackgroundLocationY + 60 * i;
+				
+				InventorySlot inventorySlot = new InventorySlot(inventorySlotLocationX, inventorySlotLocationY, inventorySlotWidth, inventorySlotHeight);
+				
+				inventorySlots.add(inventorySlot);
+				
+			}
+
+		}
 		
 		try
 		{
@@ -48,36 +79,6 @@ public class InventoryState extends GameState
 			font = new Font("Arial", Font.PLAIN, 28);
 			
 
-			
-			MouseListener mouseListener = new MouseListener()
-			{
-
-				public void mouseClicked(MouseEvent e) 
-				{
-//					if()
-				}
-
-				public void mouseEntered(MouseEvent e) 
-				{
-					
-				}
-
-				public void mouseExited(MouseEvent e) 
-				{
-					
-				}
-
-				public void mousePressed(MouseEvent e) 
-				{
-					
-				}
-
-				public void mouseReleased(MouseEvent e) 
-				{
-					
-				}
-				
-			};
 			
 		}
 		catch(Exception e)
@@ -107,14 +108,7 @@ public class InventoryState extends GameState
 		
 		graphics.setFont(font);
 		
-		
-		
-		int inventoryBackgroundWidth = 500;
-		int inventoryBackgroundHeight = 500;
-
-		int inventoryBackgroundLocationX = GamePanel.WIDTH / 2 - inventoryBackgroundWidth / 2;
-		int inventoryBackgroundLocationY = GamePanel.HEIGHT / 2 - inventoryBackgroundHeight / 2;
-		
+	
 		graphics.drawImage(
 				Content.InventoryBackground[0][0],
 				inventoryBackgroundLocationX,
@@ -124,34 +118,40 @@ public class InventoryState extends GameState
 				null
 				);
 
-		
-		int tempX = inventoryBackgroundLocationX + 60;
-		int tempY = inventoryBackgroundLocationY + 60;
-		
-		int tempWidth = 60;
-		int tempHeight = 60;
-		
 		int spacing = 10;
 
-		
-		for(int i = 0; i < (numberOfSlots / 3); i++)
+		int currentSlot = 0;
+		for(int i = 0; i < (numberOfRows); i++)
 		{
-			for(int j = 0; j < (numberOfSlots / 3); j++)
+			for(int j = 0; j < (numberOfColumns); j++)
 			{
-				graphics.drawImage(
-						Content.InventorySquare[0][0],
-						tempX + tempWidth * i + spacing * i,
-						tempY + tempHeight * j + spacing * j,
-						tempWidth,
-						tempHeight,					
-						null
-						);
+				InventorySlot inventorySlot = inventorySlots.get(currentSlot);
+				if(currentSlot == selectedSlot)
+				{
+					graphics.setColor(Color.BLUE);
+					graphics.drawRect(					
+							inventorySlot.getLocationX() + inventorySlot.getWidth() * j + spacing * j,
+							inventorySlot.getLocationY() + inventorySlot.getHeight() * i + spacing * i,
+							inventorySlot.getWidth(),
+							inventorySlot.getHeight()
+							);
+				}
+				else
+				{
+					graphics.drawImage(
+							Content.InventorySquare[0][0],
+							inventorySlot.getLocationX() + inventorySlot.getWidth() * j + spacing * j,
+							inventorySlot.getLocationY() + inventorySlot.getHeight() * i + spacing * i,
+							inventorySlot.getWidth(),
+							inventorySlot.getHeight(),					
+							null
+							);
+				}
+
+				
+				currentSlot++;
 			}
-
 		}
-		
-		
-
 	}
 	
 	
@@ -178,16 +178,38 @@ public class InventoryState extends GameState
 			select();
 		}
 		
-//		if(k == KeyEvent.VK_UP)
-//		{
-//			currentChoice--;
-//			if(currentChoice == -1) currentChoice = options.length - 1;
-//		}
-//		if(k == KeyEvent.VK_DOWN)
-//		{
-//			currentChoice++;
-//			if(currentChoice == options.length) currentChoice = 0;
-//		}
+		if(k == KeyEvent.VK_LEFT)
+		{
+			if(selectedSlot > 0)
+			{
+				selectedSlot--;
+			}
+		}
+		
+		if(k == KeyEvent.VK_RIGHT)
+		{
+			if(selectedSlot < numberOfSlots)
+			{
+				selectedSlot++;
+			}
+		}
+		
+		
+		if(k == KeyEvent.VK_UP)
+		{
+			if(selectedSlot - numberOfColumns > 0) 
+			{
+				selectedSlot -= numberOfColumns;
+			}
+		}
+		
+		if(k == KeyEvent.VK_DOWN)
+		{
+			if(selectedSlot + numberOfColumns < numberOfSlots) 
+			{
+				selectedSlot += numberOfColumns;
+			}
+		}		
 	}
 
 	public void keyReleased(int k) 

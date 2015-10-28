@@ -194,6 +194,20 @@ public class HUD
 				null);
 		
 		
+		// YARR, there be gold and silver a plenty!
+		//			(Drawing currency)
+		
+		int currencyX = GamePanel.WIDTH - 100;
+		int currencyY = GamePanel.HEIGHT - 100;
+		graphics.drawString("SILVER: " + player.getSilver(), currencyX, currencyY);
+		graphics.drawString("GOLD: " + player.getGold(), currencyX, currencyY + 30);
+		
+		
+		
+		
+		
+		// The gold is ours, let's head back to the ship!
+		
 		if(!player.getInConversation())
 		{
 			int x = GamePanel.WIDTH / 2 - (spellbarUsable.get(0).getWidth() * 2);

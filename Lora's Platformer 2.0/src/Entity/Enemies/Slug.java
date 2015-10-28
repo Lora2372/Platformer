@@ -41,10 +41,13 @@ public class Slug extends Unit
 				true,  																// inControl
 				1,		 															// health
 				1, 		 															//maxHealth
-				-1,		 															// healthCounter
+				0,		 															// healthCounter
+				0,		 															// mana
+				0,		 															// maxMana
+				0,		 															// manaRegen
 				0,	 																// stamina
 				0, 	 																// maxStamina
-				-1,		 															// staminaCounter
+				0,		 															// staminaRegen
 				800,																// sightRange
 				60,
 				0,	 	 															// punchCost
@@ -54,9 +57,6 @@ public class Slug extends Unit
 				2,		 															// dashDamage
 				40,		 															// dashRange
 				20, 	 															// dashSpeed
-				0,		 															// mana
-				0,		 															// maxMana
-				-1,		 															// manaCounter
 				0,		 															// smallFireBallManaCost
 				20,		 															// smallFireBallDamage
 				0,		 															// largeFireBallManaCost

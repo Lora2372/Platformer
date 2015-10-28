@@ -10,10 +10,15 @@ public class ActivatableChest extends Doodad
 {
 
 
+	protected int silver;
+	protected int gold;
+	
 	public ActivatableChest(
 			TileMap tileMap, 
 			double spawnX,
 			double spawnY,
+			int silver,
+			int gold,
 			String chestType
 			) 
 	{
@@ -31,6 +36,9 @@ public class ActivatableChest extends Doodad
 				false,
 				chestType
 				);
+		
+		this.silver = silver;
+		this.gold = gold;
 	}
 	
 	public void setDoodad(int currentAction)
@@ -66,7 +74,54 @@ public class ActivatableChest extends Doodad
 	
 	public void interact(Player player)
 	{
-		active = true;
+		
+		String conversationPiece = "";
+		
+		if(!active)
+		{
+			conversationPiece = "You found ";
+			
+			if(silver > 0)
+			{
+				conversationPiece = conversationPiece + silver + " silver";
+				player.addSilver(silver);
+				if(gold > 0)
+				{
+					conversationPiece = conversationPiece + " and " + gold + " gold!";
+					player.addGold(gold);
+				}
+			}
+			else if(gold > 0)
+			{
+				conversationPiece = conversationPiece + gold + " gold!";
+				player.addGold(gold);
+			}
+		}
+
+		
+		String[] conversation = new String[]
+		{
+			conversationPiece		
+		};
+		
+		if(!player.getInConversation())
+		{
+			player.getConversationBox().startConversation(player, null, null, conversation, new int[] { 3 });
+		}
+		else
+		{
+			player.getConversationBox().progressConversation();
+			
+			if(player.getConversationBox().getConversationTracker() >= player.getConversationBox().getConversationLength())
+			{
+				player.getConversationBox().endConversation();
+			}
+		}
+		
+			player.playLootSound(doodadType);
+			
+			active = true;
+
 	}
 	
 	public void activateSound() 

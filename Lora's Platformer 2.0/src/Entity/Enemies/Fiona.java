@@ -75,12 +75,15 @@ public class Fiona extends Unit
 				0.6, 	 															// stopJumpSpeed
 				facingRight,														// facingRight
 				true,  																// inControl
-				500,		 															// health
-				500, 		 															//maxHealth
+				500,		 														// health
+				500, 		 														//maxHealth
 				0,		 															// healthRegen
-				100,	 																// stamina
-				100, 	 																// maxStamina
-				30,		 															// staminaCounter
+				100,	 															// stamina
+				100, 	 															// maxStamina
+				30,		 															// staminaRegen
+				100,		 														// mana
+				100,		 														// maxMana
+				30,		 															// manaRegen
 				2000,																// sightRange
 				2000,
 				0,	 	 															// punchCost
@@ -90,9 +93,6 @@ public class Fiona extends Unit
 				2,		 															// dashDamage
 				40,		 															// dashRange
 				20, 	 															// dashSpeed
-				100,		 															// mana
-				100,		 															// maxMana
-				30,		 															// manaCounter
 				20,		 															// smallFireBallManaCost
 				20,		 															// smallFireBallDamage
 				40,		 															// largeFireBallManaCost

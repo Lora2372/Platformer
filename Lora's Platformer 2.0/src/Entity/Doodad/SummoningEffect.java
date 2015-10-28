@@ -1,5 +1,6 @@
 package Entity.Doodad;
 
+import Audio.JukeBox;
 import Main.Content;
 import TileMap.TileMap;
 
@@ -24,6 +25,9 @@ public class SummoningEffect extends Doodad
 				"SummoningEffect"
 				
 		);
+		
+		JukeBox.play("Teleport");
+		
 	}
 	public void setDoodad(int currentAction)
 	{

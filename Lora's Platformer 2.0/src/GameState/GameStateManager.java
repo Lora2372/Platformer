@@ -83,12 +83,18 @@ public class GameStateManager
 		}
 	}
 	
-	private void unloadState(int state) 
+	public void stopMusic()
 	{
 		for(int i = 0; i < Content.mapMusic.values().length; i++)
 		{
 			JukeBox.stop(Content.mapMusic.values()[i] + "");
 		}
+	}
+	
+	
+	private void unloadState(int state) 
+	{
+		stopMusic();
 		gameStates[state] = null;
 	}
 	

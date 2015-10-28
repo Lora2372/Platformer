@@ -3,7 +3,6 @@ package Main;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -39,6 +38,16 @@ public class JSONReader
 			System.out.println("SpawnLocationY: " + spawnLocationY);
 			
 			player.setSpawnPoint(spawnLocationX, spawnLocationY);
+			
+			
+			int silver = ((Long)jsonObject.get("Silver")).intValue();
+			System.out.println("Silver: " + silver);
+			player.addSilver(silver);
+			
+			int gold = ((Long)jsonObject.get("Gold")).intValue();
+			System.out.println("Gold: " + gold);
+			player.addGold(gold);
+			
 			
 		}
 		catch(FileNotFoundException e2)

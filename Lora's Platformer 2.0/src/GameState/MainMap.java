@@ -3,19 +3,16 @@ package GameState;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-
 import Main.GamePanel;
 import TileMap.*;
 import Entity.*;
 import Entity.Enemies.*;
-import Entity.Explosion.CartoonExplosion;
 import Entity.Explosion.Explosion;
 import Entity.Doodad.*;
 import Entity.Doodad.Activatable.*;
 import Entity.Player.*;
 import Entity.Projectile.Projectile;
 import Audio.JukeBox;
-
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Random;
@@ -196,7 +193,7 @@ public class MainMap extends GameState
 			return;
 		}
 		
-		// Update fireBalls
+		// Update Projectiles
 		if(projectiles != null)
 		{
 			for(int i = 0; i < projectiles.size(); i++)
@@ -211,6 +208,7 @@ public class MainMap extends GameState
 		}
 		checkProjectiles();
 		
+		// Update explosions
 		if(explosions != null)
 		{
 			for(int i = 0; i < explosions.size(); i++)
@@ -224,7 +222,7 @@ public class MainMap extends GameState
 			}
 		}
 		
-		
+		// Update all characters
 		if(characterList != null)
 		{	
 			for(int i = 0; i < characterList.size(); i++)
@@ -277,38 +275,23 @@ public class MainMap extends GameState
 						System.out.println("Game Over...");
 						
 						gameover = true;
-
-						JukeBox.stop("Battle9");
-						JukeBox.stop("Dungeon1");
-						JukeBox.stop("MysteriousBattle");
-						JukeBox.stop("MysteriousConversation");
+						
+						gameStateManager.stopMusic();
 						
 						JukeBox.play("GameOver");						
 						soundTimer = System.nanoTime();
 					}
 				}
-
-//				System.out.println("isdead? " + character.isDead() + ", name: " + character.getName());
 			}
 		}
 		
 	// Update character
 		if(characterList != null)
 		{
-
-//			System.out.println("player x: " + player.getx() + ", player y: " + player.gety() + ", position x: " + (GamePanel.WIDTH / 2 - player.getx()) + ", position y: " + (GamePanel.HEIGHT / 2 - player.gety()));
 			tileMap.setPosition(
 					GamePanel.WIDTH / 2 - player.getx(), 
 					GamePanel.HEIGHT / 2 - player.gety()
 					);
-		}	
-		else if (characterList == null)
-		{
-			System.out.println("WHY IS THE CHARACTERLIST NULL?!");
-			if(player == null)
-			{
-				System.out.println("AND WHY THE FUCK IS THE PLAYER NULL?!");
-			}
 		}
 		
 		// Update doodads
@@ -397,7 +380,7 @@ public class MainMap extends GameState
 			}
 		}
 		
-		// Draw fireBalls
+		// Draw Projectiles
 		for(int i = 0; i < projectiles.size(); i++)
 		{
 			projectiles.get(i).draw(graphics);
@@ -512,43 +495,43 @@ public class MainMap extends GameState
 		}
 	}
 	
-	public void spawnWaterfall(double x, double y)
+	public void spawnWaterfall(double locationX, double locationY)
 	{
-		Waterfall waterfall = new Waterfall(tileMap, x, y);
+		Waterfall waterfall = new Waterfall(tileMap, locationX, locationY);
 		stuff.add(waterfall);
 		
 	}
 	
-	public void spawnSummonEffect(double x, double y)
+	public void spawnSummonEffect(double locationX, double locationY)
 	{
-		SummoningEffect summoningEffect = new SummoningEffect(tileMap, x, y);
+		SummoningEffect summoningEffect = new SummoningEffect(tileMap, locationX, locationY);
 		stuff.add(summoningEffect);
 		
 	}
 	
-	public void spawnTorch(double x, double y)
+	public void spawnTorch(double locationX, double locationY)
 	{
-		Torch torch = new Torch(tileMap, x, y);
+		Torch torch = new Torch(tileMap, locationX, locationY);
 		stuff.add(torch);
 	}
 	
-	public void spawnSign(double x, double y, String[] conversation, int[] whoTalks)
+	public void spawnSign(double locationX, double locationY, String[] conversation, int[] whoTalks)
 	{
-		ActivatableSign activatableSign = new ActivatableSign(tileMap, x, y, player, conversation, whoTalks);
+		ActivatableSign activatableSign = new ActivatableSign(tileMap, locationX, locationY, player, conversation, whoTalks);
 		activatables.add(activatableSign);
 		stuff.add(activatableSign);
 	}
 	
-	public void spawnChest(double x, double y, String chestType)
+	public void spawnChest(double locationX, double locationY, int silver, int gold, String chestType)
 	{
-		ActivatableChest activatableChestCommon = new ActivatableChest(tileMap, x, y, chestType);
+		ActivatableChest activatableChestCommon = new ActivatableChest(tileMap, locationX, locationY, silver, gold, chestType);
 		activatables.add(activatableChestCommon);
 		stuff.add(activatableChestCommon);
 	}
 	
-	public void spawnStatueSave(double x, double y)
+	public void spawnStatueSave(double locationX, double locationY)
 	{
-		StatueSave statueSave = new StatueSave(tileMap, x, y);
+		StatueSave statueSave = new StatueSave(tileMap, locationX, locationY);
 		activatables.add(statueSave);
 		stuff.add(statueSave);
 	}
@@ -614,5 +597,4 @@ public class MainMap extends GameState
 		if(k == KeyEvent.VK_S) player.setCastingLargeFireBall();
 		if(k == KeyEvent.VK_Z) player.setPunching();
 	}
-	
 }

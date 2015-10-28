@@ -26,11 +26,12 @@ public class JSONWriter
   
     	
         JSONObject jsonObject = new JSONObject();  
-        jsonObject.put("Name", "Lora");  
+        jsonObject.put("Name", player.getName());  
         jsonObject.put("Map", player.getCurrentMap());  
         jsonObject.put("SpawnLocationX", spawnLocationX);
         jsonObject.put("SpawnLocationY", spawnLocationY);
-        
+        jsonObject.put("Silver", player.getSilver());
+        jsonObject.put("Gold", player.getGold());
         try 
         {  
             File myFile = new File(System.getProperty("user.home") + "\\Loras Platformer");

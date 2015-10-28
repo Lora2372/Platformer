@@ -27,6 +27,8 @@ public class Unit extends MapObject
 	protected String name;
 	protected boolean player;
 	
+	protected int silver;
+	protected int gold;
 	
 	protected ArrayList<Unit> charactersHit = new ArrayList<Unit>();
 	
@@ -39,12 +41,7 @@ public class Unit extends MapObject
 	protected double spawnY;
 	
 	protected double aim;
-	
-	protected int health;
-	protected int maxHealth;
-	protected int healthCounter;
-	protected int healthRegen;
-	
+		
 	protected int sightRangeX;
 	protected int sightRangeY;
 	
@@ -52,16 +49,18 @@ public class Unit extends MapObject
 	
 	protected boolean sexytime1;
 	protected boolean sexytime2;
-	
+
+	protected int health;
+	protected int maxHealth;
+	protected double healthRegen;
+
 	protected int mana;
 	protected int maxMana;
-	protected int manaCounter;
-	protected int manaRegen;
+	protected double manaRegen;
 	
 	protected int stamina;
 	protected int maxStamina;
-	protected int staminaCounter;
-	protected int staminaRegen;
+	protected double staminaRegen;
 	
 	protected int damageOnTouch;
 	protected boolean friendly;
@@ -193,10 +192,13 @@ public class Unit extends MapObject
 			boolean inControl,
 			int health,
 			int maxHealth,
-			int healthRegen,			
+			double healthRegen,	
+			int mana, 
+			int maxMana,
+			double manaRegen,
 			int stamina,
 			int maxStamina,
-			int staminaRegen,
+			double staminaRegen,
 			int sightRangeX,
 			int sightRangeY,
 			int punchCost,
@@ -206,9 +208,6 @@ public class Unit extends MapObject
 			int dashDamage,	
 			int dashRange,
 			double dashSpeed,
-			int mana, 
-			int maxMana,
-			int manaRegen,
 			int fireBallSmallManaCost,
 			int fireBallSmallDamage,	
 			int fireBallLargeManaCost,
@@ -288,9 +287,6 @@ public class Unit extends MapObject
 		this.spawnY = spawnY;
 		this.mainMap = mainMap;
 				
-		healthCounter = 0;
-		manaCounter = 0;
-		staminaCounter = 0;
 		
 		setPosition(spawnX, spawnY);
 		
@@ -506,6 +502,14 @@ public class Unit extends MapObject
 	
 	public String getName() { return name; }
 	
+	public int getSilver() { return silver; }
+	public int getGold() { return gold; }
+	
+	public void addSilver(int silver) { this.silver += silver; }
+	public void addGold(int gold) { this.gold += gold; }
+	
+	
+	
 	public double getDirectionX() { return directionX; }
 	public double getDirectionY() { return directionY; }
 	
@@ -591,25 +595,19 @@ public class Unit extends MapObject
 		}
 		
 		// Regeneration
-		healthCounter++;
-		if(healthCounter > healthRegen && healthCounter != -1 && healthRegen != 0)
+		if(healthRegen > 0)
 		{
-			healthCounter = 0;
-			if(health < maxHealth) health++;
+			if(health < maxHealth) health += healthRegen;
 		}
 
-		manaCounter++;
-		if(manaCounter > manaRegen && manaCounter != -1)
+		if(manaRegen > 0)
 		{
-			manaCounter = 0;
-			if(mana < maxMana) mana++;
+			if(mana < maxMana) mana += manaRegen;
 		}
 		
-		staminaCounter++;
-		if(staminaCounter > staminaRegen && staminaCounter != -1)
+		if(staminaRegen > 0)
 		{
-			staminaCounter = 0;
-			if(stamina < maxStamina) stamina++;
+			if(stamina < maxStamina) stamina += staminaRegen;
 		}
 		
 		

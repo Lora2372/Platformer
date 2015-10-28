@@ -46,10 +46,13 @@ public class Succubus extends Unit
 				true,  																// inControl
 				50,		 															// health
 				5, 		 															//maxHealth
-				30,		 															// healthCounter
-				100,	 																// stamina
-				100, 	 																// maxStamina
-				30,		 															// staminaCounter
+				0.1,	 															// healthRegen
+				100,		 														// mana
+				100,		 														// maxMana
+				0,		 															// manaRegen
+				100,	 															// stamina
+				100, 	 															// maxStamina
+				0,		 															// staminaRegen
 				800,																// sightRange
 				120,
 				0,	 	 															// punchCost
@@ -59,9 +62,6 @@ public class Succubus extends Unit
 				2,		 															// dashDamage
 				40,		 															// dashRange
 				20, 	 															// dashSpeed
-				100,		 															// mana
-				100,		 															// maxMana
-				30,		 															// manaCounter
 				20,		 															// smallFireBallManaCost
 				20,		 															// smallFireBallDamage
 				40,		 															// largeFireBallManaCost

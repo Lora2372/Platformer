@@ -68,7 +68,7 @@ public class MysteriousDungeon extends MainMap
 		
 		spawnStatueSave(250, 530);
 		
-		spawnChest(800, 630, "Common");
+		spawnChest(800, 630, 3, 0, "Common");
 
 		spawnSign(400, 575, Conversation.mysteriousDungeonDirectionMessage, Conversation.mysteriousDungeonDirectionMessageWhoTalks);
 		

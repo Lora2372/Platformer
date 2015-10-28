@@ -22,7 +22,7 @@ public class Player extends Unit
 	
 //	protected ArrayList<Projectile> a
 	
-	public enum soundTypes { Attack, Hurt, Jump }
+	public enum soundTypes { Attack, Hurt, Jump , Loot}
 	
 	protected String currentMap;
 	
@@ -51,10 +51,13 @@ public class Player extends Unit
 				true,  																// inControl
 				100,	 															// health
 				100,	 															//maxHealth
-				50,		 															// healthCounter
+				1,	 																// healthRegen
+				100,	 															// mana
+				100,	 															// maxMana
+				1,	 																// manaRegen
 				100,	 															// stamina
 				100, 	 															// maxStamina
-				25,		 															// staminaCounter
+				1,	 																// staminaRegen
 				800,																// sightRange
 				120,
 				5,	 	 															// punchCost
@@ -64,9 +67,6 @@ public class Player extends Unit
 				40,		 															// dashDamage
 				40,		 															// dashRange
 				20, 	 															// dashSpeed
-				100,	 															// mana
-				100,	 															// maxMana
-				25,		 															// manaCounter
 				20,		 															// smallFireballManaCost
 				20,		 															// smallFireballDamage
 				40,		 															// largeFireballManaCost
@@ -161,6 +161,12 @@ public class Player extends Unit
 		
 		int myRandom = random.nextInt((max - min) + 1) + min;
 		JukeBox.play("Female01" + soundTypes.Attack + "0" + myRandom);
+	}
+	
+	public void playLootSound(String lootRarity)
+	{
+		JukeBox.play("Female01" + soundTypes.Loot + lootRarity);
+				
 	}
 	
 	

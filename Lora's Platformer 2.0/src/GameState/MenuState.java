@@ -135,8 +135,6 @@ public class MenuState extends GameState
 		else if(currentChoice == 2)
 		{
 			// Load Game
-			
-			gameStateManager.setState(GameStateManager.LorasCavern);
 			if(JSONReader.load(player))
 			{
 				player.setLoaded(true);
@@ -154,6 +152,7 @@ public class MenuState extends GameState
 			}
 			else
 			{
+				player.setLoaded(false);
 				System.out.println("Couldn't find it.");
 				gameStateManager.setState(GameStateManager.LorasCavern);
 				
@@ -175,7 +174,7 @@ public class MenuState extends GameState
 					+ "S: Large fireball\n"
 					+ "D: Dash attack\n"
 					+ "F: Punch attack\n"
-					+ "E: Gliding in the air, interacting with objects on the ground.\n"
+					+ "R: Gliding in the air, interacting with objects on the ground.\n"
 					+ "\n"
 					+ "Extra stuff:\n"
 					+ "O: Summon a succubus\n"
