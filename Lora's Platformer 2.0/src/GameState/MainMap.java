@@ -265,8 +265,8 @@ public class MainMap extends GameState
 								}
 							}
 						}
-						CartoonExplosion cartoonExplosion = new CartoonExplosion(tileMap, this, characterList.get(i).getx(), characterList.get(i).gety(), false);
-						explosions.add(cartoonExplosion);
+						Poff poff = new Poff(tileMap,characterList.get(i).getx(), characterList.get(i).gety());
+						stuff.add(poff);
 						
 						characterList.remove(i);
 						i--;

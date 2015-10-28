@@ -123,6 +123,11 @@ public class MysteriousDungeon extends MainMap
 		return stuff;
 	}
 	
+	public ArrayList<Doodad> getActivatables()
+	{
+		return activatables;
+	}
+	
 	public void setDefeated(boolean b) { bossDefeated = b; }
 	
 	public void update()

@@ -34,8 +34,6 @@ public class Content
 	
 	
 	//Doodads
-	public static BufferedImage[][] Teleport 				= load("/Art/Sprites/Effects/Teleport.png", 192, 192);
-	public static BufferedImage[][] MagicShield				= load("/Art/Sprites/Effects/MagicShield.png", 192, 192);
 	public static BufferedImage[][] Sign 					= load("/Art/Sprites/Doodads/Sign.png", 50, 50);
 	public static BufferedImage[][] SignLeft 				= load("/Art/Sprites/Doodads/SignLeft.png", 50, 50);
 	public static BufferedImage[][] SignRight 				= load("/Art/Sprites/Doodads/SignRight.png", 50, 50);
@@ -56,12 +54,17 @@ public class Content
 	public static BufferedImage[][] Shrine					= load("/Art/Sprites/Doodads/Shrine.png", 146, 156);
 	public static BufferedImage[][] StatueSave				= load("/Art/Sprites/Doodads/StatueSave.png", 48, 100);
 	
+	//Effects
+	public static BufferedImage[][] Teleport 				= load("/Art/Sprites/Effects/Teleport.png", 192, 192);
+	public static BufferedImage[][] MagicShield				= load("/Art/Sprites/Effects/MagicShield.png", 192, 192);
+	public static BufferedImage[][] Poff					= load("/Art/Sprites/Effects/Poff.png", 512, 512);
 	
 	// Foreground
 	public static BufferedImage[][] GameOver				= load("/Art/HUD/Foregrounds/GameOver.png", 544, 416);
 	public static BufferedImage[][] ConversationGUI			= load("/Art/HUD/Foregrounds/Conversation GUI.png", 454, 138);
 	public static BufferedImage[][] ConversationGUIEndConversation = load("/Art/HUD/Foregrounds/ConversationGUIEndConversation.png", 206, 35);
 	public static BufferedImage[][] InventorySquare			= load("/Art/HUD/Foregrounds/InventorySquare.png", 60, 60);
+	public static BufferedImage[][] InventoryBackground		= load("/Art/HUD/Foregrounds/InventoryBackground.png", 424, 348);
 	
 	// Portraits
 	public static BufferedImage[][] PortraitPlayer			=load("/Art/HUD/Portraits/PortraitPlayer.png", 94, 94);

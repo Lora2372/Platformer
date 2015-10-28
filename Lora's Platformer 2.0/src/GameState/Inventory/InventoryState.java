@@ -107,13 +107,32 @@ public class InventoryState extends GameState
 		
 		graphics.setFont(font);
 		
-		int tempX = 500;
-		int tempY = 500;
+		
+		
+		int inventoryBackgroundWidth = 500;
+		int inventoryBackgroundHeight = 500;
+
+		int inventoryBackgroundLocationX = GamePanel.WIDTH / 2 - inventoryBackgroundWidth / 2;
+		int inventoryBackgroundLocationY = GamePanel.HEIGHT / 2 - inventoryBackgroundHeight / 2;
+		
+		graphics.drawImage(
+				Content.InventoryBackground[0][0],
+				inventoryBackgroundLocationX,
+				inventoryBackgroundLocationY,
+				inventoryBackgroundWidth,
+				inventoryBackgroundHeight,
+				null
+				);
+
+		
+		int tempX = inventoryBackgroundLocationX + 60;
+		int tempY = inventoryBackgroundLocationY + 60;
 		
 		int tempWidth = 60;
 		int tempHeight = 60;
 		
 		int spacing = 10;
+
 		
 		for(int i = 0; i < (numberOfSlots / 3); i++)
 		{
@@ -130,6 +149,8 @@ public class InventoryState extends GameState
 			}
 
 		}
+		
+		
 
 	}
 	

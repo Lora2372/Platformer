@@ -57,6 +57,7 @@ public class Doodad extends MapObject
 		locationX = spawnX;
 		locationY = spawnY;
 		
+		facingRight = false;
 		
 		setPosition(spawnX, spawnY);
 		currentAction = 0;
@@ -130,13 +131,7 @@ public class Doodad extends MapObject
 	{
 		setMapPosition();
 		
-		graphics.drawImage(
-
-		animation.getImage(),
-		(int)(locationX + mapPositionX - width / 2),
-		(int)(locationY + mapPositionY - height / 2),
-		null
-		);
+		super.draw(graphics);
 	}
 
 	public void setDoodadType(String newDoodadType)

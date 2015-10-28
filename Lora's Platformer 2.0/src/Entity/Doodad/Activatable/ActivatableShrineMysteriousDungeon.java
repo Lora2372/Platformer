@@ -154,6 +154,7 @@ public class ActivatableShrineMysteriousDungeon extends Doodad
 						else
 						{
 							mysteriousDungeon.getStuff().remove(currentDoodad);
+							mysteriousDungeon.getActivatables().remove(currentDoodad);
 							currentDoodad = null;
 							i--;
 						}
