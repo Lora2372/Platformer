@@ -37,6 +37,7 @@ public class GameStateManager
 	{
 		pausestate = new PauseState(this);
 		helpstate = new HelpState(this);
+		
 		inventorystate = new InventoryState(this);
 		
 		gameStates = new GameState[NUMGAMESTATES];
@@ -45,7 +46,12 @@ public class GameStateManager
 		loadState(currentState);
 	}
 	
-	public void setPlayer(Player player) { this.player = player; }
+	public void setPlayer(Player player) 
+	{ 
+		this.player = player; 
+		inventorystate.initialize(player);
+	}
+	
 	public void setTileMap(TileMap tileMap) { this.tileMap = tileMap; }
 	
 	public void browsingInventory(boolean b) { browsingInventory = b; }

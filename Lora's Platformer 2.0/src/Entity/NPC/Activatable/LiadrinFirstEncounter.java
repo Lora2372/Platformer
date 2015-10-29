@@ -159,7 +159,7 @@ public class LiadrinFirstEncounter extends Unit
 	{
 		if(summoningEffect != null)
 		{
-			if(summoningEffect.removeMe())
+			if(summoningEffect.getRemoveMe())
 			{
 				removeMe = true;
 			}

@@ -4,6 +4,7 @@ import Main.Content;
 import TileMap.TileMap;
 import Audio.JukeBox;
 import Entity.Doodad.Doodad;
+import Entity.Item.Item;
 import Entity.Player.Player;
 
 public class ActivatableChest extends Doodad
@@ -13,10 +14,13 @@ public class ActivatableChest extends Doodad
 	protected int silver;
 	protected int gold;
 	
+	protected boolean locked;
+	
 	public ActivatableChest(
 			TileMap tileMap, 
 			double spawnX,
 			double spawnY,
+			boolean locked,
 			int silver,
 			int gold,
 			String chestType
@@ -39,6 +43,7 @@ public class ActivatableChest extends Doodad
 		
 		this.silver = silver;
 		this.gold = gold;
+		this.locked = locked;
 	}
 	
 	public void setDoodad(int currentAction)
@@ -79,22 +84,44 @@ public class ActivatableChest extends Doodad
 			return;
 		
 		String conversationPiece = "";
-		
+		boolean successful = false;
 		if(!active)
 		{
-			conversationPiece = "You found ";
-			
-			if(silver > 0)
+			if(locked)
 			{
-				conversationPiece = conversationPiece + silver + " silver";
-				if(gold > 0)
+				Item item = player.getInventory().hasItem("Key");
+				
+				if(item != null)
 				{
-					conversationPiece = conversationPiece + " and " + gold + " gold!";
+					conversationPiece += "You unlocked the chest and found:";
+					successful = true;
+					item.use();
+				}
+				else
+				{
+					conversationPiece += "You struggle to open the chest to no avail, perhaps if you had a key...";
 				}
 			}
-			else if(gold > 0)
+			else
 			{
-				conversationPiece = conversationPiece + gold + " gold!";
+				conversationPiece = "You found ";
+				successful = true;
+			}
+			
+			if(successful)
+			{
+				if(silver > 0)
+				{
+					conversationPiece = conversationPiece + silver + " silver";
+					if(gold > 0)
+					{
+						conversationPiece = conversationPiece + " and " + gold + " gold!";
+					}
+				}
+				else if(gold > 0)
+				{
+					conversationPiece = conversationPiece + gold + " gold!";
+				}
 			}
 		}
 
@@ -107,7 +134,11 @@ public class ActivatableChest extends Doodad
 		if(!player.getInConversation())
 		{
 			player.getConversationBox().startConversation(player, null, null, conversation, new int[] { 3 });
-			player.playLootSound();
+			
+			if(successful)
+			{
+				player.playLootSound();
+			}
 		}
 		else
 		{
@@ -117,11 +148,14 @@ public class ActivatableChest extends Doodad
 			{
 				player.getConversationBox().endConversation();
 				
-				JukeBox.play("Coin");
-				
-				player.addSilver(silver);
-				player.addGold(gold);
-				used = true;
+				if(successful)
+				{
+					JukeBox.play("Coin");
+					
+					player.addSilver(silver);
+					player.addGold(gold);
+					used = true;
+				}
 			}
 		}
 		

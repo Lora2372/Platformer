@@ -13,7 +13,6 @@ public class Explosion extends MapObject
 	
 	protected ArrayList<Unit> unitsHit;
 	
-	protected boolean remove;
 	protected BufferedImage[] sprites;
 	
 	protected boolean friendly; 
@@ -73,10 +72,6 @@ public class Explosion extends MapObject
 	public void setFriendly(boolean b) { friendly = b;};
 	
 	
-	public boolean shouldRemove() 
-	{
-		return remove; 
-	}
 	
 	public void update(ArrayList<Unit> characterList)
 	{
@@ -99,7 +94,7 @@ public class Explosion extends MapObject
 		animation.update();
 		
 		if(animation.hasPlayedOnce())
-			remove = true;
+			removeMe = true;
 	}
 	
 	public boolean interescts(MapObject object)

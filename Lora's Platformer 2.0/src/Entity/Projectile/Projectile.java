@@ -14,7 +14,6 @@ public class Projectile extends MapObject
 {
 	
 	protected boolean hit;
-	protected boolean remove;
 	protected BufferedImage[] sprites;
 	
 	protected boolean friendly; 
@@ -121,7 +120,7 @@ public class Projectile extends MapObject
 		
 		explode();
 
-		remove = true;
+		removeMe = true;
 	}
 	
 	public void bounce()
@@ -131,11 +130,6 @@ public class Projectile extends MapObject
 		setFacing(!facingRight);
 		setDirection(directionX * - 1.05, directionY * -1.05);
 		setFriendly(!friendly);
-	}
-	
-	public boolean shouldRemove() 
-	{
-		return remove; 
 	}
 	
 	public void update(ArrayList<Unit> characterList)

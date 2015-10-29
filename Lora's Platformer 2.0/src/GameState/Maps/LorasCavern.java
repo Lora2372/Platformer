@@ -75,13 +75,15 @@ public class LorasCavern extends MainMap
 		spawnSuccubus(1423, 650, true);
 		spawnSuccubus(3689, 1430, false);
 				
-		spawnChest(989,			2250, 	3, 0, "Common");
-		spawnChest(989 + 120,	2250, 	15, 0, "Uncommon");
-		spawnChest(989 + 240,	2250, 	25, 2, "Rare");
+		spawnChest(989,			2250, false, 	3, 0, "Common");
+		spawnChest(989 + 120,	2250, true, 	15, 0, "Uncommon");
+		spawnChest(989 + 240,	2250, true, 	25, 2, "Rare");
 		
-		spawnChest(1923,		1170, 	10, 1, "Rare");
+		spawnChest(1923,		1170, true, 	10, 1, "Rare");
 		
-		spawnChest(1712, 		2610,	50, 0, "Uncommon");
+		spawnChest(1712, 		2610, true,	50, 0, "Uncommon");
+		
+		spawnKey(989 - 200,  			2240);
 		
 		ActivatableCave activatableCave = new ActivatableCave(tileMap, gameStateManager, 3614, 2340);
 		stuff.add(activatableCave);

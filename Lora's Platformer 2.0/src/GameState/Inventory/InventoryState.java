@@ -6,6 +6,8 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
+import Entity.Item.Item;
+import Entity.Player.Player;
 import GameState.GameState;
 import GameState.GameStateManager;
 import Main.Content;
@@ -23,9 +25,9 @@ public class InventoryState extends GameState
 	private Font titleFont;
 	private Font font;
 	
-	protected int numberOfColumns = 3;
-	protected int numberOfRows = 3;
-	protected int numberOfSlots = numberOfColumns * numberOfRows;
+	protected int numberOfColumns;
+	protected int numberOfRows;
+	protected int numberOfSlots;
 	
 	protected int selectedSlot = 0;
 	
@@ -38,14 +40,45 @@ public class InventoryState extends GameState
 	int inventorySlotWidth = 60;
 	int inventorySlotHeight = 60;
 	
+	protected Player player;
+	protected Inventory inventory;
+	protected Item[][] items;
 	
-	public InventoryState(GameStateManager gameStateManager)
+	
+	public InventoryState(
+			GameStateManager 
+			gameStateManager
+			)
 	{
 		this.gameStateManager = gameStateManager;
+
+	}
+	
+	public void initialize() 
+	{
+
+	}
+	
+	public void initialize(Player player)
+	{
+		this.player = player;
+		
+		if(player == null)
+		{
+			System.out.println("player is null");
+		}
+		System.out.println("Using inventory");
+		this.inventory = player.getInventory();
+		
+		numberOfColumns = inventory.getColumns();
+		numberOfRows = inventory.getRows();
+		numberOfSlots = numberOfColumns * numberOfRows;
+		
+		this.items = inventory.getItems();
 		
 		inventorySlots = new ArrayList<InventorySlot>();
 		
-		for(int i = 0; i < numberOfRows ; i++)
+		for(int i = 0; i < numberOfRows; i++)
 		{
 			for(int j = 0; j < numberOfColumns; j++)
 			{
@@ -55,9 +88,7 @@ public class InventoryState extends GameState
 				InventorySlot inventorySlot = new InventorySlot(inventorySlotLocationX, inventorySlotLocationY, inventorySlotWidth, inventorySlotHeight);
 				
 				inventorySlots.add(inventorySlot);
-				
 			}
-
 		}
 		
 		try
@@ -124,12 +155,29 @@ public class InventoryState extends GameState
 			for(int j = 0; j < (numberOfColumns); j++)
 			{
 				InventorySlot inventorySlot = inventorySlots.get(currentSlot);
+				int inventorySlotLocationX = inventorySlot.getLocationX() + inventorySlot.getWidth() * j + spacing * j;
+				int inventorySlotLocationY = inventorySlot.getLocationY() + inventorySlot.getHeight() * i + spacing * i;
+				
+				
+				if(items[i][j] != null)
+				{
+					graphics.drawImage(
+							items[i][j].getSprites()[0],
+							inventorySlotLocationX,
+							inventorySlotLocationY,
+							items[i][j].getWidth(),
+							items[i][j].getHeight(),
+							null
+							);
+				}
+				
+				
 				if(currentSlot == selectedSlot)
 				{
 					graphics.setColor(Color.BLUE);
 					graphics.drawRect(					
-							inventorySlot.getLocationX() + inventorySlot.getWidth() * j + spacing * j,
-							inventorySlot.getLocationY() + inventorySlot.getHeight() * i + spacing * i,
+							inventorySlotLocationX,
+							inventorySlotLocationY,
 							inventorySlot.getWidth(),
 							inventorySlot.getHeight()
 							);
@@ -138,8 +186,8 @@ public class InventoryState extends GameState
 				{
 					graphics.drawImage(
 							Content.InventorySquare[0][0],
-							inventorySlot.getLocationX() + inventorySlot.getWidth() * j + spacing * j,
-							inventorySlot.getLocationY() + inventorySlot.getHeight() * i + spacing * i,
+							inventorySlotLocationX,
+							inventorySlotLocationY,
 							inventorySlot.getWidth(),
 							inventorySlot.getHeight(),					
 							null
@@ -156,11 +204,6 @@ public class InventoryState extends GameState
 	private void select()
 	{
 
-	}
-
-	public void initialize() 
-	{
-		
 	}
 
 	public void keyPressed(int k) 
@@ -214,5 +257,5 @@ public class InventoryState extends GameState
 	{
 		
 	}
-	
+
 }

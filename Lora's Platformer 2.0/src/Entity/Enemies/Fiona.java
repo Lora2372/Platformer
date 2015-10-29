@@ -302,7 +302,7 @@ public class Fiona extends Unit
 		}
 		if(summoningEffect != null)
 		{
-			if(summoningEffect.removeMe())
+			if(summoningEffect.getRemoveMe())
 			{
 				summoningEffect = null;
 				player.getConversationBox().lockConversation(false);

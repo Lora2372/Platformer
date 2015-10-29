@@ -8,6 +8,8 @@ import TileMap.*;
 import Entity.*;
 import Entity.Enemies.*;
 import Entity.Explosion.Explosion;
+import Entity.Item.Item;
+import Entity.Item.Key;
 import Entity.Doodad.*;
 import Entity.Doodad.Activatable.*;
 import Entity.Player.*;
@@ -29,6 +31,7 @@ public class MainMap extends GameState
 	protected ArrayList<Unit> allies;
 	protected ArrayList<Doodad> stuff;
 	protected ArrayList<Doodad> activatables;
+	protected ArrayList<Item> items;
 	protected ArrayList<Projectile> projectiles;
 	protected ArrayList<Explosion> explosions;
 	protected boolean doneInitializing;
@@ -57,6 +60,7 @@ public class MainMap extends GameState
 		enemies = new ArrayList<Unit>();
 		stuff = new ArrayList<Doodad>();
 		activatables = new ArrayList<Doodad>();
+		items = new ArrayList<Item>();
 		allies = new ArrayList<Unit>();
 		
 		projectiles = new ArrayList<Projectile>();
@@ -71,7 +75,7 @@ public class MainMap extends GameState
 		if(player == null)
 		{
 			System.out.println("Player created");
-			player = new Player("Lora2", tileMap);
+			player = new Player("Lora", tileMap);
 		}
 		player.setMainMap(this);
 		characterList.add(player);
@@ -199,7 +203,7 @@ public class MainMap extends GameState
 			for(int i = 0; i < projectiles.size(); i++)
 			{
 				projectiles.get(i).update(characterList);
-				if(projectiles.get(i).shouldRemove())
+				if(projectiles.get(i).getRemoveMe())
 				{
 					projectiles.remove(i);
 					i--;
@@ -214,7 +218,7 @@ public class MainMap extends GameState
 			for(int i = 0; i < explosions.size(); i++)
 			{
 				explosions.get(i).update(characterList);
-				if(explosions.get(i).shouldRemove())
+				if(explosions.get(i).getRemoveMe())
 				{
 					explosions.remove(i);
 					i--;
@@ -299,7 +303,7 @@ public class MainMap extends GameState
 		{
 			for(int i = 0; i < stuff.size(); i++)
 			{
-				if(stuff.get(i).removeMe())
+				if(stuff.get(i).getRemoveMe())
 				{
 					stuff.remove(i);
 					i--;
@@ -307,6 +311,21 @@ public class MainMap extends GameState
 				else
 				{
 					stuff.get(i).update();					
+				}
+			}
+		}
+		
+		if(items != null)
+		{
+			for(int i = 0; i < items.size(); i++)
+			{
+				if(items.get(i).getRemoveMe())
+				{
+					items.remove(i);
+				}
+				else
+				{
+					items.get(i).update();
 				}
 			}
 		}
@@ -362,6 +381,21 @@ public class MainMap extends GameState
 				try
 				{
 					stuff.get(i).draw(graphics);					
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		if(items != null)
+		{
+			for(int i = 0; i < items.size(); i++)
+			{
+				try
+				{
+					items.get(i).draw(graphics);
 				}
 				catch(Exception e)
 				{
@@ -486,6 +520,14 @@ public class MainMap extends GameState
 			}
 		}
 		
+		for(int i = 0; i < items.size(); i++)
+		{
+			if(player.intersects(items.get(i)))
+			{
+				items.get(i).interact(player);
+			}
+		}
+		
 		for(int i = 0; i < allies.size(); i++)
 		{
 			if(player.intersects(allies.get(i)) && allies.get(i).getActivatable())
@@ -522,11 +564,18 @@ public class MainMap extends GameState
 		stuff.add(activatableSign);
 	}
 	
-	public void spawnChest(double locationX, double locationY, int silver, int gold, String chestType)
+	public void spawnChest(double locationX, double locationY, boolean locked, int silver, int gold, String chestType)
 	{
-		ActivatableChest activatableChestCommon = new ActivatableChest(tileMap, locationX, locationY, silver, gold, chestType);
+		ActivatableChest activatableChestCommon = new ActivatableChest(tileMap, locationX, locationY, locked, silver, gold, chestType);
 		activatables.add(activatableChestCommon);
 		stuff.add(activatableChestCommon);
+	}
+	
+	public void spawnKey(double locationX, double locationY)
+	{
+		Key key = new Key(tileMap, true, locationX, locationY, 0, 0, null, 1);
+		items.add(key);
+	
 	}
 	
 	public void spawnStatueSave(double locationX, double locationY)

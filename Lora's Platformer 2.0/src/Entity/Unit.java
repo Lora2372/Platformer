@@ -66,9 +66,7 @@ public class Unit extends MapObject
 	protected boolean friendly;
 	
 	protected boolean activatable;
-	
-	protected boolean removeMe;
-	
+		
 	protected boolean dead;
 	protected boolean stunned;
 	protected long flinchTimer;
@@ -391,9 +389,7 @@ public class Unit extends MapObject
 	public int getPunchStaminaCost() { return punchCost; }
 	
 	public boolean getActivatable() { return activatable; }
-	
-	public boolean getRemoveMe() { return removeMe; }
-	
+		
 	public void interact(Player player)
 	{
 
@@ -570,7 +566,6 @@ public class Unit extends MapObject
 			summoningEffect = new SummoningEffect(tileMap, locationX, locationY);
 			initializeSpawning = false;
 			spawning = true;
-			JukeBox.play("Teleport");
 		}
 		
 		if(summoningEffect != null && !summoningEffect.animation.hasPlayedOnce())

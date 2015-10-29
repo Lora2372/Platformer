@@ -19,7 +19,6 @@ public class Doodad extends MapObject
 	protected BufferedImage[] sprites;
 	
 	protected boolean runOnce;
-	protected boolean removeMe;
 	protected boolean activatable;
 	protected boolean active;
 	protected boolean spent;
@@ -120,12 +119,7 @@ public class Doodad extends MapObject
 		}
 		
 	}
-	
-	public boolean removeMe()
-	{
-		return removeMe;
-	}
-	
+		
 	
 	public void draw(Graphics2D graphics)
 	{

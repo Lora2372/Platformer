@@ -4,6 +4,7 @@ import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import Entity.Doodad.SummoningEffect;
+import GameState.Inventory.Inventory;
 import Main.GamePanel;
 import TileMap.TileMap;
 
@@ -61,7 +62,7 @@ public abstract class MapObject
 	protected Animation animation;
 	protected int currentAction;
 	protected int previousAction;
-	protected Boolean facingRight;
+	protected Boolean facingRight = false;
 	
 	// Movement
 	protected boolean left;
@@ -86,16 +87,22 @@ public abstract class MapObject
 	protected boolean invulnerable; // Attacks are able to hit you but you won't take damage.
 	protected boolean unkillable; // Attacks can hit you and you can take damage, but you won't die.
 	
+	protected boolean removeMe;
+	
+	protected Inventory inventory;
+	
 	public void setHidden(boolean b) { hidden = b; }
 	
 	// Constructor
 	public MapObject(TileMap tileMap)
 	{
+		inventory = new Inventory(5, 5, null);
+		
 		if(tileMap == null) return;
 		this.tileMap = tileMap;
 		tileSize = tileMap.getTileSize();
 		animation = new Animation();
-		setPosition(locationX, locationY);
+		setPosition(locationX, locationY);		
 	}
 	
 	public void setTileMap(TileMap tileMap)
@@ -365,6 +372,13 @@ public abstract class MapObject
 	public int getHeight() { return (int)height; }
 	public int getCollisionWidth() { return (int)collisionWidth; }
 	public int getCollisionHeight() { return (int)collisionHeight; }
+	
+	public Animation getAnimation() { return animation; }
+	
+	public Inventory getInventory() { return inventory; }
+	
+	public boolean getRemoveMe() { return removeMe; }
+
 	
 	public void setPosition(double x, double y)
 	{
