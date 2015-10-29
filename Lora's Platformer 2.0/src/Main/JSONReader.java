@@ -18,7 +18,7 @@ public class JSONReader
 		
 		
 		try
-		{			
+		{
 			Object object = jsonParser.parse(new FileReader(System.getProperty("user.home") + "\\Loras Platformer\\SaveFile.json"));
 			JSONObject jsonObject = (JSONObject) object;
 			
@@ -38,8 +38,8 @@ public class JSONReader
 			System.out.println("SpawnLocationY: " + spawnLocationY);
 			
 			player.setSpawnPoint(spawnLocationX, spawnLocationY);
-			
-			
+		
+
 			int silver = ((Long)jsonObject.get("Silver")).intValue();
 			System.out.println("Silver: " + silver);
 			player.addSilver(silver);
@@ -47,8 +47,6 @@ public class JSONReader
 			int gold = ((Long)jsonObject.get("Gold")).intValue();
 			System.out.println("Gold: " + gold);
 			player.addGold(gold);
-			
-			
 		}
 		catch(FileNotFoundException e2)
 		{
@@ -63,6 +61,11 @@ public class JSONReader
 		catch(ParseException e4)
 		{
 			e4.printStackTrace();
+			return false;
+		}
+		catch(NullPointerException e5)
+		{
+			e5.printStackTrace();
 			return false;
 		}
 		return true;

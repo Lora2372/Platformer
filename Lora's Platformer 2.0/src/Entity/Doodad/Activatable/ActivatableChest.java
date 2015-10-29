@@ -8,8 +8,8 @@ import Entity.Player.Player;
 
 public class ActivatableChest extends Doodad
 {
-
-
+	protected boolean used;
+	
 	protected int silver;
 	protected int gold;
 	
@@ -75,6 +75,9 @@ public class ActivatableChest extends Doodad
 	public void interact(Player player)
 	{
 		
+		if(used)
+			return;
+		
 		String conversationPiece = "";
 		
 		if(!active)
@@ -84,17 +87,14 @@ public class ActivatableChest extends Doodad
 			if(silver > 0)
 			{
 				conversationPiece = conversationPiece + silver + " silver";
-				player.addSilver(silver);
 				if(gold > 0)
 				{
 					conversationPiece = conversationPiece + " and " + gold + " gold!";
-					player.addGold(gold);
 				}
 			}
 			else if(gold > 0)
 			{
 				conversationPiece = conversationPiece + gold + " gold!";
-				player.addGold(gold);
 			}
 		}
 
@@ -107,6 +107,7 @@ public class ActivatableChest extends Doodad
 		if(!player.getInConversation())
 		{
 			player.getConversationBox().startConversation(player, null, null, conversation, new int[] { 3 });
+			player.playLootSound();
 		}
 		else
 		{
@@ -115,10 +116,16 @@ public class ActivatableChest extends Doodad
 			if(player.getConversationBox().getConversationTracker() >= player.getConversationBox().getConversationLength())
 			{
 				player.getConversationBox().endConversation();
+				
+				JukeBox.play("Coin");
+				
+				player.addSilver(silver);
+				player.addGold(gold);
+				used = true;
 			}
 		}
 		
-			player.playLootSound(doodadType);
+			
 			
 			active = true;
 

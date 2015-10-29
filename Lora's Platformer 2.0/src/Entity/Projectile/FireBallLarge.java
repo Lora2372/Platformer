@@ -29,8 +29,8 @@ public class FireBallLarge extends Projectile
 				down,  																// Holding down arrow
 				angle,
 				friendly, 															// Whether the spell is friendly or hostile
-				60, 																// Projectile width
-				60, 																// Projectile height
+				90, 																// Projectile width
+				90, 																// Projectile height
 				40, 																// Collision width
 				40, 																// Collision height
 				5, 																	// Projectile speed

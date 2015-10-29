@@ -1,13 +1,12 @@
 package Entity.Projectile;
 
-import Entity.Explosion.ElectricBallExplosion;
+import Entity.Explosion.ArcaneBallExplosion;
 import GameState.MainMap;
 import Main.Content;
 import TileMap.TileMap;
 
 public class ArcaneBall extends Projectile
 {
-	protected ElectricBallExplosion eletricBallExplosion;
 	
 	public ArcaneBall(
 			TileMap tileMap,
@@ -29,15 +28,15 @@ public class ArcaneBall extends Projectile
 				down,  																// Holding down arrow
 				angle,
 				friendly, 															// Whether the spell is friendly or hostile
-				96, 																// Projectile width
-				96, 																// Projectile height
-				80, 																// Collision width
+				90, 																// Projectile width
+				90, 																// Projectile height
+				60, 																// Collision width
 				60, 																// Collision height
 				5, 																	// Projectile speed
 				damage,																// Explosion damage
 				50,
 				96, 																// Explosion radius
-				"ElectricBall"														// Explosion sound
+				"ArcaneBall"														// Explosion sound
 			);
 	}
 	
@@ -48,7 +47,7 @@ public class ArcaneBall extends Projectile
 	
 		public void explode()
 		{
-			eletricBallExplosion = new ElectricBallExplosion(tileMap, mainMap, locationX, locationY, friendly);
-			mainMap.addExplosion(eletricBallExplosion);
+			ArcaneBallExplosion arcaneBallExplosion = new ArcaneBallExplosion(tileMap, mainMap, locationX, locationY, friendly);
+			mainMap.addExplosion(arcaneBallExplosion);
 		}
 }

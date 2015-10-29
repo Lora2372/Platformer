@@ -32,7 +32,9 @@ public class Fiona extends Unit
 	
 	protected boolean isHit = false;
 
-
+	protected boolean playerHit;
+	protected boolean recovered;
+	
 	
 	protected boolean defeated;
 	protected boolean used;
@@ -42,7 +44,7 @@ public class Fiona extends Unit
 	protected Player player;
 	
 	protected int[] numberofSounds;
-	public enum soundTypes { Attack, Hurt, Jump, Chargeup}
+	public enum soundTypes { Attack, Hurt, Jump, Chargeup, Hit, Recover}
 	
 	protected MysteriousDungeon mysteriousDungeon;
 	
@@ -199,10 +201,28 @@ public class Fiona extends Unit
 		JukeBox.play("Fiona" + soundTypes.Attack + "0" + myRandom);
 	}
 	
-//	public void playStunnedSound()
-//	{
-//		JukeBox.play("Grunt07");
-//	}
+	public void playHitSound()
+	{
+		Random random = new Random();
+		
+		int max = numberofSounds[4];
+		int min = 1;
+		
+		int myRandom = random.nextInt((max - min) + 1) + min;
+		JukeBox.play("Fiona" + soundTypes.Hit + "0" + myRandom);
+	}
+	
+	public void playRecoverSound()
+	{
+		Random random = new Random();
+		
+		int max = numberofSounds[5];
+		int min = 1;
+		
+		int myRandom = random.nextInt((max - min) + 1) + min;
+		JukeBox.play("Fiona" + soundTypes.Recover + "0" + myRandom);
+	}
+	
 	
 	public void castArcaneBall()
 	{
@@ -298,6 +318,7 @@ public class Fiona extends Unit
 			if(!stunned)
 			{
 				isHit = false;
+				playRecoverSound();
 				flying = true;
 			}
 			
@@ -326,7 +347,7 @@ public class Fiona extends Unit
 			if(enemiesDetected.size() > 0)
 			{
 				Unit enemy = enemiesDetected.get(0);
-				if(enemy.getx() > locationX) facingRight = true;
+				if(enemy.getLocationX() > locationX) facingRight = true;
 				else facingRight = false;
 				
 				
@@ -424,23 +445,34 @@ public class Fiona extends Unit
 		}
 		
 
-		if( !hidden &&((electricBall == null || electricBall.getHit()) && directionX == 0 && directionY == 0))
+		if( !hidden )
 		{
-			timer++;
-			if(timer > cooldown)
-			{	
-				timer = 0;
-				
-				if(mainMap.RNG(1, 2) == 1)
-				{
-					JukeBox.play("FionaChargeup01");
-					this.setStunned(1000);
+			if(player.getStunned() && !playerHit)
+			{
+				playHitSound();
+				playerHit = true;
+			}
+			
+			
+			if((electricBall == null || electricBall.getHit()) && directionX == 0 && directionY == 0)
+			{
+				timer++;
+				if(timer > cooldown)
+				{	
+					timer = 0;
+					playerHit = false;
 					
-					arcaneBallMode = true;
-					return;
+					if(mainMap.RNG(1, 2) == 1)
+					{
+						JukeBox.play("FionaChargeup01");
+						this.setStunned(1000);
+						
+						arcaneBallMode = true;
+						return;
+					}
+					
+					electricBallCasting = true;
 				}
-				
-				electricBallCasting = true;
 			}
 		}
 

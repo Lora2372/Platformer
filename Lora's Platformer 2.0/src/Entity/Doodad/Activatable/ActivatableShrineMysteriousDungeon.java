@@ -119,7 +119,7 @@ public class ActivatableShrineMysteriousDungeon extends Doodad
 						if(character == player || character == fiona)
 						{
 							
-							double tempX = character.getx() - (tileMap.getWidth() - 20 * tileSize);
+							double tempX = character.getLocationX() - (tileMap.getWidth() - 20 * tileSize);
 							
 							if(tempX < 0) tempX = 200;
 							System.out.println("tempX:" + tempX);
@@ -146,10 +146,10 @@ public class ActivatableShrineMysteriousDungeon extends Doodad
 					}
 					else
 					{
-						double tempX = currentDoodad.getx() - (tileMap.getWidth() - 20 * tileSize);
+						double tempX = currentDoodad.getLocationX() - (tileMap.getWidth() - 20 * tileSize);
 						if(tempX > 0)
 						{
-							currentDoodad.setPosition(currentDoodad.getx() - (tileMap.getWidth() - 20 * tileSize), currentDoodad.gety());
+							currentDoodad.setPosition(currentDoodad.getLocationX() - (tileMap.getWidth() - 20 * tileSize), currentDoodad.getLocationY());
 						}
 						else
 						{
@@ -174,7 +174,7 @@ public class ActivatableShrineMysteriousDungeon extends Doodad
 		}
 		if(player.getConversationBox().getConversationTracker() == 3)
 		{
-			fiona.setPosition(player.getx() + 200, player.gety() - 300);
+			fiona.setPosition(player.getLocationX() + 200, player.getLocationY() - 300);
 			fiona.setSpawning(true);
 			fiona.setHidden(false);
 			fiona.inControl(false);

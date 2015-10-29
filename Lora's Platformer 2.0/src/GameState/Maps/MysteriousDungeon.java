@@ -136,7 +136,7 @@ public class MysteriousDungeon extends MainMap
 		
 		if(!dungeonIntroduction)
 		{
-			if(player.getDirectionY() == 0 && player.gety() > 300)
+			if(player.getDirectionY() == 0 && player.getLocationY() > 300)
 			{
 				if(!player.getConversationBox().inConversation())
 				{

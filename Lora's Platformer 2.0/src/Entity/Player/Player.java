@@ -51,13 +51,13 @@ public class Player extends Unit
 				true,  																// inControl
 				100,	 															// health
 				100,	 															//maxHealth
-				1,	 																// healthRegen
+				0.005,	 																// healthRegen
 				100,	 															// mana
 				100,	 															// maxMana
-				1,	 																// manaRegen
+				0.05,	 																// manaRegen
 				100,	 															// stamina
 				100, 	 															// maxStamina
-				1,	 																// staminaRegen
+				0.05,	 																// staminaRegen
 				800,																// sightRange
 				120,
 				5,	 	 															// punchCost
@@ -163,9 +163,15 @@ public class Player extends Unit
 		JukeBox.play("Female01" + soundTypes.Attack + "0" + myRandom);
 	}
 	
-	public void playLootSound(String lootRarity)
+	public void playLootSound()
 	{
-		JukeBox.play("Female01" + soundTypes.Loot + lootRarity);
+		Random random = new Random();
+		
+		int max = numberofSounds[3];
+		int min = 1;
+		
+		int myRandom = random.nextInt((max - min) + 1) + min;
+		JukeBox.play("Female01" + soundTypes.Loot + "0" + myRandom);
 				
 	}
 	

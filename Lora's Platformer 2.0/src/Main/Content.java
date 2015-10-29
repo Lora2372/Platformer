@@ -15,16 +15,17 @@ public class Content
 	public static BufferedImage[][] FireBallLargeExplosion 	= load("/Art/Sprites/Effects/FireBallLargeExplosion.png", 512, 512);
 	public static BufferedImage[][] FireBallSmallExplosion 	= load("/Art/Sprites/Effects/FireBallLargeExplosion.png", 512, 512);
 	public static BufferedImage[][] ElectricBallExplosion 	= load("/Art/Sprites/Effects/ElectricBallExplosion.png", 180, 180);
+	public static BufferedImage[][] ArcaneBallExplosion		= load("/Art/Sprites/Effects/ArcaneBallExplosion.png", 512, 512);
 	
 	// Projectiles
-	public static BufferedImage[][] FireBallLarge 			= load("/Art/Sprites/Effects/FireBallLarge.png", 60, 60);
+	public static BufferedImage[][] FireBallLarge 			= load("/Art/Sprites/Effects/FireBallLarge.png", 90, 90);
 	public static BufferedImage[][] FireBallMedium			= load("/Art/Sprites/Effects/FireBallMediumNew.png", 60, 60);
 	public static BufferedImage[][] FireBallSmall 			= load("/Art/Sprites/Effects/FireBallSmall.png", 35, 35);
 	public static BufferedImage[][] FireBallSwirling 		= load("/Art/Sprites/Effects/FireBallSwirling.png", 60, 60);
 	public static BufferedImage[][] FireBallDouble 			= load("/Art/Sprites/Effects/FireBallDouble.png", 60, 60);
 	public static BufferedImage[][] ElectricBall			= load("/Art/Sprites/Effects/ElectricBall.png", 60, 60);
 	public static BufferedImage[][] ElectricBallChargeUp	= load("/Art/Sprites/Effects/ElectricBallChargeUp.png", 60, 60);
-	public static BufferedImage[][] ArcaneBall				= load("/Art/Sprites/Effects/ArcaneBall.png", 96, 96);
+	public static BufferedImage[][] ArcaneBall				= load("/Art/Sprites/Effects/ArcaneBall.png", 90, 90);
 
 	
 	// Characters
@@ -53,6 +54,7 @@ public class Content
 	public static BufferedImage[][] CaveEntrance			= load("/Art/Sprites/Doodads/CaveEntrance.png", 100, 96);
 	public static BufferedImage[][] Shrine					= load("/Art/Sprites/Doodads/Shrine.png", 146, 156);
 	public static BufferedImage[][] StatueSave				= load("/Art/Sprites/Doodads/StatueSave.png", 48, 100);
+	public static BufferedImage[][] Key						= load("/Art/Sprites/Doodads/Key.png", 120, 120); 
 	
 	//Effects
 	public static BufferedImage[][] Teleport 				= load("/Art/Sprites/Effects/Teleport.png", 192, 192);
@@ -118,6 +120,16 @@ public class Content
 		{
 			JukeBox.load("/Sound/CharacterSounds/Fiona/Hurt0" + i + ".mp3", "FionaHurt0" + i);
 		}
+		
+		for(int i = 1; i <= 3; i++)
+		{
+			JukeBox.load("/Sound/CharacterSounds/Fiona/Hit0" + i + ".mp3", "FionaHit0" + i);
+		}
+		
+		for(int i = 1; i <= 3; i++)
+		{
+			JukeBox.load("/Sound/CharacterSounds/Fiona/Recover0" + i + ".mp3", "FionaRecover0" + i);
+		}
 
 
 		
@@ -142,6 +154,8 @@ public class Content
 		JukeBox.load("/Sound/SpellEffects/ElectricBallLaunch.mp3", "ElectricBallLaunch");
 		JukeBox.load("/Sound/SpellEffects/ElectricBallImpact.mp3", "ElectricBallImpact");
 		
+		JukeBox.load("/Sound/SpellEffects/ArcaneBallImpact.mp3", "ArcaneBallImpact");
+		
 		JukeBox.load("/Sound/SpellEffects/FireBallLargeImpact.mp3", "FireBallLargeImpact");
 		JukeBox.load("/Sound/SpellEffects/FireBallSmallImpact.mp3", "FireBallSmallImpact");
 		
@@ -164,6 +178,8 @@ public class Content
 		JukeBox.load("/Sound/Doodads/OpenChestCommon.mp3", "OpenChestCommon");
 		JukeBox.load("/Sound/Doodads/OpenChestRare.mp3", "OpenChestRare");
 		JukeBox.load("/Sound/Doodads/Save.mp3", "Save");
+		
+		JukeBox.load("/Sound/Doodads/Coin.mp3", "Coin");
 		
 		JukeBox.load("/Sound/Doodads/Close.mp3", "Close");
 	}

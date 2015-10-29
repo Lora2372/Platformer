@@ -185,7 +185,7 @@ public class Succubus extends Unit
 		
 		if(enemiesDetected.size() > 0)
 		{
-			if(enemiesDetected.get(0).getx() > locationX) facingRight = true;
+			if(enemiesDetected.get(0).getLocationX() > locationX) facingRight = true;
 			else facingRight = false;
 			
 			if(timer > cooldown)

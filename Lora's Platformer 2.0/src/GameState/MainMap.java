@@ -263,7 +263,7 @@ public class MainMap extends GameState
 								}
 							}
 						}
-						Poff poff = new Poff(tileMap,characterList.get(i).getx(), characterList.get(i).gety());
+						Poff poff = new Poff(tileMap,characterList.get(i).getLocationX(), characterList.get(i).getLocationY());
 						stuff.add(poff);
 						
 						characterList.remove(i);
@@ -289,8 +289,8 @@ public class MainMap extends GameState
 		if(characterList != null)
 		{
 			tileMap.setPosition(
-					GamePanel.WIDTH / 2 - player.getx(), 
-					GamePanel.HEIGHT / 2 - player.gety()
+					GamePanel.WIDTH / 2 - player.getLocationX(), 
+					GamePanel.HEIGHT / 2 - player.getLocationY()
 					);
 		}
 		
@@ -539,7 +539,7 @@ public class MainMap extends GameState
 	public void GPS()
 	{
 //		spawnEnemies();
-		System.out.println("player X: " + player.getx() + ", playerY: " + player.gety());
+		System.out.println("player X: " + player.getLocationX() + ", playerY: " + player.getLocationY());
 	}
 	
 	
@@ -574,12 +574,12 @@ public class MainMap extends GameState
 		if(k == KeyEvent.VK_G) player.setCastingMagicShield();
 		
 		
-		if( k == KeyEvent.VK_M)player.setPosition(player.getx() + 200, player.gety()); 
+		if( k == KeyEvent.VK_M)player.setPosition(player.getLocationX() + 200, player.getLocationY()); 
 
-		if(k == KeyEvent.VK_P) spawnSlug(player.getx(), player.gety(), player.getFacingRight(), null); 
-		if(k == KeyEvent.VK_O) spawnSuccubus(player.getx(), player.gety(), player.getFacingRight()); 
-		if(k == KeyEvent.VK_I) spawnWaterfall(player.getx(), player.gety()); 
-		if(k == KeyEvent.VK_U) spawnSummonEffect(player.getx(), player.gety()); 
+		if(k == KeyEvent.VK_P) spawnSlug(player.getLocationX(), player.getLocationY(), player.getFacingRight(), null); 
+		if(k == KeyEvent.VK_O) spawnSuccubus(player.getLocationX(), player.getLocationY(), player.getFacingRight()); 
+		if(k == KeyEvent.VK_I) spawnWaterfall(player.getLocationX(), player.getLocationY()); 
+		if(k == KeyEvent.VK_U) spawnSummonEffect(player.getLocationX(), player.getLocationY()); 
 		if(k == KeyEvent.VK_G) GPS(); 
 	}
 	

@@ -82,8 +82,8 @@ public class Tutorial extends MainMap
 			}
 
 			if(!player.getFalling())
-				if(player.getx() < 2500)
-					player.setSpawnPoint(1420, player.gety() - 50);
+				if(player.getLocationX() < 2500)
+					player.setSpawnPoint(1420, player.getLocationY() - 50);
 				else
 					player.setSpawnPoint(4000, 320);
 					
@@ -95,7 +95,7 @@ public class Tutorial extends MainMap
 							Conversation.tutorialWelcomeMessageWhoTalks);
 			
 			if(tutorialProgress == 1)
-				if(player.getx() - 400 > 200 || player.getx() - 400 < -200)
+				if(player.getLocationX() - 400 > 200 || player.getLocationX() - 400 < -200)
 				if(player.getLeft() || player.getRight() && !player.getInConversation())
 					player.getConversationBox().startConversation(player, null, null, 
 							Conversation.tutorialMoveMessage, 
@@ -108,25 +108,25 @@ public class Tutorial extends MainMap
 							Conversation.tutorialJumpMessageWhoTalks);
 			
 			if(tutorialProgress == 3)
-				if(player.getx() > 1420 && !player.getInConversation())
+				if(player.getLocationX() > 1420 && !player.getInConversation())
 					player.getConversationBox().startConversation(player, null, null, 
 							Conversation.tutorialHoleSmallMessage, 
 							Conversation.tutorialHoleSmallMessageWhoTalks);
 					
 			if(tutorialProgress == 4)
-				if(player.getx() > 1820 && !player.getInConversation() && !player.getFalling())
+				if(player.getLocationX() > 1820 && !player.getInConversation() && !player.getFalling())
 					player.getConversationBox().startConversation(player, null, null, 
 							Conversation.tutorialHoleSmallPassedMessage, 
 							Conversation.tutorialHoleSmallPassedMessageWhoTalks);
 			
 			if(tutorialProgress == 5)
-				if(player.getx() > 2600 && !player.getInConversation() && !player.getFalling())
+				if(player.getLocationX() > 2600 && !player.getInConversation() && !player.getFalling())
 					player.getConversationBox().startConversation(player, null, null, 
 							Conversation.tutorialMovementMasteredMessage, 
 							Conversation.tutorialMovementMasteredMessageWhoTalks);
 			
 			if(tutorialProgress == 6)
-				if(player.getx() > 2950 && !player.getInConversation() && !player.getFalling())
+				if(player.getLocationX() > 2950 && !player.getInConversation() && !player.getFalling())
 					player.getConversationBox().startConversation(player, null, null, 
 							Conversation.tutorialFireBallSmallMessage, 
 							Conversation.tutorialFireBallSmallMessageWhoTalks);
@@ -159,7 +159,7 @@ public class Tutorial extends MainMap
 			if(tutorialProgress == 11)
 				if(!player.getInConversation())
 				{
-					succubus = new Succubus(tileMap, false, false, false, false, false, "Rui", 3500, player.gety(), this);
+					succubus = new Succubus(tileMap, false, false, false, false, false, "Rui", 3500, player.getLocationY(), this);
 					enemies.add(succubus);
 					characterList.add(succubus);
 					
@@ -184,13 +184,13 @@ public class Tutorial extends MainMap
 
 
 			if(tutorialProgress == 13)
-				if(!player.getInConversation() && player.getx() > 4000)
+				if(!player.getInConversation() && player.getLocationX() > 4000)
 					player.getConversationBox().startConversation(player, null, null, 
 							Conversation.tutorialHoleLargeMessage, 
 							Conversation.tutorialHoleLargeMessageWhoTalks);
 			
 			if(tutorialProgress == 14)
-				if(!player.getInConversation() && player.getx() > 4500 && !player.getFalling())
+				if(!player.getInConversation() && player.getLocationX() > 4500 && !player.getFalling())
 					player.getConversationBox().startConversation(player, null, null, 
 							Conversation.tutorialHoleLargePassedMessage, 
 							Conversation.tutorialHoleLargePassedMessageWhoTalks);

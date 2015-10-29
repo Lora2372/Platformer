@@ -359,8 +359,8 @@ public abstract class MapObject
 	}
 	public void setHit() { }
 	
-	public int getx() { return (int)locationX; }
-	public int gety() { return (int)locationY; }
+	public int getLocationX() { return (int)locationX; }
+	public int getLocationY() { return (int)locationY; }
 	public int getWidth() { return (int)width; }
 	public int getHeight() { return (int)height; }
 	public int getCollisionWidth() { return (int)collisionWidth; }

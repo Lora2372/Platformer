@@ -50,16 +50,16 @@ public class Unit extends MapObject
 	protected boolean sexytime1;
 	protected boolean sexytime2;
 
-	protected int health;
-	protected int maxHealth;
+	protected double health;
+	protected double maxHealth;
 	protected double healthRegen;
 
-	protected int mana;
-	protected int maxMana;
+	protected double mana;
+	protected double maxMana;
 	protected double manaRegen;
 	
-	protected int stamina;
-	protected int maxStamina;
+	protected double stamina;
+	protected double maxStamina;
 	protected double staminaRegen;
 	
 	protected int damageOnTouch;
@@ -190,14 +190,14 @@ public class Unit extends MapObject
 			double stopJumpSpeed,
 			boolean facingRight,
 			boolean inControl,
-			int health,
-			int maxHealth,
+			double health,
+			double maxHealth,
 			double healthRegen,	
-			int mana, 
-			int maxMana,
+			double mana, 
+			double maxMana,
 			double manaRegen,
-			int stamina,
-			int maxStamina,
+			double stamina,
+			double maxStamina,
 			double staminaRegen,
 			int sightRangeX,
 			int sightRangeY,
@@ -377,12 +377,12 @@ public class Unit extends MapObject
 	
 	public boolean isPlayer() { return player; }
 	
-	public int getHealth() { return health; }
-	public int getMaxHealth() { return maxHealth; }
-	public int getMana() { return mana; }
-	public int getMaxMana() { return maxMana; }
-	public int getStamina() { return stamina; }
-	public int getMaxStamina() { return maxStamina; }
+	public double getHealth() { return health; }
+	public double getMaxHealth() { return maxHealth; }
+	public double getMana() { return mana; }
+	public double getMaxMana() { return maxMana; }
+	public double getStamina() { return stamina; }
+	public double getMaxStamina() { return maxStamina; }
 	
 	public int getFireBallSmallManaCost() { return fireBallSmallManaCost; }
 	public int getFireBallLargeManaCost() { return fireBallLargeManaCost; }
@@ -1087,6 +1087,8 @@ public class Unit extends MapObject
 		animation.setDelay(stunDuration);
 	}
 	
+	public boolean getStunned() { return stunned; }
+	
 	public ArrayList<Unit> detectEnemy(ArrayList<Unit> characterList, boolean onlyInFrontOfYou)
 	{
 		ArrayList<Unit> enemiesDetected = new ArrayList<Unit>();
@@ -1102,10 +1104,10 @@ public class Unit extends MapObject
 				{
 					if
 						(		
-							character.getx() > locationX &&
-							character.getx() < locationX + sightRangeX &&
-							character.gety() > locationY - height - sightRangeY /2 &&
-							character.gety() < locationY + height / 2 + sightRangeY / 2
+							character.getLocationX() > locationX &&
+							character.getLocationX() < locationX + sightRangeX &&
+							character.getLocationY() > locationY - height - sightRangeY /2 &&
+							character.getLocationY() < locationY + height / 2 + sightRangeY / 2
 						)
 					{
 						enemiesDetected.add(character);
@@ -1115,10 +1117,10 @@ public class Unit extends MapObject
 				{
 					if
 						(
-								character.getx() < locationX &&
-								character.getx() > locationX - sightRangeX &&
-								character.gety() > locationY - height - sightRangeY /2 &&
-								character.gety() < locationY + height / 2 + sightRangeY / 2
+								character.getLocationX() < locationX &&
+								character.getLocationX() > locationX - sightRangeX &&
+								character.getLocationY() > locationY - height - sightRangeY /2 &&
+								character.getLocationY() < locationY + height / 2 + sightRangeY / 2
 						)
 					{
 						enemiesDetected.add(character);
@@ -1140,10 +1142,10 @@ public class Unit extends MapObject
 			{
 				if
 				(
-						projectile.getx() > locationX &&
-						projectile.getx() < locationX + punchRange &&
-						projectile.gety() > locationY - height / 2 &&
-						projectile.gety() < locationY + height / 2
+						projectile.getLocationX() > locationX &&
+						projectile.getLocationX() < locationX + punchRange &&
+						projectile.getLocationY() > locationY - height / 2 &&
+						projectile.getLocationY() < locationY + height / 2
 				)
 				{
 					projectile.bounce();
@@ -1153,10 +1155,10 @@ public class Unit extends MapObject
 			{
 				if
 				(
-						projectile.getx() < locationX &&
-						projectile.getx() > locationX - punchRange &&
-						projectile.gety() > locationY - height / 2 &&
-						projectile.gety() < locationY + height / 2
+						projectile.getLocationX() < locationX &&
+						projectile.getLocationX() > locationX - punchRange &&
+						projectile.getLocationY() > locationY - height / 2 &&
+						projectile.getLocationY() < locationY + height / 2
 				)
 				{
 					projectile.bounce();
@@ -1172,10 +1174,10 @@ public class Unit extends MapObject
 			{
 				if
 				(
-						projectile.getx() > locationX &&
-						projectile.getx() < locationX + 100 &&
-						projectile.gety() > locationY - 60 &&
-						projectile.gety() < locationY + 60
+						projectile.getLocationX() > locationX &&
+						projectile.getLocationX() < locationX + 100 &&
+						projectile.getLocationY() > locationY - 60 &&
+						projectile.getLocationY() < locationY + 60
 				)
 				{
 
@@ -1197,10 +1199,10 @@ public class Unit extends MapObject
 			{
 				if
 				(
-						projectile.getx() < locationX &&
-						projectile.getx() > locationX - 100 &&
-						projectile.gety() > locationY - 60 &&
-						projectile.gety() < locationY + 60
+						projectile.getLocationX() < locationX &&
+						projectile.getLocationX() > locationX - 100 &&
+						projectile.getLocationY() > locationY - 60 &&
+						projectile.getLocationY() < locationY + 60
 				)
 				{
 					if(tennisTimer >= tennisCooldown)
@@ -1241,10 +1243,10 @@ public class Unit extends MapObject
 					{
 						if
 						(
-								character.getx() > locationX &&
-								character.getx() < locationX + punchRange &&
-								character.gety() > locationY - height / 2 &&
-								character.gety() < locationY + height / 2
+								character.getLocationX() > locationX &&
+								character.getLocationX() < locationX + punchRange &&
+								character.getLocationY() > locationY - height / 2 &&
+								character.getLocationY() < locationY + height / 2
 						)
 						{
 							charactersHit.add(character);
@@ -1255,10 +1257,10 @@ public class Unit extends MapObject
 					{
 						if
 						(
-							character.getx() < locationX &&
-							character.getx() > locationX - punchRange &&
-							character.gety() > locationY - height / 2 &&
-							character.gety() < locationY + height / 2
+							character.getLocationX() < locationX &&
+							character.getLocationX() > locationX - punchRange &&
+							character.getLocationY() > locationY - height / 2 &&
+							character.getLocationY() < locationY + height / 2
 						)
 						{
 							charactersHit.add(character);
@@ -1277,10 +1279,10 @@ public class Unit extends MapObject
 					{
 						if
 						(
-								character.getx() > locationX &&
-								character.getx() < locationX + dashRange &&
-								character.gety() > locationY - height / 2 &&
-								character.gety() < locationY + height / 2
+								character.getLocationX() > locationX &&
+								character.getLocationX() < locationX + dashRange &&
+								character.getLocationY() > locationY - height / 2 &&
+								character.getLocationY() < locationY + height / 2
 						)
 						{
 							charactersHit.add(character);
@@ -1291,10 +1293,10 @@ public class Unit extends MapObject
 					{
 						if
 						(
-							character.getx() < locationX &&
-							character.getx() > locationX - dashRange &&
-							character.gety() > locationY - height / 2 &&
-							character.gety() < locationY + height / 2
+							character.getLocationX() < locationX &&
+							character.getLocationX() > locationX - dashRange &&
+							character.getLocationY() > locationY - height / 2 &&
+							character.getLocationY() < locationY + height / 2
 						)
 						{
 							charactersHit.add(character);
