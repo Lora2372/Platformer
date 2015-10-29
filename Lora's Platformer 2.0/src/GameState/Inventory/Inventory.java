@@ -72,10 +72,13 @@ public class Inventory
 		{
 			for(int j = 0; j < numberOfColumns; j++)
 			{
-				if(items[i][j].equals(item))
+				if(items[i][j] != null)
 				{
-					items[i][j] = null;
-					return true;
+					if(items[i][j].equals(item))
+					{
+						items[i][j] = null;
+						return true;
+					}
 				}
 			}
 		}
@@ -92,10 +95,13 @@ public class Inventory
 		{
 			for(int j = 0; j < numberOfColumns; j++)
 			{
-				if(items[i][j].getItemType().equals(itemType))
+				if(items[i][j] != null)
 				{
-					System.out.println("Found the item: " + itemType);
-					return items[i][j];
+					if(items[i][j].getItemType().equals(itemType))
+					{
+						System.out.println("Found the item: " + itemType);
+						return items[i][j];
+					}
 				}
 			}
 		}

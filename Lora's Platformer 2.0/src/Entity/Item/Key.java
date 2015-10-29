@@ -34,7 +34,7 @@ public class Key extends Item
 				owner, 
 				false, 
 				stacks, 
-				false, 
+				true, 
 				"Key"
 				
 				);

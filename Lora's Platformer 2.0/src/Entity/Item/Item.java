@@ -170,6 +170,7 @@ public class Item extends MapObject
 	public void interact(Player player)
 	{
 		player.getInventory().addItem(this);
+		owner = player;
 	}
 	
 	public void use()
@@ -179,7 +180,8 @@ public class Item extends MapObject
 			stacks--;
 			if(stacks <= 0)
 			{
-				removeMe = true;
+				removeMe = true;			
+				owner.getInventory().removeItem(this);
 			}
 		}
 	}

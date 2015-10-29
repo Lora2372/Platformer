@@ -73,7 +73,7 @@ public class Doodad extends MapObject
 	
 	public void interact(Player player)
 	{
-		if(!active) active = true;
+//		if(!active) active = true;
 	}
 	
 	public void activateSound() { }

@@ -15,6 +15,8 @@ public class ActivatableChest extends Doodad
 	protected int gold;
 	
 	protected boolean locked;
+	protected boolean successfullyOpened;
+	
 	
 	public ActivatableChest(
 			TileMap tileMap, 
@@ -84,7 +86,6 @@ public class ActivatableChest extends Doodad
 			return;
 		
 		String conversationPiece = "";
-		boolean successful = false;
 		if(!active)
 		{
 			if(locked)
@@ -94,7 +95,7 @@ public class ActivatableChest extends Doodad
 				if(item != null)
 				{
 					conversationPiece += "You unlocked the chest and found:";
-					successful = true;
+					active = true;
 					item.use();
 				}
 				else
@@ -105,11 +106,12 @@ public class ActivatableChest extends Doodad
 			else
 			{
 				conversationPiece = "You found ";
-				successful = true;
+				active = true;
 			}
 			
-			if(successful)
+			if(active)
 			{
+//				active = true;
 				if(silver > 0)
 				{
 					conversationPiece = conversationPiece + silver + " silver";
@@ -135,7 +137,7 @@ public class ActivatableChest extends Doodad
 		{
 			player.getConversationBox().startConversation(player, null, null, conversation, new int[] { 3 });
 			
-			if(successful)
+			if(active)
 			{
 				player.playLootSound();
 			}
@@ -148,21 +150,18 @@ public class ActivatableChest extends Doodad
 			{
 				player.getConversationBox().endConversation();
 				
-				if(successful)
+				if(active)
 				{
 					JukeBox.play("Coin");
 					
 					player.addSilver(silver);
 					player.addGold(gold);
 					used = true;
+					
+					System.out.println("Successful");
 				}
 			}
 		}
-		
-			
-			
-			active = true;
-
 	}
 	
 	public void activateSound() 
