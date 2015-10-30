@@ -5,9 +5,9 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import Audio.JukeBox;
-import Entity.Enemies.Succubus;
 import Entity.Player.Conversation;
 import Entity.Player.Player;
+import Entity.Unit.Succubus;
 import GameState.GameStateManager;
 import GameState.MainMap;
 import TileMap.Background;

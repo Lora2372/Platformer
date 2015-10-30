@@ -5,8 +5,6 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import Main.GamePanel;
 import TileMap.*;
-import Entity.*;
-import Entity.Enemies.*;
 import Entity.Explosion.Explosion;
 import Entity.Item.Item;
 import Entity.Item.Key;
@@ -15,6 +13,7 @@ import Entity.Doodad.*;
 import Entity.Doodad.Activatable.*;
 import Entity.Player.*;
 import Entity.Projectile.Projectile;
+import Entity.Unit.*;
 import Audio.JukeBox;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -25,7 +24,6 @@ public class MainMap extends GameState
 	protected TileMap tileMap;
 	protected Background background;
 	protected GameOver gameoverScreen;
-	
 	protected Player player;
 	protected ArrayList<Unit> characterList;
 	protected ArrayList<Unit> enemies;
@@ -574,14 +572,14 @@ public class MainMap extends GameState
 	
 	public void spawnKey(double locationX, double locationY, String keyType)
 	{
-		Key key = new Key(tileMap, true, locationX, locationY, 0, 0, null, 1, keyType);
+		Key key = new Key(tileMap, true, locationX, locationY, null, 1, keyType);
 		items.add(key);
 	
 	}
 	
 	public void spawnPotion(double locationX, double locationY, String potionType)
 	{
-		Potion potion = new Potion(tileMap, true, locationX, locationY, 0, 0, null, 1, potionType);
+		Potion potion = new Potion(tileMap, true, locationX, locationY, null, 1, potionType);
 		items.add(potion);
 	}
 	

@@ -48,6 +48,9 @@ public class StatueSave extends Doodad
 	{
 		JSONWriter.saveFile(player, (int)spawnX, (int)spawnY);
 		playSound();
+		player.restoreHealth(player.getMaxHealth());
+		player.restoreMana(player.getMaxMana());
+		player.restoreStamina(player.getMaxStamina());
 	}
 	
 	

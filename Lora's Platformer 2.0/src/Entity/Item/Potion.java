@@ -2,7 +2,7 @@ package Entity.Item;
 
 import Audio.JukeBox;
 import Entity.MapObject;
-import Entity.Unit;
+import Entity.Unit.Unit;
 import Main.Content;
 import TileMap.TileMap;
 
@@ -14,8 +14,6 @@ public class Potion extends Item
 			boolean inWorld, 
 			double locationX, 
 			double locationY, 
-			int inventorySlotX,
-			int inventorySlotY, 
 			MapObject owner, 
 			int stacks,
 			String potionType
@@ -32,8 +30,6 @@ public class Potion extends Item
 				8, 
 				locationX, 
 				locationY,
-				inventorySlotX, 
-				inventorySlotY, 
 				owner, 
 				false, 
 				stacks, 

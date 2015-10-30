@@ -26,7 +26,7 @@ public class Conversation
 			
 	}
 	
-	public int[] liadringFirstEncounterWhoTalks()
+	public int[] liadrinFirstEncounterWhoTalks()
 	{
 		return new int[]
 		{
@@ -47,7 +47,7 @@ public class Conversation
 		};
 	}
 	
-	public int[] liadringFirstEncounterChoiceHardWhoTalks()
+	public int[] liadrinFirstEncounterChoiceHardWhoTalks()
 	{
 		return new int[]
 		{
@@ -69,33 +69,106 @@ public class Conversation
 	{
 		return new int[]
 		{
-			0
+			1
 		};
 	}
 	
 
 	
+
+	
+	public String[] interactWithFionasShrine()
+	{
+		return new String[]
+		{
+			"The shrine glows faintly, there appears to be some pulsing orb at its core.",
+			"Touch the orb? \n - Yes \n - No"
+		};
+	};
+	
+	public int[] interactWithFinonasShrineWhoTalks()
+	{
+		return new int[]
+		{
+			3,
+			3
+		};
+	}
+	
+	
+	public String[] interactWithFionasShrineChoiceYes()
+	{
+		return new String[]
+		{
+			"The shrine hums at your touch...",														// 3
+			"Laughter echo through the tunnels",													// 3
+			"The door behind you closed...",														// 3
+			"Well look what I found, rummaging through my sanctum...",								// 5
+			"Who's there? reveal yourself!",														// 0
+			"Another apprentice thrown to the wolves I see...",										// 1
+			"I won't be an apprentice for much longer!",											// 0
+			"No? \n We'll see...",																	// 1
+			"I'm Fiona, by the way, keeper of this sanctum.",										// 1
+			"If you manage to defeat me, you've earned your freedom.",								// 1
+			"If you lose however, well... let's just say you will never see the light of day.",		// 1
+			"I lose to no one!",																	// 0
+			"Defend yourself if you must, it will make my victory all the sweeter..."				// 1
+		};
+	}
+	
+	public int[] interactWithFinonasShrinChoiceYesWhoTalks()
+	{
+		return new int[]
+		{
+			3,
+			3,
+			3,
+			5,
+			0,
+			1,
+			0,
+			1,
+			1,
+			1,
+			1,
+			0,
+			1
+		};
+	}
+
+	
+	public String[] interactWithFionasShrineChoiceNo()
+	{
+		return new String[]
+		{
+			"You step away from the shrine..."
+		};
+	}
+	
+	public int[] interactWithFinonasShrinChoiceNoWhoTalks()
+	{
+		return new int[]
+		{
+			3
+		};
+	}
+	
+
 	
 	public String[] fionaDefeated = new String[]
 	{
-		"Ugh...",
-		"Ready to talk about this?",
-		"I'll kill you for this...",
-		"...",
-		"Damn it, she escaped!",
-		"...",
-		"At least the door opened..."
+		"Ugh... \n Well done, I see you are an apprentice no longer.",							// 1
+		"As keeper of this sanctum I hearby release you from duty, you're free to go.",			// 1
+		"Just like that?",																		// 0
+		"But of course, were you expecting some form of reward? \n Until we meet again..."		// 1
 	};
 	
 	public int[] fionaDefeatedWhoTalks = new int[]
 	{
 		1,
-		0,
 		1,
-		3,
 		0,
-		3,
-		0
+		1
 	};
 	
 	

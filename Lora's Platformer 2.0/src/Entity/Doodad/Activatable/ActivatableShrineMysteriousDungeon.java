@@ -7,8 +7,10 @@ import javax.imageio.ImageIO;
 import TileMap.TileMap;
 import Audio.JukeBox;
 import Entity.Doodad.Doodad;
-import Entity.Enemies.Fiona;
+import Entity.Player.Conversation;
+import Entity.Player.ConversationBox;
 import Entity.Player.Player;
+import Entity.Unit.Fiona;
 import GameState.GameStateManager;
 import GameState.Maps.MysteriousDungeon;
 import Main.Content;
@@ -20,32 +22,15 @@ public class ActivatableShrineMysteriousDungeon extends Doodad
 	
 	protected Player player;
 	
-	protected boolean startConveration;
-	protected boolean used;
+	protected boolean startConversation;
+	protected boolean used = false;
+	protected boolean touched = false;
 	
 	protected Fiona fiona;
 	
-	int whoTalks[] = new int[]
-	{
-		3, 3, 3, 3, 1, 0, 1, 1, 0, 1, 0				
-	};
+	protected Conversation conversation;
 	
-	protected String conversation[] = new String[]
-			{
-			"The Shrine glows faintly, there's something written on it.",
-			"Read what it says? \n - Yes \n - No",
-			"...",
-			"...",
-			"Well look who I found, rummaging through my sanctum...",						// 1
-			"Liadrin?!",																	// 0
-			"Liadrin? "
-			+ "... "
-			+ "No that's not quite right, I'm Fiona. ",									// 1		
-			"But enough about that, since you're here, that can only mean one thing.",		// 1
-			"...?",																			// 0
-			"Play ignorant if you wish, it shan't stop me!",								// 1
-			"Wait!..."																		// 0
-		};
+	protected ConversationBox conversationBox;
 	
 	public ActivatableShrineMysteriousDungeon(
 			TileMap tileMap,
@@ -75,6 +60,8 @@ public class ActivatableShrineMysteriousDungeon extends Doodad
 		this.fiona = fiona;
 		this.gameStateManager = gameStateManager;
 		this.mysteriousDungeon = mysteriousDungeon;
+		
+		conversation = player.getConversation();
 	}
 	
 	public void setDoodad(int currentAction)
@@ -82,123 +69,168 @@ public class ActivatableShrineMysteriousDungeon extends Doodad
 		sprites = Content.Shrine[0];
 	}
 	
-	public boolean getStartConversation() { return startConveration; }
+	public boolean getStartConversation() { return startConversation; }
 	
 	public void startConversation(Player player)
 	{
-		used = true;
-		player.getConversationBox().startConversation(player, fiona, null, conversation, whoTalks);
+		
+		if(!touched)
+		{
+			player.getConversationBox().startConversation(player, null, null, player.getConversation().interactWithFionasShrine(), player.getConversation().interactWithFinonasShrineWhoTalks());
+		}
+		else if(!used)
+		{
+			used = true;
+			player.getConversationBox().startConversation(player, fiona, null, conversation.interactWithFionasShrine(), conversation.interactWithFinonasShrineWhoTalks());
+		}
 	}
 	
 	public void interact(Player player)
 	{
-		
-		if(player == null) this.player = player;
-		
-		if(!player.getConversationBox().inConversation() && !used)
-			startConversation(player);
-//		else
-//			player.getConversationBox().progressConversation();
-		
-		if(player.getConversationBox().getConversationTracker() == 2)
+		// If the player is null for whatever reason, update it with the player interacting with it:
+		if(this.player == null) 
 		{
-			JukeBox.play("Close");
-			try
-			{				
-				for(int i = 0; i < mysteriousDungeon.getCharacterList().size(); i++)
+			this.player = player;
+			conversationBox = player.getConversationBox();
+		}
+		
+		
+		// If the player is not yet in a conversation and has not yet used the shrine, start the first conversation:
+		if(!player.getInConversation() && !used)
+		{
+			startConversation(player);
+		}
+		
+		// If the player currently is in a conversation but has not yet made the choice to touch the shrine:
+		if(player.getInConversation() && !touched)
+		{
+			if(conversationBox.getConversationTracker() >= player.getConversation().interactWithFionasShrine().length)
+			{
+				if(conversationBox.getChoiceMade() == 1)
 				{
-					Entity.Unit character = mysteriousDungeon.getCharacterList().get(i);
-					if(character == null)
+					touched = true;
+					startConversation(player);
+				}
+				else
+				{
+					conversationBox.endConversation();
+				}
+			}
+		}
+		
+		// If the player has decided to start the encounter and therefore used the shrine:
+		if(used)
+		{
+			if(conversationBox.getConversationTracker() == 1)
+			{
+				// Play humming sound
+				System.out.println("tracker is at 1");
+				
+
+			}
+			else if(conversationBox.getConversationTracker() == 2)
+			{
+				// Play laugh
+				System.out.println("tracker is at 2");
+				
+			}
+			else if(conversationBox.getConversationTracker() == 3)
+			{
+				// Close the door
+				System.out.println("tracker is at 3");
+				
+				JukeBox.play("Close");
+				
+				try
+				{
+					for(int i = 0; i < mysteriousDungeon.getCharacterList().size(); i++)
 					{
-						System.out.println("removing a character");
-						mysteriousDungeon.getCharacterList().remove(character);
-						i--;
-					}
-					else
-					{
-						if(character == player || character == fiona)
+						Entity.Unit.Unit character = mysteriousDungeon.getCharacterList().get(i);
+						if(character == null)
 						{
-							
-							double tempX = character.getLocationX() - (tileMap.getWidth() - 20 * tileSize);
-							
-							if(tempX < 0) tempX = 200;
-							System.out.println("tempX:" + tempX);
-//							character.setPosition(locationX - (GamePanel.WIDTH / 30 - 20), locationY);
-							character.setPosition(tempX, 550);
-							
-						}
-						else
-						{
+							System.out.println("removing a character");
 							mysteriousDungeon.getCharacterList().remove(character);
-							character = null;
 							i--;
 						}
-					}
-				}
-				for(int i = 0; i < mysteriousDungeon.getStuff().size(); i++)
-				{
-					Doodad currentDoodad = mysteriousDungeon.getStuff().get(i);
-					
-					if(currentDoodad == null)
-					{
-						mysteriousDungeon.getStuff().remove(currentDoodad);
-						i--;
-					}
-					else
-					{
-						double tempX = currentDoodad.getLocationX() - (tileMap.getWidth() - 20 * tileSize);
-						if(tempX > 0)
-						{
-							currentDoodad.setPosition(currentDoodad.getLocationX() - (tileMap.getWidth() - 20 * tileSize), currentDoodad.getLocationY());
-						}
 						else
+						{
+							if(character == player || character == fiona)
+							{
+								
+								double tempX = character.getLocationX() - (tileMap.getWidth() - 20 * tileSize);
+								
+								if(tempX < 0) tempX = 200;
+								System.out.println("tempX:" + tempX);
+//								character.setPosition(locationX - (GamePanel.WIDTH / 30 - 20), locationY);
+								character.setPosition(tempX, 550);
+								
+							}
+							else
+							{
+								mysteriousDungeon.getCharacterList().remove(character);
+								character = null;
+								i--;
+							}
+						}
+					}
+					for(int i = 0; i < mysteriousDungeon.getStuff().size(); i++)
+					{
+						Doodad currentDoodad = mysteriousDungeon.getStuff().get(i);
+						
+						if(currentDoodad == null)
 						{
 							mysteriousDungeon.getStuff().remove(currentDoodad);
-							mysteriousDungeon.getActivatables().remove(currentDoodad);
-							currentDoodad = null;
 							i--;
 						}
+						else
+						{
+							double tempX = currentDoodad.getLocationX() - (tileMap.getWidth() - 20 * tileSize);
+							if(tempX > 0)
+							{
+								currentDoodad.setPosition(currentDoodad.getLocationX() - (tileMap.getWidth() - 20 * tileSize), currentDoodad.getLocationY());
+							}
+							else
+							{
+								mysteriousDungeon.getStuff().remove(currentDoodad);
+								mysteriousDungeon.getActivatables().remove(currentDoodad);
+								currentDoodad = null;
+								i--;
+							}
+						}
 					}
+					
+					JukeBox.stop("MysteriousDungeon");
+					
+					tileMap.loadTiles(ImageIO.read(getClass().getResource("/Art/Tilesets/LorasTileset.png")));
+					tileMap.loadMap("/Maps/MysteriousDungeonB.map");
+					tileMap.setPosition(0, 0);
+				}
+				catch(IOException e)
+				{
+					e.printStackTrace();
 				}
 				
-				JukeBox.stop("MysteriousDungeon");
-				
-				tileMap.loadTiles(ImageIO.read(getClass().getResource("/Art/Tilesets/LorasTileset.png")));
-				tileMap.loadMap("/Maps/MysteriousDungeonB.map");
-				tileMap.setPosition(0, 0);
 			}
-			catch(IOException e)
-			{
-				e.printStackTrace();
-			}
-		}
-		if(player.getConversationBox().getConversationTracker() == 3)
-		{
-			fiona.setPosition(player.getLocationX() + 200, player.getLocationY() - 300);
-			fiona.setSpawning(true);
-			fiona.setHidden(false);
-			fiona.inControl(false);
 			
-
-			JukeBox.loop("MysteriousConversation");			
+			else if(conversationBox.getConversationTracker() == 6)
+			{
+				// Fiona reveals herself
+				fiona.setPosition(player.getLocationX() + 200, player.getLocationY() - 300);
+				fiona.setSpawning(true);
+				fiona.setHidden(false);
+				fiona.inControl(false);
+				
+				JukeBox.loop("MysteriousConversation");	
+			}
+			else if(conversationBox.getConversationTracker() >= player.getConversation().interactWithFinonasShrinChoiceYesWhoTalks().length)
+			{
+				player.getConversationBox().endConversation();
+				startConversation = true;
+				active = false;
+				used = true;
+				fiona.inControl(true);
+				player.getHUD().addBoss(fiona);
+			}
 		}
-		
-		if(player.getConversationBox().getConversationTracker() >= conversation.length)
-		{
-			player.getConversationBox().endConversation();
-			startConveration = true;
-			active = false;
-			used = true;
-			fiona.inControl(true);
-			player.getHUD().addBoss(fiona);
-		}
-		
-
-	}
-	
-	public void playSound() 
-	{ 
-//		JukeBox.play("OpenChestCommon");
-	}
-	
+	}	
 }

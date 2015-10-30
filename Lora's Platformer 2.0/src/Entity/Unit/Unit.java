@@ -1,9 +1,12 @@
-package Entity;
+package Entity.Unit;
 
 import java.util.ArrayList;
 import java.util.Random;
 import Audio.JukeBox;
 import javax.imageio.ImageIO;
+
+import Entity.Animation;
+import Entity.MapObject;
 import Entity.Doodad.*;
 import Entity.Item.Item;
 import Entity.Player.ConversationBox;
@@ -54,14 +57,20 @@ public class Unit extends MapObject
 	protected double health;
 	protected double maxHealth;
 	protected double healthRegen;
-
+	protected double healthRestorationAmount;
+	protected double healthRestorationPerTick = 3;
+	
 	protected double mana;
 	protected double maxMana;
 	protected double manaRegen;
+	protected double manaRestorationAmount;
+	protected double manaRestorationPerTick;
 	
 	protected double stamina;
 	protected double maxStamina;
 	protected double staminaRegen;
+	protected double staminaRestorationAmount;
+	protected double staminaRestorationPerTick = 3;
 	
 	protected int damageOnTouch;
 	protected boolean friendly;
@@ -379,31 +388,40 @@ public class Unit extends MapObject
 	public double getHealth() { return health; }
 	public double getMaxHealth() { return maxHealth; }
 	
-	public void restoreHealth(double health) 
+	public void restoreHealth(double healthRestored) 
 	{ 
-		this.health += health; 
-		if(this.health > maxHealth)
-			this.health = maxHealth;
+		this.healthRestorationAmount = healthRestored;
+		
+		if(this.healthRestorationAmount > maxHealth)
+		{
+			this.healthRestorationAmount = maxHealth;
+		}
 	}
 	
 	public double getMana() { return mana; }
 	public double getMaxMana() { return maxMana; }
 	
-	public void restoreMana(double mana) 
+	public void restoreMana(double manaRestored) 
 	{ 
-		this.mana += mana; 
-		if(this.mana > maxHealth)
-			this.mana = maxHealth;
+		this.manaRestorationAmount = manaRestored;
+		
+		if(this.manaRestorationAmount > maxMana)
+		{
+			this.manaRestorationAmount = maxMana;
+		}
 	}
 	
 	public double getStamina() { return stamina; }
 	public double getMaxStamina() { return maxStamina; }
 
-	public void restoreStamina(double stamina) 
+	public void restoreStamina(double staminaRestored) 
 	{ 
-		this.stamina += stamina; 
-		if(this.stamina > maxHealth)
-			this.stamina = maxHealth;
+		this.staminaRestorationAmount = staminaRestored;
+		
+		if(this.staminaRestorationAmount > maxStamina)
+		{
+			this.staminaRestorationAmount = maxStamina;
+		}
 	}
 	
 	public int getFireBallSmallManaCost() { return fireBallSmallManaCost; }
@@ -592,11 +610,11 @@ public class Unit extends MapObject
 			spawning = true;
 		}
 		
-		if(summoningEffect != null && !summoningEffect.animation.hasPlayedOnce())
+		if(summoningEffect != null && !summoningEffect.getAnimation().hasPlayedOnce())
 		{
 			summoningEffect.update();
 		}
-		if(spawning && summoningEffect.animation.hasPlayedOnce())
+		if(spawning && summoningEffect.getAnimation().hasPlayedOnce())
 		{
 			summoningEffect = null;
 			spawning = false;
@@ -613,20 +631,56 @@ public class Unit extends MapObject
 			inControl = false;
 		}
 		
-		// Regeneration
+		// Regenerate health
 		if(healthRegen > 0)
 		{
-			if(health < maxHealth) health += healthRegen;
+			health += healthRegen;
 		}
 
+		if(healthRestorationAmount > 0)
+		{
+			health += healthRestorationPerTick;
+			healthRestorationAmount -= healthRestorationPerTick;
+		}
+		
+		if(health > maxHealth) 
+		{
+			health = maxHealth;
+		}
+		
+		// Regenerate mana
 		if(manaRegen > 0)
 		{
-			if(mana < maxMana) mana += manaRegen;
+			mana += manaRegen;
 		}
+
+		if(manaRestorationAmount > 0)
+		{
+			mana += manaRestorationPerTick;
+			manaRestorationAmount -= manaRestorationPerTick;
+		}
+		
+		if(mana > maxMana) 
+		{
+			mana = maxMana;
+		}
+		
+		// Regenerate stamina
 		
 		if(staminaRegen > 0)
 		{
-			if(stamina < maxStamina) stamina += staminaRegen;
+			stamina += staminaRegen;
+		}
+
+		if(staminaRestorationAmount > 0)
+		{
+			stamina += staminaRestorationPerTick;
+			staminaRestorationAmount -= staminaRestorationPerTick;
+		}
+		
+		if(stamina > maxStamina) 
+		{
+			stamina = maxStamina;
 		}
 		
 		

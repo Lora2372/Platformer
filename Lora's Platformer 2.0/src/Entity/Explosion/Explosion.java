@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import Entity.MapObject;
-import Entity.Unit;
+import Entity.Unit.Unit;
 import GameState.MainMap;
 import TileMap.TileMap;
 

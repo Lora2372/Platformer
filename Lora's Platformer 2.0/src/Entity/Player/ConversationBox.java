@@ -1,16 +1,19 @@
 package Entity.Player;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import Entity.Doodad.Doodad;
-import Entity.Unit;
+import Entity.Unit.Unit;
 import Main.Content;
 import Main.GamePanel;
 
-public class ConversationBox 
+public class ConversationBox  implements KeyListener
 {
 	
 	private Player player;
@@ -41,6 +44,9 @@ public class ConversationBox
 	protected ArrayList<Integer> choiceRows;
 	protected int choiceAmount;
 	protected int choiceSelected;
+	protected int choiceMade = 0;
+	
+	protected boolean choiceRequested;
 	
 	public ConversationBox(Player player)
 	{
@@ -120,6 +126,11 @@ public class ConversationBox
 		return conversation.length;
 	}
 	
+	public int getChoiceMade()
+	{
+		return choiceMade;
+	}
+	
 	public void draw(Graphics graphics)
 	{
 
@@ -158,7 +169,13 @@ public class ConversationBox
 		{
 			tempName = "Liadrin";
 			tempIcon = Content.PortraitLiadrin[0];
-		}	
+		}
+		
+		if(whoTalks[conversationTracker] == 5)
+		{
+			tempName = "Unknown";
+			tempIcon = Content.PortraitLiadrin[0];
+		}
 		
 		graphics.setFont(new Font("Arial", Font.PLAIN, 14));
 		
@@ -175,30 +192,12 @@ public class ConversationBox
 		}
 			
 		
-		if(conversationTracker == conversation.length - 1)
-		{
-			int tempX = (int) locationX + 454;
-			int tempY = (int) locationY + 98;
-			
-			int stringLength = graphics.getFontMetrics().stringWidth(endConversationString);
-			
-			graphics.drawImage(
-					endConversation[0], 
-					tempX, 
-					tempY,
-					stringLength + 20,
-					35,
-					null);
-			
-
-			
-			graphics.drawString(endConversationString, tempX + 12, tempY + 20);
-			
-		}
-		
 		String[] myString = conversation[conversationTracker].split(" ");
 		int tempX = 0;
 		int line = 0;
+		
+		graphics.setColor(Color.WHITE);
+		
 		for(int i = 0; i < myString.length; i++)
 		{
 			int tempInt = graphics.getFontMetrics().stringWidth(myString[i]);
@@ -206,13 +205,17 @@ public class ConversationBox
 			
 			if( (tempX + tempInt > conversationBoxWidth -40) || myString[i].equals("\n"))
 			{
+				graphics.setColor(Color.WHITE);
 				line++;
 				tempX = 0;
 				
 			}
 			if(myString[i].equals("-"))
 			{
+				graphics.setColor(Color.YELLOW);
 				choiceAmount++;
+				choiceRows.add(line);
+				choiceRequested = true;
 			}
 			
 			graphics.drawString(myString[i], (int)locationX + 21 + tempX, (int)locationY + 70 + 20 * line);
@@ -220,21 +223,48 @@ public class ConversationBox
 			tempX += tempInt + 3;
 		}
 		
-		
-//		String[] newString = conversation[conversationTracker].split("\n");
-		
+		if( !choiceRequested)
+		{
+			if(conversationTracker == conversation.length - 1)
+			{
+				tempX = (int) locationX + 454;
+				int tempY = (int) locationY + 98;
+				
+				int stringLength = graphics.getFontMetrics().stringWidth(endConversationString);
+				
+				graphics.drawImage(
+						endConversation[0], 
+						tempX, 
+						tempY,
+						stringLength + 20,
+						35,
+						null);
+				
+				graphics.drawString(endConversationString, tempX + 12, tempY + 20);
+				
+			}
+		}
+	}
+
+	public void keyPressed(KeyEvent e) 
+	{
+		System.out.println("You pressed a key!");
+		if(player.getInConversation())
+		{
+			System.out.println("You pressed a key whilst in a conversation!");
 			
+			
+			
+		}
+	}
 
-//		for(int i = 0; i < newString.length; i++)
-//		{
-//			graphics.drawString(newString[i], (int)locationX + 21, (int)locationY + 70 + i*20);			
-//		}
-//		
+	public void keyReleased(KeyEvent e) 
+	{
 		
-		
+	}
 
-//		graphics.drawString(conversation[conversationTracker], , y);
-	
-	
+	public void keyTyped(KeyEvent e) 
+	{
+		
 	}
 }

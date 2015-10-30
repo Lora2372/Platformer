@@ -12,8 +12,6 @@ public class Key extends Item
 			boolean inWorld, 
 			double locationX, 
 			double locationY, 
-			int inventorySlotX,
-			int inventorySlotY, 
 			MapObject owner, 
 			int stacks,
 			String keyType
@@ -30,8 +28,6 @@ public class Key extends Item
 				8, 
 				locationX, 
 				locationY,
-				inventorySlotX, 
-				inventorySlotY, 
 				owner, 
 				false, 
 				stacks, 

@@ -1,10 +1,10 @@
-package Entity.NPC.Activatable;
+package Entity.Unit;
 import java.util.ArrayList;
 
 import TileMap.TileMap;
-import Audio.JukeBox;
-import Entity.Unit;
 import Entity.Doodad.SummoningEffect;
+import Entity.Item.Potion;
+import Entity.Player.ConversationBox;
 import Entity.Player.Player;
 import GameState.MainMap;
 import Main.Content;
@@ -14,9 +14,13 @@ public class LiadrinFirstEncounter extends Unit
 	protected int[] whoTalks;
 	protected String[] conversation;
 	protected Player player;
+	protected boolean used;
 	protected boolean active;
+	protected int choiceMade;
 	
 	protected SummoningEffect summoningEffect;
+	
+	protected ConversationBox conversationBox;
 	
 	public LiadrinFirstEncounter(
 			TileMap tileMap,
@@ -88,42 +92,80 @@ public class LiadrinFirstEncounter extends Unit
 				mainMap
 				);
 		
-		active = false;
+		active = true;
 		
 		portrait = Content.PortraitLiadrin[0];
 	}
 	
-	public void startConversation()
-	{
-		
-		conversation = player.getConversation().liadrinFirstEncounter();
-		
-		whoTalks = player.getConversation().liadringFirstEncounterWhoTalks();
-		
-		
-		active = true;	
-		player.getConversationBox().startConversation(player, this, null, conversation, whoTalks);
-		
-	}
+
 	
 	public void interact(Player player)
 	{
-		this.player = player;
 		
-		if(!player.getConversationBox().inConversation() && summoningEffect == null)
-			startConversation();
-//		else player.getConversationBox().progressConversation();
-		
-		if(player.getConversationBox().getConversationTracker() >= conversation.length)
+		// If we've already talked to her, we should not be able to do so again.
+		if(!active)
 		{
-			
-			active = false;
+			return;
+		}
+		
+		// If the player is null for whatever reason, update it with the player interacting with it:
+		if(this.player == null)
+		{
+			this.player = player;
+			conversationBox = player.getConversationBox();
+		}
+		
+		// If the player has not yet started talking to Liadrin, do so.
+		if(!player.getConversationBox().inConversation() && summoningEffect == null && choiceMade == 0)
+		{
+			player.getConversationBox().startConversation(player, this, null, player.getConversation().liadrinFirstEncounter(), player.getConversation().liadrinFirstEncounterWhoTalks());
+			return;
+		}
+		
+		// If the player is currently in a conversation but has not yet made the choice
+		if(player.getInConversation() && choiceMade == 0)
+		{
+			if(conversationBox.getConversationTracker() >= player.getConversation().liadrinFirstEncounter().length)
+			{
+				choiceMade = conversationBox.getChoiceMade();
+				System.out.println("choiceMade (should not be 0): " + choiceMade);
+				if(choiceMade == 1)
+				{
+					player.getConversationBox().startConversation(player, this, null, player.getConversation().liadrinFirstEncounterChoiceEasy(), player.getConversation().liadrinFirstEncounterChoiceEasyWhoTalks());
+				}
+				else
+				{
+					player.getConversationBox().startConversation(player, this, null, player.getConversation().liadrinFirstEncounterChoiceHard(), player.getConversation().liadrinFirstEncounterChoiceHardWhoTalks());
+				}
+			}
+		}
+
+		// Player thought it was easy:
+		if(player.getInConversation() && choiceMade == 1)
+		{
+			if(conversationBox.getConversationTracker() > player.getConversation().liadrinFirstEncounterChoiceEasy().length)
+			{
+				active = false;
+			}
+		}
+		
+		// Player thought it was hard:
+		if(player.getInConversation() && choiceMade == 2)
+		{
+			if(conversationBox.getConversationTracker() > player.getConversation().liadrinFirstEncounterChoiceHard().length)
+			{
+				Potion healingPotion = new Potion(tileMap, false, 0, 0, player, 3, "Health");
+				
+				player.getInventory().addItem(healingPotion);
+				active = false;
+			}
+		}
+		
+		if(!active)
+		{
 			player.getConversationBox().endConversation();
-			
 			summoningEffect = new SummoningEffect(tileMap, locationX, locationY);
 			mainMap.addEffect(summoningEffect);
-			JukeBox.play("Teleport");
-			
 		}
 	}
 	
@@ -137,12 +179,4 @@ public class LiadrinFirstEncounter extends Unit
 			}
 		}
 	}
-		
-	
-	public void activateSound() 
-	{ 
-		JukeBox.play("OpenChestCommon");
-	}
-	
-
 }

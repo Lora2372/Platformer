@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import Audio.JukeBox;
 import Entity.MapObject;
-import Entity.Unit;
+import Entity.Unit.Unit;
 import GameState.MainMap;
 import TileMap.TileMap;
 

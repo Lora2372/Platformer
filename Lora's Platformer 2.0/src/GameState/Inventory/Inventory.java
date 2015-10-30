@@ -54,7 +54,7 @@ public class Inventory
 		Item tempItem = hasItem(item.getItemType());
 		if(tempItem != null)
 		{
-			tempItem.setStacks(tempItem.getStacks() + 1);
+			tempItem.setStacks(tempItem.getStacks() + item.getStacks());
 			return true;
 		}
 		

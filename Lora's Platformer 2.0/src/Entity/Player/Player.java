@@ -4,7 +4,7 @@ package Entity.Player;
 import java.util.Random;
 
 import Audio.JukeBox;
-import Entity.Unit;
+import Entity.Unit.Unit;
 import TileMap.TileMap;
 
 public class Player extends Unit

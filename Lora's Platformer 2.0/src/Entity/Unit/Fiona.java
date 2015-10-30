@@ -1,4 +1,4 @@
-package Entity.Enemies;
+package Entity.Unit;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -8,7 +8,6 @@ import javax.imageio.ImageIO;
 
 import TileMap.TileMap;
 import Audio.JukeBox;
-import Entity.Unit;
 import Entity.Doodad.SummoningEffect;
 import Entity.Player.Conversation;
 import Entity.Player.Player;

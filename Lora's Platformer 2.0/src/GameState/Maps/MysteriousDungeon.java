@@ -9,9 +9,9 @@ import Audio.JukeBox;
 import Entity.Doodad.Doodad;
 import Entity.Doodad.Activatable.ActivatableCave;
 import Entity.Doodad.Activatable.ActivatableShrineMysteriousDungeon;
-import Entity.Enemies.Fiona;
 import Entity.Player.Conversation;
 import Entity.Player.Player;
+import Entity.Unit.Fiona;
 import GameState.GameStateManager;
 import GameState.MainMap;
 import TileMap.Background;
@@ -113,7 +113,7 @@ public class MysteriousDungeon extends MainMap
 	
 	
 	
-	public ArrayList<Entity.Unit> getCharacterList()
+	public ArrayList<Entity.Unit.Unit> getCharacterList()
 	{
 		return characterList;
 	}
@@ -134,29 +134,24 @@ public class MysteriousDungeon extends MainMap
 	{
 		super.update();
 		
+		// We don't want the player to be able to progress the conversation whilst Fiona is spawning
+		player.getConversationBox().lockConversation(fiona.getSpawning());
+		
 		if(!dungeonIntroduction)
 		{
 			if(player.getDirectionY() == 0 && player.getLocationY() > 300)
 			{
 				if(!player.getConversationBox().inConversation())
 				{
-
-							int[] whoTalks = new int[]{0};
-							
-							player.getConversationBox().startConversation(player, null, null, conversation.mysteriousDungeonTorchMessage, whoTalks);
+					int[] whoTalks = new int[]{0};		
+					player.getConversationBox().startConversation(player, null, null, conversation.mysteriousDungeonTorchMessage, whoTalks);
 				}
-				else
+				else if(player.getConversationBox().getConversationTracker() >= player.getConversationBox().getConversationLength())
 				{
-					
-					if(player.getConversationBox().getConversationTracker() >= player.getConversationBox().getConversationLength())
-					{
-						player.getConversationBox().endConversation();
-						dungeonIntroduction = true;
-						JukeBox.play("Female01EnterDungeon");
-					}
-
+					player.getConversationBox().endConversation();
+					dungeonIntroduction = true;
+					JukeBox.play("Female01EnterDungeon");
 				}
-
 			}
 		}
 		

@@ -1,7 +1,7 @@
-package Entity.Enemies;
+package Entity.Unit;
 
 import java.util.ArrayList;
-import Entity.Unit;
+
 import GameState.MainMap;
 import TileMap.TileMap;
 

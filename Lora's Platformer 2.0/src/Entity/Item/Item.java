@@ -4,9 +4,9 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import Entity.MapObject;
-import Entity.Unit;
 import Entity.Doodad.Poff;
 import Entity.Player.Player;
+import Entity.Unit.Unit;
 import TileMap.TileMap;
 
 public class Item extends MapObject
@@ -45,8 +45,6 @@ public class Item extends MapObject
 			double maxFallSpeed,
 			double locationX,
 			double locationY,
-			int inventorySlotX,
-			int inventorySlotY,
 			MapObject owner,
 			boolean stackable,
 			int stacks,
@@ -78,8 +76,6 @@ public class Item extends MapObject
 		}
 		else
 		{
-			this.inventorySlotX = inventorySlotX;
-			this.inventorySlotY = inventorySlotY;
 			this.owner = owner;
 		}
 		

@@ -17,7 +17,7 @@ public class HUD
 	
 	private ArrayList<Integer> spellcost = new ArrayList<Integer>();
 	
-	private Entity.Unit boss;
+	private Entity.Unit.Unit boss;
 	
 	public HUD(Player p)
 	{
@@ -142,7 +142,7 @@ public class HUD
 		}
 	}
 	
-	public void addBoss(Entity.Unit boss)
+	public void addBoss(Entity.Unit.Unit boss)
 	{
 		this.boss = boss;
 	}
