@@ -83,9 +83,19 @@ public class LorasCavern extends MainMap
 		
 		spawnChest(1712, 		2610, true,	50, 0, "Uncommon");
 		
-		spawnKey(989 - 200,  			2240);
-		spawnKey(1515, 2210);
-		spawnKey(826, 1950);
+		spawnKey(989 - 200,  	2240, "Uncommon");
+		spawnKey(1515, 			2210, "Rare");
+		spawnKey(826, 			1950, "Boss");
+		
+		spawnPotion(800, 2200, "Health");
+		spawnPotion(2050, 2200, "Health");
+		spawnPotion(1400, 1500, "Health");
+		spawnPotion(1600, 1500, "Health");
+		
+		spawnPotion(2200, 1000, "Mana");
+		spawnPotion(2400, 1000, "Mana");
+		spawnPotion(2600, 1000, "Mana");
+		
 		
 		ActivatableCave activatableCave = new ActivatableCave(tileMap, gameStateManager, 3614, 2340);
 		stuff.add(activatableCave);

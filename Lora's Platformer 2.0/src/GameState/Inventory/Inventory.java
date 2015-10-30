@@ -51,6 +51,13 @@ public class Inventory
 	{
 		item.setInWorld(false);
 		
+		Item tempItem = hasItem(item.getItemType());
+		if(tempItem != null)
+		{
+			tempItem.setStacks(tempItem.getStacks() + 1);
+			return true;
+		}
+		
 		for(int i = 0; i < numberOfRows; i++)
 		{
 			for(int j = 0; j < numberOfColumns; j++)

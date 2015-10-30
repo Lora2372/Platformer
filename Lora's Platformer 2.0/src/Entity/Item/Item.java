@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import Entity.MapObject;
+import Entity.Unit;
 import Entity.Doodad.Poff;
 import Entity.Player.Player;
 import TileMap.TileMap;
@@ -171,10 +172,15 @@ public class Item extends MapObject
 	{
 		player.getInventory().addItem(this);
 		owner = player;
+		player.playLootSound();
 	}
 	
-	public void use()
+	public void playSound() { }
+	
+	public void use(Unit user)
 	{
+		System.out.println("Using within item");
+		playSound();
 		if(consumable)
 		{
 			stacks--;

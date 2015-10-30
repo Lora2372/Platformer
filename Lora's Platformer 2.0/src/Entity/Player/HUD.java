@@ -3,9 +3,7 @@ package Entity.Player;
 import java.awt.*;
 import java.awt.image.*;
 import java.util.ArrayList;
-
 import javax.imageio.ImageIO;
-
 import Main.GamePanel;
 
 public class HUD 

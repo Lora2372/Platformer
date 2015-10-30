@@ -196,7 +196,7 @@ public class ActivatableShrineMysteriousDungeon extends Doodad
 
 	}
 	
-	public void activateSound() 
+	public void playSound() 
 	{ 
 //		JukeBox.play("OpenChestCommon");
 	}

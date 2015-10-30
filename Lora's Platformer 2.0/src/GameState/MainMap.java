@@ -10,6 +10,7 @@ import Entity.Enemies.*;
 import Entity.Explosion.Explosion;
 import Entity.Item.Item;
 import Entity.Item.Key;
+import Entity.Item.Potion;
 import Entity.Doodad.*;
 import Entity.Doodad.Activatable.*;
 import Entity.Player.*;
@@ -571,11 +572,17 @@ public class MainMap extends GameState
 		stuff.add(activatableChestCommon);
 	}
 	
-	public void spawnKey(double locationX, double locationY)
+	public void spawnKey(double locationX, double locationY, String keyType)
 	{
-		Key key = new Key(tileMap, true, locationX, locationY, 0, 0, null, 1);
+		Key key = new Key(tileMap, true, locationX, locationY, 0, 0, null, 1, keyType);
 		items.add(key);
 	
+	}
+	
+	public void spawnPotion(double locationX, double locationY, String potionType)
+	{
+		Potion potion = new Potion(tileMap, true, locationX, locationY, 0, 0, null, 1, potionType);
+		items.add(potion);
 	}
 	
 	public void spawnStatueSave(double locationX, double locationY)
@@ -621,6 +628,9 @@ public class MainMap extends GameState
 		if(k == KeyEvent.VK_F) player.setPunching();
 		if(k == KeyEvent.VK_D) player.setDashing(true);
 		if(k == KeyEvent.VK_G) player.setCastingMagicShield();
+		if(k == KeyEvent.VK_Z) player.drinkPotion("Health");
+		if(k == KeyEvent.VK_X) player.drinkPotion("Mana");
+		if(k == KeyEvent.VK_C) player.drinkPotion("Stamina");
 		
 		
 		if( k == KeyEvent.VK_M)player.setPosition(player.getLocationX() + 200, player.getLocationY()); 
@@ -644,6 +654,5 @@ public class MainMap extends GameState
 		
 		if(k == KeyEvent.VK_A) player.setCastingSmallFireBall();
 		if(k == KeyEvent.VK_S) player.setCastingLargeFireBall();
-		if(k == KeyEvent.VK_Z) player.setPunching();
 	}
 }

@@ -47,11 +47,11 @@ public class StatueSave extends Doodad
 	public void interact(Player player)
 	{
 		JSONWriter.saveFile(player, (int)spawnX, (int)spawnY);
-		activateSound();
+		playSound();
 	}
 	
 	
-	public void activateSound() 
+	public void playSound() 
 	{ 
 		JukeBox.play("Save");
 	}

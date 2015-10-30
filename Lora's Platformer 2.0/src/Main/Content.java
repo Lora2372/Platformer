@@ -54,7 +54,14 @@ public class Content
 	public static BufferedImage[][] CaveEntrance			= load("/Art/Sprites/Doodads/CaveEntrance.png", 100, 96);
 	public static BufferedImage[][] Shrine					= load("/Art/Sprites/Doodads/Shrine.png", 146, 156);
 	public static BufferedImage[][] StatueSave				= load("/Art/Sprites/Doodads/StatueSave.png", 48, 100);
-	public static BufferedImage[][] Key						= load("/Art/Sprites/Doodads/Key.png", 120, 120); 
+	public static BufferedImage[][] KeyUncommon				= load("/Art/Sprites/Doodads/KeyUncommon.png", 120, 120); 
+	public static BufferedImage[][] KeyRare					= load("/Art/Sprites/Doodads/KeyRare.png", 120, 120); 
+	public static BufferedImage[][] KeyBoss					= load("/Art/Sprites/Doodads/KeyBoss.png", 120, 120); 
+	public static BufferedImage[][] PotionHealth			= load("/Art/Sprites/Doodads/PotionHealth.png", 60, 60); 
+	public static BufferedImage[][] PotionMana				= load("/Art/Sprites/Doodads/PotionMana.png", 60, 60); 
+	public static BufferedImage[][] PotionStamina			= load("/Art/Sprites/Doodads/PotionStamina.png", 60, 60); 
+	
+	
 	
 	//Effects
 	public static BufferedImage[][] Teleport 				= load("/Art/Sprites/Effects/Teleport.png", 192, 192);
@@ -178,9 +185,10 @@ public class Content
 		JukeBox.load("/Sound/Doodads/OpenChestCommon.mp3", "OpenChestCommon");
 		JukeBox.load("/Sound/Doodads/OpenChestRare.mp3", "OpenChestRare");
 		JukeBox.load("/Sound/Doodads/Save.mp3", "Save");
-		
-		JukeBox.load("/Sound/Doodads/Coin.mp3", "Coin");
-		
+		JukeBox.load("/Sound/Doodads/DecisionChange.mp3", "DecisionChange");
+		JukeBox.load("/Sound/Doodads/DecisionMake.mp3", "DecisionMake");		
+		JukeBox.load("/Sound/Doodads/PotionDrink.mp3", "PotionDrink");		
+		JukeBox.load("/Sound/Doodads/Coin.mp3", "Coin");		
 		JukeBox.load("/Sound/Doodads/Close.mp3", "Close");
 	}
 	

@@ -5,6 +5,7 @@ import java.util.Random;
 import Audio.JukeBox;
 import javax.imageio.ImageIO;
 import Entity.Doodad.*;
+import Entity.Item.Item;
 import Entity.Player.ConversationBox;
 import Entity.Player.Player;
 import Entity.Projectile.ArcaneBall;
@@ -377,10 +378,33 @@ public class Unit extends MapObject
 	
 	public double getHealth() { return health; }
 	public double getMaxHealth() { return maxHealth; }
+	
+	public void restoreHealth(double health) 
+	{ 
+		this.health += health; 
+		if(this.health > maxHealth)
+			this.health = maxHealth;
+	}
+	
 	public double getMana() { return mana; }
 	public double getMaxMana() { return maxMana; }
+	
+	public void restoreMana(double mana) 
+	{ 
+		this.mana += mana; 
+		if(this.mana > maxHealth)
+			this.mana = maxHealth;
+	}
+	
 	public double getStamina() { return stamina; }
 	public double getMaxStamina() { return maxStamina; }
+
+	public void restoreStamina(double stamina) 
+	{ 
+		this.stamina += stamina; 
+		if(this.stamina > maxHealth)
+			this.stamina = maxHealth;
+	}
 	
 	public int getFireBallSmallManaCost() { return fireBallSmallManaCost; }
 	public int getFireBallLargeManaCost() { return fireBallLargeManaCost; }
@@ -1302,6 +1326,16 @@ public class Unit extends MapObject
 			}
 		} // End for loop		
 	}
+	
+	public void drinkPotion(String potionType)
+	{
+		Item potion = inventory.hasItem(potionType);
+		if(potion != null)
+		{
+			potion.use(this);
+		}
+	}
+	
 	
 	public void draw(Graphics2D graphics)
 	{

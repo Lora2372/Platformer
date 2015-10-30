@@ -96,37 +96,9 @@ public class LiadrinFirstEncounter extends Unit
 	public void startConversation()
 	{
 		
-		conversation = new String[]
-		{
-			"Greetings, you must be " + player.getName() + ".",
-			
-			"How did you know that?",
-			
-			"I'm Liadrin, a pleasure.\n"
-			+ "I've been expecting your arrival for some time now.",
-			
-			"Expecting me?",
-			
-			"Why yes, I won't get into any details now but,\n"
-			+ "I'm supposed to tell you that the way forward\n"
-			+ "is through the depths of the earth.",
-			
-			"Thank you, I think...",
-			
-			"You're quite welcome, now if you don't mind,\n"
-			+ "I'll take my leave."
-		};
+		conversation = player.getConversation().liadrinFirstEncounter();
 		
-		whoTalks = new int[]
-		{
-			1,
-			0,
-			1,
-			0,
-			1,
-			0,
-			1
-		};
+		whoTalks = player.getConversation().liadringFirstEncounterWhoTalks();
 		
 		
 		active = true;	

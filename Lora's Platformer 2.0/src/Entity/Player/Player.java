@@ -26,6 +26,8 @@ public class Player extends Unit
 	
 	protected String currentMap;
 	
+	protected Conversation conversation;
+	
 	//  Animations 
 	
 	
@@ -91,14 +93,15 @@ public class Player extends Unit
 				null
 				
 				);
+		
+		conversation = new Conversation(this);
+		
 		player = true;
 		conversationbox = new ConversationBox(this);
 
 		hud = new HUD(this);
 		
 		numberofSounds = new int[soundTypes.values().length];
-
-		
 		for(int i = 0; i < numberofSounds.length; i++)
 		{
 			int tempInt = 0;
@@ -109,6 +112,8 @@ public class Player extends Unit
 			numberofSounds[i] = tempInt;
 		}
 	}
+	
+	public Conversation getConversation() { return conversation; }
 	
 	public String getCurrentMap() { return currentMap; }
 	public void setCurrentMap(String newMap) { currentMap = newMap; }

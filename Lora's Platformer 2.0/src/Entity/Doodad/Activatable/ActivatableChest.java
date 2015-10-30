@@ -90,13 +90,13 @@ public class ActivatableChest extends Doodad
 		{
 			if(locked)
 			{
-				Item item = player.getInventory().hasItem("Key");
+				Item item = player.getInventory().hasItem(doodadType);
 				
 				if(item != null)
 				{
 					conversationPiece += "You unlocked the chest and found:";
 					active = true;
-					item.use();
+					item.use(player);
 				}
 				else
 				{
@@ -164,7 +164,7 @@ public class ActivatableChest extends Doodad
 		}
 	}
 	
-	public void activateSound() 
+	public void playSound() 
 	{ 
 		JukeBox.play("OpenChest" + doodadType);
 	}

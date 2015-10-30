@@ -3,7 +3,80 @@ package Entity.Player;
 
 public class Conversation 
 {
-	public static String[] fionaDefeated = new String[]
+	
+	protected Player player;
+	
+	public Conversation(Player player)
+	{
+		this.player = player;
+		System.out.println("player: " + player.getName());
+	}
+	
+	
+	public String[] liadrinFirstEncounter()
+	{
+			return new String[]
+			{
+				"Ah, so you have awakened at last then...",
+				"Greetings Liadrin.",
+				"How does your test fair thus far?",
+				"- It's easy! \n " +
+				"- It's hard..."
+			};
+			
+	}
+	
+	public int[] liadringFirstEncounterWhoTalks()
+	{
+		return new int[]
+		{
+			1,
+			0,
+			1,
+			0
+		};
+	}
+	
+	public String[] liadrinFirstEncounterChoiceHard()
+	{
+		return new String[]
+		{
+			"Don't give up ok? \n Here, take these potions, I'm sure they will come in handy.",
+			"Thank you!",
+			"Now if you don't mind, I have some things to take care of."
+		};
+	}
+	
+	public int[] liadringFirstEncounterChoiceHardWhoTalks()
+	{
+		return new int[]
+		{
+			1,
+			0,
+			1
+		};
+	}
+	
+	public String[] liadrinFirstEncounterChoiceEasy()
+	{
+		return new String[]
+		{
+			"Glad to hear it! \n Unfortunately I can't stay, keep up the good work and we'll meet again soon."
+		};
+	}
+	
+	public int[] liadrinFirstEncounterChoiceEasyWhoTalks()
+	{
+		return new int[]
+		{
+			0
+		};
+	}
+	
+
+	
+	
+	public String[] fionaDefeated = new String[]
 	{
 		"Ugh...",
 		"Ready to talk about this?",
@@ -14,7 +87,7 @@ public class Conversation
 		"At least the door opened..."
 	};
 	
-	public static int[] fionaDefeatedWhoTalks = new int[]
+	public int[] fionaDefeatedWhoTalks = new int[]
 	{
 		1,
 		0,
@@ -26,7 +99,7 @@ public class Conversation
 	};
 	
 	
-	public static String[] tutorialWelcomeMessage = new String[]
+	public String[] tutorialWelcomeMessage = new String[]
 	{
 		"Greetings, and welcome to the tutorial! Please press E.",
 		"Good! That's exactly how you progress a conversation! ",
@@ -37,75 +110,75 @@ public class Conversation
 		+ "it does, try moving around with the arrow keys."
 	};
 	
-	public static int[] tutorialWelcomeMessageWhoTalks = new int[]
+	public int[] tutorialWelcomeMessageWhoTalks = new int[]
 	{
 		4, 4, 4, 4
 	};
 	
-	public static String[] tutorialMoveMessage = new String[]
+	public String[] tutorialMoveMessage = new String[]
 	{
 		"Good job, now try jumping by pressing space!" 
 	};
 	
-	public static int[] tutorialMoveMessageWhoTalks = new int[]
+	public int[] tutorialMoveMessageWhoTalks = new int[]
 	{
 		4
 	};
 	
-	public static String[] tutorialJumpMessage = new String[]
+	public String[] tutorialJumpMessage = new String[]
 	{
 		"Nice one! Those are the basic movements you can do. "
 		+ "Why don't you try exploring the map for a bit, see what we can find." 
 	};
 	
-	public static int[] tutorialJumpMessageWhoTalks = new int[]
+	public int[] tutorialJumpMessageWhoTalks = new int[]
 	{
 		4
 	};
 	
-	public static String[] tutorialHoleSmallMessage = new String[]
+	public String[] tutorialHoleSmallMessage = new String[]
 	{
 		"Hold up, see that hole up ahead? Try jumping over it! ",
 		"Shouldn't be too hard..."
 	};
 	
-	public static int[] tutorialHoleSmallMessageWhoTalks = new int[]
+	public int[] tutorialHoleSmallMessageWhoTalks = new int[]
 	{
 		4, 0
 	};
 	
-	public static String[] tutorialHoleSmallPassedMessage = new String[]
+	public String[] tutorialHoleSmallPassedMessage = new String[]
 	{
 		"Good job!",
 		"Hah, this is easy!"
 	};
 	
-	public static int[] tutorialHoleSmallPassedMessageWhoTalks = new int[]
+	public int[] tutorialHoleSmallPassedMessageWhoTalks = new int[]
 	{
 		4, 0
 	};
 	
-	public static String[] tutorialMovementMasteredMessage = new String[]
+	public String[] tutorialMovementMasteredMessage = new String[]
 	{
 		"Nice, looks like you have mastered the movement."
 	};
 	
-	public static int[] tutorialMovementMasteredMessageWhoTalks = new int[]
+	public int[] tutorialMovementMasteredMessageWhoTalks = new int[]
 	{
 		4
 	};
 	
-	public static String[] tutorialFireBallSmallMessage = new String[]
+	public String[] tutorialFireBallSmallMessage = new String[]
 	{
 		"Now what about attacks? Try pressing A"
 	};
 	
-	public static int[] tutorialFireBallSmallMessageWhoTalks = new int[]
+	public int[] tutorialFireBallSmallMessageWhoTalks = new int[]
 	{
 		4
 	};
 	
-	public static String[] tutorialFireBallLargeMessage = new String[]
+	public String[] tutorialFireBallLargeMessage = new String[]
 	{
 		"Excellent, that's a small fireball. See how the blue bar in the upper "
 				+ "left corner dropped a bit? That's your mana bar, all spells "
@@ -114,12 +187,12 @@ public class Conversation
 				"Hey, why don't you try holding the up arrow whilst pressing S?"
 	};
 	
-	public static int[] tutorialFireBallLargeMessageWhoTalks = new int[]
+	public int[] tutorialFireBallLargeMessageWhoTalks = new int[]
 	{
 		4, 4, 4
 	};
 
-	public static String[] tutorialDashMessage = new String[]
+	public String[] tutorialDashMessage = new String[]
 	{
 		"Nice one, not only did you cast a large fireball which is more "
 				+ "powerful, you also aimed it!", 
@@ -129,14 +202,14 @@ public class Conversation
 				+ "proceed, press the D button."
 	};
 	
-	public static int[] tutorialDashMessageWhoTalks = new int[]
+	public int[] tutorialDashMessageWhoTalks = new int[]
 	{
 		4, 4, 4
 	};
 
 
 	
-	public static String[] tutorialPunchMessage = new String[]
+	public String[] tutorialPunchMessage = new String[]
 	{
 		"That's a dash attack, as you could see it will allow you to dash "
 				+ "forward, dealing damage to all enemies that you pass along the "
@@ -148,48 +221,48 @@ public class Conversation
 				+ "regenerate automatically. For our final attack, try pressing F."
 	};
 	
-	public static int[] tutorialPunchMessageWhoTalks = new int[]
+	public int[] tutorialPunchMessageWhoTalks = new int[]
 	{
 		4, 4, 4
 	};
 
 
-	public static String[] tutorialPunchDoneMessage = new String[]
+	public String[] tutorialPunchDoneMessage = new String[]
 	{
 		"Simple, isn't it? "
 				+ "The punch is quite useful if you get up close to your enemy to beat "
 				+ "the living shit out of them."
 	};
 	
-	public static int[] tutorialPunchDoneMessageWhoTalks = new int[]
+	public int[] tutorialPunchDoneMessageWhoTalks = new int[]
 	{
 		4
 	};
 	
-	public static String[] tutorialEnemySuccubusMessage = new String[]
+	public String[] tutorialEnemySuccubusMessage = new String[]
 	{
 		"Watch out, it looks like an enemy has appeared right in front of you! "
 				+ "Try using the attacks you just learnt to defeat it!"
 	};
 	
-	public static int[] tutorialEnemySuccubusMessageWhoTalks = new int[]
+	public int[] tutorialEnemySuccubusMessageWhoTalks = new int[]
 	{
 		4
 	};
 
-	public static String[] tutorialTempleEnterMessage = new String[]
+	public String[] tutorialTempleEnterMessage = new String[]
 	{
 		"Good job!",
 		"Did you hear that? It looks like the way forward just opened up. "
 		+ "Why don't you enter the temple so see what awaits you inside?"
 	};
 	
-	public static int[] tutorialTempleEnterMessageWhoTalks = new int[]
+	public int[] tutorialTempleEnterMessageWhoTalks = new int[]
 	{
 		4, 4
 	};
 	
-	public static String[] tutorialHoleLargeMessage = new String[]
+	public String[] tutorialHoleLargeMessage = new String[]
 	{
 		"This hole is much larger than the last one...",
 		"Yes, you would never be able to cross it with a normal jump.",
@@ -198,37 +271,43 @@ public class Conversation
 		+ "start gliding!"
 	};
 	
-	public static int[] tutorialHoleLargeMessageWhoTalks = new int[]
+	public int[] tutorialHoleLargeMessageWhoTalks = new int[]
 	{
 		0, 4, 4
 	};
 	
-	public static String[] tutorialHoleLargePassedMessage = new String[]
+	public String[] tutorialHoleLargePassedMessage = new String[]
 	{
 		"Great work!",
 		"This is sadly the end of the tutorial at the moment."
 	};
 	
-	public static int[] tutorialHoleLargePassedMessageWhoTalks = new int[]
+	public int[] tutorialHoleLargePassedMessageWhoTalks = new int[]
 	{
 		4, 4
 	};
+	
+	public String[] mysteriousDungeonTorchMessage = new String[]
+	{
+			"Torches, someone must live here, or something..."
+	};
+	
 
-	public static String[] mysteriousDungeonDirectionMessage = new String[]
+	public String[] mysteriousDungeonDirectionMessage = new String[]
 	{
 		"Up: Guarded treasure \n "
 		+ "Down: No treasure",
 		"Well, I guess I need to make a choice..."
 	};
 	
-	public static int[] mysteriousDungeonDirectionMessageWhoTalks = new int[]
+	public int[] mysteriousDungeonDirectionMessageWhoTalks = new int[]
 	{
 		2, 0
 	};
 
 	
 	
-	public static void loadConversation()
+	public void loadConversation()
 	{
 
 	}

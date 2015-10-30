@@ -31,10 +31,8 @@ public class MysteriousDungeon extends MainMap
 	
 	protected boolean dungeonIntroduction;
 	
-	protected String[] conversation = new String[]
-			{
-				"Torches, someone must live here, or something..."
-			};
+	protected Conversation conversation;
+	
 	
 	public MysteriousDungeon(GameStateManager gameStatemanager,
 			TileMap tileMap,
@@ -59,6 +57,8 @@ public class MysteriousDungeon extends MainMap
 			e.printStackTrace();
 		}
 		
+		conversation = player.getConversation();
+		
 		spawnTorch(109, 200);
 		
 		
@@ -70,7 +70,7 @@ public class MysteriousDungeon extends MainMap
 		
 		spawnChest(800, 630, false, 3, 0, "Common");
 
-		spawnSign(400, 575, Conversation.mysteriousDungeonDirectionMessage, Conversation.mysteriousDungeonDirectionMessageWhoTalks);
+		spawnSign(400, 575, conversation.mysteriousDungeonDirectionMessage, conversation.mysteriousDungeonDirectionMessageWhoTalks);
 		
 		player.setCurrentMap("MysteriousDungeon");
 
@@ -143,12 +143,12 @@ public class MysteriousDungeon extends MainMap
 
 							int[] whoTalks = new int[]{0};
 							
-							player.getConversationBox().startConversation(player, null, null, conversation, whoTalks);
+							player.getConversationBox().startConversation(player, null, null, conversation.mysteriousDungeonTorchMessage, whoTalks);
 				}
 				else
 				{
 					
-					if(player.getConversationBox().getConversationTracker() >= conversation.length)
+					if(player.getConversationBox().getConversationTracker() >= player.getConversationBox().getConversationLength())
 					{
 						player.getConversationBox().endConversation();
 						dungeonIntroduction = true;

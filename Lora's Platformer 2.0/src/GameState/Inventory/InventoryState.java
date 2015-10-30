@@ -175,6 +175,8 @@ public class InventoryState extends GameState
 							items[i][j].getHeight(),
 							null
 							);
+					
+					graphics.drawString(items[i][j].getStacks() + "", inventorySlotLocationX, inventorySlotLocationY);
 				}
 				
 				

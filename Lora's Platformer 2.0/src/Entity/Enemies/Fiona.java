@@ -43,6 +43,8 @@ public class Fiona extends Unit
 	
 	protected Player player;
 	
+	protected Conversation conversation;
+	
 	protected int[] numberofSounds;
 	public enum soundTypes { Attack, Hurt, Jump, Chargeup, Hit, Recover}
 	
@@ -123,6 +125,8 @@ public class Fiona extends Unit
 		this.mysteriousDungeon = mysteriousDungeon;
 		timer = 0;
 		cooldown = 300;
+		
+		conversation = player.getConversation();
 		
 		arcaneBallTimer = 30;
 		arcaneBallCooldown = 30;
@@ -241,7 +245,7 @@ public class Fiona extends Unit
 		JukeBox.stop("MysteriousBattle");
 		JukeBox.loop("MysteriousConversation");
 		used = true;
-		player.getConversationBox().startConversation(player, this, null, Conversation.fionaDefeated, Conversation.fionaDefeatedWhoTalks);
+		player.getConversationBox().startConversation(player, this, null, conversation.fionaDefeated, conversation.fionaDefeatedWhoTalks);
 	}
 	
 	
@@ -294,7 +298,7 @@ public class Fiona extends Unit
 					mysteriousDungeon.setDefeated(true);
 				}
 				
-				if(player.getConversationBox().getConversationTracker() >= Conversation.fionaDefeated.length)
+				if(player.getConversationBox().getConversationTracker() >= conversation.fionaDefeated.length)
 				{
 					player.getConversationBox().endConversation();
 				}

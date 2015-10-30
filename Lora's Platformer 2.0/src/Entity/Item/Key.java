@@ -15,7 +15,8 @@ public class Key extends Item
 			int inventorySlotX,
 			int inventorySlotY, 
 			MapObject owner, 
-			int stacks
+			int stacks,
+			String keyType
 			) 
 	{
 		super(
@@ -35,7 +36,7 @@ public class Key extends Item
 				false, 
 				stacks, 
 				true, 
-				"Key"
+				keyType
 				
 				);
 
@@ -43,8 +44,12 @@ public class Key extends Item
 	
 	public void setItem()
 	{
-		sprites = Content.Key[0];
-	}
+		if(itemType.equals("Uncommon"))
+			sprites = Content.KeyUncommon[0];
+		else if(itemType.equals("Rare"))
+			sprites = Content.KeyRare[0];
+		else if(itemType.equals("Boss"))
+			sprites = Content.KeyBoss[0];
 	
-
+	}	
 }

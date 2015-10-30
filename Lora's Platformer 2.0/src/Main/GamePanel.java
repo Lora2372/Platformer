@@ -6,7 +6,6 @@ import java.awt.*;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-import Entity.Player.Conversation;
 import GameState.GameStateManager;
 
 import java.awt.event.*;
@@ -22,7 +21,7 @@ public class GamePanel
 	public static int WIDTH = 1200;
 	public static int HEIGHT = 900;
 	
-	public static final String version = "0.1.048.5";
+	public static final String version = "0.1.049";
 		
 	// Game thread
 	private Thread thread;
@@ -73,7 +72,6 @@ public class GamePanel
 		draw();
 		drawToScreen();
 		Content.loadContent();
-		Conversation.loadConversation();
 		running = true;
 		gameStateManager = new GameStateManager();
 

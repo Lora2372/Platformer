@@ -76,7 +76,7 @@ public class Doodad extends MapObject
 //		if(!active) active = true;
 	}
 	
-	public void activateSound() { }
+	public void playSound() { }
 	
 	public boolean getActive() { return active; }
 	
@@ -95,7 +95,7 @@ public class Doodad extends MapObject
 					setDoodad(currentAction);
 					animation.setFrames(sprites);
 					animation.setDelay(60);
-					activateSound();
+					playSound();
 				}
 				if(animation.hasPlayedOnce())
 				{

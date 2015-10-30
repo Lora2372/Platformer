@@ -3,6 +3,7 @@ package Entity.Player;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import Entity.Doodad.Doodad;
 import Entity.Unit;
@@ -36,7 +37,11 @@ public class ConversationBox
 	
 	protected int conversationBoxWidth = 454;
 	protected int conversationBoxHeight = 138;
-
+	
+	protected ArrayList<Integer> choiceRows;
+	protected int choiceAmount;
+	protected int choiceSelected;
+	
 	public ConversationBox(Player player)
 	{
 		sprites = Content.ConversationGUI[0];
@@ -205,6 +210,11 @@ public class ConversationBox
 				tempX = 0;
 				
 			}
+			if(myString[i].equals("-"))
+			{
+				choiceAmount++;
+			}
+			
 			graphics.drawString(myString[i], (int)locationX + 21 + tempX, (int)locationY + 70 + 20 * line);
 			
 			tempX += tempInt + 3;
