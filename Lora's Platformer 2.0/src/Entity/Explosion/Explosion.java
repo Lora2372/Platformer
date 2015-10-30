@@ -103,8 +103,13 @@ public class Explosion extends MapObject
 		
 		
 		
+		
 		return false;
 	}
+	
+	
+	
+	
 	
 	
 	public void draw(Graphics2D graphics)

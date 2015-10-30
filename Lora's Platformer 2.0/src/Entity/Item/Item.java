@@ -81,6 +81,7 @@ public class Item extends MapObject
 		
 		this.stackable = stackable;
 		
+		
 		if(stackable)
 		{
 			this.stacks = stacks;
@@ -168,14 +169,12 @@ public class Item extends MapObject
 	{
 		player.getInventory().addItem(this);
 		owner = player;
-		player.playLootSound();
 	}
 	
 	public void playSound() { }
 	
 	public void use(Unit user)
 	{
-		System.out.println("Using within item");
 		playSound();
 		if(consumable)
 		{

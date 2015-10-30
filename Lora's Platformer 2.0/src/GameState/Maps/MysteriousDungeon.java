@@ -10,6 +10,7 @@ import Entity.Doodad.Doodad;
 import Entity.Doodad.Activatable.ActivatableCave;
 import Entity.Doodad.Activatable.ActivatableShrineMysteriousDungeon;
 import Entity.Player.Conversation;
+import Entity.Player.ConversationState;
 import Entity.Player.Player;
 import Entity.Unit.Fiona;
 import GameState.GameStateManager;
@@ -36,12 +37,16 @@ public class MysteriousDungeon extends MainMap
 	
 	public MysteriousDungeon(GameStateManager gameStatemanager,
 			TileMap tileMap,
-			Player player
+			Player player,
+			ConversationState conversationState
 			) 
 	{
 		super(gameStatemanager, 
 				tileMap,
-				player);
+				player,
+				conversationState
+				
+				);
 		
 		try
 		{
@@ -130,25 +135,27 @@ public class MysteriousDungeon extends MainMap
 	
 	public void setDefeated(boolean b) { bossDefeated = b; }
 	
+	public void setEngaged(boolean b) { bossEngaged = b; }
+	
 	public void update()
 	{
 		super.update();
 		
 		// We don't want the player to be able to progress the conversation whilst Fiona is spawning
-		player.getConversationBox().lockConversation(fiona.getSpawning());
+		player.getConversationState().lockConversation(fiona.getSpawning());
 		
 		if(!dungeonIntroduction)
 		{
 			if(player.getDirectionY() == 0 && player.getLocationY() > 300)
 			{
-				if(!player.getConversationBox().inConversation())
+				if(!player.getConversationState().inConversation())
 				{
 					int[] whoTalks = new int[]{0};		
-					player.getConversationBox().startConversation(player, null, null, conversation.mysteriousDungeonTorchMessage, whoTalks);
+					player.getConversationState().startConversation(player, null, null, conversation.mysteriousDungeonTorchMessage, whoTalks);
 				}
-				else if(player.getConversationBox().getConversationTracker() >= player.getConversationBox().getConversationLength())
+				else if(player.getConversationState().getConversationTracker() >= player.getConversationState().getConversationLength())
 				{
-					player.getConversationBox().endConversation();
+					player.getConversationState().endConversation();
 					dungeonIntroduction = true;
 					JukeBox.play("Female01EnterDungeon");
 				}
@@ -172,15 +179,5 @@ public class MysteriousDungeon extends MainMap
 				
 			}
 		}
-		
-		if(bossEngaged || bossDefeated) return;
-		if(!activatableShrine.getActive() && activatableShrine.getStartConversation())
-		{
-			bossEngaged = true;
-			JukeBox.stop("MysteriousConversation");
-			JukeBox.loop("MysteriousBattle");
-			
-			fiona.inControl(true);
-		}	
 	}
 }

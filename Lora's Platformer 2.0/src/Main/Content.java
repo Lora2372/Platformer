@@ -115,6 +115,11 @@ public class Content
 			JukeBox.load("/Sound/CharacterSounds/Female01/Loot0" + i + ".mp3", "Female01Loot0" + i);
 		}
 		
+		for(int i = 1; i <= 3; i++)
+		{
+			JukeBox.load("/Sound/CharacterSounds/Female01/CannotOpen0" + i + ".mp3", "Female01CannotOpen0" + i);
+		}
+		
 		for(int i = 1; i <= 6; i++)
 		{
 			JukeBox.load("/Sound/CharacterSounds/Fiona/Attack0" + i + ".mp3", "FionaAttack0" + i);
@@ -190,6 +195,9 @@ public class Content
 		JukeBox.load("/Sound/Doodads/PotionDrink.mp3", "PotionDrink");		
 		JukeBox.load("/Sound/Doodads/Coin.mp3", "Coin");		
 		JukeBox.load("/Sound/Doodads/Close.mp3", "Close");
+		
+		// Background sound effect
+		JukeBox.load("/Sound/BackgroundSound/Darkness.mp3", "Darkness");
 	}
 	
 	public static void loadContent()

@@ -3,6 +3,8 @@ package GameState.Maps;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+
+import Entity.Player.ConversationState;
 import Entity.Player.Player;
 import GameState.GameStateManager;
 import GameState.MainMap;
@@ -15,12 +17,16 @@ public class DeepWoods extends MainMap
 	
 	public DeepWoods(GameStateManager gameStatemanager,
 			TileMap tileMap,
-			Player player
+			Player player,
+			ConversationState conversationState
 			) 
 	{
 		super(gameStatemanager, 
 				tileMap,
-				player);
+				player,
+				conversationState
+				
+				);
 		
 		try
 		{

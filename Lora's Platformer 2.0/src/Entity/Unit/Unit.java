@@ -9,7 +9,6 @@ import Entity.Animation;
 import Entity.MapObject;
 import Entity.Doodad.*;
 import Entity.Item.Item;
-import Entity.Player.ConversationBox;
 import Entity.Player.Player;
 import Entity.Projectile.ArcaneBall;
 import Entity.Projectile.ElectricBall;
@@ -25,7 +24,6 @@ import java.awt.image.BufferedImage;
 public class Unit extends MapObject
 {
 	protected MainMap mainMap;
-	protected ConversationBox conversationbox;
 	
 	// Character stuff
 	protected String name;
@@ -58,19 +56,19 @@ public class Unit extends MapObject
 	protected double maxHealth;
 	protected double healthRegen;
 	protected double healthRestorationAmount;
-	protected double healthRestorationPerTick = 3;
+	protected double healthRestorationPerTick = 2;
 	
 	protected double mana;
 	protected double maxMana;
 	protected double manaRegen;
 	protected double manaRestorationAmount;
-	protected double manaRestorationPerTick;
+	protected double manaRestorationPerTick = 2;
 	
 	protected double stamina;
 	protected double maxStamina;
 	protected double staminaRegen;
 	protected double staminaRestorationAmount;
-	protected double staminaRestorationPerTick = 3;
+	protected double staminaRestorationPerTick = 2;
 	
 	protected int damageOnTouch;
 	protected boolean friendly;
@@ -554,7 +552,11 @@ public class Unit extends MapObject
 
 	
 	public boolean getInConversation() { return inConversation; }
-	public void setInConversation(boolean b) { inConversation = b; }
+	public void setInConversation(boolean b) 
+	{ 
+		inConversation = b; 
+		
+	}
 	
 	public void updateAI(ArrayList<Unit> characterList){}
 	
@@ -1408,13 +1410,5 @@ public class Unit extends MapObject
 		
 		
 		super.draw(graphics);
-		
-		if(conversationbox != null)
-		{			
-			if(conversationbox.inConversation())
-			{
-				conversationbox.draw(graphics);
-			}
-		}
 	}
 }

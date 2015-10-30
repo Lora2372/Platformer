@@ -7,9 +7,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
 import org.json.simple.JSONObject;
-
 import Entity.Player.Player;
 
 
@@ -32,7 +30,22 @@ public class JSONWriter
         jsonObject.put("SpawnLocationY", spawnLocationY);
         jsonObject.put("Silver", player.getSilver());
         jsonObject.put("Gold", player.getGold());
-        jsonObject.put("Items", player.getInventory().getItems());
+        
+//        JSONArray jsonItems = new JSONArray();
+//        Item[][] items = player.getInventory().getItems();
+//        
+//        for(int i = 0; i < player.getInventory().getNumberOfRows(); i++)
+//        {
+//        	for(int j = 0; j < player.getInventory().getNumberOfColumns(); j++)
+//        	{
+//        		if( items[i][j] != null)
+//        		{
+//        			jsonItems.add(items[i][j]);
+//        		}
+//        	}
+//        }
+//        jsonObject.put(items, jsonItems);
+        
         try 
         {  
             File myFile = new File(System.getProperty("user.home") + "\\Loras Platformer");

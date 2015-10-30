@@ -151,15 +151,6 @@ public class InventoryState extends GameState
 		{
 			for(int j = 0; j < numberOfColumns; j++)
 			{
-//				int inventorySlotLocationX = inventoryBackgroundLocationX + 80 +(60 * j + spacing * j);
-//				int inventorySlotLocationY = inventoryBackgroundLocationY + 80 +(60 * i + spacing * i);
-				
-
-				
-				
-				
-
-				
 				int inventorySlotLocationX = newX + spacingX * j;
 				int inventorySlotLocationY = newY + spacingY * i;
 				

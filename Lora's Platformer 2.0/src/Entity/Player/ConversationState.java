@@ -2,18 +2,20 @@ package Entity.Player;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import com.sun.glass.events.KeyEvent;
+
 import Entity.Doodad.Doodad;
 import Entity.Unit.Unit;
+import GameState.GameState;
+import GameState.GameStateManager;
 import Main.Content;
 import Main.GamePanel;
 
-public class ConversationBox  implements KeyListener
+public class ConversationState  extends GameState
 {
 	
 	private Player player;
@@ -42,14 +44,17 @@ public class ConversationBox  implements KeyListener
 	protected int conversationBoxHeight = 138;
 	
 	protected ArrayList<Integer> choiceRows;
-	protected int choiceAmount;
-	protected int choiceSelected;
+	protected int choiceAmount = 0;
+	protected int choiceSelected = 1;
 	protected int choiceMade = 0;
 	
 	protected boolean choiceRequested;
 	
-	public ConversationBox(Player player)
+	public ConversationState(GameStateManager gameStateManager)
 	{
+		
+		this.gameStateManager = gameStateManager;
+		
 		sprites = Content.ConversationGUI[0];
 		endConversation = Content.ConversationGUIEndConversation[0];
 		
@@ -60,8 +65,13 @@ public class ConversationBox  implements KeyListener
 		locationX = GamePanel.WIDTH / 3;
 		locationY = GamePanel.HEIGHT - 138;
 		
-		this.player = player;
 		
+		
+	}
+	
+	public void initialize(Player player) 
+	{
+		this.player = player;
 	}
 	
 	public boolean inConversation() { return inConversation; }
@@ -92,6 +102,8 @@ public class ConversationBox  implements KeyListener
 			otherPerson.setInConversation(true);
 		
 		player.setInConversation(true);
+		gameStateManager.setConversationState(true);
+		choiceRows = new ArrayList<Integer>();
 		
 	}
 	
@@ -104,6 +116,13 @@ public class ConversationBox  implements KeyListener
 		player.invulnerable(false);
 		
 		player.setInConversation(false);
+		gameStateManager.setConversationState(false);
+		
+		choiceRequested = false;
+		choiceAmount = 0;
+		choiceRows = null;
+		choiceSelected = 1;
+		choiceMade = 0;
 		
 		if(otherPerson != null)
 			otherPerson.setInConversation(false);
@@ -112,8 +131,15 @@ public class ConversationBox  implements KeyListener
 	
 	public void progressConversation()
 	{
-		if(conversationLocked) return;
+		if(conversationLocked) 
+		{
+			return;
+		}
+		
+		
 		conversationTracker++;
+		choiceMade = choiceSelected;
+		
 	}
 	
 	public int getConversationTracker()
@@ -131,9 +157,10 @@ public class ConversationBox  implements KeyListener
 		return choiceMade;
 	}
 	
-	public void draw(Graphics graphics)
-	{
 
+	
+	public void draw(Graphics2D graphics)
+	{
 		graphics.drawImage(
 				sprites[0],
 				(int) (locationX),
@@ -198,6 +225,9 @@ public class ConversationBox  implements KeyListener
 		
 		graphics.setColor(Color.WHITE);
 		
+		int tempChoiceAmount = 0;
+		ArrayList<Integer> tempChoiceRows = new ArrayList<Integer>();
+		
 		for(int i = 0; i < myString.length; i++)
 		{
 			int tempInt = graphics.getFontMetrics().stringWidth(myString[i]);
@@ -212,16 +242,30 @@ public class ConversationBox  implements KeyListener
 			}
 			if(myString[i].equals("-"))
 			{
-				graphics.setColor(Color.YELLOW);
-				choiceAmount++;
-				choiceRows.add(line);
+				tempChoiceAmount++;
+				
+				if(choiceSelected == tempChoiceAmount)
+				{
+					graphics.setColor(Color.YELLOW);
+				}
+				else
+				{
+					graphics.setColor(Color.RED);
+				}
+
+
+				tempChoiceRows.add(line);
 				choiceRequested = true;
+
 			}
 			
 			graphics.drawString(myString[i], (int)locationX + 21 + tempX, (int)locationY + 70 + 20 * line);
 			
 			tempX += tempInt + 3;
 		}
+		
+		choiceAmount = tempChoiceAmount;
+		choiceRows = tempChoiceRows;
 		
 		if( !choiceRequested)
 		{
@@ -246,25 +290,41 @@ public class ConversationBox  implements KeyListener
 		}
 	}
 
-	public void keyPressed(KeyEvent e) 
+	public void keyPressed(int k) 
 	{
-		System.out.println("You pressed a key!");
 		if(player.getInConversation())
 		{
-			System.out.println("You pressed a key whilst in a conversation!");
-			
-			
-			
+			if(k == KeyEvent.VK_UP)
+			{
+				if(choiceSelected > 1)
+				{
+					choiceSelected--;
+				}
+			}
+			if(k == KeyEvent.VK_DOWN)
+			{
+				if(choiceSelected < choiceAmount)
+				{
+					choiceSelected++;
+				}
+			}
 		}
 	}
 
-	public void keyReleased(KeyEvent e) 
+	public void update() 
 	{
 		
 	}
 
-	public void keyTyped(KeyEvent e) 
+
+
+	public void keyReleased(int k) 
 	{
 		
+	}
+
+	public void initialize() 
+	{
+
 	}
 }

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import TileMap.TileMap;
 import Entity.Doodad.SummoningEffect;
 import Entity.Item.Potion;
-import Entity.Player.ConversationBox;
+import Entity.Player.ConversationState;
 import Entity.Player.Player;
 import GameState.MainMap;
 import Main.Content;
@@ -20,7 +20,7 @@ public class LiadrinFirstEncounter extends Unit
 	
 	protected SummoningEffect summoningEffect;
 	
-	protected ConversationBox conversationBox;
+	protected ConversationState conversationBox;
 	
 	public LiadrinFirstEncounter(
 			TileMap tileMap,
@@ -112,13 +112,13 @@ public class LiadrinFirstEncounter extends Unit
 		if(this.player == null)
 		{
 			this.player = player;
-			conversationBox = player.getConversationBox();
+			conversationBox = player.getConversationState();
 		}
 		
 		// If the player has not yet started talking to Liadrin, do so.
-		if(!player.getConversationBox().inConversation() && summoningEffect == null && choiceMade == 0)
+		if(!player.getConversationState().inConversation() && summoningEffect == null && choiceMade == 0)
 		{
-			player.getConversationBox().startConversation(player, this, null, player.getConversation().liadrinFirstEncounter(), player.getConversation().liadrinFirstEncounterWhoTalks());
+			player.getConversationState().startConversation(player, this, null, player.getConversation().liadrinFirstEncounter(), player.getConversation().liadrinFirstEncounterWhoTalks());
 			return;
 		}
 		
@@ -128,14 +128,13 @@ public class LiadrinFirstEncounter extends Unit
 			if(conversationBox.getConversationTracker() >= player.getConversation().liadrinFirstEncounter().length)
 			{
 				choiceMade = conversationBox.getChoiceMade();
-				System.out.println("choiceMade (should not be 0): " + choiceMade);
 				if(choiceMade == 1)
 				{
-					player.getConversationBox().startConversation(player, this, null, player.getConversation().liadrinFirstEncounterChoiceEasy(), player.getConversation().liadrinFirstEncounterChoiceEasyWhoTalks());
+					player.getConversationState().startConversation(player, this, null, player.getConversation().liadrinFirstEncounterChoiceEasy(), player.getConversation().liadrinFirstEncounterChoiceEasyWhoTalks());
 				}
 				else
 				{
-					player.getConversationBox().startConversation(player, this, null, player.getConversation().liadrinFirstEncounterChoiceHard(), player.getConversation().liadrinFirstEncounterChoiceHardWhoTalks());
+					player.getConversationState().startConversation(player, this, null, player.getConversation().liadrinFirstEncounterChoiceHard(), player.getConversation().liadrinFirstEncounterChoiceHardWhoTalks());
 				}
 			}
 		}
@@ -143,7 +142,7 @@ public class LiadrinFirstEncounter extends Unit
 		// Player thought it was easy:
 		if(player.getInConversation() && choiceMade == 1)
 		{
-			if(conversationBox.getConversationTracker() > player.getConversation().liadrinFirstEncounterChoiceEasy().length)
+			if(conversationBox.getConversationTracker() >= player.getConversation().liadrinFirstEncounterChoiceEasy().length)
 			{
 				active = false;
 			}
@@ -152,7 +151,7 @@ public class LiadrinFirstEncounter extends Unit
 		// Player thought it was hard:
 		if(player.getInConversation() && choiceMade == 2)
 		{
-			if(conversationBox.getConversationTracker() > player.getConversation().liadrinFirstEncounterChoiceHard().length)
+			if(conversationBox.getConversationTracker() >= player.getConversation().liadrinFirstEncounterChoiceHard().length)
 			{
 				Potion healingPotion = new Potion(tileMap, false, 0, 0, player, 3, "Health");
 				
@@ -163,7 +162,7 @@ public class LiadrinFirstEncounter extends Unit
 		
 		if(!active)
 		{
-			player.getConversationBox().endConversation();
+			player.getConversationState().endConversation();
 			summoningEffect = new SummoningEffect(tileMap, locationX, locationY);
 			mainMap.addEffect(summoningEffect);
 		}

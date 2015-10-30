@@ -244,7 +244,7 @@ public class Fiona extends Unit
 		JukeBox.stop("MysteriousBattle");
 		JukeBox.loop("MysteriousConversation");
 		used = true;
-		player.getConversationBox().startConversation(player, this, null, conversation.fionaDefeated, conversation.fionaDefeatedWhoTalks);
+		player.getConversationState().startConversation(player, this, null, conversation.fionaDefeated, conversation.fionaDefeatedWhoTalks);
 	}
 	
 	
@@ -265,7 +265,7 @@ public class Fiona extends Unit
 		{
 			if(!conversationOver)
 			{
-				if(player.getConversationBox().getConversationTracker() == 3)
+				if(player.getConversationState().getConversationTracker() == 3)
 				{
 					if(summoningEffect == null && conversationProgress == 0)
 					{
@@ -273,12 +273,12 @@ public class Fiona extends Unit
 						mainMap.addEffect(summoningEffect);
 						JukeBox.play("Teleport");
 						player.getHUD().removeBoss();
-						player.getConversationBox().lockConversation(true);
+						player.getConversationState().lockConversation(true);
 						conversationProgress = 1;
 					}
 				}
 				
-				if(player.getConversationBox().getConversationTracker() == 5 && conversationProgress != 3)
+				if(player.getConversationState().getConversationTracker() == 4 && conversationProgress == 2)
 				{
 					conversationProgress = 3;
 					JukeBox.play("Close");
@@ -297,9 +297,9 @@ public class Fiona extends Unit
 					mysteriousDungeon.setDefeated(true);
 				}
 				
-				if(player.getConversationBox().getConversationTracker() >= conversation.fionaDefeated.length)
+				if(player.getConversationState().getConversationTracker() >= conversation.fionaDefeated.length)
 				{
-					player.getConversationBox().endConversation();
+					player.getConversationState().endConversation();
 				}
 			}
 		}
@@ -308,7 +308,7 @@ public class Fiona extends Unit
 			if(summoningEffect.getRemoveMe())
 			{
 				summoningEffect = null;
-				player.getConversationBox().lockConversation(false);
+				player.getConversationState().lockConversation(false);
 				hidden = true;
 				conversationProgress = 2;
 			}

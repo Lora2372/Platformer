@@ -59,7 +59,7 @@ public class ActivatableSign extends Doodad
 		player.inControl(false);
 		active = true;
 		
-		player.getConversationBox().startConversation(player, null, this, conversation, whoTalks);
+		player.getConversationState().startConversation(player, null, this, conversation, whoTalks);
 	}
 	
 	public void interact(Player player)
@@ -69,17 +69,17 @@ public class ActivatableSign extends Doodad
 		if(player == null)
 			System.out.println("player is null");
 		
-		if(!player.getConversationBox().inConversation()) 
+		if(!player.getConversationState().inConversation()) 
 			startConversation();
 //		else 
-//			player.getConversationBox().progressConversation();
+//			player.getConversationState().progressConversation();
 		
-		if(player.getConversationBox().getConversationTracker() >= conversation.length)
+		if(player.getConversationState().getConversationTracker() >= conversation.length)
 		{
 			
 			active = false;
 			player.inControl(true);
-			player.getConversationBox().endConversation();
+			player.getConversationState().endConversation();
 		}
 	}
 		

@@ -37,11 +37,11 @@ public class MenuState extends GameState
 	protected Player player;
 	protected TileMap tileMap;
 	
-	public MenuState(GameStateManager gameStateManager)
+	public MenuState(GameStateManager gameStateManager, ConversationState conversationState)
 	{
 		this.gameStateManager = gameStateManager;
 		tileMap = new TileMap(60);
-		player = new Player("Lora", tileMap);
+		player = new Player("Lora", tileMap, conversationState);
 		
 		gameStateManager.setPlayer(player);
 		gameStateManager.setTileMap(tileMap);

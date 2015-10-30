@@ -8,7 +8,7 @@ import TileMap.TileMap;
 import Audio.JukeBox;
 import Entity.Doodad.Doodad;
 import Entity.Player.Conversation;
-import Entity.Player.ConversationBox;
+import Entity.Player.ConversationState;
 import Entity.Player.Player;
 import Entity.Unit.Fiona;
 import GameState.GameStateManager;
@@ -23,14 +23,16 @@ public class ActivatableShrineMysteriousDungeon extends Doodad
 	protected Player player;
 	
 	protected boolean startConversation;
-	protected boolean used = false;
+	protected boolean active = true;
 	protected boolean touched = false;
+	
+	protected int choiceMade;
 	
 	protected Fiona fiona;
 	
 	protected Conversation conversation;
 	
-	protected ConversationBox conversationBox;
+	protected ConversationState conversationBox;
 	
 	public ActivatableShrineMysteriousDungeon(
 			TileMap tileMap,
@@ -61,7 +63,7 @@ public class ActivatableShrineMysteriousDungeon extends Doodad
 		this.gameStateManager = gameStateManager;
 		this.mysteriousDungeon = mysteriousDungeon;
 		
-		conversation = player.getConversation();
+		
 	}
 	
 	public void setDoodad(int currentAction)
@@ -71,73 +73,78 @@ public class ActivatableShrineMysteriousDungeon extends Doodad
 	
 	public boolean getStartConversation() { return startConversation; }
 	
-	public void startConversation(Player player)
-	{
-		
-		if(!touched)
-		{
-			player.getConversationBox().startConversation(player, null, null, player.getConversation().interactWithFionasShrine(), player.getConversation().interactWithFinonasShrineWhoTalks());
-		}
-		else if(!used)
-		{
-			used = true;
-			player.getConversationBox().startConversation(player, fiona, null, conversation.interactWithFionasShrine(), conversation.interactWithFinonasShrineWhoTalks());
-		}
-	}
 	
 	public void interact(Player player)
 	{
+		// Don't want to activate it more than once.
+		if(!active)
+		{
+			return;
+		}
+		
 		// If the player is null for whatever reason, update it with the player interacting with it:
 		if(this.player == null) 
 		{
 			this.player = player;
-			conversationBox = player.getConversationBox();
+			conversationBox = player.getConversationState();
+			conversation = player.getConversation();
 		}
 		
 		
 		// If the player is not yet in a conversation and has not yet used the shrine, start the first conversation:
-		if(!player.getInConversation() && !used)
+		if(!player.getInConversation() && choiceMade == 0)
 		{
-			startConversation(player);
+			player.getConversationState().startConversation(player, null, null, player.getConversation().interactWithFionasShrine(), player.getConversation().interactWithFinonasShrineWhoTalks());
+			return;
 		}
 		
 		// If the player currently is in a conversation but has not yet made the choice to touch the shrine:
-		if(player.getInConversation() && !touched)
+		if(player.getInConversation() && choiceMade == 0)
 		{
 			if(conversationBox.getConversationTracker() >= player.getConversation().interactWithFionasShrine().length)
 			{
-				if(conversationBox.getChoiceMade() == 1)
+				choiceMade = conversationBox.getChoiceMade();
+				if(choiceMade == 1)
 				{
-					touched = true;
-					startConversation(player);
+					player.getConversationState().startConversation(player, fiona, null, conversation.interactWithFionasShrineChoiceYes(), conversation.interactWithFinonasShrineChoiceYesWhoTalks());
+
 				}
 				else
 				{
-					conversationBox.endConversation();
+					player.getConversationState().startConversation(player, fiona, null, conversation.interactWithFionasShrineChoiceNo(), conversation.interactWithFinonasShrineChoiceNoWhoTalks());
 				}
 			}
 		}
 		
-		// If the player has decided to start the encounter and therefore used the shrine:
-		if(used)
+		// Player didn't want to start the encounter.
+		if(choiceMade == 2 && conversationBox.getConversationTracker() >= player.getConversation().interactWithFionasShrineChoiceNo().length)
 		{
-			if(conversationBox.getConversationTracker() == 1)
+			conversationBox.endConversation();
+			choiceMade = 0;
+			return;
+		}
+		// If the player has decided to start the encounter and therefore used the shrine:
+		if(player.getInConversation() && choiceMade == 1)
+		{
+			if(conversationBox.getConversationTracker() == 0)
 			{
 				// Play humming sound
-				System.out.println("tracker is at 1");
-				
+				System.out.println("tracker is at 0");
+				JukeBox.loop("Darkness");
+				JukeBox.stop("MysteriousDungeon");
 
+			}
+			else if(conversationBox.getConversationTracker() == 1)
+			{
+				// Play laugh
+				System.out.println("tracker is at 1");
+				fiona.playRecoverSound();
+				
 			}
 			else if(conversationBox.getConversationTracker() == 2)
 			{
-				// Play laugh
-				System.out.println("tracker is at 2");
-				
-			}
-			else if(conversationBox.getConversationTracker() == 3)
-			{
 				// Close the door
-				System.out.println("tracker is at 3");
+				System.out.println("tracker is at 2");
 				
 				JukeBox.play("Close");
 				
@@ -160,8 +167,6 @@ public class ActivatableShrineMysteriousDungeon extends Doodad
 								double tempX = character.getLocationX() - (tileMap.getWidth() - 20 * tileSize);
 								
 								if(tempX < 0) tempX = 200;
-								System.out.println("tempX:" + tempX);
-//								character.setPosition(locationX - (GamePanel.WIDTH / 30 - 20), locationY);
 								character.setPosition(tempX, 550);
 								
 							}
@@ -199,8 +204,6 @@ public class ActivatableShrineMysteriousDungeon extends Doodad
 						}
 					}
 					
-					JukeBox.stop("MysteriousDungeon");
-					
 					tileMap.loadTiles(ImageIO.read(getClass().getResource("/Art/Tilesets/LorasTileset.png")));
 					tileMap.loadMap("/Maps/MysteriousDungeonB.map");
 					tileMap.setPosition(0, 0);
@@ -212,7 +215,7 @@ public class ActivatableShrineMysteriousDungeon extends Doodad
 				
 			}
 			
-			else if(conversationBox.getConversationTracker() == 6)
+			else if(conversationBox.getConversationTracker() == 5)
 			{
 				// Fiona reveals herself
 				fiona.setPosition(player.getLocationX() + 200, player.getLocationY() - 300);
@@ -220,15 +223,18 @@ public class ActivatableShrineMysteriousDungeon extends Doodad
 				fiona.setHidden(false);
 				fiona.inControl(false);
 				
-				JukeBox.loop("MysteriousConversation");	
+				JukeBox.loop("MysteriousConversation");
+				JukeBox.stop("Darkness");
 			}
-			else if(conversationBox.getConversationTracker() >= player.getConversation().interactWithFinonasShrinChoiceYesWhoTalks().length)
+			else if(conversationBox.getConversationTracker() >= player.getConversation().interactWithFinonasShrineChoiceYesWhoTalks().length)
 			{
-				player.getConversationBox().endConversation();
+				player.getConversationState().endConversation();
 				startConversation = true;
 				active = false;
-				used = true;
 				fiona.inControl(true);
+				mysteriousDungeon.setEngaged(true);
+				JukeBox.stop("MysteriousConversation");
+				JukeBox.loop("MysteriousBattle");
 				player.getHUD().addBoss(fiona);
 			}
 		}

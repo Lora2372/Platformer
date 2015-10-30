@@ -50,7 +50,7 @@ public class Inventory
 	public boolean addItem(Item item)
 	{
 		item.setInWorld(false);
-		
+				
 		Item tempItem = hasItem(item.getItemType());
 		if(tempItem != null)
 		{
@@ -106,15 +106,11 @@ public class Inventory
 				{
 					if(items[i][j].getItemType().equals(itemType))
 					{
-						System.out.println("Found the item: " + itemType);
 						return items[i][j];
 					}
 				}
 			}
 		}
-		
-		
-		System.out.println("Item wasn't found.");
 		return null;
 	}
 	
@@ -122,6 +118,16 @@ public class Inventory
 	public Item[][] getItems()
 	{
 		return items;
+	}
+	
+	public int getNumberOfColumns()
+	{
+		return numberOfColumns;
+	}
+	
+	public int getNumberOfRows()
+	{
+		return numberOfRows;
 	}
 	
 }

@@ -61,7 +61,7 @@ public class Conversation
 	{
 		return new String[]
 		{
-			"Glad to hear it! \n Unfortunately I can't stay, keep up the good work and we'll meet again soon."
+			"Glad to hear it! \nUnfortunately I can't stay, keep up the good work and we'll meet again soon."
 		};
 	}
 	
@@ -104,7 +104,7 @@ public class Conversation
 			"Laughter echo through the tunnels",													// 3
 			"The door behind you closed...",														// 3
 			"Well look what I found, rummaging through my sanctum...",								// 5
-			"Who's there? reveal yourself!",														// 0
+			"Who's there? Reveal yourself!",														// 0
 			"Another apprentice thrown to the wolves I see...",										// 1
 			"I won't be an apprentice for much longer!",											// 0
 			"No? \n We'll see...",																	// 1
@@ -116,7 +116,7 @@ public class Conversation
 		};
 	}
 	
-	public int[] interactWithFinonasShrinChoiceYesWhoTalks()
+	public int[] interactWithFinonasShrineChoiceYesWhoTalks()
 	{
 		return new int[]
 		{
@@ -145,7 +145,7 @@ public class Conversation
 		};
 	}
 	
-	public int[] interactWithFinonasShrinChoiceNoWhoTalks()
+	public int[] interactWithFinonasShrineChoiceNoWhoTalks()
 	{
 		return new int[]
 		{
@@ -160,7 +160,8 @@ public class Conversation
 		"Ugh... \n Well done, I see you are an apprentice no longer.",							// 1
 		"As keeper of this sanctum I hearby release you from duty, you're free to go.",			// 1
 		"Just like that?",																		// 0
-		"But of course, were you expecting some form of reward? \n Until we meet again..."		// 1
+		"But of course, were you expecting some form of reward? \n Until we meet again...",		// 1
+		"The door up ahead opens up."															// 3
 	};
 	
 	public int[] fionaDefeatedWhoTalks = new int[]
@@ -168,7 +169,8 @@ public class Conversation
 		1,
 		1,
 		0,
-		1
+		1,
+		3
 	};
 	
 	

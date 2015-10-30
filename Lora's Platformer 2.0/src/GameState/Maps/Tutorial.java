@@ -6,6 +6,7 @@ import javax.imageio.ImageIO;
 
 import Audio.JukeBox;
 import Entity.Player.Conversation;
+import Entity.Player.ConversationState;
 import Entity.Player.Player;
 import Entity.Unit.Succubus;
 import GameState.GameStateManager;
@@ -25,12 +26,16 @@ public class Tutorial extends MainMap
 	
 	public Tutorial(GameStateManager gameStatemanager,
 			TileMap tileMap,
-			Player player
+			Player player,
+			ConversationState conversationState
 			) 
 	{
 		super(gameStatemanager, 
 				tileMap,
-				player);
+				player,
+				conversationState
+				
+				);
 		
 		try
 		{
@@ -78,9 +83,9 @@ public class Tutorial extends MainMap
 		{
 			if(player.getInConversation())
 			{
-				if(player.getConversationBox().getConversationTracker() >= player.getConversationBox().getConversationLength())
+				if(player.getConversationState().getConversationTracker() >= player.getConversationState().getConversationLength())
 				{
-					player.getConversationBox().endConversation();
+					player.getConversationState().endConversation();
 					tutorialProgress++;
 				}
 			}
@@ -94,68 +99,68 @@ public class Tutorial extends MainMap
 					
 			if(tutorialProgress == 0 && !player.getFalling())
 				if(!player.getInConversation())
-					player.getConversationBox().startConversation(player, null, null, 
+					player.getConversationState().startConversation(player, null, null, 
 							conversation.tutorialWelcomeMessage, 
 							conversation.tutorialWelcomeMessageWhoTalks);
 			
 			if(tutorialProgress == 1)
 				if(player.getLocationX() - 400 > 200 || player.getLocationX() - 400 < -200)
 				if(player.getLeft() || player.getRight() && !player.getInConversation())
-					player.getConversationBox().startConversation(player, null, null, 
+					player.getConversationState().startConversation(player, null, null, 
 							conversation.tutorialMoveMessage, 
 							conversation.tutorialMoveMessageWhoTalks);
 			
 			if(tutorialProgress == 2)
 				if(player.getJumping() && !player.getInConversation())
-					player.getConversationBox().startConversation(player, null, null, 
+					player.getConversationState().startConversation(player, null, null, 
 							conversation.tutorialJumpMessage, 
 							conversation.tutorialJumpMessageWhoTalks);
 			
 			if(tutorialProgress == 3)
 				if(player.getLocationX() > 1420 && !player.getInConversation())
-					player.getConversationBox().startConversation(player, null, null, 
+					player.getConversationState().startConversation(player, null, null, 
 							conversation.tutorialHoleSmallMessage, 
 							conversation.tutorialHoleSmallMessageWhoTalks);
 					
 			if(tutorialProgress == 4)
 				if(player.getLocationX() > 1820 && !player.getInConversation() && !player.getFalling())
-					player.getConversationBox().startConversation(player, null, null, 
+					player.getConversationState().startConversation(player, null, null, 
 							conversation.tutorialHoleSmallPassedMessage, 
 							conversation.tutorialHoleSmallPassedMessageWhoTalks);
 			
 			if(tutorialProgress == 5)
 				if(player.getLocationX() > 2600 && !player.getInConversation() && !player.getFalling())
-					player.getConversationBox().startConversation(player, null, null, 
+					player.getConversationState().startConversation(player, null, null, 
 							conversation.tutorialMovementMasteredMessage, 
 							conversation.tutorialMovementMasteredMessageWhoTalks);
 			
 			if(tutorialProgress == 6)
 				if(player.getLocationX() > 2950 && !player.getInConversation() && !player.getFalling())
-					player.getConversationBox().startConversation(player, null, null, 
+					player.getConversationState().startConversation(player, null, null, 
 							conversation.tutorialFireBallSmallMessage, 
 							conversation.tutorialFireBallSmallMessageWhoTalks);
 			
 			if(tutorialProgress == 7)
 				if(player.getFireBallSmallDoneCasting() && !player.getInConversation())
-					player.getConversationBox().startConversation(player, null, null, 
+					player.getConversationState().startConversation(player, null, null, 
 							conversation.tutorialFireBallLargeMessage, 
 							conversation.tutorialFireBallLargeMessageWhoTalks);
 			
 			if(tutorialProgress == 8)
 				if(player.getFireBallLargeDoneCasting() && player.getUp() && !player.getInConversation())
-					player.getConversationBox().startConversation(player, null, null, 
+					player.getConversationState().startConversation(player, null, null, 
 							conversation.tutorialDashMessage, 
 							conversation.tutorialDashMessageWhoTalks);
 			
 			if(tutorialProgress == 9)
 				if(player.getDashing() && !player.getInConversation())
-					player.getConversationBox().startConversation(player, null, null, 
+					player.getConversationState().startConversation(player, null, null, 
 							conversation.tutorialPunchMessage, 
 							conversation.tutorialPunchMessageWhoTalks);
 			
 			if(tutorialProgress == 10)
 				if(player.getPunching() && !player.getInConversation())
-					player.getConversationBox().startConversation(player, null, null, 
+					player.getConversationState().startConversation(player, null, null, 
 							conversation.tutorialPunchDoneMessage, 
 							conversation.tutorialPunchDoneMessageWhoTalks);
 			
@@ -168,7 +173,7 @@ public class Tutorial extends MainMap
 					characterList.add(succubus);
 					
 					
-					player.getConversationBox().startConversation(player, null, null, 
+					player.getConversationState().startConversation(player, null, null, 
 							conversation.tutorialEnemySuccubusMessage, 
 							conversation.tutorialEnemySuccubusMessageWhoTalks);
 				}
@@ -176,11 +181,11 @@ public class Tutorial extends MainMap
 			if(tutorialProgress == 12)
 				if(succubus.isDead())
 					if(!player.getInConversation())
-						player.getConversationBox().startConversation(player, null, null, 
+						player.getConversationState().startConversation(player, null, null, 
 								conversation.tutorialTempleEnterMessage, 
 								conversation.tutorialTempleEnterMessageWhoTalks);
 					else
-						if(player.getConversationBox().getConversationTracker() == 1)
+						if(player.getConversationState().getConversationTracker() == 1)
 						{
 							JukeBox.play("Close");
 							tileMap.loadMap("/Maps/TutorialB.map");
@@ -189,13 +194,13 @@ public class Tutorial extends MainMap
 
 			if(tutorialProgress == 13)
 				if(!player.getInConversation() && player.getLocationX() > 4000)
-					player.getConversationBox().startConversation(player, null, null, 
+					player.getConversationState().startConversation(player, null, null, 
 							conversation.tutorialHoleLargeMessage, 
 							conversation.tutorialHoleLargeMessageWhoTalks);
 			
 			if(tutorialProgress == 14)
 				if(!player.getInConversation() && player.getLocationX() > 4500 && !player.getFalling())
-					player.getConversationBox().startConversation(player, null, null, 
+					player.getConversationState().startConversation(player, null, null, 
 							conversation.tutorialHoleLargePassedMessage, 
 							conversation.tutorialHoleLargePassedMessageWhoTalks);
 			

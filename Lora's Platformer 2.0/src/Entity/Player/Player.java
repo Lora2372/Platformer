@@ -22,19 +22,23 @@ public class Player extends Unit
 	
 //	protected ArrayList<Projectile> a
 	
-	public enum soundTypes { Attack, Hurt, Jump , Loot}
+	public enum soundTypes { Attack, Hurt, Jump , Loot, CannotOpen}
 	
 	protected String currentMap;
 	
 	protected Conversation conversation;
-	
+	protected ConversationState conversationState;
 	//  Animations 
 	
 	
 	// Animation actions, these are enums similar to the GameState, we use them to determine the index of the sprite animation
 	
 	// Constructor
-	public Player(String name, TileMap tileMap)
+	public Player(
+			String name, 
+			TileMap tileMap,
+			ConversationState conversationState
+			)
 	{
 		super(
 				tileMap,															// TileMap
@@ -95,9 +99,8 @@ public class Player extends Unit
 				);
 		
 		conversation = new Conversation(this);
-		
+		this.conversationState = conversationState;
 		player = true;
-		conversationbox = new ConversationBox(this);
 
 		hud = new HUD(this);
 		
@@ -114,6 +117,8 @@ public class Player extends Unit
 	}
 	
 	public Conversation getConversation() { return conversation; }
+	
+	public ConversationState getConversationState() { return conversationState; }
 	
 	public String getCurrentMap() { return currentMap; }
 	public void setCurrentMap(String newMap) { currentMap = newMap; }
@@ -176,13 +181,18 @@ public class Player extends Unit
 		int min = 1;
 		
 		int myRandom = random.nextInt((max - min) + 1) + min;
-		JukeBox.play("Female01" + soundTypes.Loot + "0" + myRandom);
-				
+		JukeBox.play("Female01" + soundTypes.Loot + "0" + myRandom);		
 	}
 	
-	
-	public ConversationBox getConversationBox()
+	public void playCannotOpenSound()
 	{
-		return conversationbox;
+		Random random = new Random();
+		
+		int max = numberofSounds[3];
+		int min = 1;
+		
+		int myRandom = random.nextInt((max - min) + 1) + min;
+		JukeBox.play("Female01" + soundTypes.CannotOpen + "0" + myRandom);		
 	}
+	
 }

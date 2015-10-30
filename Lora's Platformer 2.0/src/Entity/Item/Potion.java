@@ -31,7 +31,7 @@ public class Potion extends Item
 				locationX, 
 				locationY,
 				owner, 
-				false, 
+				true, 
 				stacks, 
 				true, 
 				potionType
@@ -52,7 +52,6 @@ public class Potion extends Item
 	
 	public void use(Unit user)
 	{
-		System.out.println("Using within potion");
 		super.use(user);
 		
 		if(itemType.equals("Health"))

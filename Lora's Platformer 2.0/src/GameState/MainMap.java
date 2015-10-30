@@ -35,6 +35,8 @@ public class MainMap extends GameState
 	protected ArrayList<Explosion> explosions;
 	protected boolean doneInitializing;
 	
+	protected ConversationState conversationState;
+	
 	protected long soundTimer;
 	
 	protected boolean gameover;
@@ -42,11 +44,13 @@ public class MainMap extends GameState
 	public MainMap(
 			GameStateManager gameStatemanager,
 			TileMap tileMap,
-			Player player
+			Player player,
+			ConversationState conversationState
 			
 			)
 	{
 		this.gameStateManager = gameStatemanager;
+		this.conversationState = conversationState;
 		this.tileMap = tileMap;
 		this.player = player;
 		initialize();
@@ -74,7 +78,7 @@ public class MainMap extends GameState
 		if(player == null)
 		{
 			System.out.println("Player created");
-			player = new Player("Lora", tileMap);
+			player = new Player("Lora", tileMap, conversationState);
 		}
 		player.setMainMap(this);
 		characterList.add(player);
@@ -509,7 +513,7 @@ public class MainMap extends GameState
 	{
 		if(player.getInConversation())
 		{
-			player.getConversationBox().progressConversation();
+			player.getConversationState().progressConversation();
 		}
 		for(int i = 0; i < activatables.size(); i++)
 		{

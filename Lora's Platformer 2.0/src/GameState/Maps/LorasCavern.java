@@ -20,12 +20,14 @@ public class LorasCavern extends MainMap
 	public LorasCavern(
 			GameStateManager gameStateManager,
 			TileMap tileMap,
-			Player player
+			Player player,
+			ConversationState conversationState
 			) 
 	{
 		super(gameStateManager, 
 				tileMap,
-				player
+				player,
+				conversationState
 				);
 	
 		try

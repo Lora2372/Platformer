@@ -1,6 +1,7 @@
 package GameState;
 
 import Audio.JukeBox;
+import Entity.Player.ConversationState;
 import Entity.Player.Player;
 import GameState.Inventory.InventoryState;
 import GameState.Maps.DeepWoods;
@@ -15,10 +16,13 @@ public class GameStateManager
 	protected PauseState pausestate;
 	protected HelpState helpstate;
 	protected InventoryState inventorystate;
+	protected ConversationState conversationState;
 	
 	protected boolean paused;
 	protected boolean browsingInventory;
 	protected boolean options;
+	protected boolean inConversation;
+	
 	
 	private GameState[] gameStates;
 	private int currentState;
@@ -40,6 +44,8 @@ public class GameStateManager
 		
 		inventorystate = new InventoryState(this);
 		
+		conversationState = new ConversationState(this);
+		
 		gameStates = new GameState[NUMGAMESTATES];
 		
 		currentState = MENUSTATE;
@@ -50,6 +56,7 @@ public class GameStateManager
 	{ 
 		this.player = player; 
 		inventorystate.initialize(player);
+		conversationState.initialize(player);
 	}
 	
 	public void setTileMap(TileMap tileMap) { this.tileMap = tileMap; }
@@ -60,32 +67,37 @@ public class GameStateManager
 	public boolean getPaused() { return paused; }
 	public void options(boolean b) { options = b; }
 	
+	public void setConversationState(boolean well)
+	{
+		inConversation = well;
+	}
+	
 	private void loadState(int state) 
 	{
 		if(state == TutorialState)
 		{
 			JukeBox.loop("Tutorial");
-			gameStates[state] = new Tutorial(this, tileMap, player);
+			gameStates[state] = new Tutorial(this, tileMap, player, conversationState);
 		}
 		else if(state == MENUSTATE)
 		{		
 			JukeBox.loop("Menu");
-			gameStates[state] = new MenuState(this);
+			gameStates[state] = new MenuState(this, conversationState);
 		}
 		else if(state == LorasCavern)
 		{
 			JukeBox.loop("LorasCavern");
-			gameStates[state] = new LorasCavern(this, tileMap, player);
+			gameStates[state] = new LorasCavern(this, tileMap, player, conversationState);
 		}
 		else if(state == MysteriousDungeon)
 		{
 			JukeBox.loop("MysteriousDungeon");
-			gameStates[state] = new MysteriousDungeon(this, tileMap, player);			
+			gameStates[state] = new MysteriousDungeon(this, tileMap, player, conversationState);
 		}
 		else if(state == DeepWoods)
 		{
 			JukeBox.loop("DeepWoods");
-			gameStates[state] = new DeepWoods(this, tileMap, player);			
+			gameStates[state] = new DeepWoods(this, tileMap, player, conversationState);			
 		}
 	}
 	
@@ -125,8 +137,15 @@ public class GameStateManager
 				
 				if(options){ helpstate.update(); }
 				return;
-			}			
+			}
+			
+			if(inConversation)
+			{
+				conversationState.update();
+			}
+			
 			gameStates[currentState].update();
+			
 		} catch(Exception e) {}
 	}
 	
@@ -145,6 +164,12 @@ public class GameStateManager
 				return;
 			}
 			gameStates[currentState].draw(graphics);
+			
+			if(inConversation)
+			{
+				conversationState.draw(graphics);
+			}
+			
 		} catch(Exception e) {}
 	}
 	
@@ -162,6 +187,12 @@ public class GameStateManager
 			
 			return;		
 		}
+		
+		if(inConversation)
+		{
+			conversationState.keyPressed(k);
+		}
+		
 		gameStates[currentState].keyPressed(k);
 	}
 	

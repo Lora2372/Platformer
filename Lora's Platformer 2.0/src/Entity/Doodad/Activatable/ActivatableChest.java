@@ -135,20 +135,24 @@ public class ActivatableChest extends Doodad
 		
 		if(!player.getInConversation())
 		{
-			player.getConversationBox().startConversation(player, null, null, conversation, new int[] { 3 });
+			player.getConversationState().startConversation(player, null, null, conversation, new int[] { 3 });
 			
 			if(active)
 			{
 				player.playLootSound();
 			}
+			else
+			{
+				player.playCannotOpenSound();
+			}
 		}
 		else
 		{
-			player.getConversationBox().progressConversation();
+			player.getConversationState().progressConversation();
 			
-			if(player.getConversationBox().getConversationTracker() >= player.getConversationBox().getConversationLength())
+			if(player.getConversationState().getConversationTracker() >= player.getConversationState().getConversationLength())
 			{
-				player.getConversationBox().endConversation();
+				player.getConversationState().endConversation();
 				
 				if(active)
 				{
