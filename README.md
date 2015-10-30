@@ -11,3 +11,7 @@ https://java.com/en/download/
 Your operative system shouldn't matter for as long as you have Java, although I'm developing it in Windows it should work fine in Linux as well.
 
 (To be continued as I learn more about what you might need and how to more easily implement means for you to test the project.)
+
+
+If you have any questions or in general just want to get in contact with me, you can always send me an email at:
+Lora.Twinblade@gmail.com
