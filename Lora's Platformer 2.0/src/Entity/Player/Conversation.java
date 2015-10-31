@@ -173,13 +173,31 @@ public class Conversation
 		3
 	};
 	
+	public String[] tutorialInstructions()
+	{
+		return new String[]
+		{
+/* 0 */		"Press E",
+/* 1 */		"Use the arrow keys to move",
+/* 2 */		"Press space to jump",
+/* 3 */		"Explore the world",
+/* 4 */		"Jump over the hole using the arrow keys to move and space to jump",
+/* 5 */		"Press A to fire a small fireball",
+/* 6 */		"Hold up or down to aim, then press S to fire a large fireball",
+/* 7 */		"Press D to dash forward",
+/* 8 */		"Press F to punch",
+/* 9 */		"Defeat the enemy using A/S/D/F",
+/* 10 */	"Enter the temple",
+/* 11 */	"Move toward the edge, jump and hold down R to glide"
+		};
+	}
 	
 	public String[] tutorialWelcomeMessage = new String[]
 	{
 		"Greetings, and welcome to the tutorial! Please press E.",
 		"Good! That's exactly how you progress a conversation! ",
 		"During a conversation you are unable to move or act "
-		+ "you must therefor end a conversation before you can "
+		+ "you must therefore end a conversation before you can "
 		+ "start doing so.",
 		"This is the last frame until this dialog ends, when "
 		+ "it does, try moving around with the arrow keys."

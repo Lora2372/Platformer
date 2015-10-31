@@ -26,8 +26,6 @@ public class MainMap extends GameState
 	protected GameOver gameoverScreen;
 	protected Player player;
 	protected ArrayList<Unit> characterList;
-	protected ArrayList<Unit> enemies;
-	protected ArrayList<Unit> allies;
 	protected ArrayList<Doodad> stuff;
 	protected ArrayList<Doodad> activatables;
 	protected ArrayList<Item> items;
@@ -60,11 +58,9 @@ public class MainMap extends GameState
 	{
 
 		characterList = new ArrayList<Unit>();
-		enemies = new ArrayList<Unit>();
 		stuff = new ArrayList<Doodad>();
 		activatables = new ArrayList<Doodad>();
 		items = new ArrayList<Item>();
-		allies = new ArrayList<Unit>();
 		
 		projectiles = new ArrayList<Projectile>();
 		explosions = new ArrayList<Explosion>();
@@ -151,11 +147,6 @@ public class MainMap extends GameState
 		}
 	}
 	
-	public void addEnemy(Unit enemy)
-	{
-		enemies.add(enemy);
-		characterList.add(enemy);
-	}
 	
 	public void addEffect(Doodad effect)
 	{
@@ -239,8 +230,6 @@ public class MainMap extends GameState
 				if(character.getRemoveMe())
 				{
 					characterList.remove(character);
-					if(character.getFriendly()) 	allies.remove(character);
-					if(!character.getFriendly()) 	enemies.remove(character);	
 					i--;
 				}
 				
@@ -259,19 +248,24 @@ public class MainMap extends GameState
 				{
 					if(character != player)
 					{
-						if(!characterList.get(i).getFriendly())
+						Poff poff = new Poff(tileMap,characterList.get(i).getLocationX(), characterList.get(i).getLocationY());
+						stuff.add(poff);
+						
+						int tempRows = character.getInventory().getRows();
+						int tempColumns = character.getInventory().getColumns();
+						
+						Item items[][] = character.getInventory().getItems();
+						
+						for(int x = 0; x < tempRows; x++)
 						{
-							for(int z = 0; z < enemies.size(); z++)
+							for(int y = 0; y < tempColumns; y++)
 							{
-								if(enemies.get(z) == characterList.get(i))
+								if(items[x][y] != null)
 								{
-									enemies.remove(z);
-									z--;
+									items[x][y].drop();
 								}
 							}
 						}
-						Poff poff = new Poff(tileMap,characterList.get(i).getLocationX(), characterList.get(i).getLocationY());
-						stuff.add(poff);
 						
 						characterList.remove(i);
 						i--;
@@ -394,16 +388,23 @@ public class MainMap extends GameState
 		
 		if(items != null)
 		{
-			for(int i = 0; i < items.size(); i++)
+			try
 			{
-				try
+				for(int i = 0; i < items.size(); i++)
 				{
-					items.get(i).draw(graphics);
+					if(items.get(i) != null)
+					{
+						items.get(i).draw(graphics);
+					}
+					else
+					{
+						System.out.println("item is null");
+					}
 				}
-				catch(Exception e)
-				{
-					e.printStackTrace();
-				}
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
 			}
 		}
 		
@@ -438,10 +439,10 @@ public class MainMap extends GameState
 	public int RNG(int min, int max)
 	{
 		Random random = new Random();
-		return random.nextInt((max - min) + min);
+		return random.nextInt((max - min) + 1) + min;
 	}
 	
-	public void spawnSlug(double x, double y, boolean facingRight, String name)
+	public Slug spawnSlug(double x, double y, boolean facingRight, String name)
 	{
 		
 		
@@ -465,10 +466,10 @@ public class MainMap extends GameState
 	
 		Slug slug = new Slug(tileMap, facingRight, false, false, false, false, name, x, y, this);
 		characterList.add(slug);
-		enemies.add(slug);
+		return slug;
 	}
 	
-	public void spawnSuccubus(double x, double y, boolean facingRight)
+	public Succubus spawnSuccubus(double x, double y, boolean facingRight)
 	{
 		String[] succubiNames = new String[]
 		{
@@ -481,11 +482,11 @@ public class MainMap extends GameState
 		
 		Succubus succubus = new Succubus(tileMap, facingRight,false, false, false, false, succubiNames[random2],x, y, this);
 		characterList.add(succubus);
-		enemies.add(succubus);
 		
+		return succubus;
 	}
 	
-	public void spawnWolf(double x, double y, boolean facingRight)
+	public Wolf spawnWolf(double x, double y, boolean facingRight)
 	{
 		String[] wolfNames = new String[]
 		{
@@ -494,7 +495,56 @@ public class MainMap extends GameState
 		
 		Wolf wolf = new Wolf(tileMap, facingRight, false, false, false, false, wolfNames[0], x, y, this);
 		characterList.add(wolf);
-		enemies.add(wolf);
+		return wolf;
+	}
+	
+	public void dropPotion(String potionType, int chance, Unit owner)
+	{
+		int oneToOneHundred = RNG(0, 100);
+		int potionDropped = RNG(1,3);
+		
+		if(oneToOneHundred <= chance)
+		{
+			Potion potion = null;
+			if(!potionType.equals("Any"))
+			{
+				potion = new Potion(tileMap, false, 0, 0, owner, 1, potionType);
+			}
+			else
+			{
+				System.out.println("potionDropped: " + potionDropped);
+				if(potionDropped == 1)
+				{
+					potion = new Potion(tileMap, false, 0, 0, owner, 1, "Health");
+				}
+				else if(potionDropped == 2)
+				{
+					potion= new Potion(tileMap, false, 0, 0, owner, 1, "Mana");
+				}
+				else if(potionDropped == 3)
+				{
+					potion = new Potion(tileMap, false, 0, 0, owner, 1, "Stamina");
+				}
+			}
+			if(potion == null)
+			{
+				System.out.println("Why is it null?");
+			}
+			owner.getInventory().addItem(potion);
+			items.add(potion);
+		}
+	}
+	
+	public void dropKey(String keyType, int chance, Unit owner)
+	{
+		int oneToOneHundred = RNG(0, 100);
+		if(oneToOneHundred <= chance)
+		{
+			Key key = new Key(tileMap, false, 0, 0, owner, 1, keyType);
+
+			owner.getInventory().addItem(key);
+			items.add(key);
+		}
 	}
 
 	public void spawnPlayer(double x, double y)
@@ -531,11 +581,11 @@ public class MainMap extends GameState
 			}
 		}
 		
-		for(int i = 0; i < allies.size(); i++)
+		for(int i = 0; i < characterList.size(); i++)
 		{
-			if(player.intersects(allies.get(i)) && allies.get(i).getActivatable())
+			if(player.intersects(characterList.get(i)) && characterList.get(i).getActivatable())
 			{
-				allies.get(i).interact(player);
+				characterList.get(i).interact(player);
 			}
 		}
 	}
@@ -589,7 +639,7 @@ public class MainMap extends GameState
 	
 	public void spawnStatueSave(double locationX, double locationY)
 	{
-		StatueSave statueSave = new StatueSave(tileMap, locationX, locationY);
+		StatueSave statueSave = new StatueSave(tileMap, locationX, locationY + 10);
 		activatables.add(statueSave);
 		stuff.add(statueSave);
 	}

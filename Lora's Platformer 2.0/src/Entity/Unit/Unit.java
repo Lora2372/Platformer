@@ -56,19 +56,19 @@ public class Unit extends MapObject
 	protected double maxHealth;
 	protected double healthRegen;
 	protected double healthRestorationAmount;
-	protected double healthRestorationPerTick = 2;
+	protected double healthRestorationPerTick = 1;
 	
 	protected double mana;
 	protected double maxMana;
 	protected double manaRegen;
 	protected double manaRestorationAmount;
-	protected double manaRestorationPerTick = 2;
+	protected double manaRestorationPerTick = 1;
 	
 	protected double stamina;
 	protected double maxStamina;
 	protected double staminaRegen;
 	protected double staminaRestorationAmount;
-	protected double staminaRestorationPerTick = 2;
+	protected double staminaRestorationPerTick = 1;
 	
 	protected int damageOnTouch;
 	protected boolean friendly;
@@ -343,6 +343,8 @@ public class Unit extends MapObject
 	}
 	
 	public TileMap getTileMap() { return tileMap; }
+	
+	public void setUnkillable(boolean unkillable) { this.unkillable = unkillable; }
 	
 	public void calculateAim(Unit character)
 	{

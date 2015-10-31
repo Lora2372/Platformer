@@ -100,7 +100,6 @@ public class MysteriousDungeon extends MainMap
 
 		
 		fiona = new Fiona(tileMap,false,false,false,false, true, "Fiona", 400, 200, this, player);
-		enemies.add(fiona);
 		characterList.add(fiona);
 		fiona.setHidden(true);
 		
@@ -110,10 +109,12 @@ public class MysteriousDungeon extends MainMap
 		
 		
 		fiona.inControl(false);
-		
-		doneInitializing = true;
+		player.setUnkillable(false);
+		player.setSpawning(true);
 		bossEngaged = false;
 		bossDefeated = false;
+		
+		doneInitializing = true;
 	}
 	
 	

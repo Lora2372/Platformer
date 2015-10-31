@@ -5,9 +5,9 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import Entity.Player.*;
 import Entity.Unit.LiadrinFirstEncounter;
+import Entity.Unit.*;
 import GameState.GameStateManager;
 import GameState.MainMap;
-import Entity.Doodad.Activatable.*;
 import TileMap.Background;
 import TileMap.GameOver;
 import TileMap.TileMap;
@@ -33,7 +33,7 @@ public class LorasCavern extends MainMap
 		try
 		{						
 			tileMap.loadTiles(ImageIO.read(getClass().getResource("/Art/Tilesets/LorasTileset.png")));
-			tileMap.loadMap("/Maps/LorasMap01018.map");
+			tileMap.loadMap("/Maps/LorasCavernA.map");
 			tileMap.setPosition(0, 0);
 			
 			background = new Background(getClass().getResource("/Art/Backgrounds/ForestMountainBackgroud.png"), 0.1);
@@ -63,45 +63,42 @@ public class LorasCavern extends MainMap
 		}
 
 		player.setSpawning(true);
-						
+		player.setUnkillable(false);	
 		doneInitializing = true;
 	}
 	
 	public void spawnEnemies()
 	{
-		spawnSlug(1690, 1600, false, "Steve");
+		Slug slug = spawnSlug(1690, 1600, false, "Steve");
+		dropPotion("Health", 100, slug);
 		
-		spawnSuccubus(2700, 1400, false);
-		spawnSuccubus(1339,1900, true);
-		spawnSuccubus(2252, 2170, true);
-		spawnSuccubus(1423, 650, true);
-		spawnSuccubus(3689, 1430, false);
-				
-		spawnChest(989,			2250, false, 	3, 0, "Common");
-		spawnChest(989 + 120,	2250, true, 	15, 0, "Uncommon");
-		spawnChest(989 + 240,	2250, true, 	25, 2, "Rare");
+		Succubus succubus;
+		succubus = spawnSuccubus(2700, 1400, false);
+		dropPotion("Any", 25, succubus);
 		
-		spawnChest(1923,		1170, true, 	10, 1, "Rare");
+		succubus = spawnSuccubus(1339,1900, true);
+		dropPotion("Any", 25, succubus);
 		
-		spawnChest(1712, 		2610, true,	50, 0, "Uncommon");
+		succubus = spawnSuccubus(2700, 2100, true);
+		dropPotion("Any", 25, succubus);
 		
-		spawnKey(989 - 200,  	2240, "Uncommon");
-		spawnKey(1515, 			2210, "Rare");
-		spawnKey(826, 			1950, "Boss");
+		succubus = spawnSuccubus(1423, 650, true);
+		dropPotion("Any", 25, succubus);
 		
-		spawnPotion(800, 2200, "Health");
-		spawnPotion(2050, 2200, "Health");
-		spawnPotion(1400, 1500, "Health");
-		spawnPotion(1600, 1500, "Health");
-		
-		spawnPotion(2200, 1000, "Mana");
-		spawnPotion(2400, 1000, "Mana");
-		spawnPotion(2600, 1000, "Mana");
+		succubus = spawnSuccubus(3689, 1430, false);
+		dropPotion("Any", 25, succubus);
 		
 		
-		ActivatableCave activatableCave = new ActivatableCave(tileMap, gameStateManager, 3614, 2340);
-		stuff.add(activatableCave);
-		activatables.add(activatableCave);
+		spawnChest(1923,		1170, true, 	10, 0, "Uncommon");
+		
+		spawnKey(1712, 		2610, "Uncommon");
+		
+
+		
+		
+//		ActivatableCave activatableCave = new ActivatableCave(tileMap, gameStateManager, 3614, 2340);
+//		stuff.add(activatableCave);
+//		activatables.add(activatableCave);
 		
 		
 		
@@ -109,7 +106,6 @@ public class LorasCavern extends MainMap
 		
 		LiadrinFirstEncounter liadrinFirstEncounter = new LiadrinFirstEncounter(tileMap, false, true, false, true, true, "Liadrin", 2680, 1800, this);
 		characterList.add(liadrinFirstEncounter);
-		allies.add(liadrinFirstEncounter);
 		
 		spawnSign(
 				1357, 
@@ -151,8 +147,16 @@ public class LorasCavern extends MainMap
 						0
 					}
 				);
+	}
 	
-
+	public void update()
+	{
+		super.update();
+		if(player.getLocationX() < 3750 && player.getLocationY() > 2640)
+		{
+			
+			gameStateManager.setState(GameStateManager.MysteriousDungeon);
+		}
 	}
 
 }

@@ -7,6 +7,7 @@ import javax.imageio.ImageIO;
 import Audio.JukeBox;
 import Entity.Player.Conversation;
 import Entity.Player.ConversationState;
+import Entity.Player.HUD;
 import Entity.Player.Player;
 import Entity.Unit.Succubus;
 import GameState.GameStateManager;
@@ -23,6 +24,10 @@ public class Tutorial extends MainMap
 	protected Succubus succubus;
 	
 	protected Conversation conversation;
+	
+	protected HUD hud;
+	
+	protected boolean alreadyDoneThis = false;
 	
 	public Tutorial(GameStateManager gameStatemanager,
 			TileMap tileMap,
@@ -51,6 +56,8 @@ public class Tutorial extends MainMap
 			e.printStackTrace();
 		}
 		
+		this.player = player;
+		this.hud = player.getHUD();
 		conversation = player.getConversation();
 		
 		player.setTileMap(tileMap);
@@ -71,8 +78,8 @@ public class Tutorial extends MainMap
 		}
 		player.setSpawning(true);
 		
-		
-		
+		player.getHUD().setShowQuestFrame(true);
+		player.setUnkillable(true);
 		doneInitializing = true;
 	}
 	
@@ -98,78 +105,143 @@ public class Tutorial extends MainMap
 					
 					
 			if(tutorialProgress == 0 && !player.getFalling())
+			{
 				if(!player.getInConversation())
-					player.getConversationState().startConversation(player, null, null, 
+				{
+					player.getConversationState().startConversation(player, null, null,
 							conversation.tutorialWelcomeMessage, 
 							conversation.tutorialWelcomeMessageWhoTalks);
+					
+					hud.setQuest(conversation.tutorialInstructions());
+					hud.setShowQuestFrame(true);
+					hud.setQuestCurrent(0);
+				}
+			}
 			
 			if(tutorialProgress == 1)
+			{
+				hud.setQuestCurrent(1);
+				
 				if(player.getLocationX() - 400 > 200 || player.getLocationX() - 400 < -200)
-				if(player.getLeft() || player.getRight() && !player.getInConversation())
-					player.getConversationState().startConversation(player, null, null, 
-							conversation.tutorialMoveMessage, 
-							conversation.tutorialMoveMessageWhoTalks);
+				{
+					if(player.getLeft() || player.getRight() && !player.getInConversation())
+					{
+						player.getConversationState().startConversation(player, null, null, 
+								conversation.tutorialMoveMessage, 
+								conversation.tutorialMoveMessageWhoTalks);
+						
+						
+					}
+				}
+			}
 			
 			if(tutorialProgress == 2)
+			{
+				hud.setQuestCurrent(2);
 				if(player.getJumping() && !player.getInConversation())
+				{
+					
 					player.getConversationState().startConversation(player, null, null, 
 							conversation.tutorialJumpMessage, 
 							conversation.tutorialJumpMessageWhoTalks);
+				}
+			}
+			
 			
 			if(tutorialProgress == 3)
+			{
+				hud.setQuestCurrent(3);
 				if(player.getLocationX() > 1420 && !player.getInConversation())
+				{
 					player.getConversationState().startConversation(player, null, null, 
 							conversation.tutorialHoleSmallMessage, 
 							conversation.tutorialHoleSmallMessageWhoTalks);
-					
+				}
+			}		
 			if(tutorialProgress == 4)
+			{	
+				hud.setQuestCurrent(4);
 				if(player.getLocationX() > 1820 && !player.getInConversation() && !player.getFalling())
+				{
+					hud.setShowQuestFrame(false);
 					player.getConversationState().startConversation(player, null, null, 
 							conversation.tutorialHoleSmallPassedMessage, 
 							conversation.tutorialHoleSmallPassedMessageWhoTalks);
+				}
+			}
 			
 			if(tutorialProgress == 5)
+			{
 				if(player.getLocationX() > 2600 && !player.getInConversation() && !player.getFalling())
+				{
 					player.getConversationState().startConversation(player, null, null, 
 							conversation.tutorialMovementMasteredMessage, 
 							conversation.tutorialMovementMasteredMessageWhoTalks);
+				}
+			}
 			
 			if(tutorialProgress == 6)
+			{	
 				if(player.getLocationX() > 2950 && !player.getInConversation() && !player.getFalling())
+				{	
 					player.getConversationState().startConversation(player, null, null, 
 							conversation.tutorialFireBallSmallMessage, 
 							conversation.tutorialFireBallSmallMessageWhoTalks);
+				}
+			}
 			
 			if(tutorialProgress == 7)
+			{
+				hud.setQuestCurrent(5);
+				hud.setShowQuestFrame(true);
 				if(player.getFireBallSmallDoneCasting() && !player.getInConversation())
+				{	
 					player.getConversationState().startConversation(player, null, null, 
 							conversation.tutorialFireBallLargeMessage, 
 							conversation.tutorialFireBallLargeMessageWhoTalks);
+				}
+			}
 			
 			if(tutorialProgress == 8)
+			{	
+				hud.setQuestCurrent(6);
 				if(player.getFireBallLargeDoneCasting() && player.getUp() && !player.getInConversation())
+				{
 					player.getConversationState().startConversation(player, null, null, 
 							conversation.tutorialDashMessage, 
 							conversation.tutorialDashMessageWhoTalks);
+				}
+			}
 			
 			if(tutorialProgress == 9)
+			{
+				hud.setQuestCurrent(7);
 				if(player.getDashing() && !player.getInConversation())
+				{
 					player.getConversationState().startConversation(player, null, null, 
 							conversation.tutorialPunchMessage, 
 							conversation.tutorialPunchMessageWhoTalks);
+				}
+			}
 			
 			if(tutorialProgress == 10)
+			{
+				hud.setQuestCurrent(8);
 				if(player.getPunching() && !player.getInConversation())
+				{
 					player.getConversationState().startConversation(player, null, null, 
 							conversation.tutorialPunchDoneMessage, 
 							conversation.tutorialPunchDoneMessageWhoTalks);
+				}
+			}
 			
 			
 			if(tutorialProgress == 11)
+			{
 				if(!player.getInConversation())
 				{
-					succubus = new Succubus(tileMap, false, false, false, false, false, "Rui", 3500, player.getLocationY(), this);
-					enemies.add(succubus);
+					hud.setQuestCurrent(9);
+					succubus = spawnSuccubus(3500, player.getLocationY(), false);
 					characterList.add(succubus);
 					
 					
@@ -177,9 +249,12 @@ public class Tutorial extends MainMap
 							conversation.tutorialEnemySuccubusMessage, 
 							conversation.tutorialEnemySuccubusMessageWhoTalks);
 				}
+			}
 			
 			if(tutorialProgress == 12)
+			{
 				if(succubus.isDead())
+				{
 					if(!player.getInConversation())
 						player.getConversationState().startConversation(player, null, null, 
 								conversation.tutorialTempleEnterMessage, 
@@ -187,24 +262,38 @@ public class Tutorial extends MainMap
 					else
 						if(player.getConversationState().getConversationTracker() == 1)
 						{
-							JukeBox.play("Close");
-							tileMap.loadMap("/Maps/TutorialB.map");
+							if(!alreadyDoneThis)
+							{
+								alreadyDoneThis = true;
+								JukeBox.play("Close");
+								tileMap.loadMap("/Maps/TutorialB.map");
+								hud.setQuestCurrent(10);
+							}
 						}
-
+				}
+			}
 
 			if(tutorialProgress == 13)
-				if(!player.getInConversation() && player.getLocationX() > 4000)
+			{	
+				alreadyDoneThis = false;
+				if(!player.getInConversation() && player.getLocationX() > 4000 && player.getLocationY() < 390)
+				{	
 					player.getConversationState().startConversation(player, null, null, 
 							conversation.tutorialHoleLargeMessage, 
 							conversation.tutorialHoleLargeMessageWhoTalks);
+				}
+			}
 			
 			if(tutorialProgress == 14)
+			{
+				hud.setQuestCurrent(11);
 				if(!player.getInConversation() && player.getLocationX() > 4500 && !player.getFalling())
+				{
 					player.getConversationState().startConversation(player, null, null, 
 							conversation.tutorialHoleLargePassedMessage, 
 							conversation.tutorialHoleLargePassedMessageWhoTalks);
-			
-			
+				}
+			}
 			
 
 		}

@@ -56,7 +56,7 @@ public class DeepWoods extends MainMap
 			player.setPosition(player.getSpawnX(), player.getSpawnY());
 		}
 		player.setSpawning(true);
-				
+		player.setUnkillable(false);
 		doneInitializing = true;
 	}
 }

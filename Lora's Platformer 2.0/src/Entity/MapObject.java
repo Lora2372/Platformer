@@ -165,98 +165,104 @@ public abstract class MapObject
 	
 	protected void getNextPosition()
 	{
-		if(spawning) return;
+		if(spawning)
+		{
+			directionX = 0;
+			directionY = 0;
+			return;
+		}
 		// Movement
-		if(left && inControl)
-		{
+			if(left && inControl )
+			{
 
-			directionX -= moveSpeed;
-			if(directionX < -maxSpeed)
-			{
-				directionX = -maxSpeed;
-			}
-		}
-		else if(right && inControl)
-		{
-
-			directionX += moveSpeed;
-			if(directionX > maxSpeed)
-			{
-				directionX = maxSpeed;
-			}
-		}
-		else
-		{
-			if(directionX > 0)
-			{
-				directionX -= stopSpeed;
-				if(directionX < 0)
+				directionX -= moveSpeed;
+				if(directionX < -maxSpeed)
 				{
-					directionX = 0;
+					directionX = -maxSpeed;
 				}
 			}
-			else if(directionX < 0)
+			else if(right && inControl)
 			{
-				directionX += stopSpeed;
+
+				directionX += moveSpeed;
+				if(directionX > maxSpeed)
+				{
+					directionX = maxSpeed;
+				}
+			}
+			else
+			{
 				if(directionX > 0)
 				{
-					directionX = 0;
+					directionX -= stopSpeed;
+					if(directionX < 0)
+					{
+						directionX = 0;
+					}
+				}
+				else if(directionX < 0)
+				{
+					directionX += stopSpeed;
+					if(directionX > 0)
+					{
+						directionX = 0;
+					}
 				}
 			}
-		}
-		
-		// Cannot move while attacking
-		//Might implement this later
-		
-		if(flying)
-		{
-			if(down)
+			
+			// Cannot move while attacking
+			//Might implement this later
+			
+			if(flying)
 			{
-				directionY += moveSpeed;
-				if(directionY > maxSpeed) directionY = maxSpeed; 
-			}
-			else if(up)
-			{
-				directionY -= moveSpeed;
-				if(directionY*-1 > maxSpeed) directionY = maxSpeed*-1;
+				if(down)
+				{
+					directionY += moveSpeed;
+					if(directionY > maxSpeed) directionY = maxSpeed; 
+				}
+				else if(up)
+				{
+					directionY -= moveSpeed;
+					if(directionY*-1 > maxSpeed) directionY = maxSpeed*-1;
+				}
+				
+				if(right)
+				{
+					directionX += moveSpeed;
+					if(directionX > maxSpeed) directionX = maxSpeed;
+				}
+				else if(left)
+				{
+					directionX -= moveSpeed;
+					if(directionX*-1 > maxSpeed) directionX = maxSpeed*-1;
+				}
+				
 			}
 			
-			if(right)
+			
+			// Jumping
+			if(jumping && !falling && inControl && !flying)
 			{
-				directionX += moveSpeed;
-				if(directionX > maxSpeed) directionX = maxSpeed;
-			}
-			else if(left)
-			{
-				directionX -= moveSpeed;
-				if(directionX*-1 > maxSpeed) directionX = maxSpeed*-1;
+				// I'll leave the jump sound commented out until we find a better one.
+//				JukeBox.play("jump");
+				playJumpSound();
+				directionY = jumpStart;
+				falling = true;
 			}
 			
-		}
-		
-		
-		// Jumping
-		if(jumping && !falling && inControl && !flying)
-		{
-			// I'll leave the jump sound commented out until we find a better one.
-//			JukeBox.play("jump");
-			playJumpSound();
-			directionY = jumpStart;
-			falling = true;
-		}
-		
-		// Falling
-//		System.out.println("character name: " + getName() + ", falling: " + falling);
-		if( (falling || swimming) && !flying)
-		{
-			if(directionY > 0 && gliding) directionY += fallSpeed * 0.1;
-			else directionY += fallSpeed;
-		
-			if(directionY > 0) jumping = false;
-			if(directionY < 0 && !jumping) directionY += stopJumpSpeed;
+			// Falling
+//			System.out.println("character name: " + getName() + ", falling: " + falling);
+			if( (falling || swimming) && !flying)
+			{
+				if(directionY > 0 && gliding) directionY += fallSpeed * 0.1;
+				else directionY += fallSpeed;
 			
-			if(directionY > maxFallSpeed) directionY = maxFallSpeed;
-		}
+				if(directionY > 0) jumping = false;
+				if(directionY < 0 && !jumping) directionY += stopJumpSpeed;
+				
+				if(directionY > maxFallSpeed) directionY = maxFallSpeed;
+			}
+
 	}
 	
 	public void playJumpSound() { }

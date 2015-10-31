@@ -2,6 +2,7 @@ package Entity.Item;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.util.Random;
 
 import Entity.MapObject;
 import Entity.Doodad.Poff;
@@ -41,6 +42,7 @@ public class Item extends MapObject
 			int height,
 			int collisionWidth,
 			int collisionHeight,
+			double stopSpeed,
 			double fallSpeed,
 			double maxFallSpeed,
 			double locationX,
@@ -60,6 +62,7 @@ public class Item extends MapObject
 		this.height = height;
 		this.collisionWidth = collisionWidth;
 		this.collisionHeight = collisionHeight;
+		this.stopSpeed = stopSpeed;
 		this.fallSpeed = fallSpeed;
 		this.maxFallSpeed = maxFallSpeed;
 		
@@ -100,6 +103,28 @@ public class Item extends MapObject
 		
 	}
 
+	public void drop()
+	{
+		locationX = owner.getLocationX();
+		locationY = owner.getLocationY();
+		inWorld = true;
+		
+		Random random = new Random();
+		int maxX = 30;
+		int minX = -30;
+		
+		int maxY = -10;
+		int minY = -80;
+		
+		
+		directionX =  (random.nextInt((maxX - minX) + 1) + minX);
+		directionY = (random.nextInt((maxY - minY) + 1) + minY);
+		
+		directionX /= 10;
+		directionY /= 10;
+		setOwner(null);
+		
+	}
 	
 	public boolean getInWorld() { return inWorld; }
 	public void setInWorld(boolean inWorld) { this.inWorld = inWorld; }

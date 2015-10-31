@@ -4,13 +4,20 @@ import java.awt.*;
 import java.awt.image.*;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
+
+import Main.Content;
 import Main.GamePanel;
 
 public class HUD 
 {
 	private Player player;
 	
-	private BufferedImage[] image = new BufferedImage[20];
+	private BufferedImage playerBar;
+	private BufferedImage playerHealthBar;
+	private BufferedImage playerManaBar;
+	private BufferedImage playerStaminaBar;
+	private BufferedImage bossBar;
+	private BufferedImage bossHealthBar;
 	
 	private ArrayList<BufferedImage> spellbarUsable = new ArrayList<BufferedImage>();
 	private ArrayList<BufferedImage> spellbarUnusable = new ArrayList<BufferedImage>();
@@ -19,36 +26,40 @@ public class HUD
 	
 	private Entity.Unit.Unit boss;
 	
-	public HUD(Player p)
+	protected boolean questFrameShow;
+	protected int questCurrent;
+	protected String[] questName;
+	
+	public HUD(Player player)
 	{
-		player = p;
+		this.player = player;
 		
 		try{
-			image[0] = ImageIO.read(
+			playerBar = ImageIO.read(
 					getClass().getResource(
 							"/Art/HUD/Bars/PlayerBar.png"
 							)
 					);
 			
-			image[1] = ImageIO.read(
+			playerHealthBar = ImageIO.read(
 					getClass().getResource(
 							"/Art/HUD/Bars/PlayerHealthBar.png"
 							)
 					);
 			
-			image[2] = ImageIO.read(
+			playerManaBar = ImageIO.read(
 					getClass().getResource(
 							"/Art/HUD/Bars/PlayerManaBar.png"
 							)
 					);
 			
-			image[3] = ImageIO.read(
+			playerStaminaBar = ImageIO.read(
 					getClass().getResource(
 							"/Art/HUD/Bars/PlayerStaminaBar.png"
 							)
 					);
 			
-			image[4] = ImageIO.read(
+			bossHealthBar = ImageIO.read(
 					getClass().getResource(
 							"/Art/HUD/Bars/BossHealthBar.png"
 							)
@@ -56,7 +67,7 @@ public class HUD
 			
 			
 			
-			image[5] = ImageIO.read(
+			bossBar = ImageIO.read(
 					getClass().getResource(
 							"/Art/HUD/Bars/BossHealthBarFrame.png"
 							)
@@ -142,6 +153,15 @@ public class HUD
 		}
 	}
 	
+	public boolean getShowQuestFrame() { return questFrameShow; }
+	public void setShowQuestFrame(boolean well) { questFrameShow = well; }
+	
+	public int getQuestCurrent() { return questCurrent; }
+	public void setQuestCurrent(int current) { questCurrent = current; }
+	
+	public void setQuest(String[] newQuest) { questName = newQuest; }
+	
+	
 	public void addBoss(Entity.Unit.Unit boss)
 	{
 		this.boss = boss;
@@ -154,39 +174,42 @@ public class HUD
 	
 	public void draw(Graphics2D graphics)
 	{
+		// Draw the health bar
+		double currentValue = player.getHealth();
+		double maxValue = player.getMaxHealth();
 		
-		double t1 = player.getHealth();
-		double t2 = player.getMaxHealth();
-		
-		graphics.drawImage(image[1], 
+		graphics.drawImage(playerHealthBar, 
 				94, 
 				27, 
-				(int)((t1/t2) * image[1].getWidth()),
-				image[1].getHeight(),
-				null);
-		
-		t1 = player.getStamina();
-		t2 = player.getMaxStamina();
-		
-		graphics.drawImage(image[3], 
-				106, 
-				86, 
-				(int)((t1/t2) * image[3].getWidth()),
-				image[3].getHeight(),
+				(int)((currentValue/maxValue) * playerHealthBar.getWidth()),
+				playerHealthBar.getHeight(),
 				null);
 		
 		
-		t1 = player.getMana();
-		t2 = player.getMaxMana();
+		// Draw the mana bar
+		currentValue = player.getMana();
+		maxValue = player.getMaxMana();
 		
-		graphics.drawImage(image[2], 
+		graphics.drawImage(playerManaBar, 
 				113, 
 				56, 
-				(int)((t1/t2) * image[2].getWidth()),
-				image[2].getHeight(),
+				(int)((currentValue/maxValue) * playerManaBar.getWidth()),
+				playerManaBar.getHeight(),
 				null);
 		
-		graphics.drawImage(image[0], 
+		// Draw the stamina bar
+		currentValue = player.getStamina();
+		maxValue = player.getMaxStamina();
+		
+		graphics.drawImage(playerStaminaBar, 
+				106, 
+				86, 
+				(int)((currentValue/maxValue) * playerStaminaBar.getWidth()),
+				playerStaminaBar.getHeight(),
+				null);
+		
+		// Draw the player bar
+		graphics.drawImage(playerBar, 
 				0, 
 				10, 
 				null);
@@ -200,12 +223,33 @@ public class HUD
 		graphics.drawString("SILVER: " + player.getSilver(), currencyX, currencyY);
 		graphics.drawString("GOLD: " + player.getGold(), currencyX, currencyY + 30);
 		
-		
-		
-		
-		
 		// The gold is ours, let's head back to the ship!
 		
+		
+		// Draw the quest frame
+		if(questFrameShow)
+		{
+
+			
+			double textWidth = graphics.getFontMetrics().stringWidth(questName[questCurrent]);
+			
+			double locationX = GamePanel.WIDTH - 100 - textWidth;
+			double locationY = 100;
+			
+			graphics.drawImage(
+					Content.ConversationGUIEndConversation[0][0],
+					(int)locationX - 20,
+					(int)locationY - 20,
+					(int)textWidth + 40,
+					30,
+					null
+					);
+			
+			graphics.drawString(questName[questCurrent], (int)locationX, (int)locationY);
+		}
+		
+		
+		// Draw the action bar
 		if(!player.getInConversation())
 		{
 			int x = GamePanel.WIDTH / 2 - (spellbarUsable.get(0).getWidth() * 2);
@@ -231,22 +275,22 @@ public class HUD
 			int x = GamePanel.WIDTH / 2 - imageWidth / 2;
 			int y = 20;
 			
-			graphics.drawImage(image[5],
+			graphics.drawImage(bossBar,
 					x,
 					y,
 					imageWidth,
-					image[5].getHeight(),
+					bossBar.getHeight(),
 					null
 					);
 			
-			t1 = boss.getHealth();
-			t2 = boss.getMaxHealth();
+			currentValue = boss.getHealth();
+			maxValue = boss.getMaxHealth();
 
-			graphics.drawImage(image[4], 
+			graphics.drawImage(bossHealthBar, 
 					x, 
 					y, 
-					(int)((t1/t2) * imageWidth),
-					image[4].getHeight(),
+					(int)((currentValue/maxValue) * imageWidth),
+					bossHealthBar.getHeight(),
 					null);			
 		}
 		

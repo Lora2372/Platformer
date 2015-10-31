@@ -2,12 +2,9 @@ package Main;
 
 import java.awt.image.BufferedImage;
 import java.awt.*;
-
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
-
 import GameState.GameStateManager;
-
 import java.awt.event.*;
 import java.io.IOException;
 
@@ -21,7 +18,7 @@ public class GamePanel
 	public static int WIDTH = 1200;
 	public static int HEIGHT = 900;
 	
-	public static final String version = "0.1.050";
+	public static final String version = "0.1.051";
 		
 	// Game thread
 	private Thread thread;

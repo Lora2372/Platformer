@@ -19,7 +19,7 @@ public class Player extends Unit
 	protected HUD hud;
 	
 	protected boolean loaded = false;
-	
+		
 //	protected ArrayList<Projectile> a
 	
 	public enum soundTypes { Attack, Hurt, Jump , Loot, CannotOpen}
@@ -125,6 +125,7 @@ public class Player extends Unit
 	
 	public boolean getLoaded() { return loaded; }
 	public void setLoaded(boolean loaded) { this.loaded = loaded; }
+	
 	
 	public HUD getHUD() { return hud; }
 	
