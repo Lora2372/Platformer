@@ -60,8 +60,11 @@ public class Content
 	public static BufferedImage[][] PotionHealth			= load("/Art/Sprites/Doodads/PotionHealth.png", 60, 60); 
 	public static BufferedImage[][] PotionMana				= load("/Art/Sprites/Doodads/PotionMana.png", 60, 60); 
 	public static BufferedImage[][] PotionStamina			= load("/Art/Sprites/Doodads/PotionStamina.png", 60, 60); 
-	
-	
+	public static BufferedImage[][] CoinSilver				= load("/Art/Sprites/Doodads/CoinSilver.png", 60, 60);
+	public static BufferedImage[][] CoinGold				= load("/Art/Sprites/Doodads/CoinGold.png", 60, 60);
+	public static BufferedImage[][] DoorClosed				= load("/Art/Sprites/Doodads/DoorClosed.png", 58, 63);
+	public static BufferedImage[][] DoorOpening				= load("/Art/Sprites/Doodads/DoorOpening.png", 58, 63);
+	public static BufferedImage[][] DoorOpened				= load("/Art/Sprites/Doodads/DoorOpened.png", 58, 63);
 	
 	//Effects
 	public static BufferedImage[][] Teleport 				= load("/Art/Sprites/Effects/Teleport.png", 192, 192);
@@ -182,7 +185,8 @@ public class Content
 		JukeBox.load("/Sound/Music/MysteriousBattle.mp3", "MysteriousBattle");
 		JukeBox.load("/Sound/Music/DeepWoods.mp3", "DeepWoods");
 		JukeBox.load("/Sound/Music/Tutorial.mp3", "Tutorial");
-				
+		JukeBox.load("/Sound/Music/FionasSanctum.mp3", "FionasSanctum");
+		
 		JukeBox.load("/Sound/Music/GameOver.mp3",  "GameOver");
 		
 		// Doodad sound effect
@@ -195,6 +199,8 @@ public class Content
 		JukeBox.load("/Sound/Doodads/PotionDrink.mp3", "PotionDrink");		
 		JukeBox.load("/Sound/Doodads/Coin.mp3", "Coin");		
 		JukeBox.load("/Sound/Doodads/Close.mp3", "Close");
+		JukeBox.load("/Sound/Doodads/Unlock.mp3", "Unlock");
+		JukeBox.load("/Sound/Doodads/DoorOpen.mp3", "DoorOpen");
 		
 		// Background sound effect
 		JukeBox.load("/Sound/BackgroundSound/Darkness.mp3", "Darkness");

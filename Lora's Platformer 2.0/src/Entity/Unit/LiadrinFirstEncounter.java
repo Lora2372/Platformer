@@ -153,7 +153,7 @@ public class LiadrinFirstEncounter extends Unit
 		{
 			if(conversationBox.getConversationTracker() >= player.getConversation().liadrinFirstEncounterChoiceHard().length)
 			{
-				Potion healingPotion = new Potion(tileMap, false, 0, 0, player, 3, "Health");
+				Potion healingPotion = new Potion(tileMap, false, 0, 0, player, 2, "Healing Potion");
 				
 				player.getInventory().addItem(healingPotion);
 				active = false;

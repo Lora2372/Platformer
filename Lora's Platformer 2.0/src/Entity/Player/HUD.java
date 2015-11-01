@@ -220,8 +220,27 @@ public class HUD
 		graphics.setFont(new Font("Arial", Font.PLAIN, 14));
 		int currencyX = GamePanel.WIDTH - 100;
 		int currencyY = GamePanel.HEIGHT - 100;
-		graphics.drawString("SILVER: " + player.getSilver(), currencyX, currencyY);
-		graphics.drawString("GOLD: " + player.getGold(), currencyX, currencyY + 30);
+		graphics.drawString("" + player.getSilver(), currencyX, currencyY);
+		graphics.drawImage(
+				Content.CoinSilver[0][0],
+				currencyX + 15,
+				currencyY - 20,				
+				30,
+				30,
+				null
+				);
+
+		currencyY += 30;
+		
+		graphics.drawImage(
+				Content.CoinGold[0][0],
+				currencyX + 15,
+				currencyY - 20,
+				30,
+				30,
+				null
+				);		
+		graphics.drawString("" + player.getGold(), currencyX, currencyY);
 		
 		// The gold is ours, let's head back to the ship!
 		

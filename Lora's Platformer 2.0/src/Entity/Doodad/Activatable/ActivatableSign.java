@@ -33,11 +33,14 @@ public class ActivatableSign extends Doodad
 				50,
 				50,
 				50,
+				0.3, 
+				8, 
 				false, 
 				true, 
 				false,
 				true,
 				false,
+				0,
 				"ActivatableSign"
 				);
 		

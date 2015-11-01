@@ -6,9 +6,11 @@ import java.awt.Graphics2D;
 import Main.GamePanel;
 import TileMap.*;
 import Entity.Explosion.Explosion;
+import Entity.Item.Coin;
 import Entity.Item.Item;
 import Entity.Item.Key;
 import Entity.Item.Potion;
+import Entity.MapObject;
 import Entity.Doodad.*;
 import Entity.Doodad.Activatable.*;
 import Entity.Player.*;
@@ -356,10 +358,6 @@ public class MainMap extends GameState
 		{
 			background.draw(graphics);			
 		}
-		else
-		{
-			System.out.println("Background is null");
-		}
 		
 		
 		
@@ -498,7 +496,7 @@ public class MainMap extends GameState
 		return wolf;
 	}
 	
-	public void dropPotion(String potionType, int chance, Unit owner)
+	public void dropPotion(String potionType, int chance, int stacks, MapObject owner)
 	{
 		int oneToOneHundred = RNG(0, 100);
 		int potionDropped = RNG(1,3);
@@ -508,22 +506,22 @@ public class MainMap extends GameState
 			Potion potion = null;
 			if(!potionType.equals("Any"))
 			{
-				potion = new Potion(tileMap, false, 0, 0, owner, 1, potionType);
+				potion = new Potion(tileMap, false, 0, 0, owner, stacks, potionType);
 			}
 			else
 			{
 				System.out.println("potionDropped: " + potionDropped);
 				if(potionDropped == 1)
 				{
-					potion = new Potion(tileMap, false, 0, 0, owner, 1, "Health");
+					potion = new Potion(tileMap, false, 0, 0, owner, stacks, "Healing Potion");
 				}
 				else if(potionDropped == 2)
 				{
-					potion= new Potion(tileMap, false, 0, 0, owner, 1, "Mana");
+					potion= new Potion(tileMap, false, 0, 0, owner, stacks, "Mana Potion");
 				}
 				else if(potionDropped == 3)
 				{
-					potion = new Potion(tileMap, false, 0, 0, owner, 1, "Stamina");
+					potion = new Potion(tileMap, false, 0, 0, owner, stacks, "Stamina Potion");
 				}
 			}
 			if(potion == null)
@@ -544,6 +542,18 @@ public class MainMap extends GameState
 
 			owner.getInventory().addItem(key);
 			items.add(key);
+		}
+	}
+	
+	public void dropCoin(String coinType, int chance, int stacks, MapObject owner)
+	{
+		int oneToOneHundred = RNG(0, 100);
+		if(oneToOneHundred <= chance)
+		{
+			Coin coin = new Coin(tileMap, false, 0, 0, owner, stacks, coinType);
+
+			owner.getInventory().addItem(coin);
+			items.add(coin);
 		}
 	}
 
@@ -617,24 +627,33 @@ public class MainMap extends GameState
 		stuff.add(activatableSign);
 	}
 	
-	public void spawnChest(double locationX, double locationY, boolean locked, int silver, int gold, String chestType)
+	public Chest spawnChest(double locationX, double locationY, boolean locked,String chestType)
 	{
-		ActivatableChest activatableChestCommon = new ActivatableChest(tileMap, locationX, locationY, locked, silver, gold, chestType);
-		activatables.add(activatableChestCommon);
-		stuff.add(activatableChestCommon);
+		Chest chest = new Chest(tileMap, locationX, locationY, locked, chestType);
+		activatables.add(chest);
+		stuff.add(chest);
+		return chest;
 	}
 	
-	public void spawnKey(double locationX, double locationY, String keyType)
+	public Key spawnKey(double locationX, double locationY, String keyType)
 	{
 		Key key = new Key(tileMap, true, locationX, locationY, null, 1, keyType);
 		items.add(key);
-	
+		return key;
 	}
 	
-	public void spawnPotion(double locationX, double locationY, String potionType)
+	public Potion spawnPotion(double locationX, double locationY, String potionType)
 	{
 		Potion potion = new Potion(tileMap, true, locationX, locationY, null, 1, potionType);
 		items.add(potion);
+		return potion;
+	}
+	
+	public Coin spawnCoin(double locationX, double locationY, String coinType)
+	{
+		Coin coin = new Coin(tileMap, true, locationX, locationY, null, 1, coinType);
+		items.add(coin);
+		return coin;
 	}
 	
 	public void spawnStatueSave(double locationX, double locationY)
@@ -680,12 +699,30 @@ public class MainMap extends GameState
 		if(k == KeyEvent.VK_F) player.setPunching();
 		if(k == KeyEvent.VK_D) player.setDashing(true);
 		if(k == KeyEvent.VK_G) player.setCastingMagicShield();
-		if(k == KeyEvent.VK_Z) player.drinkPotion("Health");
-		if(k == KeyEvent.VK_X) player.drinkPotion("Mana");
-		if(k == KeyEvent.VK_C) player.drinkPotion("Stamina");
+		if(k == KeyEvent.VK_Z) player.drinkPotion("Healing Potion");
+		if(k == KeyEvent.VK_X) player.drinkPotion("Mana Potion");
+		if(k == KeyEvent.VK_C) player.drinkPotion("Stamina Potion");
 		
 		
-		if( k == KeyEvent.VK_M)player.setPosition(player.getLocationX() + 200, player.getLocationY()); 
+		// Note: This is a built in cheat that is not supposed to be used to get the real game experience.
+		if( k == KeyEvent.VK_M)
+		{
+			if(player.getFacingRight())
+			{
+				player.setPosition(player.getLocationX() + 200, player.getLocationY());
+			}
+			else
+			{
+				player.setPosition(player.getLocationX() - 200, player.getLocationY()); 
+			}
+		}
+		
+		if(k == KeyEvent.VK_L)
+		{
+			Key myKey = new Key(tileMap, false, 0, 0, player, 1, "Boss");
+			player.getInventory().addItem(myKey);
+			items.add(myKey);
+		}
 
 		if(k == KeyEvent.VK_P) spawnSlug(player.getLocationX(), player.getLocationY(), player.getFacingRight(), null); 
 		if(k == KeyEvent.VK_O) spawnSuccubus(player.getLocationX(), player.getLocationY(), player.getFacingRight()); 

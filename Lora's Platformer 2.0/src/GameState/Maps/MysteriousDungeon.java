@@ -4,36 +4,25 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
-
 import Audio.JukeBox;
 import Entity.Doodad.Doodad;
-import Entity.Doodad.Activatable.ActivatableCave;
-import Entity.Doodad.Activatable.ActivatableShrineMysteriousDungeon;
+import Entity.Doodad.Activatable.Chest;
+import Entity.Doodad.Activatable.Door;
 import Entity.Player.Conversation;
 import Entity.Player.ConversationState;
 import Entity.Player.Player;
-import Entity.Unit.Fiona;
 import GameState.GameStateManager;
 import GameState.MainMap;
-import TileMap.Background;
 import TileMap.GameOver;
 import TileMap.TileMap;
 
 public class MysteriousDungeon extends MainMap
 {
-	protected boolean pathBlocked;
-	
-	protected ActivatableShrineMysteriousDungeon activatableShrine;
-	
-	protected Fiona fiona;
-	
-	protected boolean bossEngaged;
-	protected boolean bossDefeated;
-	
 	protected boolean dungeonIntroduction;
 	
 	protected Conversation conversation;
 	
+	protected Door door;
 	
 	public MysteriousDungeon(GameStateManager gameStatemanager,
 			TileMap tileMap,
@@ -53,8 +42,6 @@ public class MysteriousDungeon extends MainMap
 			tileMap.loadTiles(ImageIO.read(getClass().getResource("/Art/Tilesets/LorasTileset.png")));
 			tileMap.loadMap("/Maps/MysteriousDungeonA.map");
 			tileMap.setPosition(0, 0);
-			
-			background = new Background(getClass().getResource("/Art/Backgrounds/UndergroundBackground.png"), 0.1);
 			gameoverScreen = new GameOver(getClass().getResource("/Art/HUD/Foregrounds/GameOver.png"));
 		}
 		catch(IOException e)
@@ -64,18 +51,50 @@ public class MysteriousDungeon extends MainMap
 		
 		conversation = player.getConversation();
 		
-		spawnTorch(109, 200);
+		spawnTorch(109, 440);
 		
 		
-		spawnTorch(3508, 410);
+		spawnTorch(3508, 410 + 240);
 		
-		spawnTorch(3928, 410);
+		spawnTorch(3928, 410 + 240);
 		
-		spawnStatueSave(250, 530);
+		spawnTorch(390, 1245);
+		spawnTorch(390, 1725);
 		
-		spawnChest(800, 630, false, 3, 0, "Common");
+		spawnTorch(690, 1245);
+		spawnTorch(690, 1725);
+		
+		spawnKey(380, 1550, "Boss");
+		spawnSuccubus(500, 1550, true);
+		spawnWolf(537, 1760, true);
+		spawnWolf(537, 1760, false);
+		
+		spawnSlug(1788, 1250, true, null);
+		spawnSlug(1788, 1250, false, null);
+		
+		spawnStatueSave(250, 780);
+		
+		Chest chest = spawnChest(800, 850, false, "Common");
+		dropPotion("Healing Potion", 100, 1, chest);
+		
+		spawnSign(400, 810, conversation.mysteriousDungeonDirectionMessage, conversation.mysteriousDungeonDirectionMessageWhoTalks);
+		
+		chest = spawnChest(3262, 1620, false, "Common");
+		dropPotion("Healing Potion", 100, 1, chest);
+		
+		
+		spawnSuccubus(937, 430, false);
+		
+		spawnSuccubus(3150, 1620, false);
 
-		spawnSign(400, 575, conversation.mysteriousDungeonDirectionMessage, conversation.mysteriousDungeonDirectionMessageWhoTalks);
+		spawnSuccubus(2833, 780, false);
+		
+		spawnStatueSave(2900, 780);
+
+		door = new Door(tileMap, gameStatemanager, 3045, 780, true, 0, "Boss");
+		activatables.add(door);
+		stuff.add(door);
+		
 		
 		player.setCurrentMap("MysteriousDungeon");
 
@@ -90,34 +109,12 @@ public class MysteriousDungeon extends MainMap
 			player.setLoaded(false);
 			player.setPosition(player.getSpawnX(), player.getSpawnY());
 		}
-		player.setSpawning(true);
-				
-		spawnSuccubus(937, 190, false);
-		spawnSuccubus(2320, 1030, false);
-		spawnSuccubus(2833, 550, false);
-		
-		spawnStatueSave(3045, 530);
-
-		
-		fiona = new Fiona(tileMap,false,false,false,false, true, "Fiona", 400, 200, this, player);
-		characterList.add(fiona);
-		fiona.setHidden(true);
-		
-		activatableShrine = new ActivatableShrineMysteriousDungeon(tileMap, gameStatemanager, this, 3730, 530, fiona);
-		activatables.add(activatableShrine);
-		stuff.add(activatableShrine);
-		
-		
-		fiona.inControl(false);
-		player.setUnkillable(false);
-		player.setSpawning(true);
-		bossEngaged = false;
-		bossDefeated = false;
 		
 		doneInitializing = true;
 	}
 	
 	
+	public Door getDoor() { return door; }
 	
 	public ArrayList<Entity.Unit.Unit> getCharacterList()
 	{
@@ -134,17 +131,12 @@ public class MysteriousDungeon extends MainMap
 		return activatables;
 	}
 	
-	public void setDefeated(boolean b) { bossDefeated = b; }
-	
-	public void setEngaged(boolean b) { bossEngaged = b; }
-	
 	public void update()
 	{
 		super.update();
 		
 		// We don't want the player to be able to progress the conversation whilst Fiona is spawning
-		player.getConversationState().lockConversation(fiona.getSpawning());
-		
+
 		if(!dungeonIntroduction)
 		{
 			if(player.getDirectionY() == 0 && player.getLocationY() > 300)
@@ -162,23 +154,6 @@ public class MysteriousDungeon extends MainMap
 				}
 			}
 		}
-		
-		if(bossEngaged)
-		{
-			if(bossDefeated)
-			{
-				bossEngaged = false;
-				JukeBox.stop("MysteriousBattle");
-				JukeBox.loop("MysteriousDungeon");
-				
-				ActivatableCave activatableCave = new ActivatableCave(tileMap, gameStateManager, 1468, 550);
-				stuff.add(activatableCave);
-				activatables.add(activatableCave);
-				
-				spawnTorch(1348, 410);
-				spawnTorch(1588, 410);
-				
-			}
-		}
+
 	}
 }

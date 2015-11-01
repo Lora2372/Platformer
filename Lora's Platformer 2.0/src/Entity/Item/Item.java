@@ -192,6 +192,7 @@ public class Item extends MapObject
 	
 	public void interact(Player player)
 	{
+		playSound();
 		player.getInventory().addItem(this);
 		owner = player;
 	}
@@ -200,7 +201,6 @@ public class Item extends MapObject
 	
 	public void use(Unit user)
 	{
-		playSound();
 		if(consumable)
 		{
 			stacks--;

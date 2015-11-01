@@ -20,11 +20,14 @@ public class Waterfall extends Doodad
 				192,
 				192,
 				192,
+				0,
+				0,
 				true,
 				true,
 				false,
 				false,
 				false,
+				0,
 				"Waterfall"
 				);
 	}

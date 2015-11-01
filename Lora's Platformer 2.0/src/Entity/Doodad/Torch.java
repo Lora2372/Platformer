@@ -20,11 +20,14 @@ public class Torch extends Doodad
 				150,
 				150,
 				150,
+				0,
+				0,
 				true,
 				true,
 				false,
 				false,
 				false,
+				0,
 				"Torch"
 				);
 	}

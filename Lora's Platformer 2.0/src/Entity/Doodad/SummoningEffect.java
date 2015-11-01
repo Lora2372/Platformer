@@ -17,11 +17,14 @@ public class SummoningEffect extends Doodad
 				192,
 				0,
 				0,
+				0,
+				0,
 				true,
 				true,
 				true,
 				false,
 				false,
+				0,
 				"SummoningEffect"
 				
 		);

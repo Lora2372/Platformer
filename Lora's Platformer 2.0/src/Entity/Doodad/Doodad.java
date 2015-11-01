@@ -33,11 +33,14 @@ public class Doodad extends MapObject
 			int height,
 			int collisionWidth,
 			int collisionHeight,
+			double fallSpeed,
+			double maxFallSpeed,
 			boolean untouchable,
 			boolean invulnerable,
 			boolean runOnce,
 			boolean activatable,
 			boolean active,
+			int currentAction,
 			String doodadType
 			)
 	{
@@ -52,6 +55,8 @@ public class Doodad extends MapObject
 		this.active = active;
 		this.collisionHeight = collisionHeight;
 		this.collisionWidth = collisionWidth;
+		this.fallSpeed = fallSpeed;
+		this.maxFallSpeed = maxFallSpeed;
 		this.doodadType = doodadType;
 		locationX = spawnX;
 		locationY = spawnY;
@@ -59,7 +64,7 @@ public class Doodad extends MapObject
 		facingRight = false;
 		
 		setPosition(spawnX, spawnY);
-		currentAction = 0;
+		this.currentAction = currentAction;
 		setDoodad(currentAction);
 		animation.setFrames(sprites);
 		animation.setDelay(100);
@@ -82,8 +87,12 @@ public class Doodad extends MapObject
 	
 	public void update()
 	{
+
+		getNextPosition();
+		checkTileMapCollision();
+		setPosition(xtemp, ytemp);
 		
-		animation.update();
+		
 		
 		if(!spent)
 		{
@@ -111,12 +120,15 @@ public class Doodad extends MapObject
 			}
 		}
 		
-		if(!animation.hasPlayedOnce()) return;
-		
-		if(runOnce)
+		if(animation.hasPlayedOnce() && runOnce)
 		{
 			removeMe = true;
 		}
+		else
+		{
+			animation.update();
+		}
+		
 		
 	}
 		

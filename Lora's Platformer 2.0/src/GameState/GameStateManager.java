@@ -4,10 +4,7 @@ import Audio.JukeBox;
 import Entity.Player.ConversationState;
 import Entity.Player.Player;
 import GameState.Inventory.InventoryState;
-import GameState.Maps.DeepWoods;
-import GameState.Maps.LorasCavern;
-import GameState.Maps.MysteriousDungeon;
-import GameState.Maps.Tutorial;
+import GameState.Maps.*;
 import Main.Content;
 import TileMap.TileMap;
 
@@ -27,12 +24,13 @@ public class GameStateManager
 	private GameState[] gameStates;
 	private int currentState;
 	
-	public static final int NUMGAMESTATES = 5;
+	public static final int NUMGAMESTATES = 6;
 	public static final int MENUSTATE = 0;
 	public static final int TutorialState = 1;
 	public static final int LorasCavern = 2;
 	public static final int MysteriousDungeon = 3;
-	public static final int DeepWoods = 4;
+	public static final int FionasSanctum = 4;
+	public static final int DeepWoods = 5;
 	
 	protected Player player;
 	protected TileMap tileMap;
@@ -93,6 +91,12 @@ public class GameStateManager
 		{
 			JukeBox.loop("MysteriousDungeon");
 			gameStates[state] = new MysteriousDungeon(this, tileMap, player, conversationState);
+		}
+		else if(state == FionasSanctum)
+		{
+			JukeBox.loop("FionasSanctum");
+//			gameStates[state] = new FionasSanctum
+			gameStates[state] = new FionasSanctum(this, tileMap, player, conversationState);			
 		}
 		else if(state == DeepWoods)
 		{

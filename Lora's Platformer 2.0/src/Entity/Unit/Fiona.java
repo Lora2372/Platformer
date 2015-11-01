@@ -12,7 +12,7 @@ import Entity.Doodad.SummoningEffect;
 import Entity.Player.Conversation;
 import Entity.Player.Player;
 import Entity.Projectile.ArcaneBall;
-import GameState.Maps.MysteriousDungeon;
+import GameState.Maps.FionasSanctum;
 import Main.Content;
 
 public class Fiona extends Unit
@@ -28,6 +28,8 @@ public class Fiona extends Unit
 	protected int moving = 0; // 0 don't move, 1 = move left, 2 = move 3
 	protected int leftX = 240;
 	protected int rightX = 940;
+	
+	protected int upperY = 450;
 	
 	protected boolean isHit = false;
 
@@ -47,7 +49,7 @@ public class Fiona extends Unit
 	protected int[] numberofSounds;
 	public enum soundTypes { Attack, Hurt, Jump, Chargeup, Hit, Recover}
 	
-	protected MysteriousDungeon mysteriousDungeon;
+	protected FionasSanctum fionasSanctum;
 	
 	public Fiona(
 			TileMap tileMap,
@@ -59,7 +61,7 @@ public class Fiona extends Unit
 			String name,
 			double spawnX,
 			double spawnY,
-			MysteriousDungeon mysteriousDungeon,
+			FionasSanctum fionasSanctum,
 			Player player
 			) 
 	{
@@ -117,11 +119,11 @@ public class Fiona extends Unit
 				name,
 				spawnX,
 				spawnY,
-				mysteriousDungeon
+				fionasSanctum
 				);
 		
 		this.player = player;
-		this.mysteriousDungeon = mysteriousDungeon;
+		this.fionasSanctum = fionasSanctum;
 		timer = 0;
 		cooldown = 300;
 		
@@ -271,7 +273,6 @@ public class Fiona extends Unit
 					{
 						summoningEffect = new SummoningEffect(tileMap, locationX, locationY);
 						mainMap.addEffect(summoningEffect);
-						JukeBox.play("Teleport");
 						player.getHUD().removeBoss();
 						player.getConversationState().lockConversation(true);
 						conversationProgress = 1;
@@ -292,9 +293,9 @@ public class Fiona extends Unit
 					{
 						e.printStackTrace();
 					}
-					tileMap.loadMap("/Maps/MysteriousDungeonC.map");
+					tileMap.loadMap("/Maps/FionasSanctumB.map");
 					tileMap.setPosition(0, 0);
-					mysteriousDungeon.setDefeated(true);
+					fionasSanctum.setDefeated(true);
 				}
 				
 				if(player.getConversationState().getConversationTracker() >= conversation.fionaDefeated.length)
@@ -310,6 +311,7 @@ public class Fiona extends Unit
 				summoningEffect = null;
 				player.getConversationState().lockConversation(false);
 				hidden = true;
+				untouchable = true;
 				conversationProgress = 2;
 			}
 		}
@@ -354,7 +356,7 @@ public class Fiona extends Unit
 				else facingRight = false;
 				
 				
-				if(locationY > 210)
+				if(locationY > upperY)
 				{
 					directionY -= 0.1;
 					untouchable = true;
@@ -366,15 +368,15 @@ public class Fiona extends Unit
 					{
 						untouchable = false;
 						directionY = 0;
-						locationY = 210;
+						locationY = upperY;
 						if(locationX > leftX) moving = 1;
 						else moving = 2;
 					}
 				}
 				
-				if(locationY < 210)
+				if(locationY < upperY)
 				{
-					locationY = 210;
+					locationY = upperY;
 				}
 			}
 

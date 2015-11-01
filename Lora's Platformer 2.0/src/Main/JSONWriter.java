@@ -10,7 +10,6 @@ import java.nio.file.Paths;
 import org.json.simple.JSONObject;
 import Entity.Player.Player;
 
-
 public class JSONWriter 
 {  
   
@@ -31,7 +30,7 @@ public class JSONWriter
         jsonObject.put("Silver", player.getSilver());
         jsonObject.put("Gold", player.getGold());
         
-//        JSONArray jsonItems = new JSONArray();
+
 //        Item[][] items = player.getInventory().getItems();
 //        
 //        for(int i = 0; i < player.getInventory().getNumberOfRows(); i++)
@@ -40,7 +39,7 @@ public class JSONWriter
 //        	{
 //        		if( items[i][j] != null)
 //        		{
-//        			jsonItems.add(items[i][j]);
+//        			jsonObject.put(items[i][j].getItemType(),);
 //        		}
 //        	}
 //        }

@@ -20,11 +20,14 @@ public class Poff extends Doodad
 				60,
 				0,
 				0,
+				0,
+				0,
 				true, 
 				true, 
 				true,
 				false,
 				false,
+				0,
 				"Poff"
 				);
 	}

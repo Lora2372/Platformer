@@ -547,7 +547,6 @@ public class Unit extends MapObject
 	public void addGold(int gold) { this.gold += gold; }
 	
 	
-	
 	public double getDirectionX() { return directionX; }
 	public double getDirectionY() { return directionY; }
 	

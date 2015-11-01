@@ -1,9 +1,5 @@
 package Entity.Doodad.Activatable;
 
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-
 import TileMap.TileMap;
 import Audio.JukeBox;
 import Entity.Doodad.Doodad;
@@ -12,13 +8,13 @@ import Entity.Player.ConversationState;
 import Entity.Player.Player;
 import Entity.Unit.Fiona;
 import GameState.GameStateManager;
-import GameState.Maps.MysteriousDungeon;
+import GameState.Maps.FionasSanctum;
 import Main.Content;
 
-public class ActivatableShrineMysteriousDungeon extends Doodad
+public class ActivatableShrineFionasSanctum extends Doodad
 {
 	protected GameStateManager gameStateManager;
-	protected MysteriousDungeon mysteriousDungeon;
+	protected FionasSanctum fionasSanctum;
 	
 	protected Player player;
 	
@@ -34,10 +30,10 @@ public class ActivatableShrineMysteriousDungeon extends Doodad
 	
 	protected ConversationState conversationBox;
 	
-	public ActivatableShrineMysteriousDungeon(
+	public ActivatableShrineFionasSanctum(
 			TileMap tileMap,
 			GameStateManager gameStateManager,
-			MysteriousDungeon mysteriousDungeon,
+			FionasSanctum fionasSanctum,
 			double spawnX,
 			double spawnY,
 			Fiona fiona
@@ -47,21 +43,24 @@ public class ActivatableShrineMysteriousDungeon extends Doodad
 				tileMap, 
 				spawnX, 
 				spawnY, 
-				180, 
-				180,
-				180,
-				180,
+				160, 
+				160,
+				160,
+				160,
+				0, 
+				8, 
 				false, 
 				true, 
 				false,
 				true,
 				false,
-				"ActivatableShrineMysteriousDungeon"
+				0,
+				"ActivatableShrineFionasSanctum"
 				);
 		
 		this.fiona = fiona;
 		this.gameStateManager = gameStateManager;
-		this.mysteriousDungeon = mysteriousDungeon;
+		this.fionasSanctum = fionasSanctum;
 		
 		
 	}
@@ -80,6 +79,13 @@ public class ActivatableShrineMysteriousDungeon extends Doodad
 		if(!active)
 		{
 			return;
+		}
+		
+		// Comment for later:
+		// Add a key slot for the shrine
+		if(player.getInventory().hasItem("Boss") != null)
+		{
+			
 		}
 		
 		// If the player is null for whatever reason, update it with the player interacting with it:
@@ -131,7 +137,7 @@ public class ActivatableShrineMysteriousDungeon extends Doodad
 				// Play humming sound
 				System.out.println("tracker is at 0");
 				JukeBox.loop("Darkness");
-				JukeBox.stop("MysteriousDungeon");
+				JukeBox.stop("FionasSanctum");
 
 			}
 			else if(conversationBox.getConversationTracker() == 1)
@@ -145,74 +151,8 @@ public class ActivatableShrineMysteriousDungeon extends Doodad
 			{
 				// Close the door
 				System.out.println("tracker is at 2");
-				
+				fionasSanctum.getDoor().setDoodad(0);
 				JukeBox.play("Close");
-				
-				try
-				{
-					for(int i = 0; i < mysteriousDungeon.getCharacterList().size(); i++)
-					{
-						Entity.Unit.Unit character = mysteriousDungeon.getCharacterList().get(i);
-						if(character == null)
-						{
-							System.out.println("removing a character");
-							mysteriousDungeon.getCharacterList().remove(character);
-							i--;
-						}
-						else
-						{
-							if(character == player || character == fiona)
-							{
-								
-								double tempX = character.getLocationX() - (tileMap.getWidth() - 20 * tileSize);
-								
-								if(tempX < 0) tempX = 200;
-								character.setPosition(tempX, 550);
-								
-							}
-							else
-							{
-								mysteriousDungeon.getCharacterList().remove(character);
-								character = null;
-								i--;
-							}
-						}
-					}
-					for(int i = 0; i < mysteriousDungeon.getStuff().size(); i++)
-					{
-						Doodad currentDoodad = mysteriousDungeon.getStuff().get(i);
-						
-						if(currentDoodad == null)
-						{
-							mysteriousDungeon.getStuff().remove(currentDoodad);
-							i--;
-						}
-						else
-						{
-							double tempX = currentDoodad.getLocationX() - (tileMap.getWidth() - 20 * tileSize);
-							if(tempX > 0)
-							{
-								currentDoodad.setPosition(currentDoodad.getLocationX() - (tileMap.getWidth() - 20 * tileSize), currentDoodad.getLocationY());
-							}
-							else
-							{
-								mysteriousDungeon.getStuff().remove(currentDoodad);
-								mysteriousDungeon.getActivatables().remove(currentDoodad);
-								currentDoodad = null;
-								i--;
-							}
-						}
-					}
-					
-					tileMap.loadTiles(ImageIO.read(getClass().getResource("/Art/Tilesets/LorasTileset.png")));
-					tileMap.loadMap("/Maps/MysteriousDungeonB.map");
-					tileMap.setPosition(0, 0);
-				}
-				catch(IOException e)
-				{
-					e.printStackTrace();
-				}
-				
 			}
 			
 			else if(conversationBox.getConversationTracker() == 5)
@@ -232,7 +172,7 @@ public class ActivatableShrineMysteriousDungeon extends Doodad
 				startConversation = true;
 				active = false;
 				fiona.inControl(true);
-				mysteriousDungeon.setEngaged(true);
+				fionasSanctum.setEngaged(true);
 				JukeBox.stop("MysteriousConversation");
 				JukeBox.loop("MysteriousBattle");
 				player.getHUD().addBoss(fiona);

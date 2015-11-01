@@ -7,7 +7,7 @@ import Entity.Doodad.Doodad;
 import Entity.Item.Item;
 import Entity.Player.Player;
 
-public class ActivatableChest extends Doodad
+public class Chest extends Doodad
 {
 	protected boolean used;
 	
@@ -18,13 +18,11 @@ public class ActivatableChest extends Doodad
 	protected boolean successfullyOpened;
 	
 	
-	public ActivatableChest(
+	public Chest(
 			TileMap tileMap, 
 			double spawnX,
 			double spawnY,
 			boolean locked,
-			int silver,
-			int gold,
 			String chestType
 			) 
 	{
@@ -35,16 +33,17 @@ public class ActivatableChest extends Doodad
 				60,
 				60,
 				60,
+				0.3, 
+				8, 
 				false, 
 				true, 
 				false,
 				true,
 				false,
+				0,
 				chestType
 				);
 		
-		this.silver = silver;
-		this.gold = gold;
 		this.locked = locked;
 	}
 	
@@ -94,7 +93,7 @@ public class ActivatableChest extends Doodad
 				
 				if(item != null)
 				{
-					conversationPiece += "You unlocked the chest and found:";
+					conversationPiece += "You unlocked the chest and found ";
 					active = true;
 					item.use(player);
 				}
@@ -111,18 +110,43 @@ public class ActivatableChest extends Doodad
 			
 			if(active)
 			{
-//				active = true;
-				if(silver > 0)
+				
+				int tempRows = inventory.getRows();
+				int tempColumns = inventory.getColumns();
+				Item[][] items = inventory.getItems();
+				for(int i = 0; i < tempRows; i++)
 				{
-					conversationPiece = conversationPiece + silver + " silver";
-					if(gold > 0)
+					for(int j = 0; j < tempColumns; j++)
 					{
-						conversationPiece = conversationPiece + " and " + gold + " gold!";
+						if(items[i][j] != null)
+						{
+							if(items[i][j].getItemType().equals("Silver"))
+							{
+								player.addSilver(items[i][j].getStacks());
+								conversationPiece += items[i][j].getStacks() + " " + items[i][j].getItemType() + ", ";
+							}
+							else if(items[i][j].getItemType().equals("Gold"))
+							{
+								player.addGold(items[i][j].getStacks());
+								conversationPiece += items[i][j].getStacks() + " " + items[i][j].getItemType() + ", ";
+							}
+							else
+							{
+								player.getInventory().addItem(items[i][j]);
+								
+								if(items[i][j].getStacks() > 1)
+								{
+									conversationPiece += items[i][j].getStacks() + " " + items[i][j].getItemType() + "s, ";
+								}
+								else
+								{
+									conversationPiece += items[i][j].getStacks() + " " + items[i][j].getItemType() + ", ";
+								}
+							}
+						}
 					}
-				}
-				else if(gold > 0)
-				{
-					conversationPiece = conversationPiece + gold + " gold!";
+					conversationPiece = conversationPiece.substring(0, conversationPiece.length() - 1);
+					conversationPiece += ".";
 				}
 			}
 		}
@@ -172,5 +196,4 @@ public class ActivatableChest extends Doodad
 	{ 
 		JukeBox.play("OpenChest" + doodadType);
 	}
-	
 }

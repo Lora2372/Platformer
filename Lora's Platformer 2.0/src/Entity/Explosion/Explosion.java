@@ -83,10 +83,12 @@ public class Explosion extends MapObject
 			Unit character = characterList.get(i);
 			if(!unitsHit.contains(character))
 			{
-				unitsHit.add(character);
 				if(character.getFriendly() != friendly)
 					if(character.intersects(this))
+					{
+						unitsHit.add(character);
 						character.hit(damage);
+					}
 			}
 		}
 		

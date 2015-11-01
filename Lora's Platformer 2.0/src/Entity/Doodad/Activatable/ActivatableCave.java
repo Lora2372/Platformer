@@ -24,11 +24,14 @@ public class ActivatableCave extends Doodad
 				96,
 				100,
 				96,
+				0,
+				0,
 				false, 
 				true, 
 				false,
 				true,
 				false,
+				0,
 				"CaveEntrance"
 				);
 		
@@ -42,11 +45,11 @@ public class ActivatableCave extends Doodad
 	
 	public void interact(Player player)
 	{
-		if(gameStateManager.getState() == GameStateManager.LorasCavern)
-			gameStateManager.setState(GameStateManager.MysteriousDungeon);
-		
-		else if(gameStateManager.getState() == GameStateManager.MysteriousDungeon)
+
+		if(gameStateManager.getState() == GameStateManager.FionasSanctum)
+		{
 			gameStateManager.setState(GameStateManager.DeepWoods);
+		}
 			
 	}
 	

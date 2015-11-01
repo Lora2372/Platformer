@@ -20,11 +20,14 @@ public class MagicShield extends Doodad
 				192,
 				192,
 				192,
+				0,
+				0,
 				false, 
 				true, 
 				true,
 				false,
 				false,
+				0,
 				"MagicShield"
 				);
 	}

@@ -43,11 +43,11 @@ public class Potion extends Item
 	
 	public void setItem()
 	{
-		if(itemType.equals("Health"))
+		if(itemType.equals("Healing Potion"))
 			sprites = Content.PotionHealth[0];
-		else if(itemType.equals("Mana"))
+		else if(itemType.equals("Mana Potion"))
 			sprites = Content.PotionMana[0];
-		else if(itemType.equals("Stamina"))
+		else if(itemType.equals("Stamina Potion"))
 			sprites = Content.PotionStamina[0];
 	}
 	
@@ -55,18 +55,18 @@ public class Potion extends Item
 	{
 		super.use(user);
 		
-		if(itemType.equals("Health"))
+		JukeBox.play("PotionDrink");
+		
+		if(itemType.equals("Healing Potion"))
 			user.restoreHealth(50);
-		else if(itemType.equals("Mana"))
+		else if(itemType.equals("Mana Potion"))
 			user.restoreMana(50);
-		else if(itemType.equals("Stamina"))
+		else if(itemType.equals("Stamina Potion"))
 			user.restoreStamina(50);
 	}
 	
 	public void playSound()
 	{
-		JukeBox.play("PotionDrink");
+		// Pick up sound
 	}
-	
-	
 }

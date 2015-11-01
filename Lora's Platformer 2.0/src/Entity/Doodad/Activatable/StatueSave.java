@@ -25,11 +25,14 @@ public class StatueSave extends Doodad
 				100,
 				48,
 				100,
+				0.3, 
+				8, 
 				false, 
 				true, 
 				false,
 				true,
 				false,
+				0,
 				"StatueSave"
 				);
 		
