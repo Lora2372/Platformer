@@ -65,6 +65,7 @@ public class Content
 	public static BufferedImage[][] DoorClosed				= load("/Art/Sprites/Doodads/DoorClosed.png", 58, 63);
 	public static BufferedImage[][] DoorOpening				= load("/Art/Sprites/Doodads/DoorOpening.png", 58, 63);
 	public static BufferedImage[][] DoorOpened				= load("/Art/Sprites/Doodads/DoorOpened.png", 58, 63);
+	public static BufferedImage[][] Portal					= load("/Art/Sprites/Doodads/Portal.png", 102, 143);
 	
 	//Effects
 	public static BufferedImage[][] Teleport 				= load("/Art/Sprites/Effects/Teleport.png", 192, 192);

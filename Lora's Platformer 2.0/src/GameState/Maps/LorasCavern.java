@@ -46,9 +46,17 @@ public class LorasCavern extends MainMap
 			e.printStackTrace();
 		}
 		
-		spawnTorch(800, 1600);
-		spawnTorch(1850,1400);
-
+		spawnTorch(810, 1610);
+		spawnTorch(1230, 1610);
+		spawnTorch(1710, 1610);
+		
+		spawnTorch(810, 1910);
+		spawnTorch(1230, 1910);
+		spawnTorch(1710, 1910);
+		
+		spawnTorch(1830, 1310);
+		spawnTorch(2610, 2030);
+		
 		spawnEnemies();
 		this.player = player;
 

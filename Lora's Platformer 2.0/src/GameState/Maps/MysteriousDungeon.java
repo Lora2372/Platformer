@@ -58,11 +58,11 @@ public class MysteriousDungeon extends MainMap
 		
 		spawnTorch(3928, 410 + 240);
 		
-		spawnTorch(390, 1245);
-		spawnTorch(390, 1725);
+		spawnTorch(390, 1250);
+		spawnTorch(390, 1730);
 		
-		spawnTorch(690, 1245);
-		spawnTorch(690, 1725);
+		spawnTorch(690, 1250);
+		spawnTorch(690, 1730);
 		
 		spawnKey(380, 1550, "Boss");
 		spawnSuccubus(500, 1550, true);

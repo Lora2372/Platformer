@@ -4,12 +4,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
-
 import Audio.JukeBox;
 import Entity.Doodad.Doodad;
-import Entity.Doodad.Activatable.ActivatableCave;
 import Entity.Doodad.Activatable.ActivatableShrineFionasSanctum;
 import Entity.Doodad.Activatable.Door;
+import Entity.Doodad.Activatable.Portal;
 import Entity.Player.Conversation;
 import Entity.Player.ConversationState;
 import Entity.Player.Player;
@@ -141,15 +140,15 @@ public class FionasSanctum extends MainMap
 				JukeBox.stop("MysteriousBattle");
 				JukeBox.loop("MysteriousDungeon");
 				
-				ActivatableCave activatableCave = new ActivatableCave(tileMap, gameStateManager, 1468, 790);
-				stuff.add(activatableCave);
-				activatables.add(activatableCave);
+				Portal portal = new Portal(tileMap, gameStateManager, 1468, 790);
+				stuff.add(portal);
+				activatables.add(portal);
 				
-				spawnTorch(1348, 410);
-				spawnTorch(1588, 410);
+				spawnTorch(1350, 410);
+				spawnTorch(1590, 410);
 				
-				spawnTorch(1348, 650);
-				spawnTorch(1588, 650);
+				spawnTorch(1350, 650);
+				spawnTorch(1590, 650);
 				
 			}
 		}
