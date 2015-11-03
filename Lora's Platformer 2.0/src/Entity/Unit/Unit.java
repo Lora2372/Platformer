@@ -1393,6 +1393,14 @@ public class Unit extends MapObject
 		}
 	}
 	
+	public void setAnimationState(int animationState)
+	{
+		currentAction = this.animationState[animationState];
+		animation.setFrames(sprites.get(this.animationState[animationState]));
+		animation.setDelay(this.animationDelay[animationState]);
+	}
+
+	
 	
 	public void draw(Graphics2D graphics)
 	{

@@ -174,6 +174,7 @@ public class HUD
 	
 	public void draw(Graphics2D graphics)
 	{
+		
 		// Draw the health bar
 		double currentValue = player.getHealth();
 		double maxValue = player.getMaxHealth();

@@ -55,7 +55,7 @@ public class Explosion extends MapObject
 		this.untouchable = false;
 		this.locationX = locationX;
 		this.locationY = locationY;
-		this.facingRight = true;
+		this.facingRight = false;
 
 		unitsHit = new ArrayList<Unit>();
 		
@@ -101,17 +101,8 @@ public class Explosion extends MapObject
 	
 	public boolean interescts(MapObject object)
 	{
-		
-		
-		
-		
-		
 		return false;
 	}
-	
-	
-	
-	
 	
 	
 	public void draw(Graphics2D graphics)

@@ -56,6 +56,8 @@ public class Animation
 	
 	
 	public int getFrame() { return currentFrame; }
+	public int getFramesLength() { return frames.length; }
+	public BufferedImage[] getFrames() { return frames; }
 	public BufferedImage getImage() { return frames[currentFrame]; }
 	public Boolean hasPlayedOnce() { return playedOnce; }
 }

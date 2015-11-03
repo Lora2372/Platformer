@@ -59,7 +59,14 @@ public class DeepWoods extends MainMap
 			player.setPosition(player.getSpawnX(), player.getSpawnY());
 		}
 		
+		if(player.getAnimation().getFrames() == null)
+		{
+			player.setAnimationState(0);
+		}
+		
 		spawnStatueSave(600, 780);
+		
+		spawnCampFire(2830,  910);
 		
 		door = spawnDoor(3030,  890, false, 0, "Village");
 		
@@ -67,4 +74,14 @@ public class DeepWoods extends MainMap
 		player.setUnkillable(false);
 		doneInitializing = true;
 	}
+	
+	
+	public void update()
+	{
+		super.update();
+		
+
+		
+	}
+	
 }

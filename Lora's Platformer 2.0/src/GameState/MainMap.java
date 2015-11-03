@@ -350,6 +350,7 @@ public class MainMap extends GameState
 			return;
 		}
 		
+		
 		graphics.setColor(Color.WHITE);
 		graphics.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
 
@@ -406,27 +407,36 @@ public class MainMap extends GameState
 				e.printStackTrace();
 			}
 		}
-		
+
 		// Draw Characters!
 		if(characterList != null)
 		{
-			
-			for(int i = 0; i < characterList.size(); i++)
+			try
 			{
-				characterList.get(i).draw(graphics);
+				for(int i = 0; i < characterList.size(); i++)
+				{
+					characterList.get(i).draw(graphics);
+				}
+			}
+			catch(NullPointerException exception)
+			{
+				System.out.println("Null...");
+				exception.printStackTrace();
 			}
 		}
-		
+
 		// Draw Projectiles
 		for(int i = 0; i < projectiles.size(); i++)
 		{
 			projectiles.get(i).draw(graphics);
 		}
 		
+		// Draw Explosions
 		for(int i = 0; i < explosions.size(); i++)
 		{
 			explosions.get(i).draw(graphics);
 		}
+		
 		
 		// Draw HUD		
 		if(player.getHUD() != null)
@@ -618,6 +628,15 @@ public class MainMap extends GameState
 	{
 		Torch torch = new Torch(tileMap, locationX, locationY);
 		stuff.add(torch);
+	}
+	
+	public CampFire spawnCampFire(double locationX, double locationY)
+	{
+		CampFire campFire = new CampFire(tileMap, gameStateManager, locationX, locationY);
+		stuff.add(campFire);
+		activatables.add(campFire);
+		return campFire;
+		
 	}
 	
 	public void spawnSign(double locationX, double locationY, String[] conversation, int[] whoTalks)

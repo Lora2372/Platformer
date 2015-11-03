@@ -23,6 +23,8 @@ public class Doodad extends MapObject
 	protected boolean active;
 	protected boolean spent;
 	
+	protected int stopAt;
+	
 	protected String doodadType;
 	
 	public Doodad(
@@ -67,7 +69,7 @@ public class Doodad extends MapObject
 		this.currentAction = currentAction;
 		setDoodad(currentAction);
 		animation.setFrames(sprites);
-		animation.setDelay(100);
+		animation.setDelay(70);
 		portrait = Content.PortraitSign[0];
 		
 	}
@@ -90,8 +92,7 @@ public class Doodad extends MapObject
 		getNextPosition();
 		checkTileMapCollision();
 		setPosition(xtemp, ytemp);
-		
-		
+
 		
 		if(!spent)
 		{
@@ -104,8 +105,10 @@ public class Doodad extends MapObject
 					animation.setFrames(sprites);
 					animation.setDelay(60);
 					playSound();
+					stopAt = animation.getFramesLength() - 1;
 				}
-				if(animation.hasPlayedOnce())
+				
+				if(animation.getFrame() == stopAt)
 				{
 					if(currentAction != 2)
 					{
@@ -125,14 +128,13 @@ public class Doodad extends MapObject
 		{
 			removeMe = true;
 		}	
-		
 	}
 		
 	
 	public void draw(Graphics2D graphics)
 	{
-		setMapPosition();
-		
+		if(removeMe)
+			return;
 		super.draw(graphics);
 	}
 

@@ -69,7 +69,7 @@ public class Content
 	public static BufferedImage[][] DoorVillageSquareClosed = load("/Art/Sprites/Doodads/DoorVillageSquareClosed.png", 120, 120);
 	public static BufferedImage[][] DoorVillageSquareOpening = load("/Art/Sprites/Doodads/DoorVillageSquareOpening.png", 120, 120);
 	public static BufferedImage[][] DoorVillageSquareOpened = load("/Art/Sprites/Doodads/DoorVillageSquareOpened.png", 120, 120);
-	
+	public static BufferedImage[][] CampFire				= load("/Art/Sprites/Doodads/CampFire.png", 64, 64);
 	
 	//Effects
 	public static BufferedImage[][] Teleport 				= load("/Art/Sprites/Effects/Teleport.png", 192, 192);
