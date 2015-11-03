@@ -8,6 +8,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.json.simple.JSONObject;
+
+import Entity.Item.CreateItem;
+import Entity.Item.Item;
 import Entity.Player.Player;
 
 public class JSONWriter 
@@ -27,23 +30,26 @@ public class JSONWriter
         jsonObject.put("Map", player.getCurrentMap());  
         jsonObject.put("SpawnLocationX", spawnLocationX);
         jsonObject.put("SpawnLocationY", spawnLocationY);
-        jsonObject.put("Silver", player.getSilver());
-        jsonObject.put("Gold", player.getGold());
+        jsonObject.put(CreateItem.Coins.CoinSilver.toString(), player.getSilver());
+        jsonObject.put(CreateItem.Coins.CoinGold.toString(), player.getGold());
         
+        if(CreateItem.Coins.CoinGold.equals(("CoinGold")))
+        {
+        	System.out.println("Gold!");
+        }
 
-//        Item[][] items = player.getInventory().getItems();
-//        
-//        for(int i = 0; i < player.getInventory().getNumberOfRows(); i++)
-//        {
-//        	for(int j = 0; j < player.getInventory().getNumberOfColumns(); j++)
-//        	{
-//        		if( items[i][j] != null)
-//        		{
-//        			jsonObject.put(items[i][j].getItemType(),);
-//        		}
-//        	}
-//        }
-//        jsonObject.put(items, jsonItems);
+        Item[][] items = player.getInventory().getItems();
+        for(int i = 0; i < player.getInventory().getNumberOfRows(); i++)
+        {
+        	for(int j = 0; j < player.getInventory().getNumberOfColumns(); j++)
+        	{
+        		if( items[i][j] != null)
+        		{
+        			jsonObject.put("Item:" + (i + j), items[i][j].getItemType());
+        			jsonObject.put("Stack:" + (i + j), items[i][j].getStacks());
+        		}
+        	}
+        }
         
         try 
         {  

@@ -62,10 +62,14 @@ public class Content
 	public static BufferedImage[][] PotionStamina			= load("/Art/Sprites/Doodads/PotionStamina.png", 60, 60); 
 	public static BufferedImage[][] CoinSilver				= load("/Art/Sprites/Doodads/CoinSilver.png", 60, 60);
 	public static BufferedImage[][] CoinGold				= load("/Art/Sprites/Doodads/CoinGold.png", 60, 60);
-	public static BufferedImage[][] DoorClosed				= load("/Art/Sprites/Doodads/DoorClosed.png", 58, 63);
-	public static BufferedImage[][] DoorOpening				= load("/Art/Sprites/Doodads/DoorOpening.png", 58, 63);
-	public static BufferedImage[][] DoorOpened				= load("/Art/Sprites/Doodads/DoorOpened.png", 58, 63);
+	public static BufferedImage[][] DoorBossClosed				= load("/Art/Sprites/Doodads/DoorBossClosed.png", 58, 63);
+	public static BufferedImage[][] DoorBossOpening				= load("/Art/Sprites/Doodads/DoorBossOpening.png", 58, 63);
+	public static BufferedImage[][] DoorBossOpened				= load("/Art/Sprites/Doodads/DoorBossOpened.png", 58, 63);
 	public static BufferedImage[][] Portal					= load("/Art/Sprites/Doodads/Portal.png", 102, 143);
+	public static BufferedImage[][] DoorVillageSquareClosed = load("/Art/Sprites/Doodads/DoorVillageSquareClosed.png", 120, 120);
+	public static BufferedImage[][] DoorVillageSquareOpening = load("/Art/Sprites/Doodads/DoorVillageSquareOpening.png", 120, 120);
+	public static BufferedImage[][] DoorVillageSquareOpened = load("/Art/Sprites/Doodads/DoorVillageSquareOpened.png", 120, 120);
+	
 	
 	//Effects
 	public static BufferedImage[][] Teleport 				= load("/Art/Sprites/Effects/Teleport.png", 192, 192);

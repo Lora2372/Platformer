@@ -6,14 +6,14 @@ import java.io.IOException;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-
+import Entity.Item.CreateItem;
 import Entity.Player.Player;
 
 public class JSONReader 
 {
 	public static boolean load(Player player)
 	{
-		
+		CreateItem createItem = new CreateItem(player.getTileMap());
 		JSONParser jsonParser = new JSONParser();
 		
 		
@@ -40,13 +40,32 @@ public class JSONReader
 			player.setSpawnPoint(spawnLocationX, spawnLocationY);
 		
 
-			int silver = ((Long)jsonObject.get("Silver")).intValue();
+			int silver = ((Long)jsonObject.get(CreateItem.Coins.CoinSilver.toString())).intValue();
 			System.out.println("Silver: " + silver);
 			player.addSilver(silver);
 			
-			int gold = ((Long)jsonObject.get("Gold")).intValue();
+			int gold = ((Long)jsonObject.get(CreateItem.Coins.CoinGold.toString())).intValue();
 			System.out.println("Gold: " + gold);
 			player.addGold(gold);
+			
+			
+			int i = 0;
+			do
+			{
+				String itemType = (String) jsonObject.get("Item:" + i);
+								
+				if(itemType != null)
+				{
+					int itemStack =  ( (Long) ( jsonObject.get("Stack:" + i) ) ).intValue();
+					player.getInventory().addItem(createItem.createItem(itemType, player, itemStack));
+					i++;
+				}
+				else
+				{
+					i = -1;
+				}
+				
+			}while(i != -1);
 		}
 		catch(FileNotFoundException e2)
 		{
@@ -69,7 +88,5 @@ public class JSONReader
 			return false;
 		}
 		return true;
-		
-	
 	}
 }

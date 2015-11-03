@@ -7,6 +7,7 @@ import Main.GamePanel;
 import TileMap.*;
 import Entity.Explosion.Explosion;
 import Entity.Item.Coin;
+import Entity.Item.CreateItem;
 import Entity.Item.Item;
 import Entity.Item.Key;
 import Entity.Item.Potion;
@@ -510,18 +511,17 @@ public class MainMap extends GameState
 			}
 			else
 			{
-				System.out.println("potionDropped: " + potionDropped);
 				if(potionDropped == 1)
 				{
-					potion = new Potion(tileMap, false, 0, 0, owner, stacks, "Healing Potion");
+					potion = new Potion(tileMap, false, 0, 0, owner, stacks, CreateItem.Potions.PotionHealing.toString());
 				}
 				else if(potionDropped == 2)
 				{
-					potion= new Potion(tileMap, false, 0, 0, owner, stacks, "Mana Potion");
+					potion= new Potion(tileMap, false, 0, 0, owner, stacks, CreateItem.Potions.PotionMana.toString());
 				}
 				else if(potionDropped == 3)
 				{
-					potion = new Potion(tileMap, false, 0, 0, owner, stacks, "Stamina Potion");
+					potion = new Potion(tileMap, false, 0, 0, owner, stacks, CreateItem.Potions.PotionStamina.toString());
 				}
 			}
 			if(potion == null)
@@ -627,6 +627,14 @@ public class MainMap extends GameState
 		stuff.add(activatableSign);
 	}
 	
+	public Door spawnDoor(double locationX, double locationY, boolean locked, int currentAction, String doorType)
+	{
+		Door door = new Door(tileMap, gameStateManager, locationX, locationY, locked, currentAction, doorType);
+		activatables.add(door);
+		stuff.add(door);
+		return door;
+	}
+	
 	public Chest spawnChest(double locationX, double locationY, boolean locked,String chestType)
 	{
 		Chest chest = new Chest(tileMap, locationX, locationY, locked, chestType);
@@ -699,9 +707,9 @@ public class MainMap extends GameState
 		if(k == KeyEvent.VK_F) player.setPunching();
 		if(k == KeyEvent.VK_D) player.setDashing(true);
 		if(k == KeyEvent.VK_G) player.setCastingMagicShield();
-		if(k == KeyEvent.VK_Z) player.drinkPotion("Healing Potion");
-		if(k == KeyEvent.VK_X) player.drinkPotion("Mana Potion");
-		if(k == KeyEvent.VK_C) player.drinkPotion("Stamina Potion");
+		if(k == KeyEvent.VK_Z) player.drinkPotion(CreateItem.Potions.PotionHealing.toString());
+		if(k == KeyEvent.VK_X) player.drinkPotion(CreateItem.Potions.PotionMana.toString());
+		if(k == KeyEvent.VK_C) player.drinkPotion(CreateItem.Potions.PotionStamina.toString());
 		
 		
 		// Note: This is a built in cheat that is not supposed to be used to get the real game experience.

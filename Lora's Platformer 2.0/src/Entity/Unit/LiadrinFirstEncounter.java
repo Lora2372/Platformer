@@ -3,6 +3,7 @@ import java.util.ArrayList;
 
 import TileMap.TileMap;
 import Entity.Doodad.SummoningEffect;
+import Entity.Item.CreateItem;
 import Entity.Item.Potion;
 import Entity.Player.ConversationState;
 import Entity.Player.Player;
@@ -153,7 +154,7 @@ public class LiadrinFirstEncounter extends Unit
 		{
 			if(conversationBox.getConversationTracker() >= player.getConversation().liadrinFirstEncounterChoiceHard().length)
 			{
-				Potion healingPotion = new Potion(tileMap, false, 0, 0, player, 2, "Healing Potion");
+				Potion healingPotion = new Potion(tileMap, false, 0, 0, player, 2, CreateItem.Potions.PotionHealing.toString());
 				
 				player.getInventory().addItem(healingPotion);
 				active = false;

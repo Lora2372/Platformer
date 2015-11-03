@@ -41,11 +41,13 @@ public class Key extends Item
 	
 	public void setItem()
 	{
-		if(itemType.equals("Uncommon"))
+		if(itemType.equals(CreateItem.Keys.Uncommon.toString()))
+		{
 			sprites = Content.KeyUncommon[0];
-		else if(itemType.equals("Rare"))
+		}
+		else if(itemType.equals(CreateItem.Keys.Rare.toString()))
 			sprites = Content.KeyRare[0];
-		else if(itemType.equals("Boss"))
+		else if(itemType.equals(CreateItem.Keys.Boss.toString()))
 			sprites = Content.KeyBoss[0];
 	
 	}	

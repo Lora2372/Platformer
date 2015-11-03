@@ -50,7 +50,6 @@ public class Door extends Doodad
 		this.locked = locked;
 		if(currentAction == 2)
 		{
-			System.out.println("door spawns open");
 			used = true;
 			spent = true;
 			this.locked = false;
@@ -67,19 +66,35 @@ public class Door extends Doodad
 		{
 			if(currentAction == 0)
 			{
-				sprites = Content.DoorClosed[0];
+				sprites = Content.DoorBossClosed[0];
 			}
 			else if(currentAction == 1)
 			{
-				sprites = Content.DoorOpening[0];
+				sprites = Content.DoorBossOpening[0];
 			}
 			else if(currentAction == 2)
 			{
-				sprites = Content.DoorOpened[0];
+				sprites = Content.DoorBossOpened[0];
 			}
-			
-			animation.setFrames(sprites);
 		}
+		
+		if(doodadType.equals("Village"))
+		{
+			if(currentAction == 0)
+			{
+				sprites = Content.DoorVillageSquareClosed[0];
+			}
+			else if(currentAction == 1)
+			{
+				sprites = Content.DoorVillageSquareOpening[0];
+			}
+			else if(currentAction == 2)
+			{
+				sprites = Content.DoorVillageSquareOpened[0];
+			}
+		}
+		
+		animation.setFrames(sprites);
 	}
 	
 	public void interact(Player player)

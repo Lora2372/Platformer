@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import Entity.Doodad.Activatable.Chest;
+import Entity.Item.CreateItem;
 import Entity.Player.*;
 import Entity.Unit.LiadrinFirstEncounter;
 import Entity.Unit.*;
@@ -80,11 +81,11 @@ public class LorasCavern extends MainMap
 	public void spawnEnemies()
 	{
 		Slug slug = spawnSlug(1690, 1600, false, "Steve");
-		dropPotion("Healing Potion", 100, 1, slug);
+		dropPotion(CreateItem.Potions.PotionHealing.toString(), 100, 1, slug);
 		
 		Succubus succubus;
 		succubus = spawnSuccubus(2700, 1400, false);
-		dropCoin("Silver", 100, 2, succubus);
+		dropCoin(CreateItem.Coins.CoinSilver.toString(), 100, 2, succubus);
 		dropPotion("Any", 25, 1, succubus);
 		
 		succubus = spawnSuccubus(1339,1900, true);
@@ -101,11 +102,11 @@ public class LorasCavern extends MainMap
 		
 		Chest chest;
 		chest = spawnChest(1923, 1170, true, "Uncommon");
-		dropPotion("Healing Potion", 100, 1, chest);
-		dropPotion("Mana Potion", 100, 2, chest);
-		dropCoin("Silver", 100, 3, chest);
+		dropPotion(CreateItem.Potions.PotionHealing.toString(), 100, 1, chest);
+		dropPotion(CreateItem.Potions.PotionMana.toString(), 100, 2, chest);
+		dropCoin(CreateItem.Coins.CoinSilver.toString(), 100, 3, chest);
 		
-		spawnKey(1712, 		2610, "Uncommon");
+		spawnKey(1712, 		2610, CreateItem.Keys.Uncommon.toString());
 		
 
 		
@@ -116,14 +117,11 @@ public class LorasCavern extends MainMap
 		
 		
 		
-		spawnStatueSave(3200, 2150);
+		spawnStatueSave(3300, 1700);
 		
 		LiadrinFirstEncounter liadrinFirstEncounter = new LiadrinFirstEncounter(tileMap, false, true, false, true, true, "Liadrin", 2680, 1800, this);
 		characterList.add(liadrinFirstEncounter);
-		
-		spawnCoin(1200, 2200, "Silver");
-		spawnCoin(1100, 2200, "Gold");
-		
+				
 		spawnSign(
 				1357, 
 				2250, 

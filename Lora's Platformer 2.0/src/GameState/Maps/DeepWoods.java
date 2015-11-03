@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import Entity.Doodad.Activatable.Door;
 import Entity.Player.ConversationState;
 import Entity.Player.Player;
 import GameState.GameStateManager;
@@ -14,6 +15,8 @@ import TileMap.TileMap;
 
 public class DeepWoods extends MainMap
 {
+	protected Door door;
+	
 	
 	public DeepWoods(GameStateManager gameStatemanager,
 			TileMap tileMap,
@@ -55,6 +58,11 @@ public class DeepWoods extends MainMap
 			player.setLoaded(false);
 			player.setPosition(player.getSpawnX(), player.getSpawnY());
 		}
+		
+		spawnStatueSave(600, 780);
+		
+		door = spawnDoor(3030,  890, false, 0, "Village");
+		
 		player.setSpawning(true);
 		player.setUnkillable(false);
 		doneInitializing = true;

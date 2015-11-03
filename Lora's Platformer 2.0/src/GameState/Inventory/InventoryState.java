@@ -146,7 +146,6 @@ public class InventoryState extends GameState
 		
 		
 		
-		
 		for(int i = 0; i < numberOfRows; i++)
 		{
 			for(int j = 0; j < numberOfColumns; j++)
@@ -169,6 +168,7 @@ public class InventoryState extends GameState
 					
 					graphics.drawString(items[i][j].getStacks() + "", inventorySlotLocationX, inventorySlotLocationY);
 				}
+				
 				
 				
 				if(selectedSlotX == j && selectedSlotY == i)

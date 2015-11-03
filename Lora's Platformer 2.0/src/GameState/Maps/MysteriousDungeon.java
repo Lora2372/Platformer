@@ -8,9 +8,13 @@ import Audio.JukeBox;
 import Entity.Doodad.Doodad;
 import Entity.Doodad.Activatable.Chest;
 import Entity.Doodad.Activatable.Door;
+import Entity.Item.CreateItem;
 import Entity.Player.Conversation;
 import Entity.Player.ConversationState;
 import Entity.Player.Player;
+import Entity.Unit.Slug;
+import Entity.Unit.Succubus;
+import Entity.Unit.Wolf;
 import GameState.GameStateManager;
 import GameState.MainMap;
 import TileMap.GameOver;
@@ -65,35 +69,45 @@ public class MysteriousDungeon extends MainMap
 		spawnTorch(690, 1730);
 		
 		spawnKey(380, 1550, "Boss");
-		spawnSuccubus(500, 1550, true);
-		spawnWolf(537, 1760, true);
-		spawnWolf(537, 1760, false);
 		
-		spawnSlug(1788, 1250, true, null);
-		spawnSlug(1788, 1250, false, null);
+		
+		Wolf wolf = spawnWolf(537, 1760, true);
+		dropPotion("Any", 25, 1, wolf);
+		wolf = spawnWolf(537, 1760, false);
+		dropPotion("Any", 25, 1, wolf);
+		
+		Slug slug = spawnSlug(1788, 1250, true, null);
+		dropPotion("Any", 25, 1, slug);
+		
+		slug = spawnSlug(1788, 1250, false, null);
+		dropPotion("Any", 25, 1, slug);
 		
 		spawnStatueSave(250, 780);
 		
 		Chest chest = spawnChest(800, 850, false, "Common");
-		dropPotion("Healing Potion", 100, 1, chest);
+		dropPotion(CreateItem.Potions.PotionHealing.toString(), 100, 1, chest);
 		
 		spawnSign(400, 810, conversation.mysteriousDungeonDirectionMessage, conversation.mysteriousDungeonDirectionMessageWhoTalks);
 		
 		chest = spawnChest(3262, 1620, false, "Common");
-		dropPotion("Healing Potion", 100, 1, chest);
+		dropPotion(CreateItem.Potions.PotionHealing.toString(), 100, 1, chest);
 		
+		Succubus succubus = spawnSuccubus(500, 1550, true);
+		dropPotion("Any", 25, 1, succubus);
 		
-		spawnSuccubus(937, 430, false);
+		succubus = spawnSuccubus(937, 430, false);
+		dropPotion("Any", 25, 1, succubus);
 		
-		spawnSuccubus(3150, 1620, false);
-
-		spawnSuccubus(2833, 780, false);
+		succubus = spawnSuccubus(3150, 1620, false);
+		dropPotion("Any", 25, 1, succubus);
+		
+		succubus = spawnSuccubus(2833, 780, false);
+		dropPotion("Any", 25, 1, succubus);
 		
 		spawnStatueSave(2900, 780);
 
-		door = new Door(tileMap, gameStatemanager, 3045, 780, true, 0, "Boss");
-		activatables.add(door);
-		stuff.add(door);
+		
+		door = spawnDoor(3045,  780, true, 0, CreateItem.Keys.Boss.toString());
 		
 		
 		player.setCurrentMap("MysteriousDungeon");

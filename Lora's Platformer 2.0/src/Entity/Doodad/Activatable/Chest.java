@@ -4,6 +4,7 @@ import Main.Content;
 import TileMap.TileMap;
 import Audio.JukeBox;
 import Entity.Doodad.Doodad;
+import Entity.Item.CreateItem;
 import Entity.Item.Item;
 import Entity.Player.Player;
 
@@ -120,12 +121,12 @@ public class Chest extends Doodad
 					{
 						if(items[i][j] != null)
 						{
-							if(items[i][j].getItemType().equals("Silver"))
+							if(items[i][j].getItemType().equals(CreateItem.Coins.CoinSilver.toString()))
 							{
 								player.addSilver(items[i][j].getStacks());
 								conversationPiece += items[i][j].getStacks() + " " + items[i][j].getItemType() + ", ";
 							}
-							else if(items[i][j].getItemType().equals("Gold"))
+							else if(items[i][j].getItemType().equals(CreateItem.Coins.CoinGold.toString()))
 							{
 								player.addGold(items[i][j].getStacks());
 								conversationPiece += items[i][j].getStacks() + " " + items[i][j].getItemType() + ", ";

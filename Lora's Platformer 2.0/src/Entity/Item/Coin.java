@@ -43,20 +43,20 @@ public class Coin extends Item
 	
 	public void setItem()
 	{
-		if(itemType.equals("Gold"))
+		if(itemType.equals(CreateItem.Coins.CoinGold.toString()))
 			sprites = Content.CoinGold[0];
-		else if(itemType.equals("Silver"))
+		else if(itemType.equals(CreateItem.Coins.CoinSilver.toString()))
 			sprites = Content.CoinSilver[0];
 	}
 	
 	public void interact(Player player)
 	{
 		JukeBox.play("Coin");
-		if(itemType.equals("Silver"))
+		if(itemType.equals(CreateItem.Coins.CoinSilver.toString()))
 		{
 			player.addSilver(stacks);
 		}
-		else if(itemType.equals("Gold"))
+		else if(itemType.equals(CreateItem.Coins.CoinGold.toString()))
 		{
 			player.addGold(stacks);
 		}

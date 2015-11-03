@@ -43,12 +43,18 @@ public class Potion extends Item
 	
 	public void setItem()
 	{
-		if(itemType.equals("Healing Potion"))
+		if(itemType.equals(CreateItem.Potions.PotionHealing.toString()))
+		{
 			sprites = Content.PotionHealth[0];
-		else if(itemType.equals("Mana Potion"))
+		}
+		else if(itemType.equals(CreateItem.Potions.PotionMana.toString()))
+		{
 			sprites = Content.PotionMana[0];
-		else if(itemType.equals("Stamina Potion"))
+		}
+		else if(itemType.equals(CreateItem.Potions.PotionStamina.toString()))
+		{
 			sprites = Content.PotionStamina[0];
+		}
 	}
 	
 	public void use(Unit user)
@@ -57,12 +63,18 @@ public class Potion extends Item
 		
 		JukeBox.play("PotionDrink");
 		
-		if(itemType.equals("Healing Potion"))
+		if(itemType.equals(CreateItem.Potions.PotionHealing.toString()))
+		{
 			user.restoreHealth(50);
-		else if(itemType.equals("Mana Potion"))
+		}
+		else if(itemType.equals(CreateItem.Potions.PotionMana.toString()))
+		{
 			user.restoreMana(50);
-		else if(itemType.equals("Stamina Potion"))
+		}
+		else if(itemType.equals(CreateItem.Potions.PotionStamina.toString()))
+		{
 			user.restoreStamina(50);
+		}
 	}
 	
 	public void playSound()
