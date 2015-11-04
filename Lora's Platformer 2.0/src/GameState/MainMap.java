@@ -19,6 +19,7 @@ import Entity.Projectile.Projectile;
 import Entity.Unit.*;
 import Audio.JukeBox;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -770,5 +771,32 @@ public class MainMap extends GameState
 		
 		if(k == KeyEvent.VK_A) player.setCastingSmallFireBall();
 		if(k == KeyEvent.VK_S) player.setCastingLargeFireBall();
+	}
+
+
+	public void mouseClicked(MouseEvent mouse) 
+	{
+		
+	}
+
+
+	public void mouseEntered(MouseEvent mouse) 
+	{
+		
+	}
+
+	public void mouseExited(MouseEvent mouse) 
+	{
+		
+	}
+
+	public void mousePressed(MouseEvent mouse) 
+	{
+		
+	}
+
+	public void mouseReleased(MouseEvent mouse) 
+	{
+		
 	}
 }

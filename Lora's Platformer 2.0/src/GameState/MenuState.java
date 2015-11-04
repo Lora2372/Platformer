@@ -2,9 +2,8 @@ package GameState;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-
+import java.awt.event.MouseEvent;
 import javax.swing.JOptionPane;
-
 import Entity.Player.*;
 import Main.GamePanel;
 import Main.JSONReader;
@@ -18,13 +17,15 @@ public class MenuState extends GameState
 	private int currentChoice = 0;
 	
 	private String[] options =
-		{
+	{
 			"Tutorial",
 			"New Game",
 			"Load Game",
 			"Help",
 			"Quit"
-		};
+	};
+	
+	private int[] optionsWidth = new int[options.length]; 
 	
 	private String title = "Lora's Platformer";
 	
@@ -36,6 +37,8 @@ public class MenuState extends GameState
 	
 	protected Player player;
 	protected TileMap tileMap;
+	
+	protected Rectangle mouseRectangle;
 	
 	public MenuState(GameStateManager gameStateManager, ConversationState conversationState)
 	{
@@ -61,10 +64,10 @@ public class MenuState extends GameState
 		catch(Exception e)
 		{
 			e.printStackTrace();
-		}
-		
+		}		
 	}
 	
+
 	public void initialize()
 	{
 		
@@ -72,6 +75,18 @@ public class MenuState extends GameState
 	
 	public void update()
 	{
+		mouseRectangle = new Rectangle(MouseInfo.getPointerInfo().getLocation().x, MouseInfo.getPointerInfo().getLocation().y, 1, 1);
+		
+		for(int i = 0; i < options.length; i++)
+		{
+			Rectangle textRectangle = new Rectangle(GamePanel.WIDTH / 2 - options[i].length() / 2, GamePanel.HEIGHT / 2 + i * 30, optionsWidth[i], 30);
+			
+			if(textRectangle.intersects(mouseRectangle))
+			{
+				currentChoice = i;
+			}
+		}
+		
 		backGround.update();
 	}
 	
@@ -111,8 +126,9 @@ public class MenuState extends GameState
 			{
 				graphics.setColor(Color.RED);
 			}
-			stringLength = (int)graphics.getFontMetrics().getStringBounds(options[i], graphics).getWidth();
-			textX = GamePanel.WIDTH / 2 - stringLength / 2;
+			optionsWidth[i] = (int)graphics.getFontMetrics().stringWidth(options[i]);
+//			stringLength = (int)graphics.getFontMetrics().getStringBounds(options[i], graphics).getWidth();
+			textX = GamePanel.WIDTH / 2 - optionsWidth[i] / 2;
 			graphics.drawString(options[i], textX, GamePanel.HEIGHT / 2 + i * 30);
 		}
 			
@@ -217,6 +233,40 @@ public class MenuState extends GameState
 	}
 	
 	public void keyReleased(int k)
+	{
+		
+	}
+	
+	public void mouseClicked(MouseEvent mouse) 
+	{
+		for(int i = 0; i < options.length; i++)
+		{
+			Rectangle textRectangle = new Rectangle(GamePanel.WIDTH / 2 - options[i].length() / 2, GamePanel.HEIGHT / 2 + i * 30, optionsWidth[i], 30);
+			
+			if(textRectangle.intersects(mouseRectangle))
+			{
+				select();
+			}
+		}
+	}
+
+
+	public void mouseEntered(MouseEvent mouse) 
+	{
+
+	}
+
+	public void mouseExited(MouseEvent mouse) 
+	{
+		
+	}
+
+	public void mousePressed(MouseEvent mouse) 
+	{
+		
+	}
+
+	public void mouseReleased(MouseEvent mouse) 
 	{
 		
 	}

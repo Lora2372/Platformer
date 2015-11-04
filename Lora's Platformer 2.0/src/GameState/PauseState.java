@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JOptionPane;
 
@@ -165,6 +166,32 @@ public class PauseState extends GameState
 	}
 
 	public void keyReleased(int k) 
+	{
+		
+	}
+	
+	public void mouseClicked(MouseEvent mouse) 
+	{
+		
+	}
+
+
+	public void mouseEntered(MouseEvent mouse) 
+	{
+		
+	}
+
+	public void mouseExited(MouseEvent mouse) 
+	{
+		
+	}
+
+	public void mousePressed(MouseEvent mouse) 
+	{
+		
+	}
+
+	public void mouseReleased(MouseEvent mouse) 
 	{
 		
 	}

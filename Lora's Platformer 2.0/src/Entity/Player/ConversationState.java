@@ -3,6 +3,7 @@ package Entity.Player;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -319,6 +320,32 @@ public class ConversationState  extends GameState
 
 
 	public void keyReleased(int k) 
+	{
+		
+	}
+	
+	public void mouseClicked(MouseEvent mouse) 
+	{
+		
+	}
+
+
+	public void mouseEntered(MouseEvent mouse) 
+	{
+		
+	}
+
+	public void mouseExited(MouseEvent mouse) 
+	{
+		
+	}
+
+	public void mousePressed(MouseEvent mouse) 
+	{
+		
+	}
+
+	public void mouseReleased(MouseEvent mouse) 
 	{
 		
 	}

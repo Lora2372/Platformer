@@ -8,13 +8,7 @@ import TileMap.TileMap;
 
 public class CampFire extends Doodad
 {
-	protected boolean used;
 	
-	protected int silver;
-	protected int gold;
-	
-	protected boolean locked;
-	protected boolean successfullyOpened;
 	protected GameStateManager gameStateManager;
 	
 	public CampFire(
@@ -53,10 +47,7 @@ public class CampFire extends Doodad
 	
 	public void interact(Player player)
 	{
-//		if(gameStateManager.getState() == GameStateManager.FionasSanctum)
-//		{
-//			gameStateManager.setState(GameStateManager.DeepWoods);
-//		}
+
 	}
 	
 	public void playSound() 

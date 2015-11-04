@@ -1,5 +1,7 @@
 package GameState;
 
+import java.awt.event.MouseEvent;
+
 import Audio.JukeBox;
 import Entity.Player.ConversationState;
 import Entity.Player.Player;
@@ -11,7 +13,7 @@ import TileMap.TileMap;
 public class GameStateManager 
 {
 	protected PauseState pausestate;
-	protected HelpState helpstate;
+	protected OptionState helpstate;
 	protected InventoryState inventorystate;
 	protected ConversationState conversationState;
 	
@@ -38,7 +40,7 @@ public class GameStateManager
 	public GameStateManager() 
 	{
 		pausestate = new PauseState(this);
-		helpstate = new HelpState(this);
+		helpstate = new OptionState(this);
 		
 		inventorystate = new InventoryState(this);
 		
@@ -204,5 +206,76 @@ public class GameStateManager
 	{
 		if(gameStates[currentState] != null)
 			gameStates[currentState].keyReleased(k);
-	}	
+	}
+	
+	
+	public void mouseClicked(MouseEvent mouse) 
+	{
+		try 
+		{
+			if(paused)
+			{
+				if(browsingInventory)
+				{
+					inventorystate.mouseClicked(mouse);
+				}
+				else				
+				{
+					pausestate.mouseClicked(mouse);
+				}
+				
+				if(options)
+				{
+					helpstate.mouseClicked(mouse);
+				}
+				return;
+			}
+			gameStates[currentState].mouseClicked(mouse);
+			
+			if(inConversation)
+			{
+				conversationState.mouseClicked(mouse);
+			}
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void mouseEntered(MouseEvent mouse) 
+	{
+		if(gameStates[currentState] != null)
+		{
+			gameStates[currentState].mouseEntered(mouse);
+		}
+	}
+
+	public void mouseExited(MouseEvent mouse) 
+	{
+		if(gameStates[currentState] != null)
+		{
+			gameStates[currentState].mouseExited(mouse);
+		}
+	}
+
+	public void mousePressed(MouseEvent mouse) 
+	{
+		if(gameStates[currentState] != null)
+		{
+			gameStates[currentState].mousePressed(mouse);
+		}
+	}
+
+	public void mouseReleased(MouseEvent mouse) 
+	{
+		if(gameStates[currentState] != null)
+		{
+			gameStates[currentState].mouseReleased(mouse);
+		}
+	}
+	
+	
+	
+	
+	
 }

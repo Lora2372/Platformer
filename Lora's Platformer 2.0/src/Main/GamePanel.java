@@ -18,7 +18,7 @@ public class GamePanel
 	public static int WIDTH = 1200;
 	public static int HEIGHT = 900;
 	
-	public static final String version = "0.1.055";
+	public static final String version = "0.1.055.1";
 		
 	// Game thread
 	private Thread thread;
@@ -45,6 +45,52 @@ public class GamePanel
 				);
 		setFocusable(true);
 		requestFocus();
+		
+	      addMouseListener(new MouseAdapter() 
+	      {
+	          
+	      	public void mouseClicked(MouseEvent mouse) 
+	    	{
+	      		if(gameStateManager != null && mouse != null)
+	      		{
+		    		gameStateManager.mouseClicked(mouse);
+	      		}
+
+	    	}
+
+	    	public void mouseEntered(MouseEvent mouse) 
+	    	{
+	    		if(gameStateManager != null && mouse != null)
+	    		{
+	    			gameStateManager.mouseEntered(mouse);
+	    		}
+	    		
+	    	}
+
+	    	public void mouseExited(MouseEvent mouse) 
+	    	{
+	    		if(gameStateManager != null && mouse != null)
+	    		{
+	    			gameStateManager.mouseExited(mouse);
+	    		}
+	    	}
+
+	    	public void mousePressed(MouseEvent mouse) 
+	    	{
+	    		if(gameStateManager != null && mouse != null)
+	    		{
+	    			gameStateManager.mousePressed(mouse);		
+	    		}
+	    	}
+
+	    	public void mouseReleased(MouseEvent mouse) 
+	    	{
+	    		if(gameStateManager != null && mouse != null)
+	    		{
+	    			gameStateManager.mouseReleased(mouse);
+	    		}
+	    	}
+	      }); 
 	}
 	
 	public void addNotify()
@@ -145,8 +191,10 @@ public class GamePanel
 	
 	public void keyTyped(KeyEvent key)
 	{
-		
+
 	}
+	
+	
 	
 	public void keyPressed(KeyEvent key)
 	{
@@ -156,6 +204,5 @@ public class GamePanel
 	public void keyReleased(KeyEvent key)
 	{
 		gameStateManager.keyReleased(key.getKeyCode());
-	}
-	
+	}	
 }

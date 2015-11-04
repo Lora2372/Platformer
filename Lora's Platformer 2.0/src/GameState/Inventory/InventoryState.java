@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+
 import Entity.Item.Item;
 import Entity.Player.Player;
 import GameState.GameState;
@@ -250,6 +252,32 @@ public class InventoryState extends GameState
 	}
 
 	public void keyReleased(int k) 
+	{
+		
+	}
+	
+	public void mouseClicked(MouseEvent mouse) 
+	{
+		
+	}
+
+
+	public void mouseEntered(MouseEvent mouse) 
+	{
+		
+	}
+
+	public void mouseExited(MouseEvent mouse) 
+	{
+		
+	}
+
+	public void mousePressed(MouseEvent mouse) 
+	{
+		
+	}
+
+	public void mouseReleased(MouseEvent mouse) 
 	{
 		
 	}
