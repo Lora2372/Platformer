@@ -121,7 +121,9 @@ public class LorasCavern extends MainMap
 		
 		LiadrinFirstEncounter liadrinFirstEncounter = new LiadrinFirstEncounter(tileMap, false, true, false, true, true, "Liadrin", 2680, 1800, this);
 		characterList.add(liadrinFirstEncounter);
-				
+		
+		spawnSkeleton(900,  2100,  true);
+		
 		spawnSign(
 				1357, 
 				2250, 

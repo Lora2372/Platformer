@@ -508,6 +508,13 @@ public class MainMap extends GameState
 		return wolf;
 	}
 	
+	public Skeleton spawnSkeleton(double locationX, double locationY, boolean facingRight)
+	{
+		Skeleton skeleton = new Skeleton(tileMap, facingRight, false, false, false, false, "Jesse Cox", locationX, locationY, this);
+		characterList.add(skeleton);
+		return skeleton;
+	}
+	
 	public void dropPotion(String potionType, int chance, int stacks, MapObject owner)
 	{
 		int oneToOneHundred = RNG(0, 100);

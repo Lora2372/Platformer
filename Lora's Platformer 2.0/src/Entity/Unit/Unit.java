@@ -146,6 +146,10 @@ public class Unit extends MapObject
 	
 	protected int magicShieldManaCost;
 	
+	
+	// Custom animation
+	protected boolean customAnimation;
+	
 	//  Animations 
 	protected ArrayList<BufferedImage[]> sprites;
 	protected int[] numFrames;
@@ -691,7 +695,10 @@ public class Unit extends MapObject
 		
 		// Set animations
 		
-		
+		if(customAnimation)
+		{
+			return;
+		}
 		//********************************************************************************
 		//*Sexy time 1!                                                                  *
 		//********************************************************************************	

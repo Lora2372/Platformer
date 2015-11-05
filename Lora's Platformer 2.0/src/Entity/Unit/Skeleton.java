@@ -1,16 +1,18 @@
 package Entity.Unit;
 
 import java.util.ArrayList;
-
 import GameState.MainMap;
 import TileMap.TileMap;
 
-public class Wolf extends Unit
+public class Skeleton extends Unit
 {
 	protected int cooldown;
 	protected int timer;
 	
-	public Wolf(
+	
+	protected int slice;
+	
+	public Skeleton(
 			TileMap tileMap,
 			boolean facingRight,
 			boolean friendly,
@@ -25,10 +27,10 @@ public class Wolf extends Unit
 	{
 		super(
 				tileMap,  															// TileMap
-				110, 	 															// Width
-				64, 	 															// Height
-				100, 	 															// Collision width
-				60, 	 															// Collision height
+				100, 	 															// Width
+				100, 	 															// Height
+				70, 	 															// Collision width
+				108, 	 															// Collision height
 				0.1, 	 															// Move speed
 				1.0, 	 															// Max speed
 				0.4, 	 															// stopSpeed
@@ -47,7 +49,7 @@ public class Wolf extends Unit
 				100,	 															// stamina
 				100, 	 															// maxStamina
 				0,		 															// staminaRegen
-				500,																// sightRange
+				100,																// sightRange
 				120,
 				0,	 	 															// punchCost
 				0, 		 															// punchDamage
@@ -64,10 +66,10 @@ public class Wolf extends Unit
 				70,																	// electricBallDamage
 				0,
 				0,
-				"/Art/Sprites/Characters/Wolf.png",									// spritePath
-				new int[] {0, 1, 2, 3, 4, 5, 4, 5, 4, 5, 4, 3, 2, 2},						// animationStates
-				new int[]{6, 6, 1, 1, 2, 3},												// numImages
-				new int[] { 200, 300, 200, 200, 300, 200, 300, 200, 300, 200, 300, 200, 500},
+				"/Art/Sprites/Characters/Skeleton.png",									// spritePath
+				new int[] {0, 0, 0, 0, 1, 2, 4, 5, 4, 5, 4, 3, 2, 2},						// animationStates
+				new int[]{6, 1, 3, 6, 4, 4},												// numImages
+				new int[] { 120, 120, 120, 120, 500, 120, 120, 120, 120, 120, 120, 120, 120},
 				0,																	// damageOnTouch
 				friendly,															// friendly			
 				untouchable,
@@ -82,6 +84,9 @@ public class Wolf extends Unit
 		
 		timer = 200;
 		cooldown = 200;
+		
+		slice = 0;
+		
 		
 //		portrait = Content.PortraitLiadrin[0];
 	}
@@ -103,10 +108,55 @@ public class Wolf extends Unit
 //		JukeBox.play("FionaPunch01");
 	}
 	
+	
+	public void update(ArrayList<Unit> characterList)
+	{
+		if(customAnimation)
+		{
+			if(slice == 0)
+			{
+				slice = mainMap.RNG(1,  1);
+				if(slice == 1)
+				{
+					inControl = false;
+					currentAction = animationState[4];
+					animation.setFrames(sprites.get(animationState[4]));
+					animation.setDelay(animationDelay[4]);
+					if(directionY == 0) directionX = 0;
+				}
+
+			}
+			else if(animation.hasPlayedOnce())
+			{
+				if(slice == 1)
+				{
+					// Play sound
+					currentAction = animationState[5];
+					animation.setFrames(sprites.get(animationState[5]));
+					animation.setDelay(animationDelay[5]);
+					slice = -1;
+				}
+				
+				else if(slice == -1)
+				{
+					if(animation.hasPlayedOnce())
+					{
+						inControl = true;
+						slice = 0;
+						customAnimation = false;
+					}
+				}
+			}
+			animation.update();
+		}
+		
+		super.update(characterList);
+	}
+	
 	public void updateAI(ArrayList<Unit> characterList)
 	{
 		
-		if(!inControl) return;
+		if(!inControl || falling) return;
 		
 		if(directionX == 0)
 		{
@@ -137,7 +187,7 @@ public class Wolf extends Unit
 				if(timer >= cooldown)
 				{
 					timer = 0;
-					setDashing(true);
+					customAnimation = true;
 				}
 			}
 		}

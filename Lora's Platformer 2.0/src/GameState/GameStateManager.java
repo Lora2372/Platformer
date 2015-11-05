@@ -150,9 +150,16 @@ public class GameStateManager
 				conversationState.update();
 			}
 			
-			gameStates[currentState].update();
+			if(gameStates[currentState] != null)
+			{
+				gameStates[currentState].update();
+			}
 			
-		} catch(Exception e) {}
+			
+		} catch(Exception e) 
+		{
+			e.printStackTrace();
+		}
 	}
 	
 	public void draw(java.awt.Graphics2D graphics) 
