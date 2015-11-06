@@ -3,7 +3,6 @@ package GameState;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import javax.swing.JOptionPane;
 import Entity.Player.*;
 import Main.GamePanel;
 import Main.JSONReader;
@@ -21,7 +20,7 @@ public class MenuState extends GameState
 			"Tutorial",
 			"New Game",
 			"Load Game",
-			"Help",
+			"Options",
 			"Quit"
 	};
 	
@@ -39,6 +38,7 @@ public class MenuState extends GameState
 	protected TileMap tileMap;
 	
 	protected Rectangle mouseRectangle;
+	protected Rectangle[] textRectangles = new Rectangle[options.length];
 	
 	public MenuState(GameStateManager gameStateManager, ConversationState conversationState)
 	{
@@ -116,8 +116,32 @@ public class MenuState extends GameState
 		
 		// Draw menu options
 		graphics.setFont(font);
+		mouseRectangle = new Rectangle(MouseInfo.getPointerInfo().getLocation().x, MouseInfo.getPointerInfo().getLocation().y, 1, 1);
+
 		for(int i = 0; i < options.length; i++)
 		{
+			
+			int textWidth = (int) graphics.getFontMetrics().getStringBounds(options[i], graphics).getWidth();
+			int textHeight = (int) graphics.getFontMetrics().getStringBounds(options[i], graphics).getHeight();
+			
+			int textLocationX = GamePanel.WIDTH / 2 - textWidth / 2;
+			int textLocationY = GamePanel.HEIGHT / 2 + i * textHeight;
+			
+			optionsWidth[i] = textWidth;
+			
+
+			textRectangles[i] = new Rectangle(
+					textLocationX, 
+					textLocationY, 
+					textWidth, 
+					textHeight
+				);
+			
+			if(textRectangles[i].intersects(mouseRectangle))
+			{
+				currentChoice = i;
+			}
+			
 			if( i == currentChoice)
 			{
 				graphics.setColor(Color.YELLOW);
@@ -126,10 +150,7 @@ public class MenuState extends GameState
 			{
 				graphics.setColor(Color.RED);
 			}
-			optionsWidth[i] = (int)graphics.getFontMetrics().stringWidth(options[i]);
-//			stringLength = (int)graphics.getFontMetrics().getStringBounds(options[i], graphics).getWidth();
-			textX = GamePanel.WIDTH / 2 - optionsWidth[i] / 2;
-			graphics.drawString(options[i], textX, GamePanel.HEIGHT / 2 + i * 30);
+			graphics.drawString(options[i], textLocationX, textLocationY);
 		}
 			
 	}
@@ -176,28 +197,8 @@ public class MenuState extends GameState
 		}
 		if(currentChoice == 3)
 		{
-			// Help
-			String message = "Disclaimer, the following help section is still under construction to be vastly improved in the hopefully near future...\n"
-					+ "\n"
-					+ "Greetings!\n"
-					+ "Don't have much information for you yet but the controls are currently:\n"
-					+ "Left arrow: Move left\n"
-					+ "Right arrow: Move right\n"
-					+ "Up arrow: Aim up\n"
-					+ "Down arrow: Aim down\n"
-					+ "Space: Jump\n"
-					+ "A: Small fireball\n"
-					+ "S: Large fireball\n"
-					+ "D: Dash attack\n"
-					+ "F: Punch attack\n"
-					+ "R: Gliding in the air, interacting with objects on the ground.\n"
-					+ "\n"
-					+ "Extra stuff:\n"
-					+ "O: Summon a succubus\n"
-					+ "P: Summon a slug\n"
-					+ "\n"
-					+ "Have fun!";
-			JOptionPane.showMessageDialog(null, message);
+			// Options
+			gameStateManager.options(true);
 		}
 		
 		if(currentChoice == 4)
@@ -241,9 +242,7 @@ public class MenuState extends GameState
 	{
 		for(int i = 0; i < options.length; i++)
 		{
-			Rectangle textRectangle = new Rectangle(GamePanel.WIDTH / 2 - options[i].length() / 2, GamePanel.HEIGHT / 2 + i * 30, optionsWidth[i], 30);
-			
-			if(textRectangle.intersects(mouseRectangle))
+			if(textRectangles[i].intersects(mouseRectangle))
 			{
 				select();
 			}

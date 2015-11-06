@@ -13,7 +13,7 @@ import TileMap.TileMap;
 public class GameStateManager 
 {
 	protected PauseState pausestate;
-	protected OptionState helpstate;
+	protected OptionState optionstate;
 	protected InventoryState inventorystate;
 	protected ConversationState conversationState;
 	
@@ -40,7 +40,7 @@ public class GameStateManager
 	public GameStateManager() 
 	{
 		pausestate = new PauseState(this);
-		helpstate = new OptionState(this);
+		optionstate = new OptionState(this);
 		
 		inventorystate = new InventoryState(this);
 		
@@ -65,7 +65,11 @@ public class GameStateManager
 	public boolean getBrowsingInventory() { return browsingInventory; }
 	public void pause(boolean b) { paused = b; }
 	public boolean getPaused() { return paused; }
-	public void options(boolean b) { options = b; }
+	public void options(boolean b)
+	{ 
+		options = b; 
+		System.out.println("options: " + options);
+	}
 	
 	public void setConversationState(boolean well)
 	{
@@ -141,7 +145,10 @@ public class GameStateManager
 				else
 					pausestate.update();
 				
-				if(options){ helpstate.update(); }
+				if(options)
+				{ 
+					optionstate.update(); 
+				}
 				return;
 			}
 			
@@ -173,7 +180,7 @@ public class GameStateManager
 				else				
 					pausestate.draw(graphics);
 				
-				if(options) helpstate.draw(graphics);
+				if(options) optionstate.draw(graphics);
 				return;
 			}
 			gameStates[currentState].draw(graphics);
@@ -196,7 +203,7 @@ public class GameStateManager
 			if
 				(!options)pausestate.keyPressed(k);
 			else 
-				helpstate.keyPressed(k);
+				optionstate.keyPressed(k);
 			
 			return;		
 		}
@@ -233,7 +240,7 @@ public class GameStateManager
 				
 				if(options)
 				{
-					helpstate.mouseClicked(mouse);
+					optionstate.mouseClicked(mouse);
 				}
 				return;
 			}
