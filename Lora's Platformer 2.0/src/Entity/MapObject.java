@@ -472,7 +472,7 @@ public abstract class MapObject
 	}
 	
 	
-	// Since there is no point in drawing objects that are not on the scren, this
+	// Since there is no point in drawing objects that are not on the screen, this
 	// function will determine whether they even are on the screen.
 	public Boolean notOnScreen()
 	{

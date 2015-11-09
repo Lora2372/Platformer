@@ -74,19 +74,7 @@ public class MenuState extends GameState
 	}
 	
 	public void update()
-	{
-		mouseRectangle = new Rectangle(MouseInfo.getPointerInfo().getLocation().x, MouseInfo.getPointerInfo().getLocation().y, 1, 1);
-		
-		for(int i = 0; i < options.length; i++)
-		{
-			Rectangle textRectangle = new Rectangle(GamePanel.WIDTH / 2 - options[i].length() / 2, GamePanel.HEIGHT / 2 + i * 30, optionsWidth[i], 30);
-			
-			if(textRectangle.intersects(mouseRectangle))
-			{
-				currentChoice = i;
-			}
-		}
-		
+	{		
 		backGround.update();
 	}
 	

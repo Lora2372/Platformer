@@ -1,8 +1,12 @@
 package Entity.Player;
 
+import java.awt.AWTException;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.MouseInfo;
+import java.awt.Rectangle;
+import java.awt.Robot;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -34,7 +38,7 @@ public class ConversationState  extends GameState
 	private double locationX;
 	private double locationY;
 	
-	private BufferedImage[] sprites;
+	private BufferedImage[] conversationGUI;
 	
 	private boolean conversationLocked;
 	
@@ -51,12 +55,15 @@ public class ConversationState  extends GameState
 	
 	protected boolean choiceRequested;
 	
+	protected Rectangle mouseRectangle;
+	protected Rectangle conversationRectangle;
+	
 	public ConversationState(GameStateManager gameStateManager)
 	{
 		
 		this.gameStateManager = gameStateManager;
 		
-		sprites = Content.ConversationGUI[0];
+		conversationGUI = Content.ConversationGUI[0];
 		endConversation = Content.ConversationGUIEndConversation[0];
 		
 		endConversationString = "End conversation";
@@ -66,7 +73,12 @@ public class ConversationState  extends GameState
 		locationX = GamePanel.WIDTH / 3;
 		locationY = GamePanel.HEIGHT - 138;
 		
-		
+		conversationRectangle = new Rectangle(
+				(int)locationX,
+				(int)locationY,
+				conversationBoxWidth,
+				conversationBoxHeight
+				);
 		
 	}
 	
@@ -163,7 +175,7 @@ public class ConversationState  extends GameState
 	public void draw(Graphics2D graphics)
 	{
 		graphics.drawImage(
-				sprites[0],
+				conversationGUI[0],
 				(int) (locationX),
 				(int) (locationY),
 				null
@@ -223,16 +235,17 @@ public class ConversationState  extends GameState
 		String[] myString = conversation[conversationTracker].split(" ");
 		int tempX = 0;
 		int line = 0;
-		
+
 		graphics.setColor(Color.WHITE);
 		
 		int tempChoiceAmount = 0;
 		ArrayList<Integer> tempChoiceRows = new ArrayList<Integer>();
-		
+
+		mouseRectangle = new Rectangle(MouseInfo.getPointerInfo().getLocation().x, MouseInfo.getPointerInfo().getLocation().y, 1, 1);
+
 		for(int i = 0; i < myString.length; i++)
 		{
 			int tempInt = graphics.getFontMetrics().stringWidth(myString[i]);
-			
 			
 			if( (tempX + tempInt > conversationBoxWidth -40) || myString[i].equals("\n"))
 			{
@@ -241,9 +254,29 @@ public class ConversationState  extends GameState
 				tempX = 0;
 				
 			}
+			
+			int textLocationX = (int)locationX + 21 + tempX;
+			int textLocationY = (int)locationY + 70 + 20 * line;
+			
+			int textWidth = (textLocationX - (int)locationX) + conversationBoxWidth - 40;
+			int textHeight = (int) graphics.getFontMetrics().getStringBounds(myString[i], graphics).getHeight();
+				
+			
 			if(myString[i].equals("-"))
 			{
 				tempChoiceAmount++;
+				
+				Rectangle textRectangle = new Rectangle(
+						textLocationX,
+						textLocationY + 10,
+						textWidth,
+						textHeight						
+						);
+				
+				if(mouseRectangle.intersects(textRectangle))
+				{
+					choiceSelected = tempChoiceAmount;
+				}
 				
 				if(choiceSelected == tempChoiceAmount)
 				{
@@ -253,14 +286,12 @@ public class ConversationState  extends GameState
 				{
 					graphics.setColor(Color.RED);
 				}
-
-
 				tempChoiceRows.add(line);
 				choiceRequested = true;
 
 			}
 			
-			graphics.drawString(myString[i], (int)locationX + 21 + tempX, (int)locationY + 70 + 20 * line);
+			graphics.drawString(myString[i], textLocationX, textLocationY);
 			
 			tempX += tempInt + 3;
 		}
@@ -326,7 +357,20 @@ public class ConversationState  extends GameState
 	
 	public void mouseClicked(MouseEvent mouse) 
 	{
-		
+		if(conversationRectangle.intersects(mouseRectangle))
+		{
+			Robot myRobot;
+			try 
+			{
+				myRobot = new Robot();
+				myRobot.keyPress(KeyEvent.VK_E);
+				myRobot.keyRelease(KeyEvent.VK_E);
+			} catch (AWTException e) 
+			{
+				e.printStackTrace();
+			}
+
+		}
 	}
 
 

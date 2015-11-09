@@ -17,6 +17,7 @@ import Entity.Projectile.FireBallSmall;
 import Entity.Projectile.Projectile;
 import GameState.MainMap;
 import Main.Content;
+import Main.GamePanel;
 import TileMap.TileMap;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -352,7 +353,7 @@ public class Unit extends MapObject
 	
 	public void calculateAim(Unit character)
 	{
-		
+
 		double tempX = locationX;
 		double tempY = locationY;
 		
@@ -378,6 +379,16 @@ public class Unit extends MapObject
 		{
 			tempX = character.locationX;
 			tempY = character.locationY;			
+		}
+		
+		if(player)
+		{
+			tempX = MouseInfo.getPointerInfo().getLocation().getX() + locationX - GamePanel.WIDTH / 2;
+			tempY = MouseInfo.getPointerInfo().getLocation().getY() + locationY - GamePanel.HEIGHT / 2;
+			
+			
+			System.out.println("tempX: " + tempX);
+			System.out.println("tempY: " + tempY);
 		}
 		
 		aim = Math.atan2(tempY - locationY, tempX - locationX);
@@ -568,6 +579,7 @@ public class Unit extends MapObject
 	public int getPunchRange() { return punchRange; }
 	
 	public boolean getFacingRight() { return facingRight; }
+	public void setFacingRight(boolean well) { facingRight = well; }
 	
 	public boolean getFriendly() { return friendly; }
 

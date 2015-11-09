@@ -3,6 +3,8 @@ package GameState;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.MouseInfo;
+
 import Main.GamePanel;
 import TileMap.*;
 import Entity.Explosion.Explosion;
@@ -36,6 +38,12 @@ public class MainMap extends GameState
 	protected ArrayList<Projectile> projectiles;
 	protected ArrayList<Explosion> explosions;
 	protected boolean doneInitializing;
+	
+	
+	protected double mouseLocationX;
+	protected double mouseLocationY;
+	
+	protected boolean mousePressed;
 	
 	protected ConversationState conversationState;
 	
@@ -186,7 +194,15 @@ public class MainMap extends GameState
 	{
 		if(!doneInitializing) return;
 		// Update Characters
+		mouseLocationX = MouseInfo.getPointerInfo().getLocation().getX();
+		mouseLocationY = MouseInfo.getPointerInfo().getLocation().getY();
 		
+		if(mousePressed)
+		{
+			player.setFacingRight(mouseLocationX > (GamePanel.WIDTH / 2));
+			player.setRight(player.getFacingRight());
+			player.setLeft(!player.getFacingRight());
+		}
 
 		
 		if(gameover)
@@ -799,11 +815,13 @@ public class MainMap extends GameState
 
 	public void mousePressed(MouseEvent mouse) 
 	{
-		
+		mousePressed = true;
 	}
 
 	public void mouseReleased(MouseEvent mouse) 
 	{
-		
+		mousePressed = false;
+		player.setRight(false);
+		player.setLeft(false);
 	}
 }
