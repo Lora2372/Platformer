@@ -1,14 +1,14 @@
 package GameState.Options;
 
-import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.MouseInfo;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
 import Entity.Player.Player;
 import GameState.GameState;
 import GameState.GameStateManager;
@@ -29,16 +29,54 @@ public class OptionState extends GameState implements ChangeListener
 	
 	protected ArrayList<OptionObject> optionObjects;
 	
+	protected OptionObject goBack;
+	
 	public OptionState(GameStateManager gameStateManager, GamePanel gamePanel)
 	{
 		this.gameStateManager = gameStateManager;
 		this.gamePanel = gamePanel;
 		
 		optionObjects = new ArrayList<OptionObject>();
-		OptionObject useMouse = new OptionObject(200, 200, 50, 50, 1, 0, 1, new String[] { "Aim with mouse"});
+		ToggleObject useMouse = new ToggleObject
+			(
+					200, 
+					200, 
+					50, 
+					50, 
+					2, 
+					1, 
+					1, 
+					new String[] 
+						{ 
+							"Aim with mouse",
+							"Aim with arrow keys"
+						}, 
+					new BufferedImage[] 
+						{ 
+							Content.OptionConfirm[0][0], 
+							Content.OptionDeny[0][0] 
+						}
+			);
 		optionObjects.add(useMouse);
 		
-		OptionObject goBack = new OptionObject(200, 400, 100, 50, 1, 0, 1, new String[] { "Go back" } );
+		goBack = new OptionObject
+			(
+				200, 
+				400, 
+				100, 
+				50, 
+				1, 
+				1, 
+				1, 
+				new String[] 
+				{ 
+					"Go back" 
+				},
+				new BufferedImage[]
+					{
+						
+					}
+			);
 		optionObjects.add(goBack);
 		
 		try
@@ -85,38 +123,57 @@ public class OptionState extends GameState implements ChangeListener
 		{
 			try
 			{
-				double locationX = optionObjects.get(i).getLocationX();
-				double locationY = optionObjects.get(i).getLocationY();
+				OptionObject optionObject = optionObjects.get(i);
+				graphics.setFont(new Font("Arial", Font.PLAIN, 14));
+				
+				double stringWidth;
+				
+				double locationX;
+				double locationY;
 				
 				
+				if(optionObject.getText() != null)
+				{
+					stringWidth = (int)graphics.getFontMetrics().getStringBounds(optionObject.getText(), graphics).getWidth();
+					locationX = optionObject.getLocationX() - stringWidth;
+					locationY = optionObject.getLocationY();
+					graphics.drawString(optionObject.getText(), (int)locationX, (int)locationY);
+				}
 				
-				graphics.drawString(optionObjects.get(i).getText()[0], (int)locationX, (int)locationY);
-				graphics.drawImage
-				(
-					Content.OptionConfirm[0][0],
-					(int)locationX,
-					(int)locationY,
-					optionObjects.get(i).getWidth(),
-					optionObjects.get(i).getHeight(),
-					null
-					
-				);
-				
-				
-				graphics.setColor(optionObjects.get(i).getColor());
-				graphics.fillRect
-				(
-						(int)optionObjects.get(i).getLocationX(),
-						(int)optionObjects.get(i).getLocationY(),
-						optionObjects.get(i).getWidth(),
-						optionObjects.get(i).getHeight()
-				);
+				if(optionObject.getImage() != null)
+				{
+					graphics.drawImage
+					(
+						optionObject.getImage(),
+						(int)optionObject.getLocationX(),
+						(int)optionObject.getLocationY() - optionObject.getHeight() / 2,
+						optionObject.getWidth(),
+						optionObject.getHeight(),
+						null
+						
+					);
+				}
+				else
+				{
+					graphics.setColor(optionObject.getColor());
+					graphics.fillRect
+					(
+							optionObject.getRectangle().x,
+							optionObject.getRectangle().y  - optionObject.getRectangle().height / 2,
+							optionObject.getRectangle().width,
+							optionObject.getRectangle().height
+							
+					);
+				}
+
+
 				
 				}
-				catch(NullPointerException exception)
+				catch(Exception exception)
 				{
 					exception.printStackTrace();
 				}
+			
 		}
 		
 		
@@ -147,24 +204,13 @@ public class OptionState extends GameState implements ChangeListener
 		{
 			if(mouseRectangle.intersects(optionObjects.get(i).getRectangle()))
 			{
-				System.out.println("Intersecting the click!");
-				if(i == 0)
-				{
-					player.setUsingMouse(!player.getUsingMouse());
-					
-					if(player.getUsingMouse())
-					{
-						optionObjects.get(i).setColor(Color.BLUE);
-					}
-					else
-					{
-						optionObjects.get(i).setColor(Color.RED);
-					}
-				}
-				else
+				if(optionObjects.get(i) == goBack)
 				{
 					gameStateManager.options(false);
+					return;
 				}
+				System.out.println("Intersecting the click!");
+				optionObjects.get(i).click();
 			}
 		}	
 	}
