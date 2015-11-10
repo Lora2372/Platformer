@@ -3,11 +3,10 @@ package GameState;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.MouseInfo;
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-
-import javax.swing.JOptionPane;
-
 import Main.GamePanel;
 import TileMap.Background;
 
@@ -19,15 +18,20 @@ public class PauseState extends GameState
 	private String[] options =
 		{
 			"Resume",
-			"Help",
+			"Options",
 			"Return to title screen",
 			"Quit"
 		};
+	
+	private int[] optionsWidth = new int[options.length]; 
 	
 	private String title = "Game paused";
 	private Color titleColor;
 	private Font titleFont;
 	private Font font;
+	
+	protected Rectangle mouseRectangle;
+	protected Rectangle[] textRectangles = new Rectangle[options.length];
 	
 	public PauseState(GameStateManager gameStateManager)
 	{
@@ -73,8 +77,31 @@ public class PauseState extends GameState
 		graphics.drawString(title, textX, GamePanel.HEIGHT / 5);
 		
 		graphics.setFont(font);
+		mouseRectangle = new Rectangle(MouseInfo.getPointerInfo().getLocation().x, MouseInfo.getPointerInfo().getLocation().y, 1, 1);
+
 		for(int i = 0; i < options.length; i++)
 		{
+			int textWidth = (int) graphics.getFontMetrics().getStringBounds(options[i], graphics).getWidth();
+			int textHeight = (int) graphics.getFontMetrics().getStringBounds(options[i], graphics).getHeight();
+			
+			int textLocationX = GamePanel.WIDTH / 2 - textWidth / 2;
+			int textLocationY = GamePanel.HEIGHT / 2 + i * textHeight;
+			
+			optionsWidth[i] = textWidth;
+			
+
+			textRectangles[i] = new Rectangle(
+					textLocationX, 
+					textLocationY, 
+					textWidth, 
+					textHeight
+				);
+			
+			if(textRectangles[i].intersects(mouseRectangle))
+			{
+				currentChoice = i;
+			}
+			
 			if(i == currentChoice)
 			{
 				graphics.setColor(Color.YELLOW);
@@ -99,28 +126,7 @@ public class PauseState extends GameState
 		}
 		if(currentChoice == 1)
 		{
-//			gameStateManager.options(true);
-			String message = "Disclaimer, the following help section is still under construction to be vastly improved in the hopefully near future...\n"
-					+ "\n"
-					+ "Greetings!\n"
-					+ "Don't have much information for you yet but the controls are currently:\n"
-					+ "Left arrow: Move left\n"
-					+ "Right arrow: Move right\n"
-					+ "Up arrow: Aim up\n"
-					+ "Down arrow: Aim down\n"
-					+ "Space: Jump\n"
-					+ "A: Small fireball\n"
-					+ "S: Large fireball\n"
-					+ "D: Dash attack\n"
-					+ "F: Punch attack\n"
-					+ "E: Gliding in the air, interacting with objects on the ground.\n"
-					+ "\n"
-					+ "Extra stuff:\n"
-					+ "O: Summon a succubus\n"
-					+ "P: Summon a slug\n"
-					+ "\n"
-					+ "Have fun!";
-			JOptionPane.showMessageDialog(null, message);
+			gameStateManager.options(true);
 		}
 		if(currentChoice == 2)
 		{
@@ -172,7 +178,13 @@ public class PauseState extends GameState
 	
 	public void mouseClicked(MouseEvent mouse) 
 	{
-		
+		for(int i = 0; i < options.length; i++)
+		{
+			if(textRectangles[i].intersects(mouseRectangle))
+			{
+				select();
+			}
+		}
 	}
 
 

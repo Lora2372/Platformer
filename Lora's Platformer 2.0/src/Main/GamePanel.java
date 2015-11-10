@@ -5,6 +5,8 @@ import java.awt.*;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import GameState.GameStateManager;
+import TileMap.Background;
+
 import java.awt.event.*;
 import java.io.IOException;
 
@@ -18,7 +20,7 @@ public class GamePanel
 	public static int WIDTH = 1200;
 	public static int HEIGHT = 900;
 	
-	public static final String version = "0.1.056";
+	public static final String version = "0.1.056.1";
 		
 	// Game thread
 	private Thread thread;
@@ -29,6 +31,8 @@ public class GamePanel
 	// Image
 	private BufferedImage image;
 	private Graphics2D graphics;
+	
+	private Background background;
 	
 	// Game state manager
 	private GameStateManager gameStateManager;
@@ -45,6 +49,17 @@ public class GamePanel
 				);
 		setFocusable(true);
 		requestFocus();
+		
+		try
+		{
+			background = new Background(getClass().getResource("/Art/HUD/Foregrounds/ScreenPaused.png"), 0);
+			background.setVector(0, 0);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
 		
 	      addMouseListener(new MouseAdapter() 
 	      {
@@ -116,7 +131,7 @@ public class GamePanel
 		drawToScreen();
 		Content.loadContent();
 		running = true;
-		gameStateManager = new GameStateManager();
+		gameStateManager = new GameStateManager(this);
 
 		
 		long start;

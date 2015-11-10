@@ -7,7 +7,9 @@ import Entity.Player.ConversationState;
 import Entity.Player.Player;
 import GameState.Inventory.InventoryState;
 import GameState.Maps.*;
+import GameState.Options.OptionState;
 import Main.Content;
+import Main.GamePanel;
 import TileMap.TileMap;
 
 public class GameStateManager 
@@ -37,10 +39,10 @@ public class GameStateManager
 	protected Player player;
 	protected TileMap tileMap;
 	
-	public GameStateManager() 
+	public GameStateManager(GamePanel gamePanel) 
 	{
 		pausestate = new PauseState(this);
-		optionstate = new OptionState(this);
+		optionstate = new OptionState(this, gamePanel);
 		
 		inventorystate = new InventoryState(this);
 		
@@ -55,6 +57,7 @@ public class GameStateManager
 	public void setPlayer(Player player) 
 	{ 
 		this.player = player; 
+		optionstate.setPlayer(player);
 		inventorystate.initialize(player);
 		conversationState.initialize(player);
 	}
@@ -65,10 +68,11 @@ public class GameStateManager
 	public boolean getBrowsingInventory() { return browsingInventory; }
 	public void pause(boolean b) { paused = b; }
 	public boolean getPaused() { return paused; }
-	public void options(boolean b)
+	public void options(boolean well)
 	{ 
-		options = b; 
+		options = well; 
 		System.out.println("options: " + options);
+		optionstate.load(well);
 	}
 	
 	public void setConversationState(boolean well)
@@ -138,6 +142,13 @@ public class GameStateManager
 	public void update() 
 	{
 		try {
+			
+			if(options)
+			{
+				optionstate.update();
+				return;
+			}
+			
 			if(paused)
 			{
 				if(browsingInventory)
@@ -145,12 +156,10 @@ public class GameStateManager
 				else
 					pausestate.update();
 				
-				if(options)
-				{ 
-					optionstate.update(); 
-				}
 				return;
 			}
+			
+
 			
 			if(inConversation)
 			{
@@ -173,6 +182,13 @@ public class GameStateManager
 	{
 		try 
 		{
+			
+			if(options)
+			{
+				optionstate.draw(graphics);
+				return;
+			}
+			
 			if(paused)
 			{
 				if(browsingInventory)
@@ -180,7 +196,6 @@ public class GameStateManager
 				else				
 					pausestate.draw(graphics);
 				
-				if(options) optionstate.draw(graphics);
 				return;
 			}
 			gameStates[currentState].draw(graphics);
@@ -227,6 +242,12 @@ public class GameStateManager
 	{
 		try 
 		{
+			if(options)
+			{
+				optionstate.mouseClicked(mouse);
+				return;
+			}
+			
 			if(paused)
 			{
 				if(browsingInventory)
@@ -238,10 +259,7 @@ public class GameStateManager
 					pausestate.mouseClicked(mouse);
 				}
 				
-				if(options)
-				{
-					optionstate.mouseClicked(mouse);
-				}
+
 				return;
 			}
 			gameStates[currentState].mouseClicked(mouse);

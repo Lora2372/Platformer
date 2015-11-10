@@ -1,10 +1,12 @@
 package Entity.Player;
 
 
+import java.awt.MouseInfo;
 import java.util.Random;
 
 import Audio.JukeBox;
 import Entity.Unit.Unit;
+import Main.GamePanel;
 import TileMap.TileMap;
 
 public class Player extends Unit
@@ -19,7 +21,8 @@ public class Player extends Unit
 	protected HUD hud;
 	
 	protected boolean loaded = false;
-		
+	protected boolean usingMouse;
+	
 //	protected ArrayList<Projectile> a
 	
 	public enum soundTypes { Attack, Hurt, Jump , Loot, CannotOpen}
@@ -126,8 +129,61 @@ public class Player extends Unit
 	public boolean getLoaded() { return loaded; }
 	public void setLoaded(boolean loaded) { this.loaded = loaded; }
 	
+	public boolean getUsingMouse() { return usingMouse; }
+	public void setUsingMouse(boolean well) { usingMouse = well; }
 	
 	public HUD getHUD() { return hud; }
+	
+	
+	public void calculateAim(Unit character)
+	{
+		double tempX;
+		double tempY;
+		
+		if(!usingMouse)
+		{
+			tempX = locationX;
+			tempY = locationY;
+		
+			if(character == null)
+			{
+				if(facingRight)
+				{
+					tempX += 50;
+					if(up)
+						tempY -= 25;
+					else if(down)
+						tempY += 25;					
+				}
+				else
+				{
+					tempX -= 50;
+					if(up)
+						tempY -= 25;
+					else if(down)
+						tempY += 25;		
+				}
+			}
+			else
+			{
+				tempX = character.getLocationX();
+				tempY = character.getLocationY();			
+			}
+			
+			}
+			else
+			{
+				tempX = MouseInfo.getPointerInfo().getLocation().getX() + locationX - GamePanel.WIDTH / 2;
+				tempY = MouseInfo.getPointerInfo().getLocation().getY() + locationY - GamePanel.HEIGHT / 2;
+				
+				
+				System.out.println("tempX: " + tempX);
+				System.out.println("tempY: " + tempY);
+			}
+			
+			aim = Math.atan2(tempY - locationY, tempX - locationX);
+	}
+	
 	
 	public void iAmHit()
 	{

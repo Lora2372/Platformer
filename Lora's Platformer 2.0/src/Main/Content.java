@@ -82,6 +82,9 @@ public class Content
 	public static BufferedImage[][] ConversationGUIEndConversation = load("/Art/HUD/Foregrounds/ConversationGUIEndConversation.png", 206, 35);
 	public static BufferedImage[][] InventorySquare			= load("/Art/HUD/Foregrounds/InventorySquare.png", 60, 60);
 	public static BufferedImage[][] InventoryBackground		= load("/Art/HUD/Foregrounds/InventoryBackground.png", 424, 348);
+	public static BufferedImage[][] OptionConfirm			= load("/Art/HUD/Foregrounds/OptionConfirm.png", 60, 60);
+	public static BufferedImage[][] OptionDeny				= load("/Art/HUD/Foregrounds/OptionDecline.png", 60, 60);
+	
 	
 	// Portraits
 	public static BufferedImage[][] PortraitPlayer			=load("/Art/HUD/Portraits/PortraitPlayer.png", 94, 94);
