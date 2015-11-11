@@ -53,7 +53,7 @@ public class Content
 	public static BufferedImage[][] ChestRareOpened 		= load("/Art/Sprites/Doodads/ChestRareOpened.png", 60, 60);
 	public static BufferedImage[][] CaveEntrance			= load("/Art/Sprites/Doodads/CaveEntrance.png", 100, 96);
 	public static BufferedImage[][] Shrine					= load("/Art/Sprites/Doodads/Shrine.png", 146, 156);
-	public static BufferedImage[][] StatueSave				= load("/Art/Sprites/Doodads/StatueSave.png", 48, 100);
+	public static BufferedImage[][] StatueSave				= load("/Art/Sprites/Doodads/StatueSave.png", 157, 149);
 	public static BufferedImage[][] KeyUncommon				= load("/Art/Sprites/Doodads/KeyUncommon.png", 120, 120); 
 	public static BufferedImage[][] KeyRare					= load("/Art/Sprites/Doodads/KeyRare.png", 120, 120); 
 	public static BufferedImage[][] KeyBoss					= load("/Art/Sprites/Doodads/KeyBoss.png", 120, 120); 
@@ -70,6 +70,12 @@ public class Content
 	public static BufferedImage[][] DoorVillageSquareOpening = load("/Art/Sprites/Doodads/DoorVillageSquareOpening.png", 120, 120);
 	public static BufferedImage[][] DoorVillageSquareOpened = load("/Art/Sprites/Doodads/DoorVillageSquareOpened.png", 120, 120);
 	public static BufferedImage[][] CampFire				= load("/Art/Sprites/Doodads/CampFire.png", 64, 64);
+	public static BufferedImage[][] LeverOpened				= load("/Art/Sprites/Doodads/LeverOpened.png", 26, 29);
+	public static BufferedImage[][] LeverClosed				= load("/Art/Sprites/Doodads/LeverClosed.png", 26, 29);
+	public static BufferedImage[][] LeverOpening				= load("/Art/Sprites/Doodads/LeverOpening.png", 26, 29);
+	public static BufferedImage[][] LeverClosing				= load("/Art/Sprites/Doodads/LeverClosing.png", 26, 29);
+	
+	
 	
 	//Effects
 	public static BufferedImage[][] Teleport 				= load("/Art/Sprites/Effects/Teleport.png", 192, 192);
@@ -84,6 +90,7 @@ public class Content
 	public static BufferedImage[][] InventoryBackground		= load("/Art/HUD/Foregrounds/InventoryBackground.png", 424, 348);
 	public static BufferedImage[][] OptionConfirm			= load("/Art/HUD/Foregrounds/OptionConfirm.png", 60, 60);
 	public static BufferedImage[][] OptionDeny				= load("/Art/HUD/Foregrounds/OptionDecline.png", 60, 60);
+	public static BufferedImage[][] OptionBackground		= load("/Art/HUD/Foregrounds/OptionBackground.png", 424, 348);
 	
 	
 	// Portraits

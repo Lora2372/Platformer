@@ -39,7 +39,7 @@ public class OptionState extends GameState implements ChangeListener
 		optionObjects = new ArrayList<OptionObject>();
 		ToggleObject useMouse = new ToggleObject
 			(
-					200, 
+					400, 
 					200, 
 					50, 
 					50, 
@@ -53,16 +53,18 @@ public class OptionState extends GameState implements ChangeListener
 						}, 
 					new BufferedImage[] 
 						{ 
-							Content.OptionConfirm[0][0], 
-							Content.OptionDeny[0][0] 
-						}
+							Content.LeverOpened[0][0], 
+							Content.LeverClosed[0][0] 
+						},
+						"Mouse",
+						player
 			);
 		optionObjects.add(useMouse);
 		
 		goBack = new OptionObject
 			(
-				200, 
-				400, 
+				GamePanel.WIDTH - 200, 
+				GamePanel.HEIGHT - 200, 
 				100, 
 				50, 
 				1, 
@@ -70,29 +72,26 @@ public class OptionState extends GameState implements ChangeListener
 				1, 
 				new String[] 
 				{ 
-					"Go back" 
 				},
 				new BufferedImage[]
 					{
 						
-					}
+					},
+				"Back"
 			);
 		optionObjects.add(goBack);
 		
-		try
-		{
-			background = new Background(getClass().getResource("/Art/HUD/Foregrounds/ScreenPaused.png"), 0);
-			background.setVector(0, 0);
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		}
+
 	}
 	
 	public void setPlayer(Player player)
 	{
 		this.player = player;
+		for(int i = 0; i < optionObjects.size(); i++)
+		{
+			optionObjects.get(i).setPlayer(player);
+		}
+		
 	}
 	
 	public void initialize() 
@@ -118,7 +117,17 @@ public class OptionState extends GameState implements ChangeListener
 
 	public void draw(Graphics2D graphics) 
 	{
-		background.draw(graphics);
+		
+		graphics.drawImage
+		(
+			Content.OptionBackground[0][0],
+			0,
+			0,
+			GamePanel.WIDTH,
+			GamePanel.HEIGHT,
+			null
+		);
+		
 		for(int i = 0; i < optionObjects.size(); i++)
 		{
 			try
@@ -126,16 +135,13 @@ public class OptionState extends GameState implements ChangeListener
 				OptionObject optionObject = optionObjects.get(i);
 				graphics.setFont(new Font("Arial", Font.PLAIN, 14));
 				
-				double stringWidth;
-				
 				double locationX;
 				double locationY;
 				
 				
 				if(optionObject.getText() != null)
 				{
-					stringWidth = (int)graphics.getFontMetrics().getStringBounds(optionObject.getText(), graphics).getWidth();
-					locationX = optionObject.getLocationX() - stringWidth;
+					locationX = optionObject.getLocationX() - 300;
 					locationY = optionObject.getLocationY();
 					graphics.drawString(optionObject.getText(), (int)locationX, (int)locationY);
 				}
@@ -209,7 +215,6 @@ public class OptionState extends GameState implements ChangeListener
 					gameStateManager.options(false);
 					return;
 				}
-				System.out.println("Intersecting the click!");
 				optionObjects.get(i).click();
 			}
 		}	

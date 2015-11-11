@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
+import Entity.Player.Player;
+
 public class OptionObject 
 {
 	
@@ -35,14 +37,15 @@ public class OptionObject
 			int minStates, 
 			int currentState, 
 			String[] text,
-			BufferedImage[] images
+			BufferedImage[] images,
+			String name
 		)
 	{
 		this.locationX = locationX;
 		this.locationY = locationY;
 		this.width = width;
 		this.height = height;
-		this.color = Color.RED;
+		this.color = Color.white;
 		this.maxStates = maxStates;
 		this.minStates = minStates;
 		this.currentState = currentState;
@@ -72,6 +75,11 @@ public class OptionObject
 	public Color getColor() { return color; }
 	
 	public int getCurrentState() { return currentState; }
+	
+	public void setPlayer(Player player)
+	{
+		
+	}
 	
 	public String getText() 
 	{ 

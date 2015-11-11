@@ -2,9 +2,13 @@ package GameState.Options;
 
 import java.awt.image.BufferedImage;
 
+import Entity.Player.Player;
+
 public class ToggleObject extends OptionObject
 {
-
+	protected String name;
+	protected Player player;
+	
 	public ToggleObject
 		(
 			double locationX,
@@ -15,23 +19,39 @@ public class ToggleObject extends OptionObject
 			int minStates,
 			int currentState, 
 			String[] text,
-			BufferedImage[] images
+			BufferedImage[] images,
+			String name,
+			Player player
 		) 
 	{
-
-		super(locationX, locationY, width, height, maxStates, minStates, currentState, text, images);
+		super(locationX, locationY, width, height, maxStates, minStates, currentState, text, images, name);
+	
+		this.name = name;
+	
 	}
 
+	public void setPlayer(Player player)
+	{
+		this.player = player;
+	}
 	
 	public void click()
 	{
 		if(currentState == 1)
 		{
+			if(name.equals("Mouse"))
+			{
+				player.setUsingMouse(false);
+			}
 			currentState = 2;
 		}
 		else
 		{
 			currentState = 1;
+			if(name.equals("Mouse"))
+			{
+				player.setUsingMouse(true);
+			}
 		}
 	}
 	
