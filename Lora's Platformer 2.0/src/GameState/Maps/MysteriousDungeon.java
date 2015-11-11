@@ -85,12 +85,12 @@ public class MysteriousDungeon extends MainMap
 		spawnStatueSave(250, 780);
 		
 		Chest chest = spawnChest(800, 850, false, "Common");
-		dropPotion(CreateItem.Potions.PotionHealing.toString(), 100, 1, chest);
+		dropPotion(CreateItem.Potions.Mana.toString(), 100, 1, chest);
 		
 		spawnSign(400, 810, conversation.mysteriousDungeonDirectionMessage, conversation.mysteriousDungeonDirectionMessageWhoTalks);
 		
 		chest = spawnChest(3262, 1620, false, "Common");
-		dropPotion(CreateItem.Potions.PotionHealing.toString(), 100, 1, chest);
+		dropPotion(CreateItem.Potions.Stamina.toString(), 100, 1, chest);
 		
 		Succubus succubus = spawnSuccubus(500, 1550, true);
 		dropPotion("Any", 25, 1, succubus);

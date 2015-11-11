@@ -55,6 +55,8 @@ public class ConversationState  extends GameState
 	
 	protected boolean choiceRequested;
 	
+	protected boolean conversationOver;
+	
 	protected Rectangle mouseRectangle;
 	protected Rectangle conversationRectangle;
 	
@@ -109,6 +111,8 @@ public class ConversationState  extends GameState
 		player.inControl(false);
 		player.invulnerable(true);
 		
+		conversationOver = false;
+		
 		if(newSign != null) sign = newSign;
 		
 		if(otherPerson != null)
@@ -153,6 +157,11 @@ public class ConversationState  extends GameState
 		conversationTracker++;
 		choiceMade = choiceSelected;
 		
+		if(conversationTracker >= conversation.length)
+		{
+			conversationOver = true;
+		}
+		
 	}
 	
 	public int getConversationTracker()
@@ -169,6 +178,8 @@ public class ConversationState  extends GameState
 	{
 		return choiceMade;
 	}
+	
+	public boolean getConversationOver() { return conversationOver; }
 	
 
 	

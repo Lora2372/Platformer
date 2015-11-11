@@ -35,23 +35,24 @@ public class Potion extends Item
 				true, 
 				stacks, 
 				true, 
-				potionType
-				
+				potionType,
+				CreateItem.getDescriptionName(potionType.toString()),
+				CreateItem.getDescription(potionType.toString())
 				);
 
 	}
 	
 	public void setItem()
 	{
-		if(itemType.equals(CreateItem.Potions.PotionHealing.toString()))
+		if(itemType.equals(CreateItem.Potions.Healing.toString()))
 		{
 			sprites = Content.PotionHealth[0];
 		}
-		else if(itemType.equals(CreateItem.Potions.PotionMana.toString()))
+		else if(itemType.equals(CreateItem.Potions.Mana.toString()))
 		{
 			sprites = Content.PotionMana[0];
 		}
-		else if(itemType.equals(CreateItem.Potions.PotionStamina.toString()))
+		else if(itemType.equals(CreateItem.Potions.Stamina.toString()))
 		{
 			sprites = Content.PotionStamina[0];
 		}
@@ -63,15 +64,15 @@ public class Potion extends Item
 		
 		JukeBox.play("PotionDrink");
 		
-		if(itemType.equals(CreateItem.Potions.PotionHealing.toString()))
+		if(itemType.equals(CreateItem.Potions.Healing.toString()))
 		{
 			user.restoreHealth(50);
 		}
-		else if(itemType.equals(CreateItem.Potions.PotionMana.toString()))
+		else if(itemType.equals(CreateItem.Potions.Mana.toString()))
 		{
 			user.restoreMana(50);
 		}
-		else if(itemType.equals(CreateItem.Potions.PotionStamina.toString()))
+		else if(itemType.equals(CreateItem.Potions.Stamina.toString()))
 		{
 			user.restoreStamina(50);
 		}

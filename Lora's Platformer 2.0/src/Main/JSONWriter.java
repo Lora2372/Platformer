@@ -30,10 +30,10 @@ public class JSONWriter
         jsonObject.put("Map", player.getCurrentMap());  
         jsonObject.put("SpawnLocationX", spawnLocationX);
         jsonObject.put("SpawnLocationY", spawnLocationY);
-        jsonObject.put(CreateItem.Coins.CoinSilver.toString(), player.getSilver());
-        jsonObject.put(CreateItem.Coins.CoinGold.toString(), player.getGold());
+        jsonObject.put(CreateItem.Coins.Silver.toString(), player.getSilver());
+        jsonObject.put(CreateItem.Coins.Gold.toString(), player.getGold());
         
-        if(CreateItem.Coins.CoinGold.equals(("CoinGold")))
+        if(CreateItem.Coins.Gold.equals(("CoinGold")))
         {
         	System.out.println("Gold!");
         }

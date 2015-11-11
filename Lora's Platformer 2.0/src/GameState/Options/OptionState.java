@@ -14,13 +14,10 @@ import GameState.GameState;
 import GameState.GameStateManager;
 import Main.Content;
 import Main.GamePanel;
-import TileMap.Background;
-
 
 
 public class OptionState extends GameState implements ChangeListener
 {
-	private Background background;
 	
 	protected boolean addStuff;
 	protected GamePanel gamePanel;
@@ -99,17 +96,6 @@ public class OptionState extends GameState implements ChangeListener
 		
 	}
 	
-	public void load(boolean load)
-	{
-		if(load)
-		{
-
-			System.out.println("Added stuff");
-
-		}
-		
-	}
-
 	public void update() 
 	{
 		

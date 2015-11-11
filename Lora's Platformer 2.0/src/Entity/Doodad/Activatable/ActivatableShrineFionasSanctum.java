@@ -81,13 +81,6 @@ public class ActivatableShrineFionasSanctum extends Doodad
 			return;
 		}
 		
-		// Comment for later:
-		// Add a key slot for the shrine
-		if(player.getInventory().hasItem("Boss") != null)
-		{
-			
-		}
-		
 		// If the player is null for whatever reason, update it with the player interacting with it:
 		if(this.player == null) 
 		{
@@ -123,7 +116,7 @@ public class ActivatableShrineFionasSanctum extends Doodad
 		}
 		
 		// Player didn't want to start the encounter.
-		if(choiceMade == 2 && conversationBox.getConversationTracker() >= player.getConversation().interactWithFionasShrineChoiceNo().length)
+		if(choiceMade == 2 && conversationBox.getConversationOver())
 		{
 			conversationBox.endConversation();
 			choiceMade = 0;
@@ -135,7 +128,6 @@ public class ActivatableShrineFionasSanctum extends Doodad
 			if(conversationBox.getConversationTracker() == 0)
 			{
 				// Play humming sound
-				System.out.println("tracker is at 0");
 				JukeBox.loop("Darkness");
 				JukeBox.stop("FionasSanctum");
 
@@ -143,14 +135,12 @@ public class ActivatableShrineFionasSanctum extends Doodad
 			else if(conversationBox.getConversationTracker() == 1)
 			{
 				// Play laugh
-				System.out.println("tracker is at 1");
 				fiona.playRecoverSound();
 				
 			}
 			else if(conversationBox.getConversationTracker() == 2)
 			{
 				// Close the door
-				System.out.println("tracker is at 2");
 				fionasSanctum.getDoor().setDoodad(0);
 				JukeBox.play("Close");
 			}
@@ -162,11 +152,12 @@ public class ActivatableShrineFionasSanctum extends Doodad
 				fiona.setSpawning(true);
 				fiona.setHidden(false);
 				fiona.inControl(false);
+				player.getConversationState().lockConversation(true);
 				
 				JukeBox.loop("MysteriousConversation");
 				JukeBox.stop("Darkness");
 			}
-			else if(conversationBox.getConversationTracker() >= player.getConversation().interactWithFinonasShrineChoiceYesWhoTalks().length)
+			else if(conversationBox.getConversationOver())
 			{
 				player.getConversationState().endConversation();
 				startConversation = true;

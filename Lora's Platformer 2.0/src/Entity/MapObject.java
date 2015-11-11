@@ -96,7 +96,7 @@ public abstract class MapObject
 	// Constructor
 	public MapObject(TileMap tileMap)
 	{
-		inventory = new Inventory(5, 5, null);
+		inventory = new Inventory(5, 5, null, this);
 		
 		if(tileMap == null) return;
 		this.tileMap = tileMap;

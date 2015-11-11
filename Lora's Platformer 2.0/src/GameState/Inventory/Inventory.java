@@ -2,6 +2,7 @@ package GameState.Inventory;
 
 import java.util.ArrayList;
 
+import Entity.MapObject;
 import Entity.Item.Item;
 
 public class Inventory 
@@ -18,7 +19,8 @@ public class Inventory
 	public Inventory(
 			int numberOfColumns,
 			int numberOfRows,
-			ArrayList<Item> items
+			ArrayList<Item> items,
+			MapObject owner
 			)
 	{
 		

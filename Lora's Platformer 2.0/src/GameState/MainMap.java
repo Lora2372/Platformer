@@ -547,15 +547,15 @@ public class MainMap extends GameState
 			{
 				if(potionDropped == 1)
 				{
-					potion = new Potion(tileMap, false, 0, 0, owner, stacks, CreateItem.Potions.PotionHealing.toString());
+					potion = new Potion(tileMap, false, 0, 0, owner, stacks, CreateItem.Potions.Healing.toString());
 				}
 				else if(potionDropped == 2)
 				{
-					potion= new Potion(tileMap, false, 0, 0, owner, stacks, CreateItem.Potions.PotionMana.toString());
+					potion= new Potion(tileMap, false, 0, 0, owner, stacks, CreateItem.Potions.Mana.toString());
 				}
 				else if(potionDropped == 3)
 				{
-					potion = new Potion(tileMap, false, 0, 0, owner, stacks, CreateItem.Potions.PotionStamina.toString());
+					potion = new Potion(tileMap, false, 0, 0, owner, stacks, CreateItem.Potions.Stamina.toString());
 				}
 			}
 			if(potion == null)
@@ -750,9 +750,9 @@ public class MainMap extends GameState
 		if(k == KeyEvent.VK_F) player.setPunching();
 		if(k == KeyEvent.VK_D) player.setDashing(true);
 		if(k == KeyEvent.VK_G) player.setCastingMagicShield();
-		if(k == KeyEvent.VK_Z) player.drinkPotion(CreateItem.Potions.PotionHealing.toString());
-		if(k == KeyEvent.VK_X) player.drinkPotion(CreateItem.Potions.PotionMana.toString());
-		if(k == KeyEvent.VK_C) player.drinkPotion(CreateItem.Potions.PotionStamina.toString());
+		if(k == KeyEvent.VK_Z) player.drinkPotion(CreateItem.Potions.Healing.toString());
+		if(k == KeyEvent.VK_X) player.drinkPotion(CreateItem.Potions.Mana.toString());
+		if(k == KeyEvent.VK_C) player.drinkPotion(CreateItem.Potions.Stamina.toString());
 		
 		
 		// Note: This is a built in cheat that is not supposed to be used to get the real game experience.

@@ -35,7 +35,9 @@ public class Coin extends Item
 				true, 
 				stacks, 
 				true, 
-				coinType
+				coinType,
+				CreateItem.getDescriptionName(coinType.toString()),
+				CreateItem.getDescription(coinType.toString())
 				
 				);
 
@@ -43,20 +45,24 @@ public class Coin extends Item
 	
 	public void setItem()
 	{
-		if(itemType.equals(CreateItem.Coins.CoinGold.toString()))
+		if(itemType.equals(CreateItem.Coins.Gold.toString()))
+		{
 			sprites = Content.CoinGold[0];
-		else if(itemType.equals(CreateItem.Coins.CoinSilver.toString()))
+		}
+		else if(itemType.equals(CreateItem.Coins.Silver.toString()))
+		{
 			sprites = Content.CoinSilver[0];
+		}
 	}
 	
 	public void interact(Player player)
 	{
 		JukeBox.play("Coin");
-		if(itemType.equals(CreateItem.Coins.CoinSilver.toString()))
+		if(itemType.equals(CreateItem.Coins.Silver.toString()))
 		{
 			player.addSilver(stacks);
 		}
-		else if(itemType.equals(CreateItem.Coins.CoinGold.toString()))
+		else if(itemType.equals(CreateItem.Coins.Gold.toString()))
 		{
 			player.addGold(stacks);
 		}

@@ -33,7 +33,9 @@ public class Key extends Item
 				false, 
 				stacks, 
 				true, 
-				keyType
+				keyType,
+				CreateItem.getDescriptionName(keyType.toString()),
+				CreateItem.getDescription(keyType.toString())
 				
 				);
 

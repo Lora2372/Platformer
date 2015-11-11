@@ -3,6 +3,8 @@ package GameState;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+
+import Entity.Item.CreateItem;
 import Entity.Player.*;
 import Main.GamePanel;
 import Main.JSONReader;
@@ -45,6 +47,10 @@ public class MenuState extends GameState
 		this.gameStateManager = gameStateManager;
 		tileMap = new TileMap(60);
 		player = new Player("Lora", tileMap, conversationState);
+		
+		
+		@SuppressWarnings("unused")
+		CreateItem createItem = new CreateItem(tileMap);
 		
 		gameStateManager.setPlayer(player);
 		gameStateManager.setTileMap(tileMap);

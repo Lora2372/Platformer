@@ -70,9 +70,7 @@ public class GameStateManager
 	public boolean getPaused() { return paused; }
 	public void options(boolean well)
 	{ 
-		options = well; 
-		System.out.println("options: " + options);
-		optionstate.load(well);
+		options = well;
 	}
 	
 	public void setConversationState(boolean well)
@@ -105,7 +103,6 @@ public class GameStateManager
 		else if(state == FionasSanctum)
 		{
 			JukeBox.loop("FionasSanctum");
-//			gameStates[state] = new FionasSanctum
 			gameStates[state] = new FionasSanctum(this, tileMap, player, conversationState);			
 		}
 		else if(state == DeepWoods)
@@ -305,9 +302,4 @@ public class GameStateManager
 			gameStates[currentState].mouseReleased(mouse);
 		}
 	}
-	
-	
-	
-	
-	
 }

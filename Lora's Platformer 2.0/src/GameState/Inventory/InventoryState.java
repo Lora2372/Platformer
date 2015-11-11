@@ -3,6 +3,8 @@ package GameState.Inventory;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.MouseInfo;
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
@@ -46,6 +48,9 @@ public class InventoryState extends GameState
 	protected Inventory inventory;
 	protected Item[][] items;
 	
+	protected Rectangle mouseRectangle;
+	protected Rectangle[][] inventorySlotRectangles;
+	
 	
 	public InventoryState(
 			GameStateManager 
@@ -68,13 +73,16 @@ public class InventoryState extends GameState
 		if(player == null)
 		{
 			System.out.println("player is null");
+			return;
 		}
-		System.out.println("Using inventory");
 		this.inventory = player.getInventory();
 		
 		numberOfColumns = inventory.getColumns();
 		numberOfRows = inventory.getRows();
 		numberOfSlots = numberOfColumns * numberOfRows;
+		
+		inventorySlotRectangles = new Rectangle[numberOfRows][numberOfColumns];
+		
 		
 		this.items = inventory.getItems();
 
@@ -114,87 +122,109 @@ public class InventoryState extends GameState
 	public void draw(Graphics2D graphics)
 	{
 		
-		background.draw(graphics);
-		
-		graphics.setColor(titleColor);
-		graphics.setFont(titleFont);
-		int stringLength = (int)graphics.getFontMetrics().getStringBounds(title, graphics).getWidth();
-		int textX = GamePanel.WIDTH/2 - stringLength / 2;
-		
-		graphics.drawString(title, textX, GamePanel.HEIGHT / 5);
-		
-		graphics.setFont(font);
-		
-	
-		graphics.drawImage(
-				Content.InventoryBackground[0][0],
-				inventoryBackgroundLocationX,
-				inventoryBackgroundLocationY,
-				inventoryBackgroundWidth,
-				inventoryBackgroundHeight,
-				null
-				);
-
-		
-		int newX = inventoryBackgroundLocationX + 60;
-		int newY = inventoryBackgroundLocationY + 80;
-		
-		int newWidth = inventoryBackgroundWidth - 100;
-		int newHeight = inventoryBackgroundHeight - 100;
-		
-		
-		int spacingX = newWidth / numberOfColumns;
-		int spacingY = newHeight / numberOfRows;
-		
-		
-		
-		for(int i = 0; i < numberOfRows; i++)
+		try
 		{
-			for(int j = 0; j < numberOfColumns; j++)
+		
+			background.draw(graphics);
+			
+			graphics.setColor(titleColor);
+			graphics.setFont(titleFont);
+			int stringLength = (int)graphics.getFontMetrics().getStringBounds(title, graphics).getWidth();
+			int textX = GamePanel.WIDTH/2 - stringLength / 2;
+			
+			graphics.drawString(title, textX, GamePanel.HEIGHT / 5);
+			
+			graphics.setFont(font);
+			
+		
+			graphics.drawImage(
+					Content.InventoryBackground[0][0],
+					inventoryBackgroundLocationX,
+					inventoryBackgroundLocationY,
+					inventoryBackgroundWidth,
+					inventoryBackgroundHeight,
+					null
+					);
+	
+			
+			int newX = inventoryBackgroundLocationX + 60;
+			int newY = inventoryBackgroundLocationY + 80;
+			
+			int newWidth = inventoryBackgroundWidth - 100;
+			int newHeight = inventoryBackgroundHeight - 100;
+			
+			
+			int spacingX = newWidth / numberOfColumns;
+			int spacingY = newHeight / numberOfRows;
+			
+			
+			mouseRectangle = new Rectangle(MouseInfo.getPointerInfo().getLocation().x, MouseInfo.getPointerInfo().getLocation().y, 1, 1);
+	
+			
+			for(int i = 0; i < numberOfRows; i++)
 			{
-				int inventorySlotLocationX = newX + spacingX * j;
-				int inventorySlotLocationY = newY + spacingY * i;
-				
-				
-				
-				if(items[i][j] != null)
+				for(int j = 0; j < numberOfColumns; j++)
 				{
-					graphics.drawImage(
-							items[i][j].getSprites()[0],
-							inventorySlotLocationX,
-							inventorySlotLocationY,
-							items[i][j].getWidth(),
-							items[i][j].getHeight(),
-							null
-							);
+					int inventorySlotLocationX = newX + spacingX * j;
+					int inventorySlotLocationY = newY + spacingY * i;
 					
-					graphics.drawString(items[i][j].getStacks() + "", inventorySlotLocationX, inventorySlotLocationY);
-				}
-				
-				
-				
-				if(selectedSlotX == j && selectedSlotY == i)
-				{
-					graphics.setColor(Color.BLUE);
-					graphics.drawRect(					
-							inventorySlotLocationX,
-							inventorySlotLocationY,
-							slotWidth,
-							slotHeight
-							);
-				}
-				else
-				{
-					graphics.drawImage(
-							Content.InventorySquare[0][0],
-							inventorySlotLocationX,
-							inventorySlotLocationY,
-							slotWidth,
-							slotHeight,
-							null
-							);
+					inventorySlotRectangles[i][j] = new Rectangle(
+							inventorySlotLocationX, 
+							inventorySlotLocationY, 
+							inventorySlotWidth,
+							inventorySlotHeight
+						);
+					
+					if(inventorySlotRectangles[i][j].intersects(mouseRectangle))
+					{
+						 selectedSlotX = j;
+						 selectedSlotY = i;
+					}
+					
+					
+					if(items[i][j] != null)
+					{
+						graphics.drawImage(
+								items[i][j].getSprites()[0],
+								inventorySlotLocationX,
+								inventorySlotLocationY,
+								items[i][j].getWidth(),
+								items[i][j].getHeight(),
+								null
+								);
+						
+						graphics.drawString(items[i][j].getStacks() + "", inventorySlotLocationX, inventorySlotLocationY);
+					}
+					
+					
+					
+					if(selectedSlotX == j && selectedSlotY == i)
+					{
+						graphics.setColor(Color.BLUE);
+						graphics.drawRect(					
+								inventorySlotLocationX,
+								inventorySlotLocationY,
+								slotWidth,
+								slotHeight
+								);
+					}
+					else
+					{
+						graphics.drawImage(
+								Content.InventorySquare[0][0],
+								inventorySlotLocationX,
+								inventorySlotLocationY,
+								slotWidth,
+								slotHeight,
+								null
+								);
+					}
 				}
 			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
 		}
 	}
 	

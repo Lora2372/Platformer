@@ -30,6 +30,9 @@ public class Item extends MapObject
 	protected Poff poff;
 	
 	protected String itemType;
+	protected String descriptionName;
+	protected String description;
+	
 	
 	protected boolean activatable;
 	
@@ -51,7 +54,9 @@ public class Item extends MapObject
 			boolean stackable,
 			int stacks,
 			boolean consumable,
-			String itemType
+			String itemType,
+			String descriptionName,
+			String description
 			) 
 	{
 		super(tileMap);
@@ -70,6 +75,9 @@ public class Item extends MapObject
 		this.invulnerable = true;
 		this.unkillable = true;
 		this.activatable = true;
+		
+		this.descriptionName = descriptionName;
+		this.description = description;
 		
 		
 		if(inWorld)
@@ -145,6 +153,10 @@ public class Item extends MapObject
 	
 	
 	public String getItemType() { return itemType; }
+	
+	public String getDescriptionName() { return descriptionName; }
+	
+	public String getDescription() { return description; }
 	
 	public void setItem() { }
 	

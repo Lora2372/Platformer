@@ -12,8 +12,8 @@ public class Chest extends Doodad
 {
 	protected boolean used;
 	
-	protected int silver;
-	protected int gold;
+	protected int silver = 0;
+	protected int gold = 0;
 	
 	protected boolean locked;
 	protected boolean successfullyOpened;
@@ -119,34 +119,34 @@ public class Chest extends Doodad
 				{
 					for(int j = 0; j < tempColumns; j++)
 					{
-						if(items[i][j] != null)
+						Item item = items[i][j];
+						
+						if(item != null)
 						{
-							if(items[i][j].getItemType().equals(CreateItem.Coins.CoinSilver.toString()))
+							if(item.getStacks() > 1)
 							{
-								player.addSilver(items[i][j].getStacks());
-								conversationPiece += items[i][j].getStacks() + " " + items[i][j].getItemType() + ", ";
+								conversationPiece += item.getStacks() + " " + item.getDescriptionName() + "s, ";
+							}else
+							{
+								conversationPiece += item.getStacks() + " " + item.getDescriptionName() + ", ";	
 							}
-							else if(items[i][j].getItemType().equals(CreateItem.Coins.CoinGold.toString()))
+							
+							
+							if(item.getItemType().equals(CreateItem.Coins.Silver.toString()))
 							{
-								player.addGold(items[i][j].getStacks());
-								conversationPiece += items[i][j].getStacks() + " " + items[i][j].getItemType() + ", ";
+								silver = item.getStacks();
+							}
+							else if(item.getItemType().equals(CreateItem.Coins.Gold.toString()))
+							{
+								silver = item.getStacks();
 							}
 							else
 							{
-								player.getInventory().addItem(items[i][j]);
-								
-								if(items[i][j].getStacks() > 1)
-								{
-									conversationPiece += items[i][j].getStacks() + " " + items[i][j].getItemType() + "s, ";
-								}
-								else
-								{
-									conversationPiece += items[i][j].getStacks() + " " + items[i][j].getItemType() + ", ";
-								}
+								player.getInventory().addItem(item);
 							}
 						}
 					}
-					conversationPiece = conversationPiece.substring(0, conversationPiece.length() - 1);
+					conversationPiece = conversationPiece.substring(0, conversationPiece.length() - 2);
 					conversationPiece += ".";
 				}
 			}
@@ -175,13 +175,17 @@ public class Chest extends Doodad
 		{
 			player.getConversationState().progressConversation();
 			
-			if(player.getConversationState().getConversationTracker() >= player.getConversationState().getConversationLength())
+			if(player.getConversationState().getConversationOver())
 			{
 				player.getConversationState().endConversation();
 				
 				if(active)
 				{
-					JukeBox.play("Coin");
+					if(silver > 0 || gold > 0)
+					{
+						JukeBox.play("Coin");
+					}
+
 					
 					player.addSilver(silver);
 					player.addGold(gold);

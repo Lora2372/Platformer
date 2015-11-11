@@ -40,11 +40,11 @@ public class JSONReader
 			player.setSpawnPoint(spawnLocationX, spawnLocationY);
 		
 
-			int silver = ((Long)jsonObject.get(CreateItem.Coins.CoinSilver.toString())).intValue();
+			int silver = ((Long)jsonObject.get(CreateItem.Coins.Silver.toString())).intValue();
 			System.out.println("Silver: " + silver);
 			player.addSilver(silver);
 			
-			int gold = ((Long)jsonObject.get(CreateItem.Coins.CoinGold.toString())).intValue();
+			int gold = ((Long)jsonObject.get(CreateItem.Coins.Gold.toString())).intValue();
 			System.out.println("Gold: " + gold);
 			player.addGold(gold);
 			

@@ -13,6 +13,58 @@ public class Conversation
 	}
 	
 	
+	public String[] statueSave()
+	{
+		return new String[]
+		{
+			"The shrine fills you with energy.",
+			"Do you wish to save? \n " +
+			"- Yes \n " +
+			"- No"
+		};
+	}
+	
+	public int[] statuSaveWhoTalks()
+	{
+		return new int[]
+		{
+			3
+		};
+	}
+	
+	public String[] statueSaveChoiceYes()
+	{
+		return new String[]
+		{
+			"The game was saved!"
+		};
+	}
+	
+	public int[] statuSaveChoiceYesWhoTalks()
+	{
+		return new int[]
+		{
+			3
+		};
+	}
+	
+	public String[] statueSaveChoiceNo()
+	{
+		return new String[]
+		{
+			"You step away from the altar."
+		};
+	}
+	
+	public int[] statuSaveChoiceNoWhoTalks()
+	{
+		return new int[]
+		{
+			3
+		};
+	}
+	
+	
 	public String[] liadrinFirstEncounter()
 	{
 			return new String[]
