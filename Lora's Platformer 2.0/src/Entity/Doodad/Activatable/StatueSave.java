@@ -71,25 +71,28 @@ public class StatueSave extends Doodad
 			player.restoreHealth(player.getMaxHealth());
 			player.restoreMana(player.getMaxMana());
 			player.restoreStamina(player.getMaxStamina());
-			player.getConversationState().startConversation(player, null, null, conversation.statueSave(), conversation.statuSaveWhoTalks());
+			player.getConversationState().startConversation(player, null, null, conversation.statueSave(), conversation.statueSaveWhoTalks());
 			return;
 		}
 		
 		if(player.getInConversation() && choiceMade == 0)
 		{
-			choiceMade = conversationBox.getChoiceMade();
-			if(choiceMade == 1)
+			if(conversationBox.getConversationOver())
 			{
-				player.getConversationState().startConversation(player, null, null, conversation.statueSaveChoiceYes(), conversation.statuSaveChoiceYesWhoTalks());
-				
-				JSONWriter.saveFile(player, (int)spawnX, (int)spawnY);
-				JukeBox.play("Save");
-				return;
-			}
-			else
-			{
-				player.getConversationState().startConversation(player, null, null, conversation.statueSaveChoiceNo(), conversation.statuSaveChoiceNoWhoTalks());	
-				return;
+				choiceMade = conversationBox.getChoiceMade();
+				if(choiceMade == 1)
+				{
+					player.getConversationState().startConversation(player, null, null, conversation.statueSaveChoiceYes(), conversation.statueSaveChoiceYesWhoTalks());
+					
+					JSONWriter.saveFile(player, (int)spawnX, (int)spawnY);
+					JukeBox.play("Save");
+					return;
+				}
+				else
+				{
+					player.getConversationState().startConversation(player, null, null, conversation.statueSaveChoiceNo(), conversation.statuSaveChoiceNoWhoTalks());	
+					return;
+				}
 			}
 		}
 		

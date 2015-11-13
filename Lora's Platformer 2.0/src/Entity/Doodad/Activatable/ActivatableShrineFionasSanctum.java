@@ -93,24 +93,24 @@ public class ActivatableShrineFionasSanctum extends Doodad
 		// If the player is not yet in a conversation and has not yet used the shrine, start the first conversation:
 		if(!player.getInConversation() && choiceMade == 0)
 		{
-			player.getConversationState().startConversation(player, null, null, player.getConversation().interactWithFionasShrine(), player.getConversation().interactWithFinonasShrineWhoTalks());
+			conversationBox.startConversation(player, null, null, player.getConversation().interactWithFionasShrine(), player.getConversation().interactWithFinonasShrineWhoTalks());
 			return;
 		}
 		
 		// If the player currently is in a conversation but has not yet made the choice to touch the shrine:
 		if(player.getInConversation() && choiceMade == 0)
 		{
-			if(conversationBox.getConversationTracker() >= player.getConversation().interactWithFionasShrine().length)
+			if(conversationBox.getConversationOver())
 			{
 				choiceMade = conversationBox.getChoiceMade();
 				if(choiceMade == 1)
 				{
-					player.getConversationState().startConversation(player, fiona, null, conversation.interactWithFionasShrineChoiceYes(), conversation.interactWithFinonasShrineChoiceYesWhoTalks());
+					conversationBox.startConversation(player, fiona, null, conversation.interactWithFionasShrineChoiceYes(), conversation.interactWithFinonasShrineChoiceYesWhoTalks());
 
 				}
 				else
 				{
-					player.getConversationState().startConversation(player, fiona, null, conversation.interactWithFionasShrineChoiceNo(), conversation.interactWithFinonasShrineChoiceNoWhoTalks());
+					conversationBox.startConversation(player, fiona, null, conversation.interactWithFionasShrineChoiceNo(), conversation.interactWithFinonasShrineChoiceNoWhoTalks());
 				}
 			}
 		}
@@ -152,14 +152,14 @@ public class ActivatableShrineFionasSanctum extends Doodad
 				fiona.setSpawning(true);
 				fiona.setHidden(false);
 				fiona.inControl(false);
-				player.getConversationState().lockConversation(true);
+				conversationBox.lockConversation(true);
 				
 				JukeBox.loop("MysteriousConversation");
 				JukeBox.stop("Darkness");
 			}
 			else if(conversationBox.getConversationOver())
 			{
-				player.getConversationState().endConversation();
+				conversationBox.endConversation();
 				startConversation = true;
 				active = false;
 				fiona.inControl(true);

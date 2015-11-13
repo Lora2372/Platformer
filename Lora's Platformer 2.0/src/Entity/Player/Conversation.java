@@ -13,6 +13,77 @@ public class Conversation
 	}
 	
 	
+	public String[] unlockObject(String object)
+	{
+		return new String[]
+		{
+			"The " + object + " is locked.",
+			"Do you wish to unlock it? \n " +
+			"- Yes \n " +
+			"- No"
+		};
+	}
+	
+	public int[] unlockObjectWhoTalks()
+	{
+		return new int[]
+		{
+			3,
+			3
+		};
+	}
+	
+	public String[] unlockObjectChoiceYesSuccess(String object)
+	{
+		return new String[]
+		{
+			"The " + object + " was unlocked!"
+		};
+	}
+	
+	public int[] unlockObjectChoiceYesSuccessWhoTalks()
+	{
+		return new int[]
+		{
+			3
+		};
+	}
+	
+	public String[] unlockObjectChoiceYesFailure(String object)
+	{
+		return new String[]
+		{
+			"You struggle to open the " + object + " to no avail, perhaps if you had a key..."
+		};
+	}
+	
+	public int[] unlockObjectChoiceYesFailureWhoTalks()
+	{
+		return new int[]
+		{
+			3
+		};
+	}
+	
+	public String[] unlockObjectChoiceNo(String object)
+	{
+		return new String[]
+		{
+			"You step away from the " + object + "."
+		};
+	}
+	
+	public int[] unlockObjectChoiceNoWhoTalks()
+	{
+		return new int[]
+		{
+			3
+		};
+	}
+	
+
+	
+	
 	public String[] statueSave()
 	{
 		return new String[]
@@ -24,10 +95,11 @@ public class Conversation
 		};
 	}
 	
-	public int[] statuSaveWhoTalks()
+	public int[] statueSaveWhoTalks()
 	{
 		return new int[]
 		{
+			3,
 			3
 		};
 	}
@@ -40,7 +112,7 @@ public class Conversation
 		};
 	}
 	
-	public int[] statuSaveChoiceYesWhoTalks()
+	public int[] statueSaveChoiceYesWhoTalks()
 	{
 		return new int[]
 		{
@@ -52,7 +124,7 @@ public class Conversation
 	{
 		return new String[]
 		{
-			"You step away from the altar."
+			"You step away from the shrine."
 		};
 	}
 	

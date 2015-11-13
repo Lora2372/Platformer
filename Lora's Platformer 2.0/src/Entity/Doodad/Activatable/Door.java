@@ -3,6 +3,8 @@ package Entity.Doodad.Activatable;
 import Audio.JukeBox;
 import Entity.Doodad.Doodad;
 import Entity.Item.Item;
+import Entity.Player.Conversation;
+import Entity.Player.ConversationState;
 import Entity.Player.Player;
 import GameState.GameStateManager;
 import Main.Content;
@@ -11,13 +13,20 @@ import TileMap.TileMap;
 public class Door extends Doodad
 {
 	protected boolean used;
-	
-	protected int silver;
-	protected int gold;
-	
+		
 	protected boolean locked;
 	protected boolean successfullyOpened;
 	protected GameStateManager gameStateManager;
+	
+	protected int choiceMade;
+	
+	protected String doorName;
+	
+	protected Conversation conversation;
+	protected ConversationState conversationBox;
+	
+	protected Player player;
+	
 	
 	public Door(
 			TileMap tileMap, 
@@ -48,6 +57,8 @@ public class Door extends Doodad
 				);
 		
 		this.locked = locked;
+		this.doorName = CreateDoodad.doodadName.get(doodadType);
+		
 		if(currentAction == 2)
 		{
 			used = true;
@@ -99,34 +110,60 @@ public class Door extends Doodad
 	
 	public void interact(Player player)
 	{
-		
+		// If the door is already open, we walk through it.
 		if(used)
 		{
 			if(gameStateManager.getState() == GameStateManager.MysteriousDungeon)
 			{
 				gameStateManager.setState(GameStateManager.FionasSanctum);
 			}
-
 			return;
 		}
 		
-		String conversationPiece = "";
+		if(this.player == null)
+		{
+			this.player = player;
+			conversationBox = player.getConversationState();
+			conversation = player.getConversation();
+		}
+		
+		
 		if(!active)
 		{
 			if(locked)
 			{
-				Item item = player.getInventory().hasItem(doodadType);
-				
-				if(item != null)
+				if(!player.getInConversation() && choiceMade == 0)
 				{
-					JukeBox.play("Unlock");
-					conversationPiece += "... ";
-					item.use(player);
-					successfullyOpened = true;
+					conversationBox.startConversation(player, null, null, player.getConversation().unlockObject(doorName), player.getConversation().unlockObjectWhoTalks());
+					return;
 				}
-				else
+				
+				if(player.getInConversation() && choiceMade == 0)
 				{
-					conversationPiece += "You struggle to open the door to no avail, perhaps if you had a key...";
+					if(conversationBox.getConversationOver())
+					{
+						choiceMade = conversationBox.getChoiceMade();
+						
+						if(choiceMade == 1)
+						{
+							Item item = player.getInventory().hasItem(doodadType);
+							if(item != null)
+							{
+								JukeBox.play("Unlock");
+								successfullyOpened = true;
+								conversationBox.startConversation(player, null, null, conversation.unlockObjectChoiceYesSuccess(doorName), conversation.unlockObjectChoiceYesSuccessWhoTalks());
+							}
+							else
+							{
+								player.playCannotOpenSound();
+								conversationBox.startConversation(player, null, null, conversation.unlockObjectChoiceYesFailure(doorName), conversation.unlockObjectChoiceYesFailureWhoTalks());
+							}
+						}
+						else
+						{
+							conversationBox.startConversation(player, null, null, conversation.unlockObjectChoiceNo(doorName), conversation.unlockObjectChoiceNoWhoTalks());
+						}
+					}
 				}
 			}
 			else
@@ -134,30 +171,15 @@ public class Door extends Doodad
 				successfullyOpened = true;
 			}
 		}
-
 		
-		String[] conversation = new String[]
-		{
-			conversationPiece		
-		};
 		
-		if(!player.getInConversation())
+		if(player.getInConversation())
 		{
-			player.getConversationState().startConversation(player, null, null, conversation, new int[] { 3 });
 			
-			if(!successfullyOpened)
+			if(conversationBox.getConversationOver())
 			{
-				player.playCannotOpenSound();
-			}
-		}
-		else
-		{
-			player.getConversationState().progressConversation();
-			
-			if(player.getConversationState().getConversationTracker() >= player.getConversationState().getConversationLength())
-			{
-				player.getConversationState().endConversation();
-				
+				conversationBox.endConversation();
+				choiceMade = 0;
 				if(successfullyOpened)
 				{
 					JukeBox.play("DoorOpen");

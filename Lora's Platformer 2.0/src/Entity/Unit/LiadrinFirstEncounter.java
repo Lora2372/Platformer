@@ -126,7 +126,7 @@ public class LiadrinFirstEncounter extends Unit
 		// If the player is currently in a conversation but has not yet made the choice
 		if(player.getInConversation() && choiceMade == 0)
 		{
-			if(conversationBox.getConversationTracker() >= player.getConversation().liadrinFirstEncounter().length)
+			if(conversationBox.getConversationOver())
 			{
 				choiceMade = conversationBox.getChoiceMade();
 				if(choiceMade == 1)

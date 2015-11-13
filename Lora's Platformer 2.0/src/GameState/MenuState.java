@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
+import Entity.Doodad.Activatable.CreateDoodad;
 import Entity.Item.CreateItem;
 import Entity.Player.*;
 import Main.GamePanel;
@@ -51,6 +52,9 @@ public class MenuState extends GameState
 		
 		@SuppressWarnings("unused")
 		CreateItem createItem = new CreateItem(tileMap);
+		@SuppressWarnings("unused")
+		CreateDoodad createDoodad = new CreateDoodad(tileMap);
+		
 		
 		gameStateManager.setPlayer(player);
 		gameStateManager.setTileMap(tileMap);

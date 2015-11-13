@@ -768,9 +768,24 @@ public class MainMap extends GameState
 			}
 		}
 		
+		// Note: This is a built in cheat that is not supposed to be used to get the real game experience.
+		if( k == KeyEvent.VK_N)
+		{
+			player.setPosition(player.getLocationX(), player.getLocationY() - 200);
+		}
+		
+		// Note: This is a built in cheat that is not supposed to be used to get the real game experience.
 		if(k == KeyEvent.VK_L)
 		{
 			Key myKey = new Key(tileMap, false, 0, 0, player, 1, "Boss");
+			player.getInventory().addItem(myKey);
+			items.add(myKey);
+		}
+		
+		// Note: This is a built in cheat that is not supposed to be used to get the real game experience.
+		if(k == KeyEvent.VK_K)
+		{
+			Key myKey = new Key(tileMap, false, 0, 0, player, 1, "Uncommon");
 			player.getInventory().addItem(myKey);
 			items.add(myKey);
 		}
