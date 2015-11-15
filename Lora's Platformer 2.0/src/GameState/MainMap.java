@@ -199,7 +199,8 @@ public class MainMap extends GameState
 		
 		if(mousePressed)
 		{
-			player.setFacingRight(mouseLocationX > (GamePanel.WIDTH / 2));
+			double mouseRealLocationX = player.getLocationX() - (GamePanel.WIDTH / 2) + mouseLocationX;
+			player.setFacingRight(player.getLocationX() < mouseRealLocationX);
 			player.setRight(player.getFacingRight());
 			player.setLeft(!player.getFacingRight());
 		}

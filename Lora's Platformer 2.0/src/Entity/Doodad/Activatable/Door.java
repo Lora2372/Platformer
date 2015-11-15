@@ -149,6 +149,7 @@ public class Door extends Doodad
 							Item item = player.getInventory().hasItem(doodadType);
 							if(item != null)
 							{
+								item.use(player);
 								JukeBox.play("Unlock");
 								successfullyOpened = true;
 								conversationBox.startConversation(player, null, null, conversation.unlockObjectChoiceYesSuccess(doorName), conversation.unlockObjectChoiceYesSuccessWhoTalks());

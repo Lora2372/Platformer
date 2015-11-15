@@ -170,7 +170,7 @@ public class InventoryState extends GameState
 					
 					inventorySlotRectangles[i][j] = new Rectangle(
 							inventorySlotLocationX, 
-							inventorySlotLocationY, 
+							inventorySlotLocationY + inventorySlotHeight / 2, 
 							inventorySlotWidth,
 							inventorySlotHeight
 						);

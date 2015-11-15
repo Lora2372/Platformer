@@ -4,6 +4,7 @@ import java.awt.MouseInfo;
 import java.util.Random;
 import Audio.JukeBox;
 import Entity.Unit.Unit;
+import Main.GamePanel;
 import TileMap.TileMap;
 
 public class Player extends Unit
@@ -171,8 +172,8 @@ public class Player extends Unit
 		else
 		{
 			
-			tempX = MouseInfo.getPointerInfo().getLocation().getX() + locationX; //- GamePanel.WIDTH / 2;
-			tempY = MouseInfo.getPointerInfo().getLocation().getY() + locationY; // - GamePanel.HEIGHT / 2;
+			tempX = MouseInfo.getPointerInfo().getLocation().getX() + locationX - GamePanel.WIDTH / 2;
+			tempY = MouseInfo.getPointerInfo().getLocation().getY() + locationY - GamePanel.HEIGHT / 2;
 			
 			
 			System.out.println("tempX: " + tempX);

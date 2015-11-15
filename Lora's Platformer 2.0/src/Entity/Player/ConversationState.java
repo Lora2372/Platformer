@@ -333,18 +333,18 @@ public class ConversationState  extends GameState
 		}
 	}
 
-	public void keyPressed(int k) 
+	public void keyPressed(int key) 
 	{
 		if(player.getInConversation())
 		{
-			if(k == KeyEvent.VK_UP)
+			if(key == KeyEvent.VK_UP)
 			{
 				if(choiceSelected > 1)
 				{
 					choiceSelected--;
 				}
 			}
-			if(k == KeyEvent.VK_DOWN)
+			if(key == KeyEvent.VK_DOWN)
 			{
 				if(choiceSelected < choiceAmount)
 				{
@@ -361,7 +361,7 @@ public class ConversationState  extends GameState
 
 
 
-	public void keyReleased(int k) 
+	public void keyReleased(int key) 
 	{
 		
 	}
