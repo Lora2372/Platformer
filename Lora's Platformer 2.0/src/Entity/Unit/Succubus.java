@@ -44,7 +44,7 @@ public class Succubus extends Unit
 				facingRight,														// facingRight
 				true,  																// inControl
 				50,		 															// health
-				5, 		 															//maxHealth
+				50,		 															//maxHealth
 				0.1,	 															// healthRegen
 				100,		 														// mana
 				100,		 														// maxMana
@@ -61,14 +61,6 @@ public class Succubus extends Unit
 				2,		 															// dashDamage
 				40,		 															// dashRange
 				20, 	 															// dashSpeed
-				20,		 															// smallFireBallManaCost
-				20,		 															// smallFireBallDamage
-				40,		 															// largeFireBallManaCost
-				50, 																	// largeFireBallDamage
-				30,																	// electricBallManaCost
-				70,																	// electricBallDamage
-				0,
-				0,
 				"/Art/Sprites/Characters/Succubus.png",									// spritePath
 				new int[] {0,0,0,0,1,2,0,0,1,2,1,2,3,0,0,0,0},						// animationStates
 				new int[]{7, 2, 2, 1, 2, 0, 0, 0, 0},								// numImages

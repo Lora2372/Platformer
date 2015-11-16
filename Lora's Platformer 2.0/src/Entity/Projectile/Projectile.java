@@ -42,9 +42,6 @@ public class Projectile extends MapObject
 			int collisionWidth,
 			int collisionHeight,
 			double moveSpeed,
-			int damage,
-			int manacost,
-			int explosionRadius,
 			String projectileType
 			) 
 	{
@@ -60,10 +57,7 @@ public class Projectile extends MapObject
 		this.collisionWidth = collisionWidth;
 		this.collisionHeight = collisionHeight;
 		this.moveSpeed = moveSpeed;
-		this.explosionRadius = explosionRadius;
 		this.projectileType = projectileType;
-		this.damage = damage;
-		this.manacost = manacost;
 		this.aim = aim;
 		this.rotation = aim;
 		

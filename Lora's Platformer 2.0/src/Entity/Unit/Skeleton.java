@@ -41,7 +41,7 @@ public class Skeleton extends Unit
 				facingRight,														// facingRight
 				true,  																// inControl
 				50,		 															// health
-				5, 		 															//maxHealth
+				50, 		 															//maxHealth
 				0.1,	 															// healthRegen
 				100,		 														// mana
 				100,		 														// maxMana
@@ -58,14 +58,6 @@ public class Skeleton extends Unit
 				30,		 															// dashDamage
 				40,		 															// dashRange
 				20, 	 															// dashSpeed
-				20,		 															// smallFireballManaCost
-				20,		 															// smallFireballDamage
-				40,		 															// largeFireballManaCost
-				50, 																	// largeFireballDamage
-				30,																	// electricBallManaCost
-				70,																	// electricBallDamage
-				0,
-				0,
 				"/Art/Sprites/Characters/Skeleton.png",									// spritePath
 				new int[] {0, 0, 0, 0, 1, 2, 4, 5, 4, 5, 4, 3, 2, 2},						// animationStates
 				new int[]{6, 1, 3, 6, 4, 4},												// numImages

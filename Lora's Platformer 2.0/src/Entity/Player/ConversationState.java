@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import com.sun.glass.events.KeyEvent;
 
 import Entity.Doodad.Doodad;
+import Entity.Item.Item;
 import Entity.Unit.Unit;
 import GameState.GameState;
 import GameState.GameStateManager;
@@ -25,16 +26,15 @@ public class ConversationState  extends GameState
 	
 	private Player player;
 	private Unit otherPerson;
-	private Doodad sign;
+	private Doodad doodad;
+	private Item item;
 	private String[] conversation;
 	private int[] whoTalks;
 	
 	protected BufferedImage[] endConversation;
 	
 	private int conversationTracker;
-	
-	private boolean inConversation;
-	
+		
 	private double locationX;
 	private double locationY;
 	
@@ -70,8 +70,7 @@ public class ConversationState  extends GameState
 		
 		endConversationString = "End conversation";
 		
-		inConversation = false;
-		
+	
 		locationX = GamePanel.WIDTH / 3;
 		locationY = GamePanel.HEIGHT - 138;
 		
@@ -89,23 +88,39 @@ public class ConversationState  extends GameState
 		this.player = player;
 	}
 	
-	public boolean inConversation() { return inConversation; }
 	
 	public boolean conversationLocked() { return conversationLocked; }
 	public void lockConversation(boolean b) { conversationLocked = b; }
 	
-	public void startConversation(
+	
+	public void displayItem
+		(
+			Player player,
+			Item item
+		)
+	{
+
+		this.player = player;
+		this.item = item;
+		conversation = new String[] { item.getDescription() };
+		whoTalks = new int[] { 6 };
+		player.setInConversation(true);
+
+	}
+	
+	public void startConversation
+		(
 			Player newPlayer,
-			Unit newOtherPerson, 
-			Doodad newSign, 
-			String[] newConversation, 
+			Unit newOtherPerson,
+			Doodad newDoodad,
+			String[] newConversation,
 			int[] newWhoTalks
-			)
+		)
 	{
 		otherPerson = newOtherPerson;
 		conversation = newConversation;
 		conversationTracker = 0;
-		inConversation = true;
+		player.setInConversation(true);
 		whoTalks = newWhoTalks;
 		
 		player.inControl(false);
@@ -113,13 +128,12 @@ public class ConversationState  extends GameState
 		
 		conversationOver = false;
 		
-		if(newSign != null) sign = newSign;
+		if(newDoodad != null) doodad = newDoodad;
 		
 		if(otherPerson != null)
 			otherPerson.setInConversation(true);
 		
 		player.setInConversation(true);
-		gameStateManager.setConversationState(true);
 		choiceRows = new ArrayList<Integer>();
 		
 	}
@@ -127,13 +141,12 @@ public class ConversationState  extends GameState
 	public void endConversation()
 	{
 		conversationTracker = 0;
-		inConversation = false;
+		player.setInConversation(false);
 		
 		player.inControl(true);
 		player.invulnerable(false);
 		
 		player.setInConversation(false);
-		gameStateManager.setConversationState(false);
 		
 		choiceRequested = false;
 		choiceAmount = 0;
@@ -212,8 +225,8 @@ public class ConversationState  extends GameState
 		
 		if(whoTalks[conversationTracker] == 2)
 		{
-			tempName = sign.getDoodadType();
-			tempIcon = sign.getPortrait();
+			tempName = doodad.getDoodadType();
+			tempIcon = doodad.getPortrait();
 		}
 		
 		if(whoTalks[conversationTracker] == 4)
@@ -227,6 +240,13 @@ public class ConversationState  extends GameState
 			tempName = "Unknown";
 			tempIcon = Content.PortraitLiadrin[0];
 		}
+		
+		if(whoTalks[conversationTracker] == 6)
+		{
+			tempName = item.getDescriptionName();
+			tempIcon = item.getSprites();
+		}
+		
 		
 		graphics.setFont(new Font("Arial", Font.PLAIN, 14));
 		

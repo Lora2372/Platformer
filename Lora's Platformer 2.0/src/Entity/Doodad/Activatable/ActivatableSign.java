@@ -70,12 +70,14 @@ public class ActivatableSign extends Doodad
 		this.player = player;
 		
 		if(player == null)
+		{
 			System.out.println("player is null");
+		}
 		
-		if(!player.getConversationState().inConversation()) 
+		if(!player.getInConversation()) 
+		{
 			startConversation();
-//		else 
-//			player.getConversationState().progressConversation();
+		}
 		
 		if(player.getConversationState().getConversationTracker() >= conversation.length)
 		{

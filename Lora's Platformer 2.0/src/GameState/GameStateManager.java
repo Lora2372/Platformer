@@ -22,7 +22,6 @@ public class GameStateManager
 	protected boolean paused;
 	protected boolean browsingInventory;
 	protected boolean options;
-	protected boolean inConversation;
 	
 	
 	private GameState[] gameStates;
@@ -56,7 +55,7 @@ public class GameStateManager
 	
 	public void setPlayer(Player player) 
 	{ 
-		this.player = player; 
+		this.player = player;
 		optionstate.setPlayer(player);
 		inventorystate.initialize(player);
 		conversationState.initialize(player);
@@ -64,7 +63,7 @@ public class GameStateManager
 	
 	public void setTileMap(TileMap tileMap) { this.tileMap = tileMap; }
 	
-	public void browsingInventory(boolean b) { browsingInventory = b; }
+	public void setBrowsingInventory(boolean b) { browsingInventory = b; }
 	public boolean getBrowsingInventory() { return browsingInventory; }
 	public void pause(boolean b) { paused = b; }
 	public boolean getPaused() { return paused; }
@@ -72,11 +71,7 @@ public class GameStateManager
 	{ 
 		options = well;
 	}
-	
-	public void setConversationState(boolean well)
-	{
-		inConversation = well;
-	}
+
 	
 	private void loadState(int state) 
 	{
@@ -149,16 +144,25 @@ public class GameStateManager
 			if(paused)
 			{
 				if(browsingInventory)
+				{
 					inventorystate.update();
+				}
 				else
+				{
 					pausestate.update();
+				}
+				
+				if(player.getInConversation())
+				{
+					conversationState.update();
+				}
 				
 				return;
 			}
 			
 
 			
-			if(inConversation)
+			if(player.getInConversation())
 			{
 				conversationState.update();
 			}
@@ -189,15 +193,24 @@ public class GameStateManager
 			if(paused)
 			{
 				if(browsingInventory)
+				{
 					inventorystate.draw(graphics);
+				}
 				else				
+				{
 					pausestate.draw(graphics);
+				}
+				
+				if(player.getInConversation())
+				{
+					conversationState.draw(graphics);
+				}
 				
 				return;
 			}
 			gameStates[currentState].draw(graphics);
 			
-			if(inConversation)
+			if(player.getInConversation())
 			{
 				conversationState.draw(graphics);
 			}
@@ -220,7 +233,7 @@ public class GameStateManager
 			return;		
 		}
 		
-		if(inConversation)
+		if(player.getInConversation())
 		{
 			conversationState.keyPressed(k);
 		}
@@ -261,7 +274,7 @@ public class GameStateManager
 			}
 			gameStates[currentState].mouseClicked(mouse);
 			
-			if(inConversation)
+			if(player.getInConversation())
 			{
 				conversationState.mouseClicked(mouse);
 			}

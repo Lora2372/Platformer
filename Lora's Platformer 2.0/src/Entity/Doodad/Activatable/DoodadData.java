@@ -4,12 +4,12 @@ import java.util.HashMap;
 
 import TileMap.TileMap;
 
-public class CreateDoodad 
+public class DoodadData 
 {
 
 	protected TileMap tileMap;
 	
-	public CreateDoodad(TileMap tileMap)
+	public DoodadData(TileMap tileMap)
 	{
 		this.tileMap = tileMap;
 		
@@ -26,7 +26,8 @@ public class CreateDoodad
 	
 	public static enum Doors
 	{
-		Boss
+		Boss,
+		Village
 	}
 	
 	public static enum Chests

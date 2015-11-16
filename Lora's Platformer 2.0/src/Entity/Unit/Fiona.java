@@ -98,14 +98,6 @@ public class Fiona extends Unit
 				2,		 															// dashDamage
 				40,		 															// dashRange
 				20, 	 															// dashSpeed
-				20,		 															// smallFireBallManaCost
-				20,		 															// smallFireBallDamage
-				40,		 															// largeFireBallManaCost
-				50, 																	// largeFireBallDamage
-				30,																	// electricBallManaCost
-				70,																	// electricBallDamage
-				0,
-				40,
 				"/Art/Sprites/Characters/Succubus.png",									// spritePath
 				new int[] {0,0,0,0,1,2,0,0,1,2,1,2,3,0,0,0,0},						// animationStates
 				new int[]{7, 2, 2, 1, 2, 0, 0, 0, 0},								// numImages
@@ -236,7 +228,7 @@ public class Fiona extends Unit
 		
 		
 		aim = Math.atan2(tempY - locationY, tempX - locationX);
-		ArcaneBall arcaneBall = new ArcaneBall(tileMap, mainMap, facingRight, up, down, aim, friendly, arcaneBallDamage);
+		ArcaneBall arcaneBall = new ArcaneBall(tileMap, mainMap, facingRight, up, down, aim, friendly);
 		arcaneBall.setPosition(locationX, locationY - 20);
 		mainMap.addProjectile(arcaneBall);
 	}

@@ -56,42 +56,61 @@ public class Chest extends Doodad
 				);
 		
 		this.locked = locked;
-		this.chestName = CreateDoodad.doodadName.get(chestType);
+		this.chestName = DoodadData.doodadName.get(chestType);
 	}
 	
 	public void setDoodad(int currentAction)
 	{
-		if(doodadType.equals(CreateDoodad.Chests.Common.toString()))
+		if(doodadType.equals(DoodadData.Chests.Common.toString()))
 		{
 			if(currentAction == 0)
+			{
 				sprites = Content.ChestCommonClosed[0];
+			}
 			else if(currentAction == 1)
+			{
 				sprites = Content.ChestCommonOpening[0];
+			}
 			else if(currentAction == 2)
+			{
 				sprites = Content.ChestCommonOpened[0];
+			}
 		}
-		else if(doodadType.equals(CreateDoodad.Chests.Uncommon.toString()))
+		else if(doodadType.equals(DoodadData.Chests.Uncommon.toString()))
 		{
 			if(currentAction == 0)
+			{
 				sprites = Content.ChestUncommonClosed[0];
+			}
 			else if(currentAction == 1)
+			{
 				sprites = Content.ChestUncommonOpening[0];
+			}
 			else if(currentAction == 2)
+			{
 				sprites = Content.ChestUncommonOpened[0];
+			}
 		}
-		else if(doodadType.equals(CreateDoodad.Chests.Rare.toString()))
+		else if(doodadType.equals(DoodadData.Chests.Rare.toString()))
 		{
 			if(currentAction == 0)
+			{
 				sprites = Content.ChestRareClosed[0];
+			}
 			else if(currentAction == 1)
+			{
 				sprites = Content.ChestRareOpening[0];
+			}
 			else if(currentAction == 2)
+			{
 				sprites = Content.ChestRareOpened[0];
+			}
 		}
 	}
 	
 	public void interact(Player player)
 	{
+		
 		// If the chest is already open, we don't want to open it again
 		if(used)
 		{
@@ -117,7 +136,7 @@ public class Chest extends Doodad
 				// If the player hasn't started the conversation yet, start it.
 				if(!player.getInConversation() && choiceMade == 0)
 				{
-					conversationBox.startConversation(player, null, null, conversation.unlockObject(chestName), conversation.unlockObjectWhoTalks());
+					conversationBox.startConversation(player, null, this, conversation.unlockObject(chestName), conversation.unlockObjectWhoTalks());
 					return;
 				}
 				
@@ -141,19 +160,19 @@ public class Chest extends Doodad
 								item.use(player);
 								successfullyOpened = true;
 								JukeBox.play("Unlock");
-								conversationBox.startConversation(player, null, null, conversation.unlockObjectChoiceYesSuccess(chestName), conversation.unlockObjectChoiceYesSuccessWhoTalks());
+								conversationBox.startConversation(player, null, this, conversation.unlockObjectChoiceYesSuccess(chestName), conversation.unlockObjectChoiceYesSuccessWhoTalks());
 							}
 							else
 							{
 								// No key. =(
 								player.playCannotOpenSound();
-								conversationBox.startConversation(player, null, null, conversation.unlockObjectChoiceYesFailure(chestName), conversation.unlockObjectChoiceYesFailureWhoTalks());
+								conversationBox.startConversation(player, null, this, conversation.unlockObjectChoiceYesFailure(chestName), conversation.unlockObjectChoiceYesFailureWhoTalks());
 							}
 						}
 						// If the player decides not to open the chest
 						else
 						{
-							conversationBox.startConversation(player, null, null, conversation.unlockObjectChoiceNo(chestName), conversation.unlockObjectChoiceNoWhoTalks());
+							conversationBox.startConversation(player, null, this, conversation.unlockObjectChoiceNo(chestName), conversation.unlockObjectChoiceNoWhoTalks());
 						}	
 					}
 				}
@@ -175,85 +194,79 @@ public class Chest extends Doodad
 				// End the conversation and reset the choice
 				conversationBox.endConversation();
 				choiceMade = 0;
+			}
+		}
 				
-				// If the player managed to open the chest
-				if(successfullyOpened)
+		// If the player managed to open the chest
+		if(successfullyOpened)
+		{
+			// If the chest is not yet opened
+			if(!active)
+			{
+				playSound();
+				player.playLootSound();
+				
+				active = true;
+				conversationPiece = "You found ";
+						
+				int tempRows = inventory.getRows();
+				int tempColumns = inventory.getColumns();
+				Item[][] items = inventory.getItems();
+				for(int i = 0; i < tempRows; i++)
 				{
-					// If the chest is not yet opened
-					if(!active)
+					for(int j = 0; j < tempColumns; j++)
 					{
-						playSound();
-						player.playLootSound();
+						Item item = items[i][j];
 						
-						active = true;
-						conversationPiece = "You found ";
-						
-						int tempRows = inventory.getRows();
-						int tempColumns = inventory.getColumns();
-						Item[][] items = inventory.getItems();
-						for(int i = 0; i < tempRows; i++)
+						if(item != null)
 						{
-							for(int j = 0; j < tempColumns; j++)
+							if(item.getStacks() > 1)
 							{
-								Item item = items[i][j];
-								
-								if(item != null)
-								{
-									if(item.getStacks() > 1)
-									{
-										conversationPiece += item.getStacks() + " " + item.getDescriptionName() + "s, ";
-									}else
-									{
-										conversationPiece += item.getStacks() + " " + item.getDescriptionName() + ", ";	
-									}
+								conversationPiece += item.getStacks() + " " + item.getDescriptionName() + "s, ";
+							}else
+							{
+								conversationPiece += item.getStacks() + " " + item.getDescriptionName() + ", ";	
+							}
 									
 									
-									if(item.getItemType().equals(CreateItem.Coins.Silver.toString()))
-									{
-										silver = item.getStacks();
-									}
-									else if(item.getItemType().equals(CreateItem.Coins.Gold.toString()))
-									{
-										silver = item.getStacks();
-									}
-									else
-									{
-										player.getInventory().addItem(item);
-									}
-								}
-							}
-							char[] tempCharArray = conversationPiece.toCharArray();
-							conversationPiece = "";
-							for(int z = 0; z < (tempCharArray.length - 2); z++)
+							if(item.getItemType().equals(CreateItem.Coins.Silver.toString()))
 							{
-								conversationPiece += tempCharArray[z];
+								silver = item.getStacks();
 							}
-							conversationPiece += ".";
+							else if(item.getItemType().equals(CreateItem.Coins.Gold.toString()))
+							{
+								gold = item.getStacks();
+							}
+							else
+							{
+								player.getInventory().addItem(item);
+							}
 						}
-						
-						String[] conversation = new String[]
-						{
-							conversationPiece		
-						};
-						player.getConversationState().startConversation(player, null, null, conversation, new int[] { 3 });
-						
-						
-					}
-					else
-					{
-						if(silver > 0 || gold > 0)
-						{
-							JukeBox.play("Coin");
-						}
-						
-						
-						player.addSilver(silver);
-						player.addGold(gold);
-						used = true;
-							
-						System.out.println("Successful");
 					}
 				}
+				conversationPiece = conversationPiece.substring(0, conversationPiece.length() - 2);
+				
+				conversationPiece += ".";
+				
+				String[] conversation = new String[]
+				{
+					conversationPiece		
+				};
+				player.getConversationState().startConversation(player, null, this, conversation, new int[] { 2 });
+			
+			
+			}
+			else
+			{
+				if(silver > 0 || gold > 0)
+				{
+					JukeBox.play("Coin");
+				}
+						
+						
+				player.addSilver(silver);
+				player.addGold(gold);
+				used = true;
 			}
 		}
 	}

@@ -69,14 +69,6 @@ public class LiadrinFirstEncounter extends Unit
 				100,		 															// mana
 				100,		 															// maxMana
 				30,		 															// manaCounter
-				20,		 															// smallFireballManaCost
-				20,		 															// smallFireballDamage
-				40,		 															// largeFireballManaCost
-				50, 																	// largeFireballDamage
-				30,																	// electricBallManaCost
-				70,																	// electricBallDamage
-				0,
-				0,
 				"/Art/Sprites/Characters/Succubus.png",									// spritePath
 				new int[] {0,0,0,0,1,2,0,0,1,2,1,2,3,0,0,0,0},						// animationStates
 				new int[]{7, 2, 2, 1, 2, 0, 0, 0, 0},								// numImages
@@ -117,7 +109,7 @@ public class LiadrinFirstEncounter extends Unit
 		}
 		
 		// If the player has not yet started talking to Liadrin, do so.
-		if(!player.getConversationState().inConversation() && summoningEffect == null && choiceMade == 0)
+		if(!player.getInConversation() && summoningEffect == null && choiceMade == 0)
 		{
 			player.getConversationState().startConversation(player, this, null, player.getConversation().liadrinFirstEncounter(), player.getConversation().liadrinFirstEncounterWhoTalks());
 			return;

@@ -14,8 +14,8 @@ public class CreateItem
 		
     	itemDescriptionName = new HashMap<String, String>();
 		itemDescriptionName.put(Potions.Healing.toString(), "Healing Potion");
-		itemDescriptionName.put(Potions.Mana.toString(), "Stamina Potion");
-		itemDescriptionName.put(Potions.Stamina.toString(), "Mana Potion");
+		itemDescriptionName.put(Potions.Mana.toString(), "Mana Potion");
+		itemDescriptionName.put(Potions.Stamina.toString(), "Stamina Potion");
 		
 		itemDescriptionName.put(Keys.Uncommon.toString(), "Uncommon Key");
 		itemDescriptionName.put(Keys.Rare.toString(), "Rare Key");
@@ -25,9 +25,9 @@ public class CreateItem
 		itemDescriptionName.put(Coins.Gold.toString(), "Gold Coin");
 		
 		itemDescription = new HashMap<String, String>();
-		itemDescription.put(Potions.Healing.toString(), "Restores health");
-		itemDescription.put(Potions.Mana.toString(), "Restores stamina");
-		itemDescription.put(Potions.Stamina.toString(), "Restores mana");
+		itemDescription.put(Potions.Healing.toString(), "A magical red potion which heals wounds when consumed.");
+		itemDescription.put(Potions.Mana.toString(), "A magical blue potion which replenishes mana when consumed.");
+		itemDescription.put(Potions.Stamina.toString(), "A magical yellow potion wich restores stamina when consumed.");
 		
 		itemDescription.put(Keys.Uncommon.toString(), "Unlocks chests of Uncommon quality.");
 		itemDescription.put(Keys.Rare.toString(), "Unlocks chests of Rare quality.");

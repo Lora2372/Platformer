@@ -5,6 +5,7 @@ import java.awt.image.*;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
+import Entity.Projectile.ProjectileData;
 import Main.Content;
 import Main.GamePanel;
 
@@ -74,7 +75,7 @@ public class HUD
 					);
 			
 			
-			spellcost.add(player.getFireBallSmallManaCost());
+			spellcost.add(ProjectileData.projectileCost.get(ProjectileData.Projectiles.FireBallSmall.toString()));
 			
 			BufferedImage tempImage = ImageIO.read(
 					getClass().getResource(
@@ -90,7 +91,7 @@ public class HUD
 					);
 			spellbarUnusable.add(tempImage);
 
-			spellcost.add(player.getFireBallLargeManaCost());
+			spellcost.add(ProjectileData.projectileCost.get(ProjectileData.Projectiles.FireBallLarge.toString()));
 
 			
 			

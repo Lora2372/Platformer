@@ -20,7 +20,7 @@ public class GamePanel
 	public static int WIDTH = 1200;
 	public static int HEIGHT = 900;
 	
-	public static final String version = "0.1.058.5";
+	public static final String version = "0.1.059";
 		
 	// Game thread
 	private Thread thread;
@@ -175,9 +175,10 @@ public class GamePanel
 			try 
 			{
 				BufferedImage loadingImage = ImageIO.read(
-						getClass().getResource(
+						getClass().getResource
+							(
 								"/Art/HUD/Foregrounds/Loading.png"
-								)
+							)
 						);
 				
 				graphics.drawImage(loadingImage, 
@@ -200,7 +201,7 @@ public class GamePanel
 	private void drawToScreen()
 	{
 		Graphics graphics2 = getGraphics();
-		graphics2.drawImage(image,0,0, null );
+		graphics2.drawImage(image, 0, 0, null );
 		graphics2.dispose();
 	}
 	

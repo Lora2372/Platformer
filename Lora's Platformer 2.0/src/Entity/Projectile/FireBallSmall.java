@@ -16,8 +16,7 @@ public class FireBallSmall extends Projectile
 			boolean up, 
 			boolean down,
 			double angle,
-			boolean friendly,
-			int damage
+			boolean friendly
 		)
 	{
 		
@@ -34,9 +33,6 @@ public class FireBallSmall extends Projectile
 				30, 																// Collision width
 				30, 																// Collision height
 				5, 																	// Projectile speed
-				damage,																// Explosion damage
-				20,
-				30, 																// Explosion radius
 				"FireBallSmall"														// Explosion sound
 			);
 	}

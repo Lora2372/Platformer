@@ -35,6 +35,7 @@ public class InventoryState extends GameState
 	protected int selectedSlotX = 0;
 	protected int selectedSlotY = 0;
 	
+	
 	int inventoryBackgroundWidth = 600;
 	int inventoryBackgroundHeight = 600;
 
@@ -114,7 +115,11 @@ public class InventoryState extends GameState
 	
 	public void update()
 	{
-		background.update();
+//		background.update();
+		if(items[selectedSlotY][selectedSlotX] != null)
+		{
+			player.getConversationState().displayItem(player, items[selectedSlotY][selectedSlotX]);
+		}
 	}
 	
 
@@ -125,7 +130,7 @@ public class InventoryState extends GameState
 		try
 		{
 		
-			background.draw(graphics);
+//			background.draw(graphics);
 			
 			graphics.setColor(titleColor);
 			graphics.setFont(titleFont);
@@ -238,7 +243,8 @@ public class InventoryState extends GameState
 	{
 		if(k == KeyEvent.VK_B)
 		{
-			gameStateManager.browsingInventory(false);
+			player.getConversationState().endConversation();
+			gameStateManager.setBrowsingInventory(false);
 			gameStateManager.pause(false);
 		}
 		

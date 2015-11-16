@@ -28,7 +28,8 @@ public class Door extends Doodad
 	protected Player player;
 	
 	
-	public Door(
+	public Door
+		(
 			TileMap tileMap, 
 			GameStateManager gameStateManager,
 			double spawnX,
@@ -36,7 +37,7 @@ public class Door extends Doodad
 			boolean locked,
 			int currentAction,
 			String doorType
-			) 
+		) 
 	{
 		super(tileMap, 
 				spawnX, 
@@ -57,7 +58,7 @@ public class Door extends Doodad
 				);
 		
 		this.locked = locked;
-		this.doorName = CreateDoodad.doodadName.get(doodadType);
+		this.doorName = DoodadData.doodadName.get(doodadType);
 		
 		if(currentAction == 2)
 		{
@@ -73,7 +74,7 @@ public class Door extends Doodad
 	{
 		this.currentAction = currentAction;
 		
-		if(doodadType.equals("Boss"))
+		if(doodadType.equals(DoodadData.Doors.Boss.toString()))
 		{
 			if(currentAction == 0)
 			{
@@ -89,7 +90,7 @@ public class Door extends Doodad
 			}
 		}
 		
-		if(doodadType.equals("Village"))
+		if(doodadType.equals(DoodadData.Doors.Village.toString()))
 		{
 			if(currentAction == 0)
 			{
@@ -134,7 +135,7 @@ public class Door extends Doodad
 			{
 				if(!player.getInConversation() && choiceMade == 0)
 				{
-					conversationBox.startConversation(player, null, null, player.getConversation().unlockObject(doorName), player.getConversation().unlockObjectWhoTalks());
+					conversationBox.startConversation(player, null, this, player.getConversation().unlockObject(doorName), player.getConversation().unlockObjectWhoTalks());
 					return;
 				}
 				
@@ -152,17 +153,17 @@ public class Door extends Doodad
 								item.use(player);
 								JukeBox.play("Unlock");
 								successfullyOpened = true;
-								conversationBox.startConversation(player, null, null, conversation.unlockObjectChoiceYesSuccess(doorName), conversation.unlockObjectChoiceYesSuccessWhoTalks());
+								conversationBox.startConversation(player, null, this, conversation.unlockObjectChoiceYesSuccess(doorName), conversation.unlockObjectChoiceYesSuccessWhoTalks());
 							}
 							else
 							{
 								player.playCannotOpenSound();
-								conversationBox.startConversation(player, null, null, conversation.unlockObjectChoiceYesFailure(doorName), conversation.unlockObjectChoiceYesFailureWhoTalks());
+								conversationBox.startConversation(player, null, this, conversation.unlockObjectChoiceYesFailure(doorName), conversation.unlockObjectChoiceYesFailureWhoTalks());
 							}
 						}
 						else
 						{
-							conversationBox.startConversation(player, null, null, conversation.unlockObjectChoiceNo(doorName), conversation.unlockObjectChoiceNoWhoTalks());
+							conversationBox.startConversation(player, null, this, conversation.unlockObjectChoiceNo(doorName), conversation.unlockObjectChoiceNoWhoTalks());
 						}
 					}
 				}
@@ -181,14 +182,15 @@ public class Door extends Doodad
 			{
 				conversationBox.endConversation();
 				choiceMade = 0;
-				if(successfullyOpened)
-				{
-					JukeBox.play("DoorOpen");
-				
-					active = true;
-					used = true;
-				}
 			}
+		}
+		
+		if(successfullyOpened)
+		{
+			JukeBox.play("DoorOpen");
+				
+			active = true;
+			used = true;
 		}
 	}
 	

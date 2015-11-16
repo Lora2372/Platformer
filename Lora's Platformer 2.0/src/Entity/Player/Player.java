@@ -58,15 +58,15 @@ public class Player extends Unit
 				true,  																// inControl
 				100,	 															// health
 				100,	 															//maxHealth
-				0.005,	 																// healthRegen
+				0.005,	 															// healthRegen
 				100,	 															// mana
 				100,	 															// maxMana
-				0.05,	 																// manaRegen
+				0.05,	 															// manaRegen
 				100,	 															// stamina
 				100, 	 															// maxStamina
-				0.05,	 																// staminaRegen
-				800,																// sightRange
-				120,
+				0.05,	 															// staminaRegen
+				800,																// sightRangeX
+				120,																// sightRangeY
 				5,	 	 															// punchCost
 				1, 		 															// punchDamage
 				80, 	 															// punchRange
@@ -74,14 +74,6 @@ public class Player extends Unit
 				40,		 															// dashDamage
 				40,		 															// dashRange
 				20, 	 															// dashSpeed
-				20,		 															// smallFireballManaCost
-				20,		 															// smallFireballDamage
-				40,		 															// largeFireballManaCost
-				50, 																// largeFireballDamage
-				30,																	// electricBallManaCost
-				70,																	// electricBallDamage
-				0,
-				0,
 				"/Art/Sprites/Characters/Lora.png", 									// spritePath
 				new int[] {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,14,15},				// animationStates
 				new int[]{6, 6, 1, 5, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1},			// numImages

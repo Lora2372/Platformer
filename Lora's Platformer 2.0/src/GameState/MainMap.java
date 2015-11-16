@@ -474,14 +474,14 @@ public class MainMap extends GameState
 		
 		
 		String[] names = new String[]
-				{
-					"cookie",
-					"steven",
-					"morgan",
-					"tom",
-					"carl",
-					"john"				
-				};
+		{
+			"Cookie",
+			"Steven",
+			"Morgan",
+			"Tom",
+			"Carl",
+			"John"				
+		};
 		
 		if(name == null)
 		{
@@ -500,8 +500,8 @@ public class MainMap extends GameState
 	{
 		String[] succubiNames = new String[]
 		{
-					"Rui",
-					"Domwena"
+			"Rui",
+			"Domwena"
 		};
 		
 		Random randomizer = new Random();
@@ -679,6 +679,14 @@ public class MainMap extends GameState
 		return door;
 	}
 	
+	public Lever spawnLever(double locationX, double locationY, int currentAction)
+	{
+		Lever lever = new Lever(tileMap, gameStateManager, locationX, locationY, currentAction);
+		activatables.add(lever);
+		stuff.add(lever);
+		return lever;
+	}
+	
 	public Chest spawnChest(double locationX, double locationY, boolean locked,String chestType)
 	{
 		Chest chest = new Chest(tileMap, locationX, locationY, locked, chestType);
@@ -727,12 +735,16 @@ public class MainMap extends GameState
 		if(k == KeyEvent.VK_ESCAPE) 
 		{
 			gameStateManager.paused = !gameStateManager.getPaused();
-			gameStateManager.browsingInventory(false);
+			gameStateManager.setBrowsingInventory(false);
 		}
 		
 		if(k == KeyEvent.VK_B)
 		{
-			gameStateManager.browsingInventory = !gameStateManager.getBrowsingInventory();
+			if(player.getInConversation())
+			{
+				return;
+			}
+			gameStateManager.setBrowsingInventory(!gameStateManager.getBrowsingInventory());
 			gameStateManager.pause(gameStateManager.getBrowsingInventory());
 		}
 		

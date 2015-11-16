@@ -87,6 +87,17 @@ public class Explosion extends MapObject
 					if(character.intersects(this))
 					{
 						unitsHit.add(character);
+						
+//						double distance(int x1, int y1, int x2, int y2) {
+//						    int dx = x2 - x1;
+//						    int dy = y2 - y1;
+//						    return Math.sqrt(dx * dx + dy * dy);
+//						}
+//						
+						double distanceX = character.getLocationX() - locationX;
+						double distanceY = character.getLocationY() - locationY;
+						double  distance = Math.sqrt(distanceX * distanceX * + distanceY * distanceY);
+						System.out.println("distance: " + distance);
 						character.hit(damage);
 					}
 			}

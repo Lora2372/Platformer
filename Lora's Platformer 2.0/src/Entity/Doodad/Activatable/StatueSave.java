@@ -90,7 +90,7 @@ public class StatueSave extends Doodad
 				}
 				else
 				{
-					player.getConversationState().startConversation(player, null, null, conversation.statueSaveChoiceNo(), conversation.statuSaveChoiceNoWhoTalks());	
+					player.getConversationState().startConversation(player, null, null, conversation.statueSaveChoiceNo(), conversation.statueSaveChoiceNoWhoTalks());	
 					return;
 				}
 			}

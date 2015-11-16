@@ -15,6 +15,7 @@ import Entity.Projectile.ElectricBall;
 import Entity.Projectile.FireBallLarge;
 import Entity.Projectile.FireBallSmall;
 import Entity.Projectile.Projectile;
+import Entity.Projectile.ProjectileData;
 import GameState.MainMap;
 import Main.Content;
 import TileMap.TileMap;
@@ -91,32 +92,20 @@ public class Unit extends MapObject
 	protected boolean fireBallSmallDoneCasting;
 	protected boolean fireBallSmallHolding;
 	
-	protected int fireBallSmallManaCost;
-	protected int fireBallSmallDamage;
-	
 	// Large fireBall
 	protected boolean fireBallLargeCasting;
 	protected boolean fireBallLargeDoneCasting;
 	protected boolean fireBallLargeHolding;
-	
-	protected int fireBallLargeManaCost;
-	protected int fireBallLargeDamage;
 	
 	// electricBall
 	protected boolean electricBallCasting;
 	protected boolean electricBallDoneCasting;
 	protected boolean electricBallHolding;
 	
-	protected int electricBallManaCost;
-	protected int electricBallDamage;
-	
 	// arcaneBall
 	protected boolean arcaneBallCasting;
 	protected boolean arcaneBallDoneCasting;
 	protected boolean arcaneBallHolding;
-	
-	protected int arcaneBallManaCost;
-	protected int arcaneBallDamage;
 	
 	// Punch
 	protected boolean startPunch;
@@ -218,14 +207,6 @@ public class Unit extends MapObject
 			int dashDamage,	
 			int dashRange,
 			double dashSpeed,
-			int fireBallSmallManaCost,
-			int fireBallSmallDamage,	
-			int fireBallLargeManaCost,
-			int fireBallLargeDamage,
-			int electricBallManaCost,
-			int electricBallDamage,
-			int arcaneBallManaCost,
-			int arcaneBallDamage,
 			String spritePath,
 			int[] animationState,
 			int[] numFrames,
@@ -274,14 +255,6 @@ public class Unit extends MapObject
 		this.mana = mana;
 		this.maxMana = maxMana;
 		this.manaRegen = manaRegen;
-		this.fireBallSmallManaCost = fireBallSmallManaCost;
-		this.fireBallSmallDamage = fireBallSmallDamage;
-		this.fireBallLargeManaCost = fireBallLargeManaCost;
-		this.fireBallLargeDamage = fireBallLargeDamage;
-		this.electricBallManaCost = electricBallManaCost;
-		this.electricBallDamage = electricBallDamage;
-		this.arcaneBallManaCost = arcaneBallManaCost;
-		this.arcaneBallDamage = arcaneBallDamage;
 		this.spritePath = spritePath;
 		this.animationState = animationState;
 		this.numFrames = numFrames;
@@ -431,8 +404,6 @@ public class Unit extends MapObject
 		}
 	}
 	
-	public int getFireBallSmallManaCost() { return fireBallSmallManaCost; }
-	public int getFireBallLargeManaCost() { return fireBallLargeManaCost; }
 	
 	public int getDashStaminaCost()  { return dashCost; }
 	public int getPunchStaminaCost() { return punchCost; }
@@ -480,7 +451,7 @@ public class Unit extends MapObject
 	
 	public void setCastingSmallFireBall()
 	{
-		if(mana > fireBallSmallManaCost && inControl && !fireBallSmallHolding)
+		if(mana > ProjectileData.projectileCost.get(ProjectileData.Projectiles.FireBallSmall.toString()) && inControl && !fireBallSmallHolding)
 		{
 			fireBallSmallCasting = true;
 			inControl = false;			
@@ -490,7 +461,7 @@ public class Unit extends MapObject
 	
 	public void setCastingLargeFireBall()
 	{
-		if(mana > fireBallLargeManaCost && inControl && !fireBallLargeHolding)
+		if(mana > ProjectileData.projectileCost.get(ProjectileData.Projectiles.FireBallLarge.toString()) && inControl && !fireBallLargeHolding)
 		{
 			fireBallLargeCasting = true;
 			inControl = false;			
@@ -860,12 +831,12 @@ public class Unit extends MapObject
 		//********************************************************************************	
 		else if(arcaneBallCasting)
 		{
-			mana -= arcaneBallManaCost;
+			mana -= ProjectileData.projectileCost.get(ProjectileData.Projectiles.ArcaneBall.toString());
 			arcaneBallCasting = false;
 			arcaneBallDoneCasting = true;
 			
 			
-			ArcaneBall arcaneBall = new ArcaneBall(tileMap, mainMap, facingRight, up, down, aim, friendly, arcaneBallDamage);
+			ArcaneBall arcaneBall = new ArcaneBall(tileMap, mainMap, facingRight, up, down, aim, friendly);
 			arcaneBall.setPosition(locationX, locationY - 20);
 			mainMap.addProjectile(arcaneBall);
 			
@@ -896,13 +867,13 @@ public class Unit extends MapObject
 			if(animation.hasPlayedOnce())
 			{
 
-				mana -= fireBallSmallManaCost;
+				mana -= ProjectileData.projectileCost.get(ProjectileData.Projectiles.FireBallSmall.toString());
 				fireBallSmallCasting = false;
 				fireBallSmallDoneCasting = true;
 		
 				calculateAim(null);
 				
-				FireBallSmall fireBall = new FireBallSmall(tileMap, mainMap, facingRight, up, down, aim, friendly, fireBallSmallDamage);
+				FireBallSmall fireBall = new FireBallSmall(tileMap, mainMap, facingRight, up, down, aim, friendly);
 				fireBall.setPosition(locationX, locationY - 20);
 				mainMap.addProjectile(fireBall);
 				playCastSound();
@@ -946,7 +917,7 @@ public class Unit extends MapObject
 			if(animation.hasPlayedOnce())
 			{
 
-				mana -= electricBallManaCost;
+				mana -= ProjectileData.projectileCost.get(ProjectileData.Projectiles.ElectricBall.toString());
 				electricBallCasting = false;
 				electricBallDoneCasting = true;
 				
@@ -964,7 +935,7 @@ public class Unit extends MapObject
 				}
 				
 				
-				electricBall = new ElectricBall(tileMap, mainMap, facingRight, up, down, aim, friendly, electricBallDamage);
+				electricBall = new ElectricBall(tileMap, mainMap, facingRight, up, down, aim, friendly);
 				electricBall.setPosition(locationX, locationY - 20);
 				mainMap.addProjectile(electricBall);
 				
@@ -1002,12 +973,12 @@ public class Unit extends MapObject
 			}
 			if(animation.hasPlayedOnce())
 			{
-				mana -= fireBallLargeManaCost;
+				mana -= ProjectileData.projectileCost.get(ProjectileData.Projectiles.FireBallLarge.toString());
 				fireBallLargeCasting = false;
 				fireBallLargeDoneCasting = true;
 				
 				calculateAim(null);
-				FireBallLarge fireBall = new FireBallLarge(tileMap, mainMap, facingRight, up, down, aim, friendly, fireBallLargeDamage);
+				FireBallLarge fireBall = new FireBallLarge(tileMap, mainMap, facingRight, up, down, aim, friendly);
 				fireBall.setPosition(locationX, locationY);
 				mainMap.addProjectile(fireBall);
 				

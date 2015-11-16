@@ -4,9 +4,10 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
-import Entity.Doodad.Activatable.CreateDoodad;
+import Entity.Doodad.Activatable.DoodadData;
 import Entity.Item.CreateItem;
 import Entity.Player.*;
+import Entity.Projectile.ProjectileData;
 import Main.GamePanel;
 import Main.JSONReader;
 import TileMap.Background;
@@ -53,8 +54,9 @@ public class MenuState extends GameState
 		@SuppressWarnings("unused")
 		CreateItem createItem = new CreateItem(tileMap);
 		@SuppressWarnings("unused")
-		CreateDoodad createDoodad = new CreateDoodad(tileMap);
-		
+		DoodadData doodadData = new DoodadData(tileMap);
+		@SuppressWarnings("unused")
+		ProjectileData projectileData = new ProjectileData(tileMap);
 		
 		gameStateManager.setPlayer(player);
 		gameStateManager.setTileMap(tileMap);

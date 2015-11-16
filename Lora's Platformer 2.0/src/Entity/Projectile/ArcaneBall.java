@@ -15,8 +15,7 @@ public class ArcaneBall extends Projectile
 			boolean up, 
 			boolean down, 
 			double angle,
-			boolean friendly,
-			int damage
+			boolean friendly
 		)
 	{
 		
@@ -33,9 +32,6 @@ public class ArcaneBall extends Projectile
 				60, 																// Collision width
 				60, 																// Collision height
 				5, 																	// Projectile speed
-				damage,																// Explosion damage
-				50,
-				96, 																// Explosion radius
 				"ArcaneBall"														// Explosion sound
 			);
 	}

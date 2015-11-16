@@ -155,7 +155,7 @@ public class MysteriousDungeon extends MainMap
 		{
 			if(player.getDirectionY() == 0 && player.getLocationY() > 300)
 			{
-				if(!player.getConversationState().inConversation())
+				if(!player.getInConversation())
 				{
 					int[] whoTalks = new int[]{0};		
 					player.getConversationState().startConversation(player, null, null, conversation.mysteriousDungeonTorchMessage, whoTalks);

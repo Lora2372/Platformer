@@ -16,8 +16,7 @@ public class ElectricBall extends Projectile
 			boolean up, 
 			boolean down, 
 			double angle,
-			boolean friendly,
-			int damage
+			boolean friendly
 		)
 	{
 		
@@ -34,9 +33,6 @@ public class ElectricBall extends Projectile
 				40, 																// Collision width
 				40, 																// Collision height
 				5, 																	// Projectile speed
-				damage,																// Explosion damage
-				50,
-				60, 																// Explosion radius
 				"ElectricBall"														// Explosion sound
 			);
 	}

@@ -56,14 +56,6 @@ public class Slug extends Unit
 				2,		 															// dashDamage
 				40,		 															// dashRange
 				20, 	 															// dashSpeed
-				0,		 															// smallFireBallManaCost
-				20,		 															// smallFireBallDamage
-				0,		 															// largeFireBallManaCost
-				0, 																	// largeFireBallDamage
-				30,																	// electricBallManaCost
-				70,																	// electricBallDamage
-				0,
-				0,
 				"/Art/Sprites/Characters/slugger.gif",									// spritePath
 				new int[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},						// animationStates
 				new int[]{3},														// numImages

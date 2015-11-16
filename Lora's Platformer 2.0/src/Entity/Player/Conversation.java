@@ -28,8 +28,8 @@ public class Conversation
 	{
 		return new int[]
 		{
-			3,
-			3
+			2,
+			2
 		};
 	}
 	
@@ -45,7 +45,7 @@ public class Conversation
 	{
 		return new int[]
 		{
-			3
+			2
 		};
 	}
 	
@@ -61,7 +61,7 @@ public class Conversation
 	{
 		return new int[]
 		{
-			3
+			2
 		};
 	}
 	
@@ -77,7 +77,7 @@ public class Conversation
 	{
 		return new int[]
 		{
-			3
+			2
 		};
 	}
 	
@@ -99,8 +99,8 @@ public class Conversation
 	{
 		return new int[]
 		{
-			3,
-			3
+			2,
+			2
 		};
 	}
 	
@@ -116,7 +116,7 @@ public class Conversation
 	{
 		return new int[]
 		{
-			3
+			2
 		};
 	}
 	
@@ -128,11 +128,11 @@ public class Conversation
 		};
 	}
 	
-	public int[] statuSaveChoiceNoWhoTalks()
+	public int[] statueSaveChoiceNoWhoTalks()
 	{
 		return new int[]
 		{
-			3
+			2
 		};
 	}
 	
