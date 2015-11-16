@@ -666,7 +666,7 @@ public class MainMap extends GameState
 	
 	public void spawnSign(double locationX, double locationY, String[] conversation, int[] whoTalks)
 	{
-		ActivatableSign activatableSign = new ActivatableSign(tileMap, locationX, locationY, player, conversation, whoTalks);
+		Sign activatableSign = new Sign(tileMap, locationX, locationY, player, conversation, whoTalks);
 		activatables.add(activatableSign);
 		stuff.add(activatableSign);
 	}

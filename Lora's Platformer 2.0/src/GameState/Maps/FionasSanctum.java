@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import Audio.JukeBox;
 import Entity.Doodad.Doodad;
-import Entity.Doodad.Activatable.ActivatableShrineFionasSanctum;
+import Entity.Doodad.Activatable.ShrineFionasSanctum;
 import Entity.Doodad.Activatable.Door;
 import Entity.Doodad.Activatable.Portal;
 import Entity.Player.Conversation;
@@ -22,7 +22,7 @@ public class FionasSanctum extends MainMap
 {
 	protected boolean pathBlocked;
 	
-	protected ActivatableShrineFionasSanctum activatableShrine;
+	protected ShrineFionasSanctum activatableShrine;
 	
 	protected Fiona fiona;
 	
@@ -75,7 +75,7 @@ public class FionasSanctum extends MainMap
 		characterList.add(fiona);
 		fiona.setHidden(true);
 		
-		activatableShrine = new ActivatableShrineFionasSanctum(tileMap, gameStatemanager, this, 600, 760, fiona);
+		activatableShrine = new ShrineFionasSanctum(tileMap, gameStatemanager, this, 600, 760, fiona);
 		activatables.add(activatableShrine);
 		stuff.add(activatableShrine);
 		

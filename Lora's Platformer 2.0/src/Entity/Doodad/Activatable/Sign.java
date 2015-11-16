@@ -7,7 +7,7 @@ import Entity.Doodad.Doodad;
 import Entity.Player.Player;
 
 
-public class ActivatableSign extends Doodad
+public class Sign extends Doodad
 {
 
 	protected String[] conversation;
@@ -17,7 +17,7 @@ public class ActivatableSign extends Doodad
 	protected String name;
 	
 	// We need a class that draws the basic "sign background" and then write text on top of that, the stuff below is temporary...
-	public ActivatableSign(
+	public Sign(
 			TileMap tileMap, 
 			double spawnX,
 			double spawnY,
@@ -41,11 +41,10 @@ public class ActivatableSign extends Doodad
 				true,
 				false,
 				0,
-				"ActivatableSign"
+				"Sign",
+				DoodadData.doodadName.get("Sign")
 				);
-		
-		setDoodadType("Sign");
-		
+				
 		this.conversation = conversation;
 		
 		this.whoTalks = whoTalks;
@@ -55,6 +54,7 @@ public class ActivatableSign extends Doodad
 	public void setDoodad(int currentAction)
 	{
 		sprites = Content.Sign[0];
+		portrait = Content.PortraitSign[0];
 	}
 	
 	public void startConversation()

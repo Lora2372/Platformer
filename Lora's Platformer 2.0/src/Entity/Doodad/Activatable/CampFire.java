@@ -34,7 +34,8 @@ public class CampFire extends Doodad
 				true,
 				false,
 				0,
-				"CampFire"
+				"CampFire",
+				DoodadData.doodadName.get("CampFire")
 				);
 
 		this.gameStateManager = gameStateManager;
@@ -43,6 +44,7 @@ public class CampFire extends Doodad
 	public void setDoodad(int currentAction)
 	{
 		sprites = Content.CampFire[0];
+		portrait = Content.PortraitCampFire[0];
 	}
 	
 	public void interact(Player player)

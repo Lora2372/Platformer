@@ -21,7 +21,12 @@ public class DoodadData
 		doodadName.put(Chests.Uncommon.toString(), "Uncommon Chest");
 		doodadName.put(Chests.Rare.toString(), "Rare Chest");
 		
-		
+		doodadName.put(Other.CampFire.toString(), "Campfire");
+		doodadName.put(Other.Lever.toString(), "Lever");
+		doodadName.put(Other.Portal.toString(), "Portal");
+		doodadName.put(Other.Shrine.toString(), "Shrine");
+		doodadName.put(Other.Sign.toString(), "Sign");
+		doodadName.put(Other.StatueSave.toString(), "Shrine of Saving");		
 	}
 	
 	public static enum Doors
@@ -35,6 +40,16 @@ public class DoodadData
 		Common,
 		Uncommon,
 		Rare
+	}
+	
+	public static enum Other
+	{
+		CampFire,
+		Lever,
+		Portal,
+		Shrine,
+		Sign,
+		StatueSave
 	}
 	
 	

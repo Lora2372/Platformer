@@ -33,6 +33,7 @@ public class Item extends MapObject
 	protected String descriptionName;
 	protected String description;
 	
+	protected BufferedImage[] portrait;
 	
 	protected boolean activatable;
 	
@@ -157,6 +158,8 @@ public class Item extends MapObject
 	public String getDescriptionName() { return descriptionName; }
 	
 	public String getDescription() { return description; }
+	
+	public BufferedImage[] getPortrait() { return portrait;}
 	
 	public void setItem() { }
 	

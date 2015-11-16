@@ -41,7 +41,8 @@ public class Lever extends Doodad
 				true,
 				false,
 				currentAction,
-				"Lever"
+				"Lever",
+				DoodadData.doodadName.get("Lever")
 			);
 		
 		if(currentAction == 2)
@@ -60,6 +61,7 @@ public class Lever extends Doodad
 		
 		if(doodadType.equals(DoodadData.Doors.Boss.toString()))
 		{
+			portrait = Content.PortraitLever[0];
 			if(currentAction == 0)
 			{
 				sprites = Content.LeverClosed[0];

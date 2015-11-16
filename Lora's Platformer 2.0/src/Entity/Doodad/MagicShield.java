@@ -28,7 +28,8 @@ public class MagicShield extends Doodad
 				false,
 				false,
 				0,
-				"MagicShield"
+				"MagicShield",
+				""
 				);
 	}
 	public void setDoodad(int currentAction)

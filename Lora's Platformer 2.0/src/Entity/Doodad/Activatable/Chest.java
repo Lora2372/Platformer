@@ -52,7 +52,8 @@ public class Chest extends Doodad
 				true,
 				false,
 				0,
-				chestType
+				chestType,
+				DoodadData.doodadName.get(chestType)
 				);
 		
 		this.locked = locked;
@@ -63,6 +64,7 @@ public class Chest extends Doodad
 	{
 		if(doodadType.equals(DoodadData.Chests.Common.toString()))
 		{
+			portrait = Content.PortraitChestCommon[0];
 			if(currentAction == 0)
 			{
 				sprites = Content.ChestCommonClosed[0];
@@ -78,6 +80,7 @@ public class Chest extends Doodad
 		}
 		else if(doodadType.equals(DoodadData.Chests.Uncommon.toString()))
 		{
+			portrait = Content.PortraitChestUncommon[0];
 			if(currentAction == 0)
 			{
 				sprites = Content.ChestUncommonClosed[0];
@@ -93,6 +96,7 @@ public class Chest extends Doodad
 		}
 		else if(doodadType.equals(DoodadData.Chests.Rare.toString()))
 		{
+			portrait = Content.PortraitChestRare[0];
 			if(currentAction == 0)
 			{
 				sprites = Content.ChestRareClosed[0];

@@ -94,10 +94,9 @@ public class Explosion extends MapObject
 //						    return Math.sqrt(dx * dx + dy * dy);
 //						}
 //						
-						double distanceX = character.getLocationX() - locationX;
-						double distanceY = character.getLocationY() - locationY;
-						double  distance = Math.sqrt(distanceX * distanceX * + distanceY * distanceY);
-						System.out.println("distance: " + distance);
+//						double distanceX = character.getLocationX() - locationX;
+//						double distanceY = character.getLocationY() - locationY;
+//						double  distance = Math.sqrt(distanceX * distanceX * + distanceY * distanceY);
 						character.hit(damage);
 					}
 			}

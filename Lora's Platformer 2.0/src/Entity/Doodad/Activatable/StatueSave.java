@@ -20,6 +20,7 @@ public class StatueSave extends Doodad
 	
 	protected int choiceMade;
 	
+	
 	public StatueSave(
 			TileMap tileMap, 
 			double spawnX,
@@ -41,18 +42,19 @@ public class StatueSave extends Doodad
 				true,
 				false,
 				0,
-				"StatueSave"
+				DoodadData.Other.StatueSave.toString(),
+				DoodadData.doodadName.get(DoodadData.Other.StatueSave.toString())
 				);
+				
 		
 		this.spawnX = spawnX;
 		this.spawnY = spawnY;
-		
 	}
 	
 	public void setDoodad(int currentAction)
 	{
 		sprites = Content.StatueSave[0];
-
+		portrait = Content.PortraitStatueSave[0];
 	}
 	
 	public void interact(Player player)
@@ -71,7 +73,7 @@ public class StatueSave extends Doodad
 			player.restoreHealth(player.getMaxHealth());
 			player.restoreMana(player.getMaxMana());
 			player.restoreStamina(player.getMaxStamina());
-			player.getConversationState().startConversation(player, null, null, conversation.statueSave(), conversation.statueSaveWhoTalks());
+			player.getConversationState().startConversation(player, null, this, conversation.statueSave(), conversation.statueSaveWhoTalks());
 			return;
 		}
 		
@@ -82,7 +84,7 @@ public class StatueSave extends Doodad
 				choiceMade = conversationBox.getChoiceMade();
 				if(choiceMade == 1)
 				{
-					player.getConversationState().startConversation(player, null, null, conversation.statueSaveChoiceYes(), conversation.statueSaveChoiceYesWhoTalks());
+					player.getConversationState().startConversation(player, null, this, conversation.statueSaveChoiceYes(), conversation.statueSaveChoiceYesWhoTalks());
 					
 					JSONWriter.saveFile(player, (int)spawnX, (int)spawnY);
 					JukeBox.play("Save");
@@ -90,7 +92,7 @@ public class StatueSave extends Doodad
 				}
 				else
 				{
-					player.getConversationState().startConversation(player, null, null, conversation.statueSaveChoiceNo(), conversation.statueSaveChoiceNoWhoTalks());	
+					player.getConversationState().startConversation(player, null, this, conversation.statueSaveChoiceNo(), conversation.statueSaveChoiceNoWhoTalks());	
 					return;
 				}
 			}

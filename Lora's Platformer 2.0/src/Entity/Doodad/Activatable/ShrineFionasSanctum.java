@@ -11,7 +11,7 @@ import GameState.GameStateManager;
 import GameState.Maps.FionasSanctum;
 import Main.Content;
 
-public class ActivatableShrineFionasSanctum extends Doodad
+public class ShrineFionasSanctum extends Doodad
 {
 	protected GameStateManager gameStateManager;
 	protected FionasSanctum fionasSanctum;
@@ -30,7 +30,7 @@ public class ActivatableShrineFionasSanctum extends Doodad
 	
 	protected ConversationState conversationBox;
 	
-	public ActivatableShrineFionasSanctum(
+	public ShrineFionasSanctum(
 			TileMap tileMap,
 			GameStateManager gameStateManager,
 			FionasSanctum fionasSanctum,
@@ -55,7 +55,8 @@ public class ActivatableShrineFionasSanctum extends Doodad
 				true,
 				false,
 				0,
-				"ActivatableShrineFionasSanctum"
+				"ShrineFionasSanctum",
+				DoodadData.doodadName.get("ShrineFionasSanctum")
 				);
 		
 		this.fiona = fiona;
@@ -68,6 +69,7 @@ public class ActivatableShrineFionasSanctum extends Doodad
 	public void setDoodad(int currentAction)
 	{
 		sprites = Content.Shrine[0];
+		portrait = Content.PortraitShrine[0];
 	}
 	
 	public boolean getStartConversation() { return startConversation; }

@@ -25,7 +25,8 @@ public class SummoningEffect extends Doodad
 				false,
 				false,
 				0,
-				"SummoningEffect"
+				"SummoningEffect",
+				""
 				
 		);
 		

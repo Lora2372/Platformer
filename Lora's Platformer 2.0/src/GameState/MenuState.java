@@ -48,8 +48,6 @@ public class MenuState extends GameState
 	{
 		this.gameStateManager = gameStateManager;
 		tileMap = new TileMap(60);
-		player = new Player("Lora", tileMap, conversationState);
-		
 		
 		@SuppressWarnings("unused")
 		CreateItem createItem = new CreateItem(tileMap);
@@ -57,6 +55,8 @@ public class MenuState extends GameState
 		DoodadData doodadData = new DoodadData(tileMap);
 		@SuppressWarnings("unused")
 		ProjectileData projectileData = new ProjectileData(tileMap);
+		
+		player = new Player("Lora", tileMap, conversationState);
 		
 		gameStateManager.setPlayer(player);
 		gameStateManager.setTileMap(tileMap);

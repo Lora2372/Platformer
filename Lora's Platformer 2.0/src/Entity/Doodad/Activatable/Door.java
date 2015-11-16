@@ -54,7 +54,8 @@ public class Door extends Doodad
 				true,
 				false,
 				currentAction,
-				doorType
+				doorType,
+				DoodadData.doodadName.get(doorType)
 				);
 		
 		this.locked = locked;
@@ -76,6 +77,7 @@ public class Door extends Doodad
 		
 		if(doodadType.equals(DoodadData.Doors.Boss.toString()))
 		{
+			portrait = Content.PortraitDoorBoss[0];
 			if(currentAction == 0)
 			{
 				sprites = Content.DoorBossClosed[0];
@@ -92,6 +94,7 @@ public class Door extends Doodad
 		
 		if(doodadType.equals(DoodadData.Doors.Village.toString()))
 		{
+			portrait = Content.PortraitDoorVillage[0];
 			if(currentAction == 0)
 			{
 				sprites = Content.DoorVillageSquareClosed[0];
@@ -112,7 +115,7 @@ public class Door extends Doodad
 	public void interact(Player player)
 	{
 		// If the door is already open, we walk through it.
-		if(used)
+		if(used && !player.getInConversation())
 		{
 			if(gameStateManager.getState() == GameStateManager.MysteriousDungeon)
 			{
@@ -185,7 +188,7 @@ public class Door extends Doodad
 			}
 		}
 		
-		if(successfullyOpened)
+		if(successfullyOpened && !used)
 		{
 			JukeBox.play("DoorOpen");
 				

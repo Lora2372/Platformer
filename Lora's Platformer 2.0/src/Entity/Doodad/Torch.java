@@ -28,7 +28,8 @@ public class Torch extends Doodad
 				false,
 				false,
 				0,
-				"Torch"
+				"Torch",
+				""
 				);
 	}
 	public void setDoodad(int currentAction)

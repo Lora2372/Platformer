@@ -2,7 +2,6 @@ package Entity.Doodad;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import Main.Content;
 import TileMap.TileMap;
 import Entity.MapObject;
 import Entity.Player.Player;
@@ -26,6 +25,7 @@ public class Doodad extends MapObject
 	protected int stopAt;
 	
 	protected String doodadType;
+	protected String doodadName;
 	
 	public Doodad(
 			TileMap tileMap, 
@@ -43,7 +43,8 @@ public class Doodad extends MapObject
 			boolean activatable,
 			boolean active,
 			int currentAction,
-			String doodadType
+			String doodadType,
+			String descriptionName
 			)
 	{
 		super(tileMap);
@@ -60,6 +61,8 @@ public class Doodad extends MapObject
 		this.fallSpeed = fallSpeed;
 		this.maxFallSpeed = maxFallSpeed;
 		this.doodadType = doodadType;
+		this.doodadName = descriptionName;
+				
 		locationX = spawnX;
 		locationY = spawnY;
 		
@@ -69,9 +72,7 @@ public class Doodad extends MapObject
 		this.currentAction = currentAction;
 		setDoodad(currentAction);
 		animation.setFrames(sprites);
-		animation.setDelay(70);
-		portrait = Content.PortraitSign[0];
-		
+		animation.setDelay(70);		
 	}
 	
 	public void setDoodad(int currentAction) { }
@@ -147,4 +148,10 @@ public class Doodad extends MapObject
 	{
 		return doodadType;
 	}
+	
+	public String getDoodadName()
+	{
+		return doodadName;
+	}
+	
 }

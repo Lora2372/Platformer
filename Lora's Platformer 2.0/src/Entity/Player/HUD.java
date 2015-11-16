@@ -74,6 +74,9 @@ public class HUD
 							)
 					);
 			
+			int k  = ProjectileData.projectileCost.get(ProjectileData.Projectiles.FireBallSmall.toString());
+			System.out.println(k);
+			
 			
 			spellcost.add(ProjectileData.projectileCost.get(ProjectileData.Projectiles.FireBallSmall.toString()));
 			
@@ -175,147 +178,154 @@ public class HUD
 	
 	public void draw(Graphics2D graphics)
 	{
-		
-		// Draw the health bar
-		double currentValue = player.getHealth();
-		double maxValue = player.getMaxHealth();
-		
-		graphics.drawImage(playerHealthBar, 
-				94, 
-				27, 
-				(int)((currentValue/maxValue) * playerHealthBar.getWidth()),
-				playerHealthBar.getHeight(),
-				null);
-		
-		
-		// Draw the mana bar
-		currentValue = player.getMana();
-		maxValue = player.getMaxMana();
-		
-		graphics.drawImage(playerManaBar, 
-				113, 
-				56, 
-				(int)((currentValue/maxValue) * playerManaBar.getWidth()),
-				playerManaBar.getHeight(),
-				null);
-		
-		// Draw the stamina bar
-		currentValue = player.getStamina();
-		maxValue = player.getMaxStamina();
-		
-		graphics.drawImage(playerStaminaBar, 
-				106, 
-				86, 
-				(int)((currentValue/maxValue) * playerStaminaBar.getWidth()),
-				playerStaminaBar.getHeight(),
-				null);
-		
-		// Draw the player bar
-		graphics.drawImage(playerBar, 
-				0, 
-				10, 
-				null);
-		
-		
-		// YARR, there be gold and silver a plenty!
-		//			(Drawing currency)
-		graphics.setFont(new Font("Arial", Font.PLAIN, 14));
-		int currencyX = GamePanel.WIDTH - 100;
-		int currencyY = GamePanel.HEIGHT - 100;
-		graphics.drawString("" + player.getSilver(), currencyX, currencyY);
-		graphics.drawImage(
-				Content.CoinSilver[0][0],
-				currencyX + 15,
-				currencyY - 20,				
-				30,
-				30,
-				null
-				);
-
-		currencyY += 30;
-		
-		graphics.drawImage(
-				Content.CoinGold[0][0],
-				currencyX + 15,
-				currencyY - 20,
-				30,
-				30,
-				null
-				);		
-		graphics.drawString("" + player.getGold(), currencyX, currencyY);
-		
-		// The gold is ours, let's head back to the ship!
-		
-		
-		// Draw the quest frame
-		if(questFrameShow)
+		try
 		{
-
 			
-			double textWidth = graphics.getFontMetrics().stringWidth(questName[questCurrent]);
+		
+			// Draw the health bar
+			double currentValue = player.getHealth();
+			double maxValue = player.getMaxHealth();
 			
-			double locationX = GamePanel.WIDTH - 100 - textWidth;
-			double locationY = 100;
+			graphics.drawImage(playerHealthBar, 
+					94, 
+					27, 
+					(int)((currentValue/maxValue) * playerHealthBar.getWidth()),
+					playerHealthBar.getHeight(),
+					null);
 			
+			
+			// Draw the mana bar
+			currentValue = player.getMana();
+			maxValue = player.getMaxMana();
+			
+			graphics.drawImage(playerManaBar, 
+					113, 
+					56, 
+					(int)((currentValue/maxValue) * playerManaBar.getWidth()),
+					playerManaBar.getHeight(),
+					null);
+			
+			// Draw the stamina bar
+			currentValue = player.getStamina();
+			maxValue = player.getMaxStamina();
+			
+			graphics.drawImage(playerStaminaBar, 
+					106, 
+					86, 
+					(int)((currentValue/maxValue) * playerStaminaBar.getWidth()),
+					playerStaminaBar.getHeight(),
+					null);
+			
+			// Draw the player bar
+			graphics.drawImage(playerBar, 
+					0, 
+					10, 
+					null);
+			
+			
+			// YARR, there be gold and silver a plenty!
+			//			(Drawing currency)
+			graphics.setFont(new Font("Arial", Font.PLAIN, 14));
+			int currencyX = GamePanel.WIDTH - 100;
+			int currencyY = GamePanel.HEIGHT - 100;
+			graphics.drawString("" + player.getSilver(), currencyX, currencyY);
 			graphics.drawImage(
-					Content.ConversationGUIEndConversation[0][0],
-					(int)locationX - 20,
-					(int)locationY - 20,
-					(int)textWidth + 40,
+					Content.CoinSilver[0][0],
+					currencyX + 15,
+					currencyY - 20,				
+					30,
 					30,
 					null
 					);
+	
+			currencyY += 30;
 			
-			graphics.drawString(questName[questCurrent], (int)locationX, (int)locationY);
-		}
-		
-		
-		// Draw the action bar
-		if(!player.getInConversation())
-		{
-			int x = GamePanel.WIDTH / 2 - (spellbarUsable.get(0).getWidth() * 2);
-			int y = GamePanel.HEIGHT - spellbarUsable.get(0).getHeight() - 5;
+			graphics.drawImage(
+					Content.CoinGold[0][0],
+					currencyX + 15,
+					currencyY - 20,
+					30,
+					30,
+					null
+					);		
+			graphics.drawString("" + player.getGold(), currencyX, currencyY);
 			
-			for(int i = 0; i < spellbarUsable.size(); i++)
+			// The gold is ours, let's head back to the ship!
+			
+			
+			// Draw the quest frame
+			if(questFrameShow)
 			{
-				if( (player.getMana() >= spellcost.get(i) && i < 2) || (player.getStamina() >= spellcost.get(i) && i >=2) )
+	
+				
+				double textWidth = graphics.getFontMetrics().stringWidth(questName[questCurrent]);
+				
+				double locationX = GamePanel.WIDTH - 100 - textWidth;
+				double locationY = 100;
+				
+				graphics.drawImage(
+						Content.ConversationGUIEndConversation[0][0],
+						(int)locationX - 20,
+						(int)locationY - 20,
+						(int)textWidth + 40,
+						30,
+						null
+						);
+				
+				graphics.drawString(questName[questCurrent], (int)locationX, (int)locationY);
+			}
+			
+			
+			// Draw the action bar
+			if(!player.getInConversation())
+			{
+				int x = GamePanel.WIDTH / 2 - (spellbarUsable.get(0).getWidth() * 2);
+				int y = GamePanel.HEIGHT - spellbarUsable.get(0).getHeight() - 5;
+				
+				for(int i = 0; i < spellbarUsable.size(); i++)
 				{
-					graphics.drawImage(spellbarUsable.get(i), x + i * spellbarUsable.get(i).getWidth(), y, null);
+					if( (player.getMana() >= spellcost.get(i) && i < 2) || (player.getStamina() >= spellcost.get(i) && i >=2) )
+					{
+						graphics.drawImage(spellbarUsable.get(i), x + i * spellbarUsable.get(i).getWidth(), y, null);
+					}
+					else
+						graphics.drawImage(spellbarUnusable.get(i), x + i * spellbarUsable.get(i).getWidth(), y, null);
 				}
-				else
-					graphics.drawImage(spellbarUnusable.get(i), x + i * spellbarUsable.get(i).getWidth(), y, null);
+			}
+			
+			
+			if(boss != null)
+			{
+				
+				int imageWidth = GamePanel.WIDTH / 4;
+				
+				int x = GamePanel.WIDTH / 2 - imageWidth / 2;
+				int y = 20;
+				
+				graphics.drawImage(bossBar,
+						x,
+						y,
+						imageWidth,
+						bossBar.getHeight(),
+						null
+						);
+				
+				currentValue = boss.getHealth();
+				maxValue = boss.getMaxHealth();
+	
+				graphics.drawImage(bossHealthBar, 
+						x, 
+						y, 
+						(int)((currentValue/maxValue) * imageWidth),
+						bossHealthBar.getHeight(),
+						null);			
 			}
 		}
-		
-		
-		if(boss != null)
+		catch(NullPointerException exception)
 		{
-			
-			int imageWidth = GamePanel.WIDTH / 4;
-			
-			int x = GamePanel.WIDTH / 2 - imageWidth / 2;
-			int y = 20;
-			
-			graphics.drawImage(bossBar,
-					x,
-					y,
-					imageWidth,
-					bossBar.getHeight(),
-					null
-					);
-			
-			currentValue = boss.getHealth();
-			maxValue = boss.getMaxHealth();
-
-			graphics.drawImage(bossHealthBar, 
-					x, 
-					y, 
-					(int)((currentValue/maxValue) * imageWidth),
-					bossHealthBar.getHeight(),
-					null);			
+			exception.printStackTrace();
 		}
-		
-		
 	}
+
 	
 }

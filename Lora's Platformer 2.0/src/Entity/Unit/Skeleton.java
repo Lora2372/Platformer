@@ -41,14 +41,14 @@ public class Skeleton extends Unit
 				facingRight,														// facingRight
 				true,  																// inControl
 				50,		 															// health
-				50, 		 															//maxHealth
-				0.1,	 															// healthRegen
+				50, 		 														//maxHealth
+				0.005,	 															// healthRegen
 				100,		 														// mana
 				100,		 														// maxMana
-				0,		 															// manaRegen
+				0.1,	 															// manaRegen
 				100,	 															// stamina
 				100, 	 															// maxStamina
-				0,		 															// staminaRegen
+				0.1,	 															// staminaRegen
 				100,																// sightRange
 				120,
 				0,	 	 															// punchCost

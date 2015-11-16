@@ -28,7 +28,8 @@ public class Poff extends Doodad
 				false,
 				false,
 				0,
-				"Poff"
+				"Poff",
+				""
 				);
 	}
 	public void setDoodad(int currentAction)

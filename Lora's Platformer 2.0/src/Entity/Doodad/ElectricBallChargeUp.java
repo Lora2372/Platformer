@@ -28,7 +28,8 @@ public class ElectricBallChargeUp extends Doodad
 				false,
 				false,
 				0,
-				"ElectricballChargeUp"
+				"ElectricballChargeUp",
+				""
 				);
 	}
 	public void setDoodad(int currentAction)

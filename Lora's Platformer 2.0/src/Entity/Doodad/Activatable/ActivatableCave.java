@@ -32,7 +32,8 @@ public class ActivatableCave extends Doodad
 				true,
 				false,
 				0,
-				"CaveEntrance"
+				"CaveEntrance",
+				DoodadData.doodadName.get("CaveEntrance")
 				);
 		
 		this.gameStateManager = gameStateManager;

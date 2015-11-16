@@ -28,7 +28,8 @@ public class Waterfall extends Doodad
 				false,
 				false,
 				0,
-				"Waterfall"
+				"Waterfall",
+				""
 				);
 	}
 	public void setDoodad(int currentAction)

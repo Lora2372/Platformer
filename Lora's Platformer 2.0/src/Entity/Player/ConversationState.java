@@ -198,158 +198,166 @@ public class ConversationState  extends GameState
 	
 	public void draw(Graphics2D graphics)
 	{
-		graphics.drawImage(
-				conversationGUI[0],
-				(int) (locationX),
-				(int) (locationY),
-				null
-			);
-		
-		player.inControl(false);
-		
-		String tempName = "";
-		
-		BufferedImage[] tempIcon = null;
-		
-		if(whoTalks[conversationTracker] == 0)
-		{
-			tempName = player.getName();
-			tempIcon = player.getPortrait();
-		}
-		
-		if(whoTalks[conversationTracker] == 1)
-		{
-			tempName = otherPerson.getName();
-			tempIcon = otherPerson.getPortrait();
-		}
-		
-		if(whoTalks[conversationTracker] == 2)
-		{
-			tempName = doodad.getDoodadType();
-			tempIcon = doodad.getPortrait();
-		}
-		
-		if(whoTalks[conversationTracker] == 4)
-		{
-			tempName = "Liadrin";
-			tempIcon = Content.PortraitLiadrin[0];
-		}
-		
-		if(whoTalks[conversationTracker] == 5)
-		{
-			tempName = "Unknown";
-			tempIcon = Content.PortraitLiadrin[0];
-		}
-		
-		if(whoTalks[conversationTracker] == 6)
-		{
-			tempName = item.getDescriptionName();
-			tempIcon = item.getSprites();
-		}
-		
-		
-		graphics.setFont(new Font("Arial", Font.PLAIN, 14));
-		
-		if(whoTalks[conversationTracker] != 3)
+		try
 		{
 			graphics.drawImage(
-					tempIcon[0],
-					(int) (locationX - 94),
-					(int) (locationY + 35),
+					conversationGUI[0],
+					(int) (locationX),
+					(int) (locationY),
 					null
 				);
 			
-			graphics.drawString(tempName, (int)locationX + 21, (int)locationY + 25);	
-		}
+			player.inControl(false);
 			
-		
-		String[] myString = conversation[conversationTracker].split(" ");
-		int tempX = 0;
-		int line = 0;
-
-		graphics.setColor(Color.WHITE);
-		
-		int tempChoiceAmount = 0;
-		ArrayList<Integer> tempChoiceRows = new ArrayList<Integer>();
-
-		mouseRectangle = new Rectangle(MouseInfo.getPointerInfo().getLocation().x, MouseInfo.getPointerInfo().getLocation().y, 1, 1);
-
-		for(int i = 0; i < myString.length; i++)
-		{
-			int tempInt = graphics.getFontMetrics().stringWidth(myString[i]);
+			String tempName = "";
 			
-			if( (tempX + tempInt > conversationBoxWidth -40) || myString[i].equals("\n"))
+			BufferedImage[] tempIcon = null;
+			
+			if(whoTalks[conversationTracker] == 0)
 			{
-				graphics.setColor(Color.WHITE);
-				line++;
-				tempX = 0;
-				
+				tempName = player.getName();
+				tempIcon = player.getPortrait();
 			}
 			
-			int textLocationX = (int)locationX + 21 + tempX;
-			int textLocationY = (int)locationY + 70 + 20 * line;
-			
-			int textWidth = (textLocationX - (int)locationX) + conversationBoxWidth - 40;
-			int textHeight = (int) graphics.getFontMetrics().getStringBounds(myString[i], graphics).getHeight();
-				
-			
-			if(myString[i].equals("-"))
+			if(whoTalks[conversationTracker] == 1)
 			{
-				tempChoiceAmount++;
-				
-				Rectangle textRectangle = new Rectangle(
-						textLocationX,
-						textLocationY + 10,
-						textWidth,
-						textHeight						
-						);
-				
-				if(mouseRectangle.intersects(textRectangle))
-				{
-					choiceSelected = tempChoiceAmount;
-				}
-				
-				if(choiceSelected == tempChoiceAmount)
-				{
-					graphics.setColor(Color.YELLOW);
-				}
-				else
-				{
-					graphics.setColor(Color.RED);
-				}
-				tempChoiceRows.add(line);
-				choiceRequested = true;
-
+				tempName = otherPerson.getName();
+				tempIcon = otherPerson.getPortrait();
 			}
 			
-			graphics.drawString(myString[i], textLocationX, textLocationY);
-			
-			tempX += tempInt + 3;
-		}
-		
-		choiceAmount = tempChoiceAmount;
-		choiceRows = tempChoiceRows;
-		
-		if( !choiceRequested)
-		{
-			if(conversationTracker == conversation.length - 1)
+			if(whoTalks[conversationTracker] == 2)
 			{
-				tempX = (int) locationX + 454;
-				int tempY = (int) locationY + 98;
 				
-				int stringLength = graphics.getFontMetrics().stringWidth(endConversationString);
-				
+				tempName = doodad.getDoodadName();
+				tempIcon = doodad.getPortrait();
+			}
+			
+			if(whoTalks[conversationTracker] == 4)
+			{
+				tempName = "Liadrin";
+				tempIcon = Content.PortraitLiadrin[0];
+			}
+			
+			if(whoTalks[conversationTracker] == 5)
+			{
+				tempName = "Unknown";
+				tempIcon = Content.PortraitLiadrin[0];
+			}
+			
+			if(whoTalks[conversationTracker] == 6)
+			{
+				tempName = item.getDescriptionName();
+				tempIcon = item.getPortrait();
+			}
+			
+			
+			graphics.setFont(new Font("Arial", Font.PLAIN, 14));
+			
+			if(whoTalks[conversationTracker] != 3)
+			{
 				graphics.drawImage(
-						endConversation[0], 
-						tempX, 
-						tempY,
-						stringLength + 20,
-						35,
-						null);
+						tempIcon[0],
+						(int) (locationX - 94),
+						(int) (locationY + 35),
+						null
+					);
 				
-				graphics.drawString(endConversationString, tempX + 12, tempY + 20);
-				
+				graphics.drawString(tempName, (int)locationX + 21, (int)locationY + 25);	
 			}
+				
+			
+			String[] myString = conversation[conversationTracker].split(" ");
+			int tempX = 0;
+			int line = 0;
+	
+			graphics.setColor(Color.WHITE);
+			
+			int tempChoiceAmount = 0;
+			ArrayList<Integer> tempChoiceRows = new ArrayList<Integer>();
+	
+			mouseRectangle = new Rectangle(MouseInfo.getPointerInfo().getLocation().x, MouseInfo.getPointerInfo().getLocation().y, 1, 1);
+	
+			for(int i = 0; i < myString.length; i++)
+			{
+				int tempInt = graphics.getFontMetrics().stringWidth(myString[i]);
+				
+				if( (tempX + tempInt > conversationBoxWidth -40) || myString[i].equals("\n"))
+				{
+					graphics.setColor(Color.WHITE);
+					line++;
+					tempX = 0;
+					
+				}
+				
+				int textLocationX = (int)locationX + 21 + tempX;
+				int textLocationY = (int)locationY + 70 + 20 * line;
+				
+				int textWidth = (textLocationX - (int)locationX) + conversationBoxWidth - 40;
+				int textHeight = (int) graphics.getFontMetrics().getStringBounds(myString[i], graphics).getHeight();
+					
+				
+				if(myString[i].equals("-"))
+				{
+					tempChoiceAmount++;
+					
+					Rectangle textRectangle = new Rectangle(
+							textLocationX,
+							textLocationY + 10,
+							textWidth,
+							textHeight						
+							);
+					
+					if(mouseRectangle.intersects(textRectangle))
+					{
+						choiceSelected = tempChoiceAmount;
+					}
+					
+					if(choiceSelected == tempChoiceAmount)
+					{
+						graphics.setColor(Color.YELLOW);
+					}
+					else
+					{
+						graphics.setColor(Color.RED);
+					}
+					tempChoiceRows.add(line);
+					choiceRequested = true;
+	
+				}
+				
+				graphics.drawString(myString[i], textLocationX, textLocationY);
+				
+				tempX += tempInt + 3;
+			}
+			
+			choiceAmount = tempChoiceAmount;
+			choiceRows = tempChoiceRows;
+			
+			if( !choiceRequested)
+			{
+				if(conversationTracker == conversation.length - 1)
+				{
+					tempX = (int) locationX + 454;
+					int tempY = (int) locationY + 98;
+					
+					int stringLength = graphics.getFontMetrics().stringWidth(endConversationString);
+					
+					graphics.drawImage(
+							endConversation[0], 
+							tempX, 
+							tempY,
+							stringLength + 20,
+							35,
+							null);
+					
+					graphics.drawString(endConversationString, tempX + 12, tempY + 20);
+					
+				}
+			}
+		}
+		catch(NullPointerException exception)
+		{
+			exception.printStackTrace();
 		}
 	}
 

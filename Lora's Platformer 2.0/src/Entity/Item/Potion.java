@@ -47,14 +47,17 @@ public class Potion extends Item
 		if(itemType.equals(CreateItem.Potions.Healing.toString()))
 		{
 			sprites = Content.PotionHealth[0];
+			portrait = Content.PortraitPotionHealing[0];
 		}
 		else if(itemType.equals(CreateItem.Potions.Mana.toString()))
 		{
 			sprites = Content.PotionMana[0];
+			portrait = Content.PortraitPotionMana[0];
 		}
 		else if(itemType.equals(CreateItem.Potions.Stamina.toString()))
 		{
 			sprites = Content.PotionStamina[0];
+			portrait = Content.PortraitPotionStamina[0];
 		}
 	}
 	
