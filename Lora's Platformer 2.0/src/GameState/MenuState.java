@@ -44,6 +44,9 @@ public class MenuState extends GameState
 	protected Rectangle mouseRectangle;
 	protected Rectangle[] textRectangles = new Rectangle[options.length];
 	
+	double mouseLocationX;
+	double mouseLocationY;
+	
 	public MenuState(GameStateManager gameStateManager, ConversationState conversationState)
 	{
 		this.gameStateManager = gameStateManager;
@@ -117,7 +120,7 @@ public class MenuState extends GameState
 		
 		// Draw menu options
 		graphics.setFont(font);
-		mouseRectangle = new Rectangle(MouseInfo.getPointerInfo().getLocation().x, MouseInfo.getPointerInfo().getLocation().y, 1, 1);
+		mouseRectangle = new Rectangle((int)mouseLocationX, (int)mouseLocationY, 1, 1);
 
 		for(int i = 0; i < options.length; i++)
 		{
@@ -133,7 +136,7 @@ public class MenuState extends GameState
 
 			textRectangles[i] = new Rectangle(
 					textLocationX, 
-					textLocationY, 
+					textLocationY - textHeight / 2, 
 					textWidth, 
 					textHeight
 				);
@@ -269,6 +272,18 @@ public class MenuState extends GameState
 	public void mouseReleased(MouseEvent mouse) 
 	{
 		
+	}
+	
+	public void mouseMoved(MouseEvent mouse) 
+	{
+		mouseLocationX = mouse.getX();
+		mouseLocationY = mouse.getY();
+	}
+	
+	public void mouseDragged(MouseEvent mouse) 
+	{
+		mouseLocationX = mouse.getX();
+		mouseLocationY = mouse.getY();
 	}
 	
 }

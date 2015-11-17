@@ -3,7 +3,6 @@ package GameState;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
-import java.awt.MouseInfo;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -32,6 +31,9 @@ public class PauseState extends GameState
 	
 	protected Rectangle mouseRectangle;
 	protected Rectangle[] textRectangles = new Rectangle[options.length];
+	
+	protected double mouseLocationX;
+	protected double mouseLocationY;
 	
 	public PauseState(GameStateManager gameStateManager)
 	{
@@ -77,7 +79,7 @@ public class PauseState extends GameState
 		graphics.drawString(title, textX, GamePanel.HEIGHT / 5);
 		
 		graphics.setFont(font);
-		mouseRectangle = new Rectangle(MouseInfo.getPointerInfo().getLocation().x, MouseInfo.getPointerInfo().getLocation().y, 1, 1);
+		mouseRectangle = new Rectangle((int)mouseLocationX, (int)mouseLocationY, 1, 1);
 
 		for(int i = 0; i < options.length; i++)
 		{
@@ -92,7 +94,7 @@ public class PauseState extends GameState
 
 			textRectangles[i] = new Rectangle(
 					textLocationX, 
-					textLocationY, 
+					textLocationY - textHeight / 2, 
 					textWidth, 
 					textHeight
 				);
@@ -208,4 +210,15 @@ public class PauseState extends GameState
 		
 	}
 	
+	public void mouseMoved(MouseEvent mouse) 
+	{
+		mouseLocationX = mouse.getX();
+		mouseLocationY = mouse.getY();
+	}
+	
+	public void mouseDragged(MouseEvent mouse) 
+	{
+		mouseLocationX = mouse.getX();
+		mouseLocationY = mouse.getY();
+	}
 }

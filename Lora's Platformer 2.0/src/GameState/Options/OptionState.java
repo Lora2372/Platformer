@@ -2,7 +2,6 @@ package GameState.Options;
 
 import java.awt.Font;
 import java.awt.Graphics2D;
-import java.awt.MouseInfo;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -27,6 +26,9 @@ public class OptionState extends GameState implements ChangeListener
 	protected ArrayList<OptionObject> optionObjects;
 	
 	protected OptionObject goBack;
+	
+	protected double mouseLocationX;
+	protected double mouseLocationY;
 	
 	public OptionState(GameStateManager gameStateManager, GamePanel gamePanel)
 	{
@@ -129,7 +131,7 @@ public class OptionState extends GameState implements ChangeListener
 				{
 					locationX = optionObject.getLocationX() - 300;
 					locationY = optionObject.getLocationY();
-					graphics.drawString(optionObject.getText(), (int)locationX, (int)locationY);
+					graphics.drawString(optionObject.getText(), (int)locationX, (int)locationY + optionObject.getHeight());
 				}
 				
 				if(optionObject.getImage() != null)
@@ -138,7 +140,7 @@ public class OptionState extends GameState implements ChangeListener
 					(
 						optionObject.getImage(),
 						(int)optionObject.getLocationX(),
-						(int)optionObject.getLocationY() - optionObject.getHeight() / 2,
+						(int)optionObject.getLocationY(),
 						optionObject.getWidth(),
 						optionObject.getHeight(),
 						null
@@ -151,24 +153,19 @@ public class OptionState extends GameState implements ChangeListener
 					graphics.fillRect
 					(
 							optionObject.getRectangle().x,
-							optionObject.getRectangle().y  - optionObject.getRectangle().height / 2,
+							optionObject.getRectangle().y,
 							optionObject.getRectangle().width,
 							optionObject.getRectangle().height
 							
 					);
 				}
-
-
 				
-				}
-				catch(Exception exception)
-				{
-					exception.printStackTrace();
-				}
-			
+			}
+			catch(Exception exception)
+			{
+				exception.printStackTrace();
+			}
 		}
-		
-		
 	}
 
 	public void keyPressed(int k) 
@@ -181,13 +178,12 @@ public class OptionState extends GameState implements ChangeListener
 		
 	}
 
-	@Override
 	public void mouseClicked(MouseEvent mouse) 
 	{
 		Rectangle mouseRectangle = new Rectangle
 			(
-				(int)MouseInfo.getPointerInfo().getLocation().getX(),
-				(int)MouseInfo.getPointerInfo().getLocation().getY(),
+				(int)mouseLocationX,
+				(int)mouseLocationY,
 				1,
 				1
 			);
@@ -224,6 +220,18 @@ public class OptionState extends GameState implements ChangeListener
 	public void mouseReleased(MouseEvent mouse) 
 	{
 		
+	}
+	
+	public void mouseMoved(MouseEvent mouse) 
+	{
+		mouseLocationX = mouse.getX();
+		mouseLocationY = mouse.getY();
+	}
+	
+	public void mouseDragged(MouseEvent mouse) 
+	{
+		mouseLocationX = mouse.getX();
+		mouseLocationY = mouse.getY();
 	}
 
 

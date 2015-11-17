@@ -173,9 +173,9 @@ public class GameStateManager
 			}
 			
 			
-		} catch(Exception e) 
+		} catch(Exception exception) 
 		{
-			e.printStackTrace();
+			exception.printStackTrace();
 		}
 	}
 	
@@ -208,43 +208,101 @@ public class GameStateManager
 				
 				return;
 			}
-			gameStates[currentState].draw(graphics);
+			
+			if(gameStates[currentState] != null)
+			{
+				gameStates[currentState].draw(graphics);
+			}
 			
 			if(player.getInConversation())
 			{
 				conversationState.draw(graphics);
 			}
 			
-		} catch(Exception e) {}
+		} catch(Exception exception) 
+		{
+			exception.printStackTrace();
+		}
 	}
 	
-	public void keyPressed(int k) 
+	public void keyPressed(int key) 
 	{
-		if(paused)
+		try 
 		{
-			if(browsingInventory)
-				inventorystate.keyPressed(k);
-			else 
-			if
-				(!options)pausestate.keyPressed(k);
-			else 
-				optionstate.keyPressed(k);
+			if(options)
+			{
+				optionstate.keyPressed(key);
+				return;
+			}
 			
-			return;		
-		}
-		
-		if(player.getInConversation())
+			if(paused)
+			{
+				if(browsingInventory)
+				{
+					inventorystate.keyPressed(key);
+				}
+				else				
+				{
+					pausestate.keyPressed(key);
+				}
+				
+
+				return;
+			}
+			
+			if(gameStates[currentState] != null)
+			{
+				gameStates[currentState].keyPressed(key);
+			}
+			if(player.getInConversation())
+			{
+				conversationState.keyPressed(key);
+			}
+			
+		} catch(Exception exception) 
 		{
-			conversationState.keyPressed(k);
+			exception.printStackTrace();
 		}
-		
-		gameStates[currentState].keyPressed(k);
 	}
 	
-	public void keyReleased(int k) 
+	public void keyReleased(int key) 
 	{
-		if(gameStates[currentState] != null)
-			gameStates[currentState].keyReleased(k);
+		try 
+		{
+			if(options)
+			{
+				optionstate.keyReleased(key);
+				return;
+			}
+			
+			if(paused)
+			{
+				if(browsingInventory)
+				{
+					inventorystate.keyReleased(key);
+				}
+				else				
+				{
+					pausestate.keyReleased(key);
+				}
+				
+
+				return;
+			}
+			
+			if(gameStates[currentState] != null)
+			{
+				gameStates[currentState].keyReleased(key);
+			}
+			if(player.getInConversation())
+			{
+				conversationState.keyReleased(key);
+			}
+			
+		} catch(Exception exception) 
+		{
+			exception.printStackTrace();
+		}
 	}
 	
 	
@@ -272,47 +330,260 @@ public class GameStateManager
 
 				return;
 			}
-			gameStates[currentState].mouseClicked(mouse);
 			
+			if(gameStates[currentState] != null)
+			{
+				gameStates[currentState].mouseClicked(mouse);
+			}
 			if(player.getInConversation())
 			{
 				conversationState.mouseClicked(mouse);
 			}
 			
-		} catch(Exception e) {
-			e.printStackTrace();
+		} catch(Exception exception) 
+		{
+			exception.printStackTrace();
 		}
 	}
 	
 	public void mouseEntered(MouseEvent mouse) 
 	{
-		if(gameStates[currentState] != null)
+		try 
 		{
-			gameStates[currentState].mouseEntered(mouse);
+			if(options)
+			{
+				optionstate.mouseEntered(mouse);
+				return;
+			}
+			
+			if(paused)
+			{
+				if(browsingInventory)
+				{
+					inventorystate.mouseEntered(mouse);
+				}
+				else				
+				{
+					pausestate.mouseEntered(mouse);
+				}
+				
+
+				return;
+			}
+			
+			if(gameStates[currentState] != null)
+			{
+				gameStates[currentState].mouseEntered(mouse);
+			}
+			if(player.getInConversation())
+			{
+				conversationState.mouseEntered(mouse);
+			}
+			
+		} catch(Exception exception) 
+		{
+			exception.printStackTrace();
 		}
 	}
 
 	public void mouseExited(MouseEvent mouse) 
 	{
-		if(gameStates[currentState] != null)
+		try 
 		{
-			gameStates[currentState].mouseExited(mouse);
+			if(options)
+			{
+				optionstate.mouseExited(mouse);
+				return;
+			}
+			
+			if(paused)
+			{
+				if(browsingInventory)
+				{
+					inventorystate.mouseExited(mouse);
+				}
+				else				
+				{
+					pausestate.mouseExited(mouse);
+				}
+				
+
+				return;
+			}
+			
+			if(gameStates[currentState] != null)
+			{
+				gameStates[currentState].mouseExited(mouse);
+			}
+			if(player.getInConversation())
+			{
+				conversationState.mouseExited(mouse);
+			}
+			
+		} catch(Exception exception) 
+		{
+			exception.printStackTrace();
 		}
 	}
 
 	public void mousePressed(MouseEvent mouse) 
 	{
-		if(gameStates[currentState] != null)
+		try 
 		{
-			gameStates[currentState].mousePressed(mouse);
+			if(options)
+			{
+				optionstate.mousePressed(mouse);
+				return;
+			}
+			
+			if(paused)
+			{
+				if(browsingInventory)
+				{
+					inventorystate.mousePressed(mouse);
+				}
+				else				
+				{
+					pausestate.mousePressed(mouse);
+				}
+				
+
+				return;
+			}
+			
+			if(gameStates[currentState] != null)
+			{
+				gameStates[currentState].mousePressed(mouse);
+			}
+			if(player.getInConversation())
+			{
+				conversationState.mousePressed(mouse);
+			}
+			
+		} catch(Exception exception) 
+		{
+			exception.printStackTrace();
 		}
 	}
 
 	public void mouseReleased(MouseEvent mouse) 
 	{
-		if(gameStates[currentState] != null)
+		try 
 		{
-			gameStates[currentState].mouseReleased(mouse);
+			if(options)
+			{
+				optionstate.mouseReleased(mouse);
+				return;
+			}
+			
+			if(paused)
+			{
+				if(browsingInventory)
+				{
+					inventorystate.mouseReleased(mouse);
+				}
+				else				
+				{
+					pausestate.mouseReleased(mouse);
+				}
+				
+
+				return;
+			}
+			
+			if(gameStates[currentState] != null)
+			{
+				gameStates[currentState].mouseReleased(mouse);
+			}
+			if(player.getInConversation())
+			{
+				conversationState.mouseReleased(mouse);
+			}
+			
+		} catch(Exception exception) 
+		{
+			exception.printStackTrace();
+		}
+	}
+
+	public void mouseMoved(MouseEvent mouse)
+	{
+		try 
+		{
+			if(options)
+			{
+				optionstate.mouseMoved(mouse);
+				return;
+			}
+			
+			if(paused)
+			{
+				if(browsingInventory)
+				{
+					inventorystate.mouseMoved(mouse);
+				}
+				else				
+				{
+					pausestate.mouseMoved(mouse);
+				}
+				
+
+				return;
+			}
+			
+			if(gameStates[currentState] != null)
+			{
+				gameStates[currentState].mouseMoved(mouse);
+			}
+			if(player.getInConversation())
+			{
+				conversationState.mouseMoved(mouse);
+			}
+			
+		} catch(Exception exception) 
+		{
+			exception.printStackTrace();
+		}
+	}
+	
+	public void mouseDragged(MouseEvent mouse)
+	{
+		try 
+		{
+			if(options)
+			{
+				optionstate.mouseDragged(mouse);
+				return;
+			}
+			
+			if(paused)
+			{
+				if(browsingInventory)
+				{
+					inventorystate.mouseDragged(mouse);
+				}
+				else				
+				{
+					pausestate.mouseDragged(mouse);
+				}
+				
+
+				return;
+			}
+			if(gameStates[currentState] != null)
+			{
+				gameStates[currentState].mouseDragged(mouse);
+			}
+			
+			
+			if(player.getInConversation())
+			{
+				conversationState.mouseDragged(mouse);
+			}
+			
+		} catch(Exception exception) 
+		{
+			exception.printStackTrace();
 		}
 	}
 }

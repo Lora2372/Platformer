@@ -4,15 +4,12 @@ import java.awt.AWTException;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
-import java.awt.MouseInfo;
 import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-
 import com.sun.glass.events.KeyEvent;
-
 import Entity.Doodad.Doodad;
 import Entity.Item.Item;
 import Entity.Unit.Unit;
@@ -59,6 +56,10 @@ public class ConversationState  extends GameState
 	
 	protected Rectangle mouseRectangle;
 	protected Rectangle conversationRectangle;
+	
+	protected double mouseLocationX;
+	protected double mouseLocationY;
+	
 	
 	public ConversationState(GameStateManager gameStateManager)
 	{
@@ -252,6 +253,7 @@ public class ConversationState  extends GameState
 			
 			
 			graphics.setFont(new Font("Arial", Font.PLAIN, 14));
+			graphics.setColor(Color.WHITE);
 			
 			if(whoTalks[conversationTracker] != 3)
 			{
@@ -269,13 +271,11 @@ public class ConversationState  extends GameState
 			String[] myString = conversation[conversationTracker].split(" ");
 			int tempX = 0;
 			int line = 0;
-	
-			graphics.setColor(Color.WHITE);
 			
 			int tempChoiceAmount = 0;
 			ArrayList<Integer> tempChoiceRows = new ArrayList<Integer>();
 	
-			mouseRectangle = new Rectangle(MouseInfo.getPointerInfo().getLocation().x, MouseInfo.getPointerInfo().getLocation().y, 1, 1);
+			mouseRectangle = new Rectangle((int)mouseLocationX, (int)mouseLocationY, 1, 1);
 	
 			for(int i = 0; i < myString.length; i++)
 			{
@@ -431,6 +431,18 @@ public class ConversationState  extends GameState
 	public void mouseReleased(MouseEvent mouse) 
 	{
 		
+	}
+	
+	public void mouseMoved(MouseEvent mouse) 
+	{
+		mouseLocationX = mouse.getX();
+		mouseLocationY = mouse.getY();
+	}
+	
+	public void mouseDragged(MouseEvent mouse) 
+	{
+		mouseLocationX = mouse.getX();
+		mouseLocationY = mouse.getY();
 	}
 
 	public void initialize() 

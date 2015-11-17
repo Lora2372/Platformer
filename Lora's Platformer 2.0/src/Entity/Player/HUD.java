@@ -73,10 +73,7 @@ public class HUD
 							"/Art/HUD/Bars/BossHealthBarFrame.png"
 							)
 					);
-			
-			int k  = ProjectileData.projectileCost.get(ProjectileData.Projectiles.FireBallSmall.toString());
-			System.out.println(k);
-			
+						
 			
 			spellcost.add(ProjectileData.projectileCost.get(ProjectileData.Projectiles.FireBallSmall.toString()));
 			

@@ -3,8 +3,6 @@ package GameState;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.MouseInfo;
-
 import Main.GamePanel;
 import TileMap.*;
 import Entity.Explosion.Explosion;
@@ -194,13 +192,10 @@ public class MainMap extends GameState
 	{
 		if(!doneInitializing) return;
 		// Update Characters
-		mouseLocationX = MouseInfo.getPointerInfo().getLocation().getX();
-		mouseLocationY = MouseInfo.getPointerInfo().getLocation().getY();
 		
 		if(mousePressed)
 		{
-			double mouseRealLocationX = player.getLocationX() - (GamePanel.WIDTH / 2) + mouseLocationX;
-			player.setFacingRight(player.getLocationX() < mouseRealLocationX);
+			player.setFacingRight(player.getLocationX() + tileMap.getX() < mouseLocationX);
 			player.setRight(player.getFacingRight());
 			player.setLeft(!player.getFacingRight());
 		}
@@ -802,6 +797,14 @@ public class MainMap extends GameState
 			player.getInventory().addItem(myKey);
 			items.add(myKey);
 		}
+		
+		// Note: This is a built in cheat that is not supposed to be used to get the real game experience.
+		if(k == KeyEvent.VK_9)
+		{
+			player.restoreHealth(100);
+			player.restoreMana(100);
+			player.restoreStamina(100);
+		}
 
 		if(k == KeyEvent.VK_P) spawnSlug(player.getLocationX(), player.getLocationY(), player.getFacingRight(), null); 
 		if(k == KeyEvent.VK_O) spawnSuccubus(player.getLocationX(), player.getLocationY(), player.getFacingRight()); 
@@ -851,5 +854,23 @@ public class MainMap extends GameState
 		mousePressed = false;
 		player.setRight(false);
 		player.setLeft(false);
+	}
+
+	public void mouseMoved(MouseEvent mouse) 
+	{
+		mouseLocationX = mouse.getX();
+		mouseLocationY = mouse.getY();
+		
+		player.setMouseLocationX(mouseLocationX);
+		player.setMouseLocationY(mouseLocationY);
+	}
+	
+	public void mouseDragged(MouseEvent mouse) 
+	{
+		mouseLocationX = mouse.getX();
+		mouseLocationY = mouse.getY();
+		
+		player.setMouseLocationX(mouseLocationX);
+		player.setMouseLocationY(mouseLocationY);
 	}
 }

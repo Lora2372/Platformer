@@ -16,4 +16,6 @@ public abstract class GameState
 	public abstract void mouseExited(MouseEvent mouse);
 	public abstract void mousePressed(MouseEvent mouse);
 	public abstract void mouseReleased(MouseEvent mouse);
+	public abstract void mouseMoved(MouseEvent mouse);
+	public abstract void mouseDragged(MouseEvent mouse);
 }

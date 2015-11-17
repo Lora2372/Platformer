@@ -1,10 +1,8 @@
 package Entity.Player;
 
-import java.awt.MouseInfo;
 import java.util.Random;
 import Audio.JukeBox;
 import Entity.Unit.Unit;
-import Main.GamePanel;
 import TileMap.TileMap;
 
 public class Player extends Unit
@@ -20,6 +18,10 @@ public class Player extends Unit
 	
 	protected boolean loaded = false;
 	protected boolean usingMouse;
+	
+	protected double mouseLocationX;
+	protected double mouseLocationY;
+	
 	
 //	protected ArrayList<Projectile> a
 	
@@ -164,12 +166,8 @@ public class Player extends Unit
 		else
 		{
 			
-			tempX = MouseInfo.getPointerInfo().getLocation().getX() + locationX - GamePanel.WIDTH / 2;
-			tempY = MouseInfo.getPointerInfo().getLocation().getY() + locationY - GamePanel.HEIGHT / 2;
-			
-			
-			System.out.println("tempX: " + tempX);
-			System.out.println("tempY: " + tempY);
+			tempX = mouseLocationX - tileMap.getX();
+			tempY = mouseLocationY - tileMap.getY();
 		}
 			
 		aim = Math.atan2(tempY - locationY, tempX - locationX);
@@ -241,6 +239,16 @@ public class Player extends Unit
 		
 		int myRandom = random.nextInt((max - min) + 1) + min;
 		JukeBox.play("Female01" + soundTypes.CannotOpen + "0" + myRandom);		
+	}
+	
+	public void setMouseLocationX(double mouse)
+	{
+		this.mouseLocationX = mouse;
+	}
+	
+	public void setMouseLocationY(double mouse)
+	{
+		this.mouseLocationY = mouse;
 	}
 	
 }

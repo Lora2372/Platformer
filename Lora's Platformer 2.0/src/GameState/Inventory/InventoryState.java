@@ -3,11 +3,9 @@ package GameState.Inventory;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
-import java.awt.MouseInfo;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-
 import Entity.Item.Item;
 import Entity.Player.Player;
 import GameState.GameState;
@@ -45,6 +43,10 @@ public class InventoryState extends GameState
 	int inventorySlotWidth = 60;
 	int inventorySlotHeight = 60;
 	
+	protected boolean movingItem;
+	protected int movingItemFromSlotX = 0;
+	protected int movingItemFromSlotY = 0;
+	
 	protected Player player;
 	protected Inventory inventory;
 	protected Item[][] items;
@@ -52,6 +54,8 @@ public class InventoryState extends GameState
 	protected Rectangle mouseRectangle;
 	protected Rectangle[][] inventorySlotRectangles;
 	
+	protected double mouseLocationX;
+	protected double mouseLocationY;
 	
 	public InventoryState(
 			GameStateManager 
@@ -116,10 +120,13 @@ public class InventoryState extends GameState
 	public void update()
 	{
 //		background.update();
-		if(items[selectedSlotY][selectedSlotX] != null)
+		if(items[selectedSlotY][selectedSlotX] == null)
 		{
-			player.getConversationState().displayItem(player, items[selectedSlotY][selectedSlotX]);
+			player.getConversationState().endConversation();
+			return;
 		}
+		
+		player.getConversationState().displayItem(player, items[selectedSlotY][selectedSlotX]);
 	}
 	
 
@@ -163,7 +170,7 @@ public class InventoryState extends GameState
 			int spacingY = newHeight / numberOfRows;
 			
 			
-			mouseRectangle = new Rectangle(MouseInfo.getPointerInfo().getLocation().x, MouseInfo.getPointerInfo().getLocation().y, 1, 1);
+			mouseRectangle = new Rectangle((int)mouseLocationX, (int)mouseLocationY, 1, 1);
 	
 			
 			for(int i = 0; i < numberOfRows; i++)
@@ -175,7 +182,7 @@ public class InventoryState extends GameState
 					
 					inventorySlotRectangles[i][j] = new Rectangle(
 							inventorySlotLocationX, 
-							inventorySlotLocationY + inventorySlotHeight / 2, 
+							inventorySlotLocationY, 
 							inventorySlotWidth,
 							inventorySlotHeight
 						);
@@ -198,7 +205,12 @@ public class InventoryState extends GameState
 								null
 								);
 						
-						graphics.drawString(items[i][j].getStacks() + "", inventorySlotLocationX, inventorySlotLocationY);
+						graphics.drawString
+						(
+							items[i][j].getStacks() + "",
+							inventorySlotLocationX,
+							inventorySlotLocationY
+						);
 					}
 					
 					
@@ -310,12 +322,55 @@ public class InventoryState extends GameState
 
 	public void mousePressed(MouseEvent mouse) 
 	{
-		
+		for(int y = 0; y < numberOfRows; y++)
+		{
+			for(int x = 0; x < numberOfColumns; x++)
+			{
+				if(mouseRectangle.intersects(inventorySlotRectangles[y][x]))
+				{
+					if(items[y][x] != null)
+					{
+						movingItem = true;
+					}
+					movingItemFromSlotX = x;
+					movingItemFromSlotY = y;
+				}
+			}
+		}
 	}
 
 	public void mouseReleased(MouseEvent mouse) 
 	{
-		
+		if(movingItem)
+		{
+			for(int y = 0; y < numberOfRows; y++)
+			{
+				for(int x = 0; x < numberOfColumns; x++)
+				{
+					if(mouseRectangle.intersects(inventorySlotRectangles[y][x]))
+					{
+						if(items[y][x] == null)
+						{
+							items[y][x] = items[movingItemFromSlotY][movingItemFromSlotX];
+							items[movingItemFromSlotY][movingItemFromSlotX] = null;
+						}
+					}
+				}
+			}
+		}
+		movingItem = false;
+	}
+	
+	public void mouseMoved(MouseEvent mouse) 
+	{
+		mouseLocationX = mouse.getX();
+		mouseLocationY = mouse.getY();
+	}
+	
+	public void mouseDragged(MouseEvent mouse) 
+	{
+		mouseLocationX = mouse.getX();
+		mouseLocationY = mouse.getY();
 	}
 
 }

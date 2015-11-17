@@ -476,7 +476,7 @@ public abstract class MapObject
 	// function will determine whether they even are on the screen.
 	public Boolean notOnScreen()
 	{
-		// Again, x + mapPositionX is the final position on the game screen itself.
+		// Again, locationX + mapPositionX is the final position on the game screen itself.
 		return 
 				//If the object is beyond the left side of the screen
 				locationX + mapPositionX + width < 0 ||
