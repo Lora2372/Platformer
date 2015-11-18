@@ -9,14 +9,14 @@ import Entity.Doodad.Doodad;
 import Entity.Doodad.Activatable.Chest;
 import Entity.Doodad.Activatable.Door;
 import Entity.Item.CreateItem;
-import Entity.Player.Conversation;
-import Entity.Player.ConversationState;
 import Entity.Player.Player;
 import Entity.Unit.Slug;
 import Entity.Unit.Succubus;
 import Entity.Unit.Wolf;
 import GameState.GameStateManager;
 import GameState.MainMap;
+import GameState.Conversation.Conversation;
+import GameState.Conversation.ConversationState;
 import TileMap.GameOver;
 import TileMap.TileMap;
 
@@ -157,10 +157,9 @@ public class MysteriousDungeon extends MainMap
 			{
 				if(!player.getInConversation())
 				{
-					int[] whoTalks = new int[]{0};		
-					player.getConversationState().startConversation(player, null, null, conversation.mysteriousDungeonTorchMessage, whoTalks);
+					player.getConversationState().startConversation(player, null, null, conversation.mysteriousDungeonTorchMessage, new int[] { 0 });
 				}
-				else if(player.getConversationState().getConversationTracker() >= player.getConversationState().getConversationLength())
+				else if(player.getConversationState().getConversationOver())
 				{
 					player.getConversationState().endConversation();
 					dungeonIntroduction = true;

@@ -9,12 +9,12 @@ import Entity.Doodad.Doodad;
 import Entity.Doodad.Activatable.ShrineFionasSanctum;
 import Entity.Doodad.Activatable.Door;
 import Entity.Doodad.Activatable.Portal;
-import Entity.Player.Conversation;
-import Entity.Player.ConversationState;
 import Entity.Player.Player;
 import Entity.Unit.Fiona;
 import GameState.GameStateManager;
 import GameState.MainMap;
+import GameState.Conversation.Conversation;
+import GameState.Conversation.ConversationState;
 import TileMap.GameOver;
 import TileMap.TileMap;
 
@@ -28,6 +28,8 @@ public class FionasSanctum extends MainMap
 	
 	protected boolean bossEngaged;
 	protected boolean bossDefeated;
+	
+	protected int unlockOnce;
 	
 	protected Conversation conversation;
 	
@@ -130,7 +132,25 @@ public class FionasSanctum extends MainMap
 		super.update();
 		
 		// We don't want the player to be able to progress the conversation whilst Fiona is spawning
-		player.getConversationState().lockConversation(fiona.getSpawning());
+		
+		if(unlockOnce != 2)
+		{
+			if(fiona.getSpawning())
+			{
+				unlockOnce = 1;
+			}
+		}
+
+		
+		if(unlockOnce == 1)
+		{
+			if(!fiona.getSpawning())
+			{
+				unlockOnce = 2;
+				player.getConversationState().lockConversation(false);
+			}
+		}
+		
 		
 		if(bossEngaged)
 		{

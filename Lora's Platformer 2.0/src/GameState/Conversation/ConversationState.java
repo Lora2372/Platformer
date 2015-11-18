@@ -1,4 +1,4 @@
-package Entity.Player;
+package GameState.Conversation;
 
 import java.awt.AWTException;
 import java.awt.Color;
@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import com.sun.glass.events.KeyEvent;
 import Entity.Doodad.Doodad;
 import Entity.Item.Item;
+import Entity.Player.Player;
 import Entity.Unit.Unit;
 import GameState.GameState;
 import GameState.GameStateManager;
@@ -91,7 +92,10 @@ public class ConversationState  extends GameState
 	
 	
 	public boolean conversationLocked() { return conversationLocked; }
-	public void lockConversation(boolean b) { conversationLocked = b; }
+	public void lockConversation(boolean b) 
+	{ 
+		conversationLocked = b; 	
+	}
 	
 	
 	public void displayItem
@@ -166,7 +170,6 @@ public class ConversationState  extends GameState
 		{
 			return;
 		}
-		
 		
 		conversationTracker++;
 		choiceMade = choiceSelected;
@@ -302,7 +305,7 @@ public class ConversationState  extends GameState
 					
 					Rectangle textRectangle = new Rectangle(
 							textLocationX,
-							textLocationY + 10,
+							textLocationY - textHeight / 2,
 							textWidth,
 							textHeight						
 							);

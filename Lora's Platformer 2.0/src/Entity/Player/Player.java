@@ -3,6 +3,8 @@ package Entity.Player;
 import java.util.Random;
 import Audio.JukeBox;
 import Entity.Unit.Unit;
+import GameState.Conversation.Conversation;
+import GameState.Conversation.ConversationState;
 import TileMap.TileMap;
 
 public class Player extends Unit

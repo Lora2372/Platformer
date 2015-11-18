@@ -3,8 +3,8 @@ package GameState;
 import java.awt.event.MouseEvent;
 
 import Audio.JukeBox;
-import Entity.Player.ConversationState;
 import Entity.Player.Player;
+import GameState.Conversation.ConversationState;
 import GameState.Inventory.InventoryState;
 import GameState.Maps.*;
 import GameState.Options.OptionState;

@@ -17,6 +17,7 @@ import Entity.Doodad.Activatable.*;
 import Entity.Player.*;
 import Entity.Projectile.Projectile;
 import Entity.Unit.*;
+import GameState.Conversation.ConversationState;
 import Audio.JukeBox;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;

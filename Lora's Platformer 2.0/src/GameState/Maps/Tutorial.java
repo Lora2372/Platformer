@@ -5,13 +5,13 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import Audio.JukeBox;
-import Entity.Player.Conversation;
-import Entity.Player.ConversationState;
 import Entity.Player.HUD;
 import Entity.Player.Player;
 import Entity.Unit.Succubus;
 import GameState.GameStateManager;
 import GameState.MainMap;
+import GameState.Conversation.Conversation;
+import GameState.Conversation.ConversationState;
 import TileMap.Background;
 import TileMap.GameOver;
 import TileMap.TileMap;

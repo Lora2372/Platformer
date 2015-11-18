@@ -556,7 +556,10 @@ public class Unit extends MapObject
 		
 	public void hit(int damage)
 	{
-		if(dead) return;
+		if(dead || invulnerable)
+		{
+			return;
+		}
 		health -= damage;
 		if( health < 0)health = 0;
 		if(health == 0 && !unkillable)

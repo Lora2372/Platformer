@@ -8,6 +8,7 @@ import Entity.Doodad.Activatable.DoodadData;
 import Entity.Item.CreateItem;
 import Entity.Player.*;
 import Entity.Projectile.ProjectileData;
+import GameState.Conversation.ConversationState;
 import Main.GamePanel;
 import Main.JSONReader;
 import TileMap.Background;

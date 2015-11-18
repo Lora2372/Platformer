@@ -2,9 +2,9 @@ package Entity.Doodad.Activatable;
 
 import Audio.JukeBox;
 import Entity.Doodad.Doodad;
-import Entity.Player.Conversation;
-import Entity.Player.ConversationState;
 import Entity.Player.Player;
+import GameState.Conversation.Conversation;
+import GameState.Conversation.ConversationState;
 import Main.Content;
 import Main.JSONWriter;
 import TileMap.TileMap;

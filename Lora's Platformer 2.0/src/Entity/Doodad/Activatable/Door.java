@@ -3,10 +3,10 @@ package Entity.Doodad.Activatable;
 import Audio.JukeBox;
 import Entity.Doodad.Doodad;
 import Entity.Item.Item;
-import Entity.Player.Conversation;
-import Entity.Player.ConversationState;
 import Entity.Player.Player;
 import GameState.GameStateManager;
+import GameState.Conversation.Conversation;
+import GameState.Conversation.ConversationState;
 import Main.Content;
 import TileMap.TileMap;
 

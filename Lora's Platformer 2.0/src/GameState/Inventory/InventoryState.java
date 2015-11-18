@@ -105,7 +105,7 @@ public class InventoryState extends GameState
 					20
 					);
 			
-			font = new Font("Arial", Font.PLAIN, 28);
+			font = new Font("Arial", Font.PLAIN, 14);
 			
 
 			
@@ -205,11 +205,12 @@ public class InventoryState extends GameState
 								null
 								);
 						
+						graphics.setColor(Color.WHITE);
 						graphics.drawString
 						(
 							items[i][j].getStacks() + "",
-							inventorySlotLocationX,
-							inventorySlotLocationY
+							inventorySlotLocationX + inventorySlotWidth / 2,
+							inventorySlotLocationY + inventorySlotHeight + 12
 						);
 					}
 					

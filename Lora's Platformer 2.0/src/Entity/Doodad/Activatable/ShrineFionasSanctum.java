@@ -3,11 +3,11 @@ package Entity.Doodad.Activatable;
 import TileMap.TileMap;
 import Audio.JukeBox;
 import Entity.Doodad.Doodad;
-import Entity.Player.Conversation;
-import Entity.Player.ConversationState;
 import Entity.Player.Player;
 import Entity.Unit.Fiona;
 import GameState.GameStateManager;
+import GameState.Conversation.Conversation;
+import GameState.Conversation.ConversationState;
 import GameState.Maps.FionasSanctum;
 import Main.Content;
 
@@ -29,6 +29,8 @@ public class ShrineFionasSanctum extends Doodad
 	protected Conversation conversation;
 	
 	protected ConversationState conversationBox;
+	
+	protected int currentProgress = 0;
 	
 	public ShrineFionasSanctum(
 			TileMap tileMap,
@@ -147,8 +149,9 @@ public class ShrineFionasSanctum extends Doodad
 				JukeBox.play("Close");
 			}
 			
-			else if(conversationBox.getConversationTracker() == 5)
+			else if(conversationBox.getConversationTracker() == 5 && currentProgress != 5)
 			{
+				currentProgress = 5;
 				// Fiona reveals herself
 				fiona.setPosition(player.getLocationX() + 200, player.getLocationY() - 300);
 				fiona.setSpawning(true);

@@ -5,9 +5,9 @@ import TileMap.TileMap;
 import Entity.Doodad.SummoningEffect;
 import Entity.Item.CreateItem;
 import Entity.Item.Potion;
-import Entity.Player.ConversationState;
 import Entity.Player.Player;
 import GameState.MainMap;
+import GameState.Conversation.ConversationState;
 import Main.Content;
 public class LiadrinFirstEncounter extends Unit
 {

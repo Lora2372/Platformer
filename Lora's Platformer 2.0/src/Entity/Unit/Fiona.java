@@ -9,9 +9,9 @@ import javax.imageio.ImageIO;
 import TileMap.TileMap;
 import Audio.JukeBox;
 import Entity.Doodad.SummoningEffect;
-import Entity.Player.Conversation;
 import Entity.Player.Player;
 import Entity.Projectile.ArcaneBall;
+import GameState.Conversation.Conversation;
 import GameState.Maps.FionasSanctum;
 import Main.Content;
 
@@ -25,7 +25,7 @@ public class Fiona extends Unit
 	protected int arcaneBallTimer;
 	protected int arcaneBallCooldown;
 	
-	protected int moving = 0; // 0 don't move, 1 = move left, 2 = move 3
+	protected int moving = 0; // 0 don't move, 1 = move left, 2 = move right
 	protected int leftX = 240;
 	protected int rightX = 940;
 	
@@ -263,10 +263,11 @@ public class Fiona extends Unit
 				{
 					if(summoningEffect == null && conversationProgress == 0)
 					{
+						player.getConversationState().lockConversation(true);
+						System.out.println("locking conversation");
 						summoningEffect = new SummoningEffect(tileMap, locationX, locationY);
 						mainMap.addEffect(summoningEffect);
 						player.getHUD().removeBoss();
-						player.getConversationState().lockConversation(true);
 						conversationProgress = 1;
 					}
 				}
@@ -352,17 +353,23 @@ public class Fiona extends Unit
 				{
 					directionY -= 0.1;
 					untouchable = true;
+					invulnerable = true;
 				}
 				else
 				{
 					
 					if(directionY != 0)
 					{
-						untouchable = false;
 						directionY = 0;
 						locationY = upperY;
-						if(locationX > leftX) moving = 1;
-						else moving = 2;
+						if(locationX > leftX)
+						{
+							moving = 1;
+						}
+						else 
+						{
+							moving = 2;
+						}
 					}
 				}
 				
@@ -374,6 +381,11 @@ public class Fiona extends Unit
 
 		}
 		
+		if(moving == 0 && directionY == 0)
+		{
+			untouchable = false;
+			invulnerable = false;
+		}
 		
 		if(moving == 1)
 		{
@@ -400,6 +412,7 @@ public class Fiona extends Unit
 		
 		if(arcaneBallMode && !stunned)
 		{
+			invulnerable = true;
 			arcaneBallTimer++;
 			
 			if(arcaneBallTimer >= arcaneBallCooldown)
@@ -463,7 +476,6 @@ public class Fiona extends Unit
 					{
 						JukeBox.play("FionaChargeup01");
 						this.setStunned(1000);
-						
 						arcaneBallMode = true;
 						return;
 					}

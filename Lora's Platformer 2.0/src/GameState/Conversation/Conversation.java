@@ -1,5 +1,6 @@
-package Entity.Player;
+package GameState.Conversation;
 
+import Entity.Player.Player;
 
 public class Conversation 
 {

@@ -5,10 +5,10 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import Entity.Doodad.Activatable.Door;
-import Entity.Player.ConversationState;
 import Entity.Player.Player;
 import GameState.GameStateManager;
 import GameState.MainMap;
+import GameState.Conversation.ConversationState;
 import TileMap.Background;
 import TileMap.GameOver;
 import TileMap.TileMap;

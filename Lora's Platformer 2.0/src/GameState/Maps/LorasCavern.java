@@ -11,6 +11,7 @@ import Entity.Unit.LiadrinFirstEncounter;
 import Entity.Unit.*;
 import GameState.GameStateManager;
 import GameState.MainMap;
+import GameState.Conversation.ConversationState;
 import TileMap.Background;
 import TileMap.GameOver;
 import TileMap.TileMap;

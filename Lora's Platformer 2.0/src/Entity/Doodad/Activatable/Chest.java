@@ -6,9 +6,9 @@ import Audio.JukeBox;
 import Entity.Doodad.Doodad;
 import Entity.Item.CreateItem;
 import Entity.Item.Item;
-import Entity.Player.Conversation;
-import Entity.Player.ConversationState;
 import Entity.Player.Player;
+import GameState.Conversation.Conversation;
+import GameState.Conversation.ConversationState;
 
 public class Chest extends Doodad
 {

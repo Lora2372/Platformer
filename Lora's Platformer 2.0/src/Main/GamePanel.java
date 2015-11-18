@@ -20,7 +20,7 @@ public class GamePanel
 	public static int WIDTH = 1200;
 	public static int HEIGHT = 900;
 	
-	public static final String version = "0.1.061";
+	public static final String version = "0.1.062";
 		
 	// Game thread
 	private Thread thread;
@@ -70,7 +70,6 @@ public class GamePanel
 	      		{
 		    		gameStateManager.mouseClicked(mouse);
 	      		}
-
 	    	}
 
 	    	public void mouseEntered(MouseEvent mouse) 
@@ -79,7 +78,6 @@ public class GamePanel
 	    		{
 	    			gameStateManager.mouseEntered(mouse);
 	    		}
-	    		
 	    	}
 
 	    	public void mouseExited(MouseEvent mouse) 
@@ -125,14 +123,6 @@ public class GamePanel
 	    		}
 			}
 		});
-	      
-//	      class MyMouseMotionListener extends MouseMotionAdapter {
-//	    	  public void mouseDragged(MouseEvent e) {
-//	    	  String s = "Mouse dragging: X = "+ e.getX()
-//	    	  + " Y = " + e.getY();
-//	    	  tf.setText(s);
-//	    	  }
-//	    	  }
 	}
 	
 	public void addNotify()
