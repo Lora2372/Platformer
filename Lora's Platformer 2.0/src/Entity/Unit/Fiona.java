@@ -114,6 +114,7 @@ public class Fiona extends Unit
 				fionasSanctum
 				);
 		
+		this.unitType = "Fiona";
 		this.player = player;
 		this.fionasSanctum = fionasSanctum;
 		timer = 0;
@@ -126,7 +127,7 @@ public class Fiona extends Unit
 		
 		flying = true;
 		
-		portrait = Content.PortraitLiadrin[0];
+		portrait = Content.PortraitSuccubus[0];
 		
 		setTennisPlayer(true);
 				
@@ -161,6 +162,34 @@ public class Fiona extends Unit
 			setStunned(5000);
 			isHit = true;
 		}
+	}
+	
+	public void hit(int damage)
+	{
+		System.out.println("Running Fiona's hit");
+		if(dead || invulnerable)
+		{
+			return;
+		}
+		
+		if(!stunned)
+		{
+			if(damage != 70)
+			{
+				return;
+			}
+		}
+		
+		health -= damage;
+		if( health < 0)health = 0;
+		if(health == 0 && !unkillable)
+		{
+			dead = true;
+		}
+		iAmHit();
+		if(!stunned)setStunned(500);
+		inControl = false;
+		flinchTimer = System.nanoTime();
 	}
 	
 	

@@ -66,6 +66,11 @@ public class PauseState extends GameState
 		background.update();
 	}
 	
+	public void reset()
+	{
+		currentChoice = 0;
+	}
+	
 	public void draw(Graphics2D graphics)
 	{
 		

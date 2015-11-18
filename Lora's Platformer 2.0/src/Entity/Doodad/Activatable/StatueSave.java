@@ -3,6 +3,7 @@ package Entity.Doodad.Activatable;
 import Audio.JukeBox;
 import Entity.Doodad.Doodad;
 import Entity.Player.Player;
+import GameState.GameStateManager;
 import GameState.Conversation.Conversation;
 import GameState.Conversation.ConversationState;
 import Main.Content;
@@ -20,11 +21,13 @@ public class StatueSave extends Doodad
 	
 	protected int choiceMade;
 	
+	protected GameStateManager gameStateManager;
 	
 	public StatueSave(
 			TileMap tileMap, 
 			double spawnX,
-			double spawnY
+			double spawnY,
+			GameStateManager gameStateManager
 			) 
 	{
 		super(tileMap, 
@@ -49,6 +52,7 @@ public class StatueSave extends Doodad
 		
 		this.spawnX = spawnX;
 		this.spawnY = spawnY;
+		this.gameStateManager = gameStateManager;
 	}
 	
 	public void setDoodad(int currentAction)

@@ -1,7 +1,6 @@
 package Entity.Unit;
 
 import java.util.ArrayList;
-import java.util.Random;
 import TileMap.TileMap;
 import Audio.JukeBox;
 import GameState.MainMap;
@@ -77,11 +76,12 @@ public class Succubus extends Unit
 				level1state
 				);
 		
+		this.unitType = "Succubus";
 		timer = 0;
 		cooldown = 300;
 		
 		
-		portrait = Content.PortraitLiadrin[0];
+		portrait = Content.PortraitSuccubus[0];
 		
 		
 		numberofSounds = new int[soundTypes.values().length];
@@ -102,13 +102,9 @@ public class Succubus extends Unit
 	{
 		try
 		{
-			Random random = new Random();
-			
-			int max = numberofSounds[1];
-			int min = 1;
-			
-			int myRandom = random.nextInt((max - min) + 1) + min;
-			JukeBox.play("Succubus" + soundTypes.Hurt + "0" + myRandom);
+			int RNG = mainMap.RNG(1, numberofSounds[1]);
+
+			JukeBox.play("Succubus" + soundTypes.Hurt + (RNG < 10 ? "0" : "") + RNG);
 		}
 		catch(Exception e)
 		{
@@ -122,24 +118,14 @@ public class Succubus extends Unit
 	
 	public void playCastSound()
 	{
-		Random random = new Random();
-		
-		int max = numberofSounds[0];
-		int min = 1;
-		
-		int myRandom = random.nextInt((max - min) + 1) + min;
-		JukeBox.play("Succubus" + soundTypes.Attack + "0" + myRandom);
+		int RNG = mainMap.RNG(1, numberofSounds[0]);
+		JukeBox.play("Succubus" + soundTypes.Attack + (RNG < 10 ? "0" : "") + RNG);
 	}
 	
 	public void playPunchSound()
 	{
-		Random random = new Random();
-		
-		int max = numberofSounds[0];
-		int min = 1;
-		
-		int myRandom = random.nextInt((max - min) + 1) + min;
-		JukeBox.play("Succubus" + soundTypes.Attack + "0" + myRandom);
+		int RNG = mainMap.RNG(1, numberofSounds[0]);
+		JukeBox.play("Succubus" + soundTypes.Attack + (RNG < 10 ? "0" : "") + RNG);
 	}
 	
 	public void updateAI(ArrayList<Unit> characterList)

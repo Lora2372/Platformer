@@ -5,21 +5,31 @@ import java.util.HashMap;
 
 public class JukeBox 
 {
-	private static HashMap<String, Clip> clips;
+	private static HashMap<String, Clip> allSounds;
+	private static HashMap<String, Clip> musicSounds;
+	private static HashMap<String, Clip> characterSounds;
+	private static HashMap<String, Clip> effectSounds;
+	
+	
+	
 	private static int gap;
 	private static boolean mute = false;
 	
 	public static void initialize()
 	{
-		clips = new HashMap<String, Clip>();
+		allSounds = new HashMap<String, Clip>();
+		musicSounds = new HashMap<String, Clip>();
+		characterSounds = new HashMap<String, Clip>();
+		effectSounds = new HashMap<String, Clip>();
+		
 		gap = 0;
 	}
 	
 	
 	public static void load(String string, String n)
 	{
-		if(clips == null) initialize();
-		if(clips.get(n) != null) return;
+		if(allSounds == null) initialize();
+		if(allSounds.get(n) != null) return;
 		Clip clip;
 		try
 		{
@@ -40,7 +50,29 @@ public class JukeBox
 			AudioInputStream decodeAudioInputStream = AudioSystem.getAudioInputStream(decodeFormat, audioInputStream);
 			clip = AudioSystem.getClip();
 			clip.open(decodeAudioInputStream);
-			clips.put(n, clip);
+			allSounds.put(n, clip);
+			
+			
+			if(string.contains("Music"))
+			{
+				musicSounds.put(n, clip);
+			}
+			if(string.contains("BackgroundSound"))
+			{
+				musicSounds.put(n, clip);
+			}
+			if(string.contains("Doodads"))
+			{
+				effectSounds.put(n, clip);
+			}
+			if(string.contains("SpellEffects"))
+			{
+				effectSounds.put(n, clip);
+			}
+			if(string.contains("CharacterSounds"))
+			{
+				characterSounds.put(n, clip);
+			}
 			
 		}
 		catch(Exception e)
@@ -49,9 +81,9 @@ public class JukeBox
 		}
 	}
 	
-	public static boolean checkIfClipExists(String s)
+	public static boolean checkIfClipExists(String specificSound)
 	{
-		if(clips.get(s) != null)
+		if(allSounds.get(specificSound) != null)
 		{
 			return true;
 		}
@@ -61,64 +93,77 @@ public class JukeBox
 		}
 	}
 	
-	public static void play(String s)
+	public static void play(String specificSound)
 	{
-		play(s, gap);
+		play(specificSound,gap);
 	}
 	
-	public static void play(String s, int i)
+	public static void play(String specificSound, int i)
 	{
 		if(mute) return;
-		Clip clip = clips.get(s);
+		Clip clip = allSounds.get(specificSound);
 		if(clip == null) return;
 		if(clip.isRunning()) clip.stop();
 		clip.setFramePosition(i);
 		while(!clip.isRunning()) clip.start();
 	}
 	
-	public static void stop(String s)
+	public static void setVolume(String specificSound, int volume)
 	{
-		if(clips.get(s) == null) return;
-		if(clips.get(s).isRunning()) clips.get(s).stop();
+		Clip clip = allSounds.get(specificSound);
+		if(clip == null) return;
+		if(!clip.isRunning()) return;
+//		FloatControl gainControl = (FloatControl)clip.getControl(FloatControl.Type.VOLUME);
+//		
+//		double currentVolume =  gainControl.getValue();
+//		gainControl.Set
+//		
+//		gainControl.setValue(volume);
 	}
 	
-	public static void resume(String s) 
+	public static void stop(String specificSound)
+	{
+		if(allSounds.get(specificSound) == null) return;
+		if(allSounds.get(specificSound).isRunning()) allSounds.get(specificSound).stop();
+	}
+	
+	public static void resume(String specificSound) 
 	{
 		if(mute) return;
-		if(clips.get(s).isRunning()) return;
-		clips.get(s).start();
+		if(allSounds.get(specificSound).isRunning()) return;
+		allSounds.get(specificSound).start();
 	}
 	
-	public static void loop(String s)
+	public static void loop(String specificSound)
 	{
-		loop(s, gap, gap, clips.get(s).getFrameLength() - 1);
+		loop(specificSound,gap, gap, allSounds.get(specificSound).getFrameLength() - 1);
 	}
-	public static void loop(String s, int frame)
+	public static void loop(String specificSound, int frame)
 	{
-		loop(s, frame, gap, clips.get(s).getFrameLength() -1);
-	}
-	
-	public static void loop(String s, int start, int end)
-	{
-		loop(s, gap, start, end);
+		loop(specificSound,frame, gap, allSounds.get(specificSound).getFrameLength() -1);
 	}
 	
-	public static void loop(String s, int frame, int start, int end)
+	public static void loop(String specificSound, int start, int end)
 	{
-		stop(s);
+		loop(specificSound,gap, start, end);
+	}
+	
+	public static void loop(String specificSound, int frame, int start, int end)
+	{
+		stop(specificSound);
 		if(mute) return;
-		clips.get(s).setLoopPoints(start, end);
-		clips.get(s).setFramePosition(frame);
-		clips.get(s).loop(Clip.LOOP_CONTINUOUSLY);
+		allSounds.get(specificSound).setLoopPoints(start, end);
+		allSounds.get(specificSound).setFramePosition(frame);
+		allSounds.get(specificSound).loop(Clip.LOOP_CONTINUOUSLY);
 		
 	}
 	
-	public static void setPosition(String s, int frame)
+	public static void setPosition(String specificSound, int frame)
 	{
-		clips.get(s).setFramePosition(frame);
+		allSounds.get(specificSound).setFramePosition(frame);
 	}
 	
-	public static int getFrames(String s) { return clips.get(s).getFrameLength(); }
-	public static int getPosition(String s) { return clips.get(s).getFramePosition(); }	
+	public static int getFrames(String specificSound) { return allSounds.get(specificSound).getFrameLength(); }
+	public static int getPosition(String specificSound) { return allSounds.get(specificSound).getFramePosition(); }	
 	
 }

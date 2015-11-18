@@ -3,11 +3,9 @@ package GameState.Maps;
 
 import java.io.IOException;
 import javax.imageio.ImageIO;
-
 import Entity.Doodad.Activatable.Chest;
 import Entity.Item.CreateItem;
 import Entity.Player.*;
-import Entity.Unit.LiadrinFirstEncounter;
 import Entity.Unit.*;
 import GameState.GameStateManager;
 import GameState.MainMap;
@@ -21,18 +19,21 @@ public class LorasCavern extends MainMap
 
 	
 	
-	public LorasCavern(
+	public LorasCavern
+		(
 			GameStateManager gameStateManager,
 			TileMap tileMap,
 			Player player,
 			ConversationState conversationState
-			) 
+		) 
 	{
-		super(gameStateManager, 
+		super
+			(
+				gameStateManager, 
 				tileMap,
 				player,
 				conversationState
-				);
+			);
 	
 		try
 		{						
@@ -109,38 +110,12 @@ public class LorasCavern extends MainMap
 		
 		spawnKey(1712, 		2610, CreateItem.Keys.Uncommon.toString());
 		
-
-		
-		
-//		ActivatableCave activatableCave = new ActivatableCave(tileMap, gameStateManager, 3614, 2340);
-//		stuff.add(activatableCave);
-//		activatables.add(activatableCave);
-		
-		
 		
 		spawnStatueSave(3300, 1700);
 		
 		LiadrinFirstEncounter liadrinFirstEncounter = new LiadrinFirstEncounter(tileMap, false, true, false, true, true, "Liadrin", 2680, 1800, this);
 		characterList.add(liadrinFirstEncounter);
-		
-		spawnSkeleton(900,  2100,  true);
-		
-		spawnSign(
-				1357, 
-				2250, 
-				new String[] 
-					{ 
-						"Greetings mortal, I am a welcome sign intended to make you feel,\n well... Welcome!",
-						"What an odd sign..."
-					}, 
-					new int[]
-					{
-						2,
-						0
-					}
-				);
-		
-		
+				
 		spawnSign(
 				3805, 
 				1480, 
@@ -176,5 +151,10 @@ public class LorasCavern extends MainMap
 			gameStateManager.setState(GameStateManager.MysteriousDungeon);
 		}
 	}
-
+	
+	public void reset()
+	{
+		super.update();
+		
+	}
 }

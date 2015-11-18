@@ -74,6 +74,7 @@ public class Skeleton extends Unit
 				level1state
 				);
 		
+		this.unitType = "Skeleton";
 		timer = 200;
 		cooldown = 200;
 		

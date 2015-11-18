@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
+import Audio.JukeBox;
 import Entity.Doodad.Activatable.DoodadData;
 import Entity.Item.CreateItem;
 import Entity.Player.*;
@@ -95,6 +96,20 @@ public class MenuState extends GameState
 		backGround.update();
 	}
 	
+	public void reset()
+	{
+		currentChoice = 0;
+	}
+	
+	public void updateChoice(int choice)
+	{
+		if(currentChoice != choice)
+		{
+			currentChoice = choice;
+			JukeBox.play("DecisionChange");
+		}
+	}
+	
 	public void draw(Graphics2D graphics)
 	{
 		// Draw the background
@@ -144,7 +159,7 @@ public class MenuState extends GameState
 			
 			if(textRectangles[i].intersects(mouseRectangle))
 			{
-				currentChoice = i;
+				updateChoice(i);
 			}
 			
 			if( i == currentChoice)
@@ -163,6 +178,7 @@ public class MenuState extends GameState
 	
 	private void select()
 	{
+		JukeBox.play("DecisionMake");
 		if(currentChoice == 0)
 		{
 			// Tutorial
@@ -185,12 +201,17 @@ public class MenuState extends GameState
 				
 				String currentMap = player.getCurrentMap();
 				if(currentMap.equals("LorasCavern"))
+				{
 					gameStateManager.setState(GameStateManager.LorasCavern);
+				}
 				else if(currentMap.equals("MysteriousDungeon"))
+				{
 					gameStateManager.setState(GameStateManager.MysteriousDungeon);
+				}
 				else if(currentMap.equals("DeepWoods"))
+				{
 					gameStateManager.setState(GameStateManager.DeepWoods);
-//				gameStateManager.setState(GameStateManager.);
+				}
 			}
 			else
 			{
@@ -221,16 +242,17 @@ public class MenuState extends GameState
 		}
 		if(k == KeyEvent.VK_UP)
 		{
-			currentChoice--;
+			updateChoice(currentChoice -1);
 			if(currentChoice == -1)
 			{
 				currentChoice = options.length - 1;
 			}
+			
 		}
 		
 		if(k == KeyEvent.VK_DOWN)
 		{
-			currentChoice++;
+			updateChoice(currentChoice +1);
 			if(currentChoice == options.length)
 			{
 				currentChoice = 0;

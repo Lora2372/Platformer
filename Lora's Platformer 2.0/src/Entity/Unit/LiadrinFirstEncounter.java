@@ -84,10 +84,10 @@ public class LiadrinFirstEncounter extends Unit
 				spawnY,
 				mainMap
 				);
-		
+		this.unitType = "LiadrinFirstEncounter";
 		active = true;
 		
-		portrait = Content.PortraitLiadrin[0];
+		portrait = Content.PortraitSuccubus[0];
 	}
 	
 

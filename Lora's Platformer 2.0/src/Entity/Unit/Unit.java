@@ -27,6 +27,7 @@ public class Unit extends MapObject
 	protected MainMap mainMap;
 	
 	// Character stuff
+	protected String unitType;
 	protected String name;
 	protected boolean player;
 	
@@ -517,6 +518,8 @@ public class Unit extends MapObject
 	public void setSexytime2() { sexytime2 = true; }
 	
 	public String getName() { return name; }
+	
+	public String getUnitType() { return unitType; }
 	
 	public int getSilver() { return silver; }
 	public int getGold() { return gold; }

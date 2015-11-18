@@ -166,7 +166,7 @@ public class ConversationState  extends GameState
 	
 	public void progressConversation()
 	{
-		if(conversationLocked) 
+		if(conversationLocked || conversationOver) 
 		{
 			return;
 		}
@@ -239,13 +239,13 @@ public class ConversationState  extends GameState
 			if(whoTalks[conversationTracker] == 4)
 			{
 				tempName = "Liadrin";
-				tempIcon = Content.PortraitLiadrin[0];
+				tempIcon = Content.PortraitSuccubus[0];
 			}
 			
 			if(whoTalks[conversationTracker] == 5)
 			{
 				tempName = "Unknown";
-				tempIcon = Content.PortraitLiadrin[0];
+				tempIcon = Content.PortraitSuccubus[0];
 			}
 			
 			if(whoTalks[conversationTracker] == 6)
@@ -386,6 +386,11 @@ public class ConversationState  extends GameState
 	}
 
 	public void update() 
+	{
+		
+	}
+	
+	public void reset()
 	{
 		
 	}

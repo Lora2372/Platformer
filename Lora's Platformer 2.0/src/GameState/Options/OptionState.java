@@ -1,5 +1,6 @@
 package GameState.Options;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -47,8 +48,9 @@ public class OptionState extends GameState implements ChangeListener
 					1, 
 					new String[] 
 						{ 
-							"Aim with mouse",
-							"Aim with arrow keys"
+							"Aim with arrow keys",
+							"Aim with mouse"
+							
 						}, 
 					new BufferedImage[] 
 						{ 
@@ -100,8 +102,37 @@ public class OptionState extends GameState implements ChangeListener
 	
 	public void update() 
 	{
+		for(int i = 0; i < optionObjects.size(); i++)
+		{
+			optionObjects.get(i).update();
+		}
+	}
+	
+	public void reset()
+	{
 		
 	}
+	
+	
+	protected int shiftNorth(int coordinate, int distance) 
+	{
+	   return (coordinate - distance);
+	}
+	
+	protected int shiftSouth(int coordinate, int distance) {
+	   return (coordinate + distance);
+	}
+	
+	protected int shiftEast(int coordinate, int distance) 
+	{
+	   return (coordinate + distance);
+	}
+	
+	protected int shiftWest(int coordinate, int distance) 
+	{
+	   return (coordinate - distance);
+	}
+	
 
 	public void draw(Graphics2D graphics) 
 	{
@@ -116,22 +147,35 @@ public class OptionState extends GameState implements ChangeListener
 			null
 		);
 		
+		graphics.setFont(new Font("Arial", Font.PLAIN, 14));
+		graphics.setColor(Color.WHITE);
+		
 		for(int i = 0; i < optionObjects.size(); i++)
 		{
 			try
 			{
 				OptionObject optionObject = optionObjects.get(i);
-				graphics.setFont(new Font("Arial", Font.PLAIN, 14));
+
 				
-				double locationX;
-				double locationY;
+				int locationX;
+				int locationY;
 				
 				
 				if(optionObject.getText() != null)
 				{
-					locationX = optionObject.getLocationX() - 300;
-					locationY = optionObject.getLocationY();
-					graphics.drawString(optionObject.getText(), (int)locationX, (int)locationY + optionObject.getHeight());
+					locationX = (int)optionObject.getLocationX() - 300;
+					locationY = (int)optionObject.getLocationY() + optionObject.getHeight();
+					String textString = optionObject.getText();
+					
+					graphics.setColor(Color.BLACK);
+					graphics.drawString(textString, shiftWest(locationX, 1), shiftNorth(locationY, 1));
+					graphics.drawString(textString, shiftWest(locationX, 1), shiftSouth(locationY, 1));
+					graphics.drawString(textString, shiftEast(locationX, 1), shiftNorth(locationY, 1));
+					graphics.drawString(textString, shiftEast(locationX, 1), shiftSouth(locationY, 1));
+					
+					graphics.setColor(Color.WHITE);					
+					graphics.drawString(textString, locationX, locationY);
+
 				}
 				
 				if(optionObject.getImage() != null)
@@ -144,7 +188,6 @@ public class OptionState extends GameState implements ChangeListener
 						optionObject.getWidth(),
 						optionObject.getHeight(),
 						null
-						
 					);
 				}
 				else
@@ -156,7 +199,6 @@ public class OptionState extends GameState implements ChangeListener
 							optionObject.getRectangle().y,
 							optionObject.getRectangle().width,
 							optionObject.getRectangle().height
-							
 					);
 				}
 				

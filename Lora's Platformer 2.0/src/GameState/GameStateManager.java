@@ -78,32 +78,51 @@ public class GameStateManager
 		if(state == TutorialState)
 		{
 			JukeBox.loop("Tutorial");
-			gameStates[state] = new Tutorial(this, tileMap, player, conversationState);
+			if(gameStates[state] == null)
+			{
+				gameStates[state] = new Tutorial(this, tileMap, player, conversationState);		
+			}
 		}
 		else if(state == MENUSTATE)
 		{		
 			JukeBox.loop("Menu");
-			gameStates[state] = new MenuState(this, conversationState);
+			if(gameStates[state] == null)
+			{
+				gameStates[state] = new MenuState(this, conversationState);
+			}
+			
 		}
 		else if(state == LorasCavern)
 		{
 			JukeBox.loop("LorasCavern");
-			gameStates[state] = new LorasCavern(this, tileMap, player, conversationState);
+			if(gameStates[state] == null)
+			{
+				gameStates[state] = new LorasCavern(this, tileMap, player, conversationState);
+			}
 		}
 		else if(state == MysteriousDungeon)
 		{
 			JukeBox.loop("MysteriousDungeon");
-			gameStates[state] = new MysteriousDungeon(this, tileMap, player, conversationState);
+			if(gameStates[state] == null)
+			{
+				gameStates[state] = new MysteriousDungeon(this, tileMap, player, conversationState);
+			}
 		}
 		else if(state == FionasSanctum)
 		{
 			JukeBox.loop("FionasSanctum");
-			gameStates[state] = new FionasSanctum(this, tileMap, player, conversationState);			
+			if(gameStates[state] == null)
+			{
+				gameStates[state] = new FionasSanctum(this, tileMap, player, conversationState);
+			}
 		}
 		else if(state == DeepWoods)
 		{
 			JukeBox.loop("DeepWoods");
-			gameStates[state] = new DeepWoods(this, tileMap, player, conversationState);			
+			if(gameStates[state] == null)
+			{
+				gameStates[state] = new DeepWoods(this, tileMap, player, conversationState);			
+			}
 		}
 	}
 	
@@ -122,7 +141,7 @@ public class GameStateManager
 		gameStates[state] = null;
 	}
 	
-	public void setState(int state) 
+	public void setState(int state)
 	{
 		unloadState(currentState);
 		currentState = state;
@@ -130,6 +149,11 @@ public class GameStateManager
 	}
 	
 	public int getState() { return currentState; }
+	
+	public GameState[] getStates()
+	{
+		return gameStates;
+	}
 	
 	public void update() 
 	{

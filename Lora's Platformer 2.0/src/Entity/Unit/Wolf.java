@@ -72,6 +72,7 @@ public class Wolf extends Unit
 				level1state
 				);
 		
+		this.unitType = "Wolf";
 		timer = 200;
 		cooldown = 200;
 		

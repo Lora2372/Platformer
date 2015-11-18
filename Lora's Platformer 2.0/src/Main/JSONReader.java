@@ -19,26 +19,32 @@ public class JSONReader
 		
 		try
 		{
+			System.out.println("Loading data...");
+			
 			Object object = jsonParser.parse(new FileReader(System.getProperty("user.home") + "\\Loras Platformer\\SaveFile.json"));
 			JSONObject jsonObject = (JSONObject) object;
 			
 			String name = (String) jsonObject.get("Name");
-			System.out.println("Name: " + name);
+			System.out.println("name: " + name);
 			
 			
 			String map = (String) jsonObject.get("Map");
-			System.out.println("Map: " + map);
+			System.out.println("map: " + map);
 			
 			player.setCurrentMap(map);
 			
 			int spawnLocationX = ((Long) jsonObject.get("SpawnLocationX")).intValue();
-			System.out.println("SpawnLocationX: " + spawnLocationX);
+			System.out.println("spawnLocationX: " + spawnLocationX);
 			
 			int spawnLocationY = ((Long) jsonObject.get("SpawnLocationY")).intValue();
-			System.out.println("SpawnLocationY: " + spawnLocationY);
+			System.out.println("spawnLocationY: " + spawnLocationY);
 			
 			player.setSpawnPoint(spawnLocationX, spawnLocationY);
 		
+			
+			boolean usingMouse = (Boolean) jsonObject.get("UsingMouse");
+			player.setUsingMouse(usingMouse);
+			System.out.println("usingMouse: " + usingMouse);
 
 			int silver = ((Long)jsonObject.get(CreateItem.Coins.Silver.toString())).intValue();
 			System.out.println("Silver: " + silver);

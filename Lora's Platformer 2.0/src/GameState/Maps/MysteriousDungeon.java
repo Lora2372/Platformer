@@ -163,7 +163,7 @@ public class MysteriousDungeon extends MainMap
 				{
 					player.getConversationState().endConversation();
 					dungeonIntroduction = true;
-					JukeBox.play("Female01EnterDungeon");
+					JukeBox.play("PlayerEnterDungeon");
 				}
 			}
 		}

@@ -129,6 +129,11 @@ public class InventoryState extends GameState
 		player.getConversationState().displayItem(player, items[selectedSlotY][selectedSlotX]);
 	}
 	
+	public void reset()
+	{
+		
+	}
+	
 
 	
 	public void draw(Graphics2D graphics)

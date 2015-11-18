@@ -189,6 +189,11 @@ public class MainMap extends GameState
 		return characterList;
 	}
 	
+	public ArrayList<Doodad> getDoodadList()
+	{
+		return stuff;
+	}
+	
 	public void update()
 	{
 		if(!doneInitializing) return;
@@ -350,6 +355,12 @@ public class MainMap extends GameState
 			background.setPosition(tileMap.getX(), tileMap.getY());
 		}
 		
+	}
+	
+	public void reset()
+	{
+		projectiles = new ArrayList<Projectile>();
+		explosions = new ArrayList<Explosion>();
 	}
 	
 
@@ -714,7 +725,7 @@ public class MainMap extends GameState
 	
 	public void spawnStatueSave(double locationX, double locationY)
 	{
-		StatueSave statueSave = new StatueSave(tileMap, locationX, locationY + 10);
+		StatueSave statueSave = new StatueSave(tileMap, locationX, locationY + 10, gameStateManager);
 		activatables.add(statueSave);
 		stuff.add(statueSave);
 	}
@@ -726,15 +737,15 @@ public class MainMap extends GameState
 	}
 	
 	
-	public void keyPressed(int k)
+	public void keyPressed(int key)
 	{
-		if(k == KeyEvent.VK_ESCAPE) 
+		if(key == KeyEvent.VK_ESCAPE) 
 		{
 			gameStateManager.paused = !gameStateManager.getPaused();
 			gameStateManager.setBrowsingInventory(false);
 		}
 		
-		if(k == KeyEvent.VK_B)
+		if(key == KeyEvent.VK_B)
 		{
 			if(player.getInConversation())
 			{
@@ -746,26 +757,26 @@ public class MainMap extends GameState
 		
 		if(gameStateManager.paused) return;
 		
-		if(k == KeyEvent.VK_LEFT) player.setLeft(true);
-		if(k == KeyEvent.VK_RIGHT) player.setRight(true);
-		if(k == KeyEvent.VK_DOWN) player.setDown(true);
-		if(k == KeyEvent.VK_UP) player.setUp(true);
-		if(k == KeyEvent.VK_SPACE) player.setJumping(true);
-		if(k == KeyEvent.VK_E) interact();
-		if(k == KeyEvent.VK_R)player.setGliding(true); 
+		if(key == KeyEvent.VK_LEFT) player.setLeft(true);
+		if(key == KeyEvent.VK_RIGHT) player.setRight(true);
+		if(key == KeyEvent.VK_DOWN) player.setDown(true);
+		if(key == KeyEvent.VK_UP) player.setUp(true);
+		if(key == KeyEvent.VK_SPACE) player.setJumping(true);
+		if(key == KeyEvent.VK_E) interact();
+		if(key == KeyEvent.VK_R)player.setGliding(true); 
 		
-		if(k == KeyEvent.VK_A) player.setCastingSmallFireBall();
-		if(k == KeyEvent.VK_S) player.setCastingLargeFireBall();
-		if(k == KeyEvent.VK_F) player.setPunching();
-		if(k == KeyEvent.VK_D) player.setDashing(true);
-		if(k == KeyEvent.VK_G) player.setCastingMagicShield();
-		if(k == KeyEvent.VK_Z) player.drinkPotion(CreateItem.Potions.Healing.toString());
-		if(k == KeyEvent.VK_X) player.drinkPotion(CreateItem.Potions.Mana.toString());
-		if(k == KeyEvent.VK_C) player.drinkPotion(CreateItem.Potions.Stamina.toString());
+		if(key == KeyEvent.VK_A) player.setCastingSmallFireBall();
+		if(key == KeyEvent.VK_S) player.setCastingLargeFireBall();
+		if(key == KeyEvent.VK_F) player.setPunching();
+		if(key == KeyEvent.VK_D) player.setDashing(true);
+		if(key == KeyEvent.VK_G) player.setCastingMagicShield();
+		if(key == KeyEvent.VK_Z) player.drinkPotion(CreateItem.Potions.Healing.toString());
+		if(key == KeyEvent.VK_X) player.drinkPotion(CreateItem.Potions.Mana.toString());
+		if(key == KeyEvent.VK_C) player.drinkPotion(CreateItem.Potions.Stamina.toString());
 		
 		
 		// Note: This is a built in cheat that is not supposed to be used to get the real game experience.
-		if( k == KeyEvent.VK_M)
+		if(key == KeyEvent.VK_M)
 		{
 			if(player.getFacingRight())
 			{
@@ -778,13 +789,13 @@ public class MainMap extends GameState
 		}
 		
 		// Note: This is a built in cheat that is not supposed to be used to get the real game experience.
-		if( k == KeyEvent.VK_N)
+		if(key == KeyEvent.VK_N)
 		{
 			player.setPosition(player.getLocationX(), player.getLocationY() - 200);
 		}
 		
 		// Note: This is a built in cheat that is not supposed to be used to get the real game experience.
-		if(k == KeyEvent.VK_L)
+		if(key == KeyEvent.VK_L)
 		{
 			Key myKey = new Key(tileMap, false, 0, 0, player, 1, "Boss");
 			player.getInventory().addItem(myKey);
@@ -792,7 +803,7 @@ public class MainMap extends GameState
 		}
 		
 		// Note: This is a built in cheat that is not supposed to be used to get the real game experience.
-		if(k == KeyEvent.VK_K)
+		if(key == KeyEvent.VK_K)
 		{
 			Key myKey = new Key(tileMap, false, 0, 0, player, 1, "Uncommon");
 			player.getInventory().addItem(myKey);
@@ -800,32 +811,32 @@ public class MainMap extends GameState
 		}
 		
 		// Note: This is a built in cheat that is not supposed to be used to get the real game experience.
-		if(k == KeyEvent.VK_9)
+		if(key == KeyEvent.VK_9)
 		{
 			player.restoreHealth(100);
 			player.restoreMana(100);
 			player.restoreStamina(100);
 		}
 
-		if(k == KeyEvent.VK_P) spawnSlug(player.getLocationX(), player.getLocationY(), player.getFacingRight(), null); 
-		if(k == KeyEvent.VK_O) spawnSuccubus(player.getLocationX(), player.getLocationY(), player.getFacingRight()); 
-		if(k == KeyEvent.VK_I) spawnWaterfall(player.getLocationX(), player.getLocationY()); 
-		if(k == KeyEvent.VK_U) spawnSummonEffect(player.getLocationX(), player.getLocationY()); 
-		if(k == KeyEvent.VK_G) GPS(); 
+		if(key == KeyEvent.VK_P) spawnSlug(player.getLocationX(), player.getLocationY(), player.getFacingRight(), null); 
+		if(key == KeyEvent.VK_O) spawnSuccubus(player.getLocationX(), player.getLocationY(), player.getFacingRight()); 
+		if(key == KeyEvent.VK_I) spawnWaterfall(player.getLocationX(), player.getLocationY()); 
+		if(key == KeyEvent.VK_U) spawnSummonEffect(player.getLocationX(), player.getLocationY()); 
+		if(key == KeyEvent.VK_G) GPS(); 
 	}
 	
 	
-	public void keyReleased(int k)
+	public void keyReleased(int key)
 	{
-		if(k == KeyEvent.VK_LEFT) player.setLeft(false);
-		if(k == KeyEvent.VK_RIGHT) player.setRight(false);
-		if(k == KeyEvent.VK_DOWN) player.setDown(false);
-		if(k == KeyEvent.VK_SPACE) player.setJumping(false);
-		if(k == KeyEvent.VK_UP) player.setUp(false);
-		if(k == KeyEvent.VK_R) player.setGliding(false);
+		if(key == KeyEvent.VK_LEFT) player.setLeft(false);
+		if(key == KeyEvent.VK_RIGHT) player.setRight(false);
+		if(key == KeyEvent.VK_DOWN) player.setDown(false);
+		if(key == KeyEvent.VK_SPACE) player.setJumping(false);
+		if(key == KeyEvent.VK_UP) player.setUp(false);
+		if(key == KeyEvent.VK_R) player.setGliding(false);
 		
-		if(k == KeyEvent.VK_A) player.setCastingSmallFireBall();
-		if(k == KeyEvent.VK_S) player.setCastingLargeFireBall();
+		if(key == KeyEvent.VK_A) player.setCastingSmallFireBall();
+		if(key == KeyEvent.VK_S) player.setCastingLargeFireBall();
 	}
 
 

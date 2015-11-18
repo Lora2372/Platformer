@@ -73,6 +73,7 @@ public class Slug extends Unit
 				
 				);
 		
+		this.unitType = "Slug";
 		timer = 0;
 		cooldown = 100;
 		

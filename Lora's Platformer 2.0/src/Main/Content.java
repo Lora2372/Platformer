@@ -95,7 +95,7 @@ public class Content
 	
 	// Portraits
 	public static BufferedImage[][] PortraitPlayer			=load("/Art/HUD/Portraits/PortraitPlayer.png", 94, 94);
-	public static BufferedImage[][] PortraitLiadrin			=load("/Art/HUD/Portraits/PortraitLiadrin.png", 94, 94);
+	public static BufferedImage[][] PortraitSuccubus		=load("/Art/HUD/Portraits/PortraitSuccubus.png", 94, 94);
 	
 	public static BufferedImage[][] PortraitCampFire		=load("/Art/HUD/Portraits/PortraitCampFire.png", 94, 94);
 	public static BufferedImage[][] PortraitChestCommon		=load("/Art/HUD/Portraits/PortraitChestCommon.png", 94, 94);
@@ -119,11 +119,13 @@ public class Content
 	public static enum mapMusic 
 	{ 
 		Menu,
+		GameOver,
 		Tutorial,
 		LorasCavern,
 		MysteriousDungeon,
 		MysteriousBattle,
 		MysteriousConversation,
+		FionasSanctum,
 		DeepWoods
 	}
 	
@@ -131,29 +133,29 @@ public class Content
 	{
 		for(int i = 1; i <= 6; i++)
 		{
-			JukeBox.load("/Sound/CharacterSounds/Female01/Attack0" + i + ".mp3", "Female01Attack0" + i);
+			JukeBox.load("/Sound/CharacterSounds/Player/Attack0" + i + ".mp3", "PlayerAttack0" + i);
 		}
 		
-		JukeBox.load("/Sound/CharacterSounds/Female01/EnterDungeon.mp3", "Female01EnterDungeon");
+		JukeBox.load("/Sound/CharacterSounds/Player/EnterDungeon.mp3", "PlayerEnterDungeon");
 		
 		for(int i = 1; i <= 7; i++)
 		{
-			JukeBox.load("/Sound/CharacterSounds/Female01/Hurt0" + i + ".mp3", "Female01Hurt0" + i);
+			JukeBox.load("/Sound/CharacterSounds/Player/Hurt0" + i + ".mp3", "PlayerHurt0" + i);
 		}
 		
 		for(int i = 1; i <= 6; i++)
 		{
-			JukeBox.load("/Sound/CharacterSounds/Female01/Jump0" + i + ".mp3", "Female01Jump0" + i);
+			JukeBox.load("/Sound/CharacterSounds/Player/Jump0" + i + ".mp3", "PlayerJump0" + i);
 		}
 		
 		for(int i = 1; i <= 4; i++)
 		{
-			JukeBox.load("/Sound/CharacterSounds/Female01/Loot0" + i + ".mp3", "Female01Loot0" + i);
+			JukeBox.load("/Sound/CharacterSounds/Player/Loot0" + i + ".mp3", "PlayerLoot0" + i);
 		}
 		
 		for(int i = 1; i <= 3; i++)
 		{
-			JukeBox.load("/Sound/CharacterSounds/Female01/CannotOpen0" + i + ".mp3", "Female01CannotOpen0" + i);
+			JukeBox.load("/Sound/CharacterSounds/Player/CannotOpen0" + i + ".mp3", "PlayerCannotOpen0" + i);
 		}
 		
 		for(int i = 1; i <= 6; i++)
@@ -166,7 +168,7 @@ public class Content
 		
 		for(int i = 1; i <= 9; i++)
 		{
-			JukeBox.load("/Sound/CharacterSounds/Fiona/Hurt0" + i + ".mp3", "FionaHurt0" + i);
+			JukeBox.load("/Sound/CharacterSounds/Fiona/Hurt" + (i > 9 ? "0" : "") + i + ".mp3", "FionaHurt" + (i > 9 ? "0" : "") + i);
 		}
 		
 		for(int i = 1; i <= 3; i++)
@@ -192,51 +194,52 @@ public class Content
 		}
 		
 		// Projectile sound effects
-		JukeBox.load("/Sound/SpellEffects/FireBallLargeLaunch.mp3", "FireBallLargeLaunch");
-		JukeBox.load("/Sound/SpellEffects/FireBallSmallLaunch.mp3", "FireBallSmallLaunch");	
+		JukeBox.load("/Sound/SpellEffects/FireBallLargeLaunch.mp3", 				"FireBallLargeLaunch");
+		JukeBox.load("/Sound/SpellEffects/FireBallSmallLaunch.mp3", 				"FireBallSmallLaunch");	
 		
-		JukeBox.load("/Sound/SpellEffects/EnergyBallChargeUp.mp3", "EnergyBallChargeUp");
-		JukeBox.load("/Sound/SpellEffects/ElectricBallActive.mp3", "ElectricBallActive");
+		JukeBox.load("/Sound/SpellEffects/EnergyBallChargeUp.mp3", 					"EnergyBallChargeUp");
+		JukeBox.load("/Sound/SpellEffects/ElectricBallActive.mp3", 					"ElectricBallActive");
 		
-		JukeBox.load("/Sound/SpellEffects/ElectricBallChargeUp.mp3", "ElectricBallChargeUp");
-		JukeBox.load("/Sound/SpellEffects/ElectricBallLaunch.mp3", "ElectricBallLaunch");
-		JukeBox.load("/Sound/SpellEffects/ElectricBallImpact.mp3", "ElectricBallImpact");
+		JukeBox.load("/Sound/SpellEffects/ElectricBallChargeUp.mp3", 				"ElectricBallChargeUp");
+		JukeBox.load("/Sound/SpellEffects/ElectricBallLaunch.mp3", 					"ElectricBallLaunch");
+		JukeBox.load("/Sound/SpellEffects/ElectricBallImpact.mp3", 					"ElectricBallImpact");
 		
-		JukeBox.load("/Sound/SpellEffects/ArcaneBallImpact.mp3", "ArcaneBallImpact");
+		JukeBox.load("/Sound/SpellEffects/ArcaneBallImpact.mp3", 					"ArcaneBallImpact");
 		
-		JukeBox.load("/Sound/SpellEffects/FireBallLargeImpact.mp3", "FireBallLargeImpact");
-		JukeBox.load("/Sound/SpellEffects/FireBallSmallImpact.mp3", "FireBallSmallImpact");
+		JukeBox.load("/Sound/SpellEffects/FireBallLargeImpact.mp3", 				"FireBallLargeImpact");
+		JukeBox.load("/Sound/SpellEffects/FireBallSmallImpact.mp3", 				"FireBallSmallImpact");
 		
 		// Spell sound effect
 		JukeBox.load("/Sound/SpellEffects/Teleport.mp3", "Teleport");
 		
 		// Music
-		JukeBox.load("/Sound/Music/Menu.mp3", "Menu");
-		JukeBox.load("/Sound/Music/LorasCavern.mp3", "LorasCavern");
-		JukeBox.load("/Sound/Music/MysteriousDungeon.mp3", "MysteriousDungeon");
-		JukeBox.load("/Sound/Music/MysteriousConversation.mp3", "MysteriousConversation");
-		JukeBox.load("/Sound/Music/MysteriousBattle.mp3", "MysteriousBattle");
-		JukeBox.load("/Sound/Music/DeepWoods.mp3", "DeepWoods");
-		JukeBox.load("/Sound/Music/Tutorial.mp3", "Tutorial");
-		JukeBox.load("/Sound/Music/FionasSanctum.mp3", "FionasSanctum");
+		JukeBox.load("/Sound/Music/Menu.mp3", 										"Menu");
+		JukeBox.load("/Sound/Music/LorasCavern.mp3", 								"LorasCavern");
+		JukeBox.load("/Sound/Music/MysteriousDungeon.mp3", 							"MysteriousDungeon");
+		JukeBox.load("/Sound/Music/MysteriousConversation.mp3", 					"MysteriousConversation");
+		JukeBox.load("/Sound/Music/MysteriousBattle.mp3", 							"MysteriousBattle");
+		JukeBox.load("/Sound/Music/DeepWoods.mp3", 									"DeepWoods");
+		JukeBox.load("/Sound/Music/Tutorial.mp3", 									"Tutorial");
+		JukeBox.load("/Sound/Music/FionasSanctum.mp3", 								"FionasSanctum");
 		
-		JukeBox.load("/Sound/Music/GameOver.mp3",  "GameOver");
+		JukeBox.load("/Sound/Music/GameOver.mp3",  									"GameOver");
 		
 		// Doodad sound effect
-		JukeBox.load("/Sound/Doodads/OpenChestUncommon.mp3", "OpenChestUncommon");
-		JukeBox.load("/Sound/Doodads/OpenChestCommon.mp3", "OpenChestCommon");
-		JukeBox.load("/Sound/Doodads/OpenChestRare.mp3", "OpenChestRare");
-		JukeBox.load("/Sound/Doodads/Save.mp3", "Save");
-		JukeBox.load("/Sound/Doodads/DecisionChange.mp3", "DecisionChange");
-		JukeBox.load("/Sound/Doodads/DecisionMake.mp3", "DecisionMake");		
-		JukeBox.load("/Sound/Doodads/PotionDrink.mp3", "PotionDrink");		
-		JukeBox.load("/Sound/Doodads/Coin.mp3", "Coin");		
-		JukeBox.load("/Sound/Doodads/Close.mp3", "Close");
-		JukeBox.load("/Sound/Doodads/Unlock.mp3", "Unlock");
-		JukeBox.load("/Sound/Doodads/DoorOpen.mp3", "DoorOpen");
+		JukeBox.load("/Sound/Doodads/OpenChestUncommon.mp3", 						"OpenChestUncommon");
+		JukeBox.load("/Sound/Doodads/OpenChestCommon.mp3", 							"OpenChestCommon");
+		JukeBox.load("/Sound/Doodads/OpenChestRare.mp3", 							"OpenChestRare");
+		JukeBox.load("/Sound/Doodads/Save.mp3", 									"Save");
+		JukeBox.load("/Sound/Doodads/DecisionChange.mp3", 							"DecisionChange");
+		JukeBox.load("/Sound/Doodads/DecisionMake.mp3", 							"DecisionMake");		
+		JukeBox.load("/Sound/Doodads/PotionDrink.mp3", 								"PotionDrink");		
+		JukeBox.load("/Sound/Doodads/Coin.mp3", 									"Coin");		
+		JukeBox.load("/Sound/Doodads/Close.mp3", 									"Close");
+		JukeBox.load("/Sound/Doodads/Unlock.mp3", 									"Unlock");
+		JukeBox.load("/Sound/Doodads/DoorOpen.mp3", 								"DoorOpen");
+		
 		
 		// Background sound effect
-		JukeBox.load("/Sound/BackgroundSound/Darkness.mp3", "Darkness");
+		JukeBox.load("/Sound/BackgroundSound/Darkness.mp3", 						"Darkness");
 	}
 	
 	public static void loadContent()

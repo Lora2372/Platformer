@@ -81,6 +81,11 @@ public class OptionObject
 		
 	}
 	
+	public void update() 
+	{
+		
+	}
+	
 	public String getText() 
 	{ 
 	

@@ -2,6 +2,7 @@ package GameState.Options;
 
 import java.awt.image.BufferedImage;
 
+import Audio.JukeBox;
 import Entity.Player.Player;
 
 public class ToggleObject extends OptionObject
@@ -35,24 +36,23 @@ public class ToggleObject extends OptionObject
 		this.player = player;
 	}
 	
+	public void update()
+	{
+		if(name.equals("Mouse"))
+		{
+			currentState = !player.getUsingMouse() ? 1 : 2;
+		}
+	}
+	
+	
 	public void click()
 	{
-		if(currentState == 1)
+		if(name.equals("Mouse"))
 		{
-			if(name.equals("Mouse"))
-			{
-				player.setUsingMouse(false);
-			}
-			currentState = 2;
+			player.setUsingMouse(!player.getUsingMouse());
 		}
-		else
-		{
-			currentState = 1;
-			if(name.equals("Mouse"))
-			{
-				player.setUsingMouse(true);
-			}
-		}
+		
+		JukeBox.play("DecisionMake");
 	}
 	
 }

@@ -3,6 +3,7 @@ package Entity.Player;
 import java.util.Random;
 import Audio.JukeBox;
 import Entity.Unit.Unit;
+import Entity.Unit.Succubus.soundTypes;
 import GameState.Conversation.Conversation;
 import GameState.Conversation.ConversationState;
 import TileMap.TileMap;
@@ -94,7 +95,7 @@ public class Player extends Unit
 				null
 				
 				);
-		
+		this.unitType = "Player";
 		conversation = new Conversation(this);
 		this.conversationState = conversationState;
 		player = true;
@@ -105,7 +106,7 @@ public class Player extends Unit
 		for(int i = 0; i < numberofSounds.length; i++)
 		{
 			int tempInt = 0;
-			while(JukeBox.checkIfClipExists("Female01" + soundTypes.values()[i] + "0" + (tempInt + 1)))
+			while(JukeBox.checkIfClipExists("Player" + soundTypes.values()[i] + "0" + (tempInt + 1)))
 			{
 				tempInt++;
 			}
@@ -178,69 +179,39 @@ public class Player extends Unit
 	
 	public void iAmHit()
 	{
-		Random random = new Random();
-		
-		int max = numberofSounds[1];
-		int min = 1;
-		
-		int myRandom = random.nextInt((max - min) + 1) + min;
-		JukeBox.play("Female01" + soundTypes.Hurt + "0" + myRandom);
+		int RNG = mainMap.RNG(1, numberofSounds[1]);
+		JukeBox.play(unitType + soundTypes.Hurt + (RNG < 10 ? "0" : "") + RNG);
 	}
 	
 	
 	public void playJumpSound()
 	{
-		Random random = new Random();
-		
-		int max = numberofSounds[2];
-		int min = 1;
-		
-		int myRandom = random.nextInt((max - min) + 1) + min;
-		JukeBox.play("Female01" + soundTypes.Jump + "0" + myRandom);
+		int RNG = mainMap.RNG(1, numberofSounds[2]);
+		JukeBox.play(unitType + soundTypes.Jump + (RNG < 10 ? "0" : "") + RNG);
 	}
 	
 	public void playCastSound()
 	{
-		Random random = new Random();
-		
-		int max = numberofSounds[0];
-		int min = 1;
-		
-		int myRandom = random.nextInt((max - min) + 1) + min;
-		JukeBox.play("Female01" + soundTypes.Attack + "0" + myRandom);
+		int RNG = mainMap.RNG(1, numberofSounds[0]);
+		JukeBox.play(unitType + soundTypes.Attack + (RNG < 10 ? "0" : "") + RNG);
 	}
 	
 	public void playPunchSound()
 	{
-		Random random = new Random();
-		
-		int max = numberofSounds[0];
-		int min = 1;
-		
-		int myRandom = random.nextInt((max - min) + 1) + min;
-		JukeBox.play("Female01" + soundTypes.Attack + "0" + myRandom);
+		int RNG = mainMap.RNG(1, numberofSounds[0]);
+		JukeBox.play(unitType + soundTypes.Attack + (RNG < 10 ? "0" : "") + RNG);
 	}
 	
 	public void playLootSound()
 	{
-		Random random = new Random();
-		
-		int max = numberofSounds[3];
-		int min = 1;
-		
-		int myRandom = random.nextInt((max - min) + 1) + min;
-		JukeBox.play("Female01" + soundTypes.Loot + "0" + myRandom);		
+		int RNG = mainMap.RNG(1, numberofSounds[3]);
+		JukeBox.play(unitType + soundTypes.Loot + (RNG < 10 ? "0" : "") + RNG);	
 	}
 	
 	public void playCannotOpenSound()
 	{
-		Random random = new Random();
-		
-		int max = numberofSounds[3];
-		int min = 1;
-		
-		int myRandom = random.nextInt((max - min) + 1) + min;
-		JukeBox.play("Female01" + soundTypes.CannotOpen + "0" + myRandom);		
+		int RNG = mainMap.RNG(1, numberofSounds[4]);
+		JukeBox.play(unitType + soundTypes.CannotOpen + (RNG < 10 ? "0" : "") + RNG);	
 	}
 	
 	public void setMouseLocationX(double mouse)
