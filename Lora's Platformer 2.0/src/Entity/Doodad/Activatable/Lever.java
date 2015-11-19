@@ -1,5 +1,6 @@
 package Entity.Doodad.Activatable;
 
+import Audio.JukeBox;
 import Entity.Doodad.Doodad;
 import Entity.Player.Player;
 import GameState.GameStateManager;
@@ -87,6 +88,6 @@ public class Lever extends Doodad
 	
 	public void playSound() 
 	{ 
-//		JukeBox.play("OpenChest" + doodadType);
+		JukeBox.play("Switch01");
 	}
 }

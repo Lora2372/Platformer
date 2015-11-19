@@ -32,7 +32,7 @@ public class Unit extends MapObject
 	protected int silver;
 	protected int gold;
 	
-	public enum soundTypes { Attack, Hurt, Jump , Loot, CannotOpen}
+	public enum soundTypes { Attack, Hurt, Jump , Loot, CannotOpen, Chargeup, Hit, Recover}
 	
 	protected int numberofAttackSounds;
 	protected int numberofHurtSounds;
@@ -85,7 +85,6 @@ public class Unit extends MapObject
 		
 	protected boolean dead;
 	protected boolean stunned;
-	protected long flinchTimer;
 
 	protected boolean inConversation;
 	
@@ -589,7 +588,6 @@ public class Unit extends MapObject
 		iAmHit();
 		if(!stunned)setStunned(500);
 		inControl = false;
-		flinchTimer = System.nanoTime();
 	}
 	
 	public void update(ArrayList<Unit> characterList)
@@ -1437,6 +1435,22 @@ public class Unit extends MapObject
 		JukeBox.play(unitType + soundTypes.CannotOpen + (RNG < 10 ? "0" : "") + RNG);	
 	}
 	
+	public void playHitSound()
+	{
+		int RNG = mainMap.RNG(1, numberofSounds[6]);
+		if(RNG == -1)
+			return;
+		JukeBox.play(unitType + soundTypes.Hit + (RNG < 10 ? "0" : "") + RNG);
+	}
+	
+	public void playRecoverSound()
+	{
+		int RNG = mainMap.RNG(1, numberofSounds[7]);
+		if(RNG == -1)
+			return;
+		JukeBox.play(unitType + soundTypes.Recover + (RNG < 10 ? "0" : "") + RNG);
+	}
+	
 	public void setAnimationState(int animationState)
 	{
 		currentAction = this.animationState[animationState];
@@ -1449,6 +1463,42 @@ public class Unit extends MapObject
 	public void draw(Graphics2D graphics)
 	{
 		setMapPosition();
+		
+//		try
+//		{
+//			BufferedImage bossHealthBar = ImageIO.read
+//			(
+//				getClass().getResource
+//				(
+//					"/Art/HUD/Bars/BossHealthBar.png"
+//				)
+//			);
+//			
+//			
+//			graphics.drawImage
+//			(
+//				bossHealthBar,
+//				locationX,
+//				locationY,
+//				50,
+//				20,
+//				null
+//			);
+//			
+//			
+//			BufferedImage bossBar = ImageIO.read
+//			(
+//				getClass().getResource
+//				(
+//					"/Art/HUD/Bars/BossHealthBarFrame.png"
+//				)
+//			);
+//		}
+//		catch(Exception exception)
+//		{
+//			exception.printStackTrace();
+//		}
+
 		
 		// Draw Summoning Effect
 		if(summoningEffect != null)

@@ -92,6 +92,8 @@ public class Content
 	public static BufferedImage[][] OptionDeny				= load("/Art/HUD/Foregrounds/OptionDecline.png", 60, 60);
 	public static BufferedImage[][] OptionBackground		= load("/Art/HUD/Foregrounds/OptionBackground.png", 424, 348);
 	
+//	public static BufferedImage[][] BossHealthBarFrame		= load("/Art/HUD/Bars/BossHealthBarFrame.png")
+	
 	
 	// Portraits
 	public static BufferedImage[][] PortraitPlayer			=load("/Art/HUD/Portraits/PortraitPlayer.png", 94, 94);

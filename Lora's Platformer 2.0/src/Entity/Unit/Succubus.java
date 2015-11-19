@@ -2,7 +2,6 @@ package Entity.Unit;
 
 import java.util.ArrayList;
 import TileMap.TileMap;
-import Audio.JukeBox;
 import GameState.MainMap;
 import Main.Content;
 
@@ -10,9 +9,6 @@ public class Succubus extends Unit
 {
 	protected int cooldown;
 	protected int timer;
-	
-	protected int[] numberofSounds;
-	public enum soundTypes { Attack, Hurt, Jump, Chargeup}
 	
 	public Succubus(
 			TileMap tileMap,
@@ -24,7 +20,7 @@ public class Succubus extends Unit
 			String name,
 			double spawnX,
 			double spawnY,
-			MainMap level1state
+			MainMap mainMap
 			) 
 	{
 		super(
@@ -52,7 +48,7 @@ public class Succubus extends Unit
 				100, 	 															// maxStamina
 				0.1,	 															// staminaRegen
 				800,																// sightRange
-				120,
+				120,																// sightHeight
 				0,	 	 															// punchCost
 				0, 		 															// punchDamage
 				0,	 	 															// punchRange
@@ -60,7 +56,7 @@ public class Succubus extends Unit
 				2,		 															// dashDamage
 				40,		 															// dashRange
 				20, 	 															// dashSpeed
-				"/Art/Sprites/Characters/Succubus.png",									// spritePath
+				"/Art/Sprites/Characters/Succubus.png",								// spritePath
 				new int[] {0,0,0,0,1,2,0,0,1,2,1,2,3,0,0,0,0},						// animationStates
 				new int[]{7, 2, 2, 1, 2, 0, 0, 0, 0},								// numImages
 				new int[] { 400, 400, 400, 400, 125, 120, 100, 100, 100, 100, 100, 100, 500, 400, 400, 400, 400 }, // animationDelay
@@ -74,7 +70,7 @@ public class Succubus extends Unit
 				"Succubus",
 				spawnX,
 				spawnY,
-				level1state
+				mainMap
 				);
 		
 		timer = 0;
@@ -83,49 +79,6 @@ public class Succubus extends Unit
 		
 		portrait = Content.PortraitSuccubus[0];
 		
-		
-		numberofSounds = new int[soundTypes.values().length];
-		
-		for(int i = 0; i < numberofSounds.length; i++)
-		{
-			int tempInt = 0;
-			while(JukeBox.checkIfClipExists("Succubus" + soundTypes.values()[i] + "0" + (tempInt + 1)))
-			{
-				tempInt++;
-			}
-			numberofSounds[i] = tempInt;
-		}
-		
-	}
-	
-	public void iAmHit()
-	{
-		try
-		{
-			int RNG = mainMap.RNG(1, numberofSounds[1]);
-
-			JukeBox.play("Succubus" + soundTypes.Hurt + (RNG < 10 ? "0" : "") + RNG);
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		}
-
-
-		setStunned(2000);
-		
-	}
-	
-	public void playCastSound()
-	{
-		int RNG = mainMap.RNG(1, numberofSounds[0]);
-		JukeBox.play("Succubus" + soundTypes.Attack + (RNG < 10 ? "0" : "") + RNG);
-	}
-	
-	public void playPunchSound()
-	{
-		int RNG = mainMap.RNG(1, numberofSounds[0]);
-		JukeBox.play("Succubus" + soundTypes.Attack + (RNG < 10 ? "0" : "") + RNG);
 	}
 	
 	public void updateAI(ArrayList<Unit> characterList)
@@ -168,7 +121,6 @@ public class Succubus extends Unit
 			if(timer > cooldown)
 			{
 				timer = 0;
-//				System.out.println("FIRE THE FIREBALL!");
 				fireBallLargeCasting = true;
 			}
 		}

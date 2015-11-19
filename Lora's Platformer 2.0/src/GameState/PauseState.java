@@ -6,6 +6,8 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+
+import Audio.JukeBox;
 import Main.GamePanel;
 import TileMap.Background;
 
@@ -71,6 +73,15 @@ public class PauseState extends GameState
 		currentChoice = 0;
 	}
 	
+	public void updateChoice(int choice)
+	{
+		if(currentChoice != choice)
+		{
+			currentChoice = choice;
+			JukeBox.play("DecisionChange");
+		}
+	}
+	
 	public void draw(Graphics2D graphics)
 	{
 		
@@ -106,7 +117,7 @@ public class PauseState extends GameState
 			
 			if(textRectangles[i].intersects(mouseRectangle))
 			{
-				currentChoice = i;
+				updateChoice(i);
 			}
 			
 			if(i == currentChoice)
@@ -126,6 +137,7 @@ public class PauseState extends GameState
 	
 	private void select()
 	{
+		JukeBox.play("DecisionMake");
 		if(currentChoice == 0)
 		{
 			// Resume

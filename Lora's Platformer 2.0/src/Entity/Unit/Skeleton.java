@@ -22,7 +22,7 @@ public class Skeleton extends Unit
 			String name,
 			double spawnX,
 			double spawnY,
-			MainMap level1state
+			MainMap mainMap
 			) 
 	{
 		super(
@@ -72,35 +72,14 @@ public class Skeleton extends Unit
 				"Skeleton",
 				spawnX,
 				spawnY,
-				level1state
+				mainMap
 				);
 		
 		timer = 200;
 		cooldown = 200;
 		
 		slice = 0;
-		
-		
-//		portrait = Content.PortraitLiadrin[0];
 	}
-	
-	public void iAmHit()
-	{
-//		JukeBox.play("FionaGrunt07");
-	}
-	
-	public void playCastSound()
-	{
-//		Random random = new Random();
-//		int myRandom = random.nextInt((2 - 1) + 1) + 1;
-//		JukeBox.play("FionaCast0" + myRandom);
-	}
-	
-	public void playPunchSound()
-	{
-//		JukeBox.play("FionaPunch01");
-	}
-	
 	
 	public void update(ArrayList<Unit> characterList)
 	{

@@ -2,10 +2,7 @@ package Entity.Unit;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Random;
-
 import javax.imageio.ImageIO;
-
 import TileMap.TileMap;
 import Audio.JukeBox;
 import Entity.Doodad.SummoningEffect;
@@ -45,10 +42,7 @@ public class Fiona extends Unit
 	protected Player player;
 	
 	protected Conversation conversation;
-	
-	protected int[] numberofSounds;
-	public enum soundTypes { Attack, Hurt, Jump, Chargeup, Hit, Recover}
-	
+		
 	protected FionasSanctum fionasSanctum;
 	
 	public Fiona(
@@ -131,33 +125,16 @@ public class Fiona extends Unit
 		portrait = Content.PortraitSuccubus[0];
 		
 		setTennisPlayer(true);
-				
-
-		numberofSounds = new int[soundTypes.values().length];
-
-		
-		for(int i = 0; i < numberofSounds.length; i++)
-		{
-			int tempInt = 0;
-			while(JukeBox.checkIfClipExists("Fiona" + soundTypes.values()[i] + "0" + (tempInt + 1)))
-			{
-				tempInt++;
-			}
-			numberofSounds[i] = tempInt;
-		}
 	}
 	
 
 	
 	public void iAmHit()
 	{
-		Random random = new Random();
-		
-		int max = numberofSounds[1];
-		int min = 1;
-		
-		int myRandom = random.nextInt((max - min) + 1) + min;
-		JukeBox.play("Fiona" + soundTypes.Hurt + "0" + myRandom);
+		int RNG = mainMap.RNG(1, numberofSounds[1]);
+		if(RNG == -1)
+			return;
+		JukeBox.play(unitType + soundTypes.Hurt + (RNG < 10 ? "0" : "") + RNG);
 		if(!isHit)
 		{
 			setStunned(5000);
@@ -167,7 +144,6 @@ public class Fiona extends Unit
 	
 	public void hit(int damage)
 	{
-		System.out.println("Running Fiona's hit");
 		if(dead || invulnerable)
 		{
 			return;
@@ -188,68 +164,8 @@ public class Fiona extends Unit
 			dead = true;
 		}
 		iAmHit();
-		if(!stunned)setStunned(500);
 		inControl = false;
-		flinchTimer = System.nanoTime();
 	}
-	
-	
-	
-	public void playJumpSound()
-	{
-		Random random = new Random();
-		
-		int max = numberofSounds[2];
-		int min = 1;
-		
-		int myRandom = random.nextInt((max - min) + 1) + min;
-		JukeBox.play("Fiona" + soundTypes.Jump + "0" + myRandom);
-	}
-	
-	public void playCastSound()
-	{
-		Random random = new Random();
-		
-		int max = numberofSounds[0];
-		int min = 1;
-		
-		int myRandom = random.nextInt((max - min) + 1) + min;
-		JukeBox.play("Fiona" + soundTypes.Attack + "0" + myRandom);
-	}
-	
-	public void playPunchSound()
-	{
-		Random random = new Random();
-		
-		int max = numberofSounds[0];
-		int min = 1;
-		
-		int myRandom = random.nextInt((max - min) + 1) + min;
-		JukeBox.play("Fiona" + soundTypes.Attack + "0" + myRandom);
-	}
-	
-	public void playHitSound()
-	{
-		Random random = new Random();
-		
-		int max = numberofSounds[4];
-		int min = 1;
-		
-		int myRandom = random.nextInt((max - min) + 1) + min;
-		JukeBox.play("Fiona" + soundTypes.Hit + "0" + myRandom);
-	}
-	
-	public void playRecoverSound()
-	{
-		Random random = new Random();
-		
-		int max = numberofSounds[5];
-		int min = 1;
-		
-		int myRandom = random.nextInt((max - min) + 1) + min;
-		JukeBox.play("Fiona" + soundTypes.Recover + "0" + myRandom);
-	}
-	
 	
 	public void castArcaneBall()
 	{
@@ -284,6 +200,8 @@ public class Fiona extends Unit
 		// this as to not make it too easy for the player as they need to move!
 		
 		//If the player moves to one corner, she moves to the other!
+		
+		super.update(characterList);
 		
 		if(used)
 		{

@@ -162,8 +162,10 @@ public class LiadrinFirstEncounter extends Unit
 		}
 	}
 	
-	public void updateAI(ArrayList<Unit> characterList)
+	public void update(ArrayList<Unit> characterList)
 	{
+		super.update(characterList);
+		
 		if(summoningEffect != null)
 		{
 			if(summoningEffect.getRemoveMe())

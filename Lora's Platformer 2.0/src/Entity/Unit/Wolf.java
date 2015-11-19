@@ -20,7 +20,7 @@ public class Wolf extends Unit
 			String name,
 			double spawnX,
 			double spawnY,
-			MainMap level1state
+			MainMap mainMap
 			) 
 	{
 		super(
@@ -70,30 +70,12 @@ public class Wolf extends Unit
 				"Wolf",
 				spawnX,
 				spawnY,
-				level1state
+				mainMap
 				);
 
 		timer = 200;
 		cooldown = 200;
 		
-//		portrait = Content.PortraitLiadrin[0];
-	}
-	
-	public void iAmHit()
-	{
-//		JukeBox.play("FionaGrunt07");
-	}
-	
-	public void playCastSound()
-	{
-//		Random random = new Random();
-//		int myRandom = random.nextInt((2 - 1) + 1) + 1;
-//		JukeBox.play("FionaCast0" + myRandom);
-	}
-	
-	public void playPunchSound()
-	{
-//		JukeBox.play("FionaPunch01");
 	}
 	
 	public void updateAI(ArrayList<Unit> characterList)
@@ -101,7 +83,7 @@ public class Wolf extends Unit
 		
 		if(!inControl) return;
 		
-		if(directionX == 0)
+		if(directionX == 0 && timer > 0)
 		{
 			if(facingRight)
 			{
@@ -134,6 +116,5 @@ public class Wolf extends Unit
 				}
 			}
 		}
-		
 	}
 }
