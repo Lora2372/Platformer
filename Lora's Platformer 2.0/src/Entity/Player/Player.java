@@ -1,21 +1,15 @@
 package Entity.Player;
 
-import java.util.Random;
-import Audio.JukeBox;
 import Entity.Unit.Unit;
-import Entity.Unit.Succubus.soundTypes;
 import GameState.Conversation.Conversation;
 import GameState.Conversation.ConversationState;
+import Main.Content;
 import TileMap.TileMap;
 
 public class Player extends Unit
 {
 	
-	protected int numberofAttackSounds;
-	protected int numberofHurtSounds;
-	protected int numberofJumpSounds;
-	
-	protected int[] numberofSounds;
+
 	
 	protected HUD hud;
 	
@@ -28,7 +22,7 @@ public class Player extends Unit
 	
 //	protected ArrayList<Projectile> a
 	
-	public enum soundTypes { Attack, Hurt, Jump , Loot, CannotOpen}
+	
 	
 	protected String currentMap;
 	
@@ -90,28 +84,20 @@ public class Player extends Unit
 				false,
 				false,
 				name,
+				"Player",
 				0,
 				0,
 				null
 				
 				);
-		this.unitType = "Player";
 		conversation = new Conversation(this);
 		this.conversationState = conversationState;
 		player = true;
 
+		portrait = Content.PortraitPlayer[0];
+
 		hud = new HUD(this);
 		
-		numberofSounds = new int[soundTypes.values().length];
-		for(int i = 0; i < numberofSounds.length; i++)
-		{
-			int tempInt = 0;
-			while(JukeBox.checkIfClipExists("Player" + soundTypes.values()[i] + "0" + (tempInt + 1)))
-			{
-				tempInt++;
-			}
-			numberofSounds[i] = tempInt;
-		}
 	}
 	
 	public Conversation getConversation() { return conversation; }
@@ -176,43 +162,6 @@ public class Player extends Unit
 		aim = Math.atan2(tempY - locationY, tempX - locationX);
 	}
 	
-	
-	public void iAmHit()
-	{
-		int RNG = mainMap.RNG(1, numberofSounds[1]);
-		JukeBox.play(unitType + soundTypes.Hurt + (RNG < 10 ? "0" : "") + RNG);
-	}
-	
-	
-	public void playJumpSound()
-	{
-		int RNG = mainMap.RNG(1, numberofSounds[2]);
-		JukeBox.play(unitType + soundTypes.Jump + (RNG < 10 ? "0" : "") + RNG);
-	}
-	
-	public void playCastSound()
-	{
-		int RNG = mainMap.RNG(1, numberofSounds[0]);
-		JukeBox.play(unitType + soundTypes.Attack + (RNG < 10 ? "0" : "") + RNG);
-	}
-	
-	public void playPunchSound()
-	{
-		int RNG = mainMap.RNG(1, numberofSounds[0]);
-		JukeBox.play(unitType + soundTypes.Attack + (RNG < 10 ? "0" : "") + RNG);
-	}
-	
-	public void playLootSound()
-	{
-		int RNG = mainMap.RNG(1, numberofSounds[3]);
-		JukeBox.play(unitType + soundTypes.Loot + (RNG < 10 ? "0" : "") + RNG);	
-	}
-	
-	public void playCannotOpenSound()
-	{
-		int RNG = mainMap.RNG(1, numberofSounds[4]);
-		JukeBox.play(unitType + soundTypes.CannotOpen + (RNG < 10 ? "0" : "") + RNG);	
-	}
 	
 	public void setMouseLocationX(double mouse)
 	{

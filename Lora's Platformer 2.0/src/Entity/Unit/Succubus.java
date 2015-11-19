@@ -71,12 +71,12 @@ public class Succubus extends Unit
 				unkillable,
 				false,
 				name,
+				"Succubus",
 				spawnX,
 				spawnY,
 				level1state
 				);
 		
-		this.unitType = "Succubus";
 		timer = 0;
 		cooldown = 300;
 		

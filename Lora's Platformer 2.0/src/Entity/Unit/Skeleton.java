@@ -69,12 +69,12 @@ public class Skeleton extends Unit
 				unkillable,
 				false,
 				name,
+				"Skeleton",
 				spawnX,
 				spawnY,
 				level1state
 				);
 		
-		this.unitType = "Skeleton";
 		timer = 200;
 		cooldown = 200;
 		

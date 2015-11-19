@@ -52,7 +52,7 @@ public class ToggleObject extends OptionObject
 			player.setUsingMouse(!player.getUsingMouse());
 		}
 		
-		JukeBox.play("DecisionMake");
+		JukeBox.play("Switch01");
 	}
 	
 }

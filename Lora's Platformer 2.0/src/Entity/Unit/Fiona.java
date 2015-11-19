@@ -109,6 +109,7 @@ public class Fiona extends Unit
 				unkillable,
 				false,
 				name,
+				"Fiona",
 				spawnX,
 				spawnY,
 				fionasSanctum

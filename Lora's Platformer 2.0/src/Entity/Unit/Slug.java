@@ -67,13 +67,13 @@ public class Slug extends Unit
 				unkillable,
 				false,
 				name,
+				"Slug",
 				spawnX,
 				spawnY,
 				mainMap
 				
 				);
 		
-		this.unitType = "Slug";
 		timer = 0;
 		cooldown = 100;
 		

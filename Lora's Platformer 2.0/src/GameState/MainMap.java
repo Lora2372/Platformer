@@ -472,6 +472,10 @@ public class MainMap extends GameState
 	
 	public int RNG(int min, int max)
 	{
+		if(max < min)
+		{
+			return -1;
+		}
 		Random random = new Random();
 		return random.nextInt((max - min) + 1) + min;
 	}

@@ -133,34 +133,34 @@ public class Content
 	{
 		for(int i = 1; i <= 6; i++)
 		{
-			JukeBox.load("/Sound/CharacterSounds/Player/Attack0" + i + ".mp3", "PlayerAttack0" + i);
+			JukeBox.load("/Sound/CharacterSounds/Player/Attack" + (i < 10 ? "0" : "")+ i + ".mp3", "PlayerAttack" + (i < 10 ? "0" : "")+ i);
 		}
 		
 		JukeBox.load("/Sound/CharacterSounds/Player/EnterDungeon.mp3", "PlayerEnterDungeon");
 		
 		for(int i = 1; i <= 7; i++)
 		{
-			JukeBox.load("/Sound/CharacterSounds/Player/Hurt0" + i + ".mp3", "PlayerHurt0" + i);
+			JukeBox.load("/Sound/CharacterSounds/Player/Hurt" + (i < 10 ? "0" : "")+ i + ".mp3", "PlayerHurt" + (i < 10 ? "0" : "")+ i);
 		}
 		
 		for(int i = 1; i <= 6; i++)
 		{
-			JukeBox.load("/Sound/CharacterSounds/Player/Jump0" + i + ".mp3", "PlayerJump0" + i);
+			JukeBox.load("/Sound/CharacterSounds/Player/Jump" + (i < 10 ? "0" : "")+ i + ".mp3", "PlayerJump" + (i < 10 ? "0" : "")+ i);
 		}
 		
 		for(int i = 1; i <= 4; i++)
 		{
-			JukeBox.load("/Sound/CharacterSounds/Player/Loot0" + i + ".mp3", "PlayerLoot0" + i);
+			JukeBox.load("/Sound/CharacterSounds/Player/Loot" + (i < 10 ? "0" : "")+ i + ".mp3", "PlayerLoot" + (i < 10 ? "0" : "")+ i);
 		}
 		
 		for(int i = 1; i <= 3; i++)
 		{
-			JukeBox.load("/Sound/CharacterSounds/Player/CannotOpen0" + i + ".mp3", "PlayerCannotOpen0" + i);
+			JukeBox.load("/Sound/CharacterSounds/Player/CannotOpen" + (i < 10 ? "0" : "")+ i + ".mp3", "PlayerCannotOpen" + (i < 10 ? "0" : "")+ i);
 		}
 		
 		for(int i = 1; i <= 6; i++)
 		{
-			JukeBox.load("/Sound/CharacterSounds/Fiona/Attack0" + i + ".mp3", "FionaAttack0" + i);
+			JukeBox.load("/Sound/CharacterSounds/Fiona/Attack" + (i < 10 ? "0" : "")+ i + ".mp3", "FionaAttack" + (i < 10 ? "0" : "")+ i);
 		}
 				
 		JukeBox.load("/Sound/CharacterSounds/Fiona/Chargeup01.mp3", "FionaChargeup01");
@@ -168,29 +168,29 @@ public class Content
 		
 		for(int i = 1; i <= 9; i++)
 		{
-			JukeBox.load("/Sound/CharacterSounds/Fiona/Hurt" + (i > 9 ? "0" : "") + i + ".mp3", "FionaHurt" + (i > 9 ? "0" : "") + i);
+			JukeBox.load("/Sound/CharacterSounds/Fiona/Hurt" + (i < 10 ? "" + (i < 10 ? "0" : ""): "") + i + ".mp3", "FionaHurt" + (i < 10 ? "" + (i < 10 ? "0" : ""): "") + i);
 		}
 		
 		for(int i = 1; i <= 3; i++)
 		{
-			JukeBox.load("/Sound/CharacterSounds/Fiona/Hit0" + i + ".mp3", "FionaHit0" + i);
+			JukeBox.load("/Sound/CharacterSounds/Fiona/Hit" + (i < 10 ? "0" : "")+ i + ".mp3", "FionaHit" + (i < 10 ? "0" : "")+ i);
 		}
 		
 		for(int i = 1; i <= 3; i++)
 		{
-			JukeBox.load("/Sound/CharacterSounds/Fiona/Recover0" + i + ".mp3", "FionaRecover0" + i);
+			JukeBox.load("/Sound/CharacterSounds/Fiona/Recover" + (i < 10 ? "0" : "")+ i + ".mp3", "FionaRecover" + (i < 10 ? "0" : "")+ i);
 		}
 
 
 		
 		for(int i = 1; i <= 4; i++)
 		{
-			JukeBox.load("/Sound/CharacterSounds/Succubus/Attack0" + i + ".mp3", "SuccubusAttack0" + i);
+			JukeBox.load("/Sound/CharacterSounds/Succubus/Attack" + (i < 10 ? "0" : "")+ i + ".mp3", "SuccubusAttack" + (i < 10 ? "0" : "")+ i);
 		}
 
 		for(int i = 1; i <= 3; i++)
 		{
-			JukeBox.load("/Sound/CharacterSounds/Succubus/Hurt0" + i + ".mp3", "SuccubusHurt0" + i);
+			JukeBox.load("/Sound/CharacterSounds/Succubus/Hurt" + (i < 10 ? "0" : "")+ i + ".mp3", "SuccubusHurt" + (i < 10 ? "0" : "")+ i);
 		}
 		
 		// Projectile sound effects
@@ -236,6 +236,9 @@ public class Content
 		JukeBox.load("/Sound/Doodads/Close.mp3", 									"Close");
 		JukeBox.load("/Sound/Doodads/Unlock.mp3", 									"Unlock");
 		JukeBox.load("/Sound/Doodads/DoorOpen.mp3", 								"DoorOpen");
+		JukeBox.load("/Sound/Doodads/Switch01.mp3", 								"Switch01");
+		JukeBox.load("/Sound/Doodads/Switch02.mp3", 								"Switch02");
+		JukeBox.load("/Sound/Doodads/Switch03.mp3", 								"Switch03");
 		
 		
 		// Background sound effect

@@ -217,6 +217,11 @@ public class ConversationState  extends GameState
 			
 			BufferedImage[] tempIcon = null;
 			
+			if(conversationTracker > whoTalks.length)
+			{
+				return;
+			}
+			
 			if(whoTalks[conversationTracker] == 0)
 			{
 				tempName = player.getName();

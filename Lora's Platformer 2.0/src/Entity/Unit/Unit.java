@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Random;
 import Audio.JukeBox;
 import javax.imageio.ImageIO;
-
 import Entity.Animation;
 import Entity.MapObject;
 import Entity.Doodad.*;
@@ -17,7 +16,6 @@ import Entity.Projectile.FireBallSmall;
 import Entity.Projectile.Projectile;
 import Entity.Projectile.ProjectileData;
 import GameState.MainMap;
-import Main.Content;
 import TileMap.TileMap;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -33,6 +31,14 @@ public class Unit extends MapObject
 	
 	protected int silver;
 	protected int gold;
+	
+	public enum soundTypes { Attack, Hurt, Jump , Loot, CannotOpen}
+	
+	protected int numberofAttackSounds;
+	protected int numberofHurtSounds;
+	protected int numberofJumpSounds;
+	
+	protected int[] numberofSounds;
 	
 	protected ArrayList<Unit> charactersHit = new ArrayList<Unit>();
 	
@@ -219,6 +225,7 @@ public class Unit extends MapObject
 			boolean unkillable,
 			boolean activatable,
 			String name,
+			String unitType,
 			double spawnX,
 			double spawnY,
 			MainMap mainMap
@@ -264,6 +271,7 @@ public class Unit extends MapObject
 		this.friendly = friendly;
 		this.activatable = activatable;
 		this.name = name;
+		this.unitType = unitType;
 		this.invulnerable = invulnerable;
 		this.untouchable = untouchable;
 		this.unkillable = unkillable;
@@ -272,9 +280,18 @@ public class Unit extends MapObject
 		this.mainMap = mainMap;
 				
 		
-		setPosition(spawnX, spawnY);
+		setPosition(spawnX, spawnY);		
 		
-		portrait = Content.PortraitPlayer[0];
+		numberofSounds = new int[soundTypes.values().length];
+		for(int i = 0; i < numberofSounds.length; i++)
+		{
+			int tempInt = 0;
+			while(JukeBox.checkIfClipExists(unitType + soundTypes.values()[i] + (i < 10 ? "0" : "") + (tempInt + 1)))
+			{
+				tempInt++;
+			}
+			numberofSounds[i] = tempInt;
+		}
 		
 		// Load the sprites.
 		try{
@@ -574,15 +591,6 @@ public class Unit extends MapObject
 		inControl = false;
 		flinchTimer = System.nanoTime();
 	}
-	
-	public void iAmHit() { }
-	
-	public void playCastSound(){}
-	
-	public void playPunchSound(){}
-	
-	public void playJumpSound() { }
-	
 	
 	public void update(ArrayList<Unit> characterList)
 	{
@@ -1379,6 +1387,54 @@ public class Unit extends MapObject
 		{
 			potion.use(this);
 		}
+	}
+	
+	public void playCastSound()
+	{
+		int RNG = mainMap.RNG(1, numberofSounds[0]);
+		if(RNG == -1)
+			return;
+		JukeBox.play(unitType + soundTypes.Attack + (RNG < 10 ? "0" : "") + RNG);
+	}
+	
+	public void playPunchSound()
+	{
+		int RNG = mainMap.RNG(1, numberofSounds[0]);
+		if(RNG == -1)
+			return;
+		JukeBox.play(unitType + soundTypes.Attack + (RNG < 10 ? "0" : "") + RNG);
+	}
+	
+	public void iAmHit()
+	{
+		int RNG = mainMap.RNG(1, numberofSounds[1]);
+		if(RNG == -1)
+			return;
+		JukeBox.play(unitType + soundTypes.Hurt + (RNG < 10 ? "0" : "") + RNG);
+	}
+	
+	public void playJumpSound()
+	{
+		int RNG = mainMap.RNG(1, numberofSounds[2]);
+		if(RNG == -1)
+			return;
+		JukeBox.play(unitType + soundTypes.Jump + (RNG < 10 ? "0" : "") + RNG);
+	}
+	
+	public void playLootSound()
+	{
+		int RNG = mainMap.RNG(1, numberofSounds[3]);
+		if(RNG == -1)
+			return;
+		JukeBox.play(unitType + soundTypes.Loot + (RNG < 10 ? "0" : "") + RNG);	
+	}
+	
+	public void playCannotOpenSound()
+	{
+		int RNG = mainMap.RNG(1, numberofSounds[4]);
+		if(RNG == -1)
+			return;
+		JukeBox.play(unitType + soundTypes.CannotOpen + (RNG < 10 ? "0" : "") + RNG);	
 	}
 	
 	public void setAnimationState(int animationState)

@@ -67,12 +67,12 @@ public class Wolf extends Unit
 				unkillable,
 				false,
 				name,
+				"Wolf",
 				spawnX,
 				spawnY,
 				level1state
 				);
-		
-		this.unitType = "Wolf";
+
 		timer = 200;
 		cooldown = 200;
 		

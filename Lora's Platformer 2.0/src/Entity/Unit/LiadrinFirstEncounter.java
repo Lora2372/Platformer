@@ -80,11 +80,12 @@ public class LiadrinFirstEncounter extends Unit
 				unkillable,
 				true,
 				name,
+				"LiadrinFirstEncounter",
 				spawnX,
 				spawnY,
 				mainMap
 				);
-		this.unitType = "LiadrinFirstEncounter";
+
 		active = true;
 		
 		portrait = Content.PortraitSuccubus[0];
