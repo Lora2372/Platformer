@@ -183,41 +183,53 @@ public class HUD
 			double currentValue = player.getHealth();
 			double maxValue = player.getMaxHealth();
 			
-			graphics.drawImage(playerHealthBar, 
-					94, 
-					27, 
-					(int)((currentValue/maxValue) * playerHealthBar.getWidth()),
-					playerHealthBar.getHeight(),
-					null);
+			graphics.drawImage
+			(
+				playerHealthBar, 
+				94, 
+				27, 
+				(int)((currentValue/maxValue) * playerHealthBar.getWidth()),
+				playerHealthBar.getHeight(),
+				null
+			);
 			
 			
 			// Draw the mana bar
 			currentValue = player.getMana();
 			maxValue = player.getMaxMana();
 			
-			graphics.drawImage(playerManaBar, 
-					113, 
-					56, 
-					(int)((currentValue/maxValue) * playerManaBar.getWidth()),
-					playerManaBar.getHeight(),
-					null);
+			graphics.drawImage
+			(
+				playerManaBar, 
+				113, 
+				56, 
+				(int)((currentValue/maxValue) * playerManaBar.getWidth()),
+				playerManaBar.getHeight(),
+				null
+			);
 			
 			// Draw the stamina bar
 			currentValue = player.getStamina();
 			maxValue = player.getMaxStamina();
 			
-			graphics.drawImage(playerStaminaBar, 
-					106, 
-					86, 
-					(int)((currentValue/maxValue) * playerStaminaBar.getWidth()),
-					playerStaminaBar.getHeight(),
-					null);
+			graphics.drawImage
+			(
+				playerStaminaBar, 
+				106, 
+				86, 
+				(int)((currentValue/maxValue) * playerStaminaBar.getWidth()),
+				playerStaminaBar.getHeight(),
+				null
+			);
 			
 			// Draw the player bar
-			graphics.drawImage(playerBar, 
-					0, 
-					10, 
-					null);
+			graphics.drawImage
+			(
+				playerBar, 
+				0, 
+				10, 
+				null
+			);
 			
 			
 			// YARR, there be gold and silver a plenty!
@@ -226,25 +238,27 @@ public class HUD
 			int currencyX = GamePanel.WIDTH - 100;
 			int currencyY = GamePanel.HEIGHT - 100;
 			graphics.drawString("" + player.getSilver(), currencyX, currencyY);
-			graphics.drawImage(
-					Content.CoinSilver[0][0],
-					currencyX + 15,
-					currencyY - 20,				
-					30,
-					30,
-					null
-					);
+			graphics.drawImage
+			(
+				Content.CoinSilver[0][0],
+				currencyX + 15,
+				currencyY - 20,				
+				30,
+				30,
+				null
+			);
 	
 			currencyY += 30;
 			
-			graphics.drawImage(
-					Content.CoinGold[0][0],
-					currencyX + 15,
-					currencyY - 20,
-					30,
-					30,
-					null
-					);		
+			graphics.drawImage
+			(
+				Content.CoinGold[0][0],
+				currencyX + 15,
+				currencyY - 20,
+				30,
+				30,
+				null
+			);		
 			graphics.drawString("" + player.getGold(), currencyX, currencyY);
 			
 			// The gold is ours, let's head back to the ship!
@@ -252,22 +266,21 @@ public class HUD
 			
 			// Draw the quest frame
 			if(questFrameShow)
-			{
-	
-				
+			{	
 				double textWidth = graphics.getFontMetrics().stringWidth(questName[questCurrent]);
 				
 				double locationX = GamePanel.WIDTH - 100 - textWidth;
 				double locationY = 100;
 				
-				graphics.drawImage(
-						Content.ConversationGUIEndConversation[0][0],
-						(int)locationX - 20,
-						(int)locationY - 20,
-						(int)textWidth + 40,
-						30,
-						null
-						);
+				graphics.drawImage
+				(
+					Content.ConversationGUIEndConversation[0][0],
+					(int)locationX - 20,
+					(int)locationY - 20,
+					(int)textWidth + 40,
+					30,
+					null
+				);
 				
 				graphics.drawString(questName[questCurrent], (int)locationX, (int)locationY);
 			}

@@ -42,9 +42,13 @@ public class JSONReader
 			player.setSpawnPoint(spawnLocationX, spawnLocationY);
 		
 			
-			boolean usingMouse = (Boolean) jsonObject.get("UsingMouse");
-			player.setUsingMouse(usingMouse);
+			boolean usingMouse = (Boolean) jsonObject.get("UseMouse");
+			player.setUseMouse(usingMouse);
 			System.out.println("usingMouse: " + usingMouse);
+			
+			boolean displayHealthBars = (Boolean) jsonObject.get("DisplayHealthBars");
+			player.setDisplayHealthBars(displayHealthBars);
+			System.out.println("displayHealthBars: " + displayHealthBars);
 
 			int silver = ((Long)jsonObject.get(CreateItem.Coins.Silver.toString())).intValue();
 			System.out.println("Silver: " + silver);

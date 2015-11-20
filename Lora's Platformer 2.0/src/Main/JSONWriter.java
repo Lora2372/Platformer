@@ -32,7 +32,8 @@ public class JSONWriter
         jsonObject.put("SpawnLocationY", spawnLocationY);
         jsonObject.put(CreateItem.Coins.Silver.toString(), player.getSilver());
         jsonObject.put(CreateItem.Coins.Gold.toString(), player.getGold());
-        jsonObject.put("UsingMouse", player.getUsingMouse());
+        jsonObject.put("UseMouse", player.getUseMouse());
+        jsonObject.put("DisplayHealthBars", player.getDisplayHealthBars());
         
         Item[][] items = player.getInventory().getItems();
         for(int i = 0; i < player.getInventory().getNumberOfRows(); i++)

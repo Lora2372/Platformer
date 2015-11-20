@@ -36,20 +36,39 @@ public class ToggleObject extends OptionObject
 		this.player = player;
 	}
 	
+	
 	public void update()
 	{
-		if(name.equals("Mouse"))
+		if(name.equals("useMouse"))
 		{
-			currentState = !player.getUsingMouse() ? 1 : 2;
+			currentState = !player.getUseMouse() ? 1 : 2;
+		}
+		
+		if(name.equals("displayHealthBar"))
+		{
+			currentState = !player.getDisplayHealthBars() ? 1 : 2;
+		}
+		
+		if(name.equals("displayNamePlates"))
+		{
+			currentState = !player.getDisplayNamePlates() ? 1 : 2;
 		}
 	}
 	
 	
 	public void click()
 	{
-		if(name.equals("Mouse"))
+		if(name.equals("useMouse"))
 		{
-			player.setUsingMouse(!player.getUsingMouse());
+			player.setUseMouse(!player.getUseMouse());
+		}
+		if(name.equals("displayHealthBar"))
+		{
+			player.setDisplayHealthBars(!player.getDisplayHealthBars());
+		}
+		if(name.equals("displayNamePlates"))
+		{
+			player.setDisplayNamePlates(!player.getDisplayNamePlates());
 		}
 		
 		JukeBox.play("Switch01");

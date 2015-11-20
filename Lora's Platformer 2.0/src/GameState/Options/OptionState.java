@@ -38,51 +38,105 @@ public class OptionState extends GameState implements ChangeListener
 		
 		optionObjects = new ArrayList<OptionObject>();
 		ToggleObject useMouse = new ToggleObject
-			(
-					400, 
-					200, 
-					50, 
-					50, 
-					2, 
-					1, 
-					1, 
-					new String[] 
-						{ 
-							"Aim with arrow keys",
-							"Aim with mouse"
-							
-						}, 
-					new BufferedImage[] 
-						{ 
-							Content.LeverOpened[0][0], 
-							Content.LeverClosed[0][0] 
-						},
-						"Mouse",
-						player
-			);
+		(
+			400, 
+			200, 
+			50, 
+			50, 
+			2, 
+			1, 
+			1, 
+			new String[] 
+			{ 
+				"Aim with arrow keys",
+				"Aim with mouse"					
+			}, 
+			new BufferedImage[] 
+			{ 
+				Content.LeverOpened[0][0], 
+				Content.LeverClosed[0][0] 
+			},
+			"useMouse",
+			player
+		);
 		optionObjects.add(useMouse);
+			
+		ToggleObject displayHealthBars = new ToggleObject
+		(
+			400, 
+			300, 
+			50, 
+			50, 
+			2, 
+			1, 
+			1, 
+			new String[] 
+			{ 
+				"Hide health bars",
+				"Display health bars"
+			}, 
+			new BufferedImage[] 
+			{ 
+				Content.LeverOpened[0][0], 
+				Content.LeverClosed[0][0] 
+			},
+			"displayHealthBar",
+			player
+		);
+		optionObjects.add(displayHealthBars);
+				
+		ToggleObject displayNamePlates = new ToggleObject
+		(
+			400, 
+			300, 
+			50, 
+			50, 
+			2, 
+			1, 
+			1, 
+			new String[] 
+			{ 
+				"Hide name plates",
+				"Display name plates"
+			}, 
+			new BufferedImage[] 
+			{ 
+				Content.LeverOpened[0][0], 
+				Content.LeverClosed[0][0] 
+			},
+				"displayNamePlates",
+				player
+		);
+		
+		optionObjects.add(displayNamePlates);
+		
+		for(int i = 0; i < optionObjects.size(); i++)
+		{
+			optionObjects.get(i).setLocation(400, 200 + i * 50);
+		}
+		
 		
 		goBack = new OptionObject
-			(
-				GamePanel.WIDTH - 200, 
-				GamePanel.HEIGHT - 200, 
-				100, 
-				50, 
-				1, 
-				1, 
-				1, 
-				new String[] 
-				{ 
-				},
-				new BufferedImage[]
-					{
+		(
+			GamePanel.WIDTH - 200, 
+			GamePanel.HEIGHT - 200, 
+			100, 
+			50, 
+			1, 
+			1, 
+			1, 
+			new String[] 
+			{ 
+			},
+			new BufferedImage[]
+			{
 						
-					},
-				"Back"
-			);
+			},
+			"Back"
+		);
 		optionObjects.add(goBack);
 		
-
+		
 	}
 	
 	public void setPlayer(Player player)

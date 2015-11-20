@@ -7,8 +7,8 @@ import TileMap.TileMap;
 
 public class Wolf extends Unit
 {
-	protected int cooldown;
-	protected int timer;
+	protected int attackCooldown;
+	protected int attackTimer;
 	
 	public Wolf(
 			TileMap tileMap,
@@ -72,9 +72,9 @@ public class Wolf extends Unit
 				spawnY,
 				mainMap
 				);
-
-		timer = 200;
-		cooldown = 200;
+		
+		attackTimer = 200;
+		attackCooldown = 200;
 		
 	}
 	
@@ -83,7 +83,7 @@ public class Wolf extends Unit
 		
 		if(!inControl) return;
 		
-		if(directionX == 0 && timer > 0)
+		if(directionX == 0 && attackTimer > 0)
 		{
 			if(facingRight)
 			{
@@ -99,19 +99,19 @@ public class Wolf extends Unit
 			}
 		}
 		
-		timer++;
+		attackTimer++;
 		
 
-		if(timer >= cooldown * 10) timer = cooldown;
+		if(attackTimer >= attackCooldown * 10) attackTimer = attackCooldown;
 		
 		ArrayList<Unit> enemiesDetected = detectEnemy(characterList, true);
 		if(enemiesDetected != null)
 		{
 			if(enemiesDetected.size() > 0)
 			{
-				if(timer >= cooldown)
+				if(attackTimer >= attackCooldown)
 				{
-					timer = 0;
+					attackTimer = 0;
 					setDashing(true);
 				}
 			}

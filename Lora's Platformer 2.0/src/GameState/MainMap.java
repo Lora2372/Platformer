@@ -44,6 +44,9 @@ public class MainMap extends GameState
 	
 	protected boolean mousePressed;
 	
+	protected boolean displayHealthBars;
+	protected boolean displayNamePlates;
+	
 	protected ConversationState conversationState;
 	
 	protected long soundTimer;
@@ -198,6 +201,9 @@ public class MainMap extends GameState
 	{
 		if(!doneInitializing) return;
 		// Update Characters
+		
+		displayHealthBars = player.getDisplayHealthBars();
+		displayNamePlates = player.getDisplayNamePlates();
 		
 		if(mousePressed)
 		{
@@ -440,7 +446,21 @@ public class MainMap extends GameState
 			{
 				for(int i = 0; i < characterList.size(); i++)
 				{
-					characterList.get(i).draw(graphics);
+					Unit unit = characterList.get(i);
+					unit.draw(graphics);
+					if(player.getDisplayHealthBars())
+					{
+						unit.drawHealthBars(graphics);
+					}
+					
+					if(displayHealthBars)
+					{
+						unit.drawHealthBars(graphics);
+					}
+					if(displayNamePlates)
+					{
+						unit.drawNamePlate(graphics);
+					}
 				}
 			}
 			catch(NullPointerException exception)
@@ -480,58 +500,61 @@ public class MainMap extends GameState
 		return random.nextInt((max - min) + 1) + min;
 	}
 	
-	public Slug spawnSlug(double x, double y, boolean facingRight, String name)
-	{
-		
-		
-		String[] names = new String[]
+	public Slug spawnSlug(double locationX, double locationY, boolean facingRight, String name)
+	{	
+		String[] slugNames = new String[]
 		{
-			"Cookie",
-			"Steven",
-			"Morgan",
-			"Tom",
-			"Carl",
-			"John"				
+				"Cookie",
+				"Steven",
+				"Morgan",
+				"Tom",
+				"Carl",
+				"John"			
 		};
 		
-		if(name == null)
-		{
-			Random randomizer = new Random();
-			int random = randomizer.nextInt((5 - 0) + 1 + 0);
-			name = names[random];
-		}
-
-	
-		Slug slug = new Slug(tileMap, facingRight, false, false, false, false, name, x, y, this);
+		Slug slug = new Slug(tileMap, facingRight, false, false, false, false, slugNames[RNG(0, slugNames.length - 1)], locationX, locationY, this);
 		characterList.add(slug);
 		return slug;
 	}
 	
-	public Succubus spawnSuccubus(double x, double y, boolean facingRight)
+	public Succubus spawnSuccubus(double locationX, double locationY, boolean facingRight)
 	{
+		
 		String[] succubiNames = new String[]
 		{
 			"Rui",
-			"Domwena"
+			"Domwena",
+			"Elerlith",
+			"Synys",
+			"Kallith",
+			"Fierneth",
+			"Catvina",
+			"Bronlissa",
+			"Cariel",
+			"Darxia",
+			"Nimnys"
 		};
 		
-		Random randomizer = new Random();
-		int random2 = randomizer.nextInt((1 - 0) + 1 + 0);
-		
-		Succubus succubus = new Succubus(tileMap, facingRight,false, false, false, false, succubiNames[random2],x, y, this);
+		Succubus succubus = new Succubus(tileMap, facingRight,false, false, false, false, succubiNames[RNG(0, succubiNames.length - 1)], locationX, locationY, this);
 		characterList.add(succubus);
-		
 		return succubus;
 	}
 	
-	public Wolf spawnWolf(double x, double y, boolean facingRight)
+	public Wolf spawnWolf(double locationX, double locationY, boolean facingRight)
 	{
+		
 		String[] wolfNames = new String[]
 		{
-			"Cookie"
+			"Rhuudym",
+			"Pryyfenn",
+			"Phathun",
+			"Jhazeem",
+			"Maahzon",
+			"Gzaalum",
+			"Drootom"
 		};
 		
-		Wolf wolf = new Wolf(tileMap, facingRight, false, false, false, false, wolfNames[0], x, y, this);
+		Wolf wolf = new Wolf(tileMap, facingRight, false, false, false, false, wolfNames[RNG(0, wolfNames.length - 1)], locationX, locationY, this);
 		characterList.add(wolf);
 		return wolf;
 	}
@@ -603,7 +626,7 @@ public class MainMap extends GameState
 		}
 	}
 
-	public void spawnPlayer(double x, double y)
+	public void spawnPlayer(double locationX, double y)
 	{
 		// find me
 	}

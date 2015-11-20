@@ -63,6 +63,12 @@ public class OptionObject
 		
 	}
 	
+	public void setLocation(double locationX, double locationY) 
+	{ 
+		this.locationX = locationX;
+		this.locationY = locationY;
+	}
+	
 	public double getLocationX() { return locationX; }
 	public double getLocationY() { return locationY; }
 	

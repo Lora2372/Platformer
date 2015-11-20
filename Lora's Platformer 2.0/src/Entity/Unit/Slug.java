@@ -7,8 +7,8 @@ import GameState.MainMap;
 
 public class Slug extends Unit
 {
-	protected int cooldown;
-	protected int timer;
+	protected int attackCooldown;
+	protected int attackTimer;
 	
 	public Slug(
 			TileMap tileMap,
@@ -74,16 +74,12 @@ public class Slug extends Unit
 				
 				);
 		
-		timer = 0;
-		cooldown = 100;
+		attackTimer = 0;
+		attackCooldown = 100;
 		
 		
 		
 	}
-	
-	
-
-	
 	
 	public void updateAI(ArrayList<Unit> characterList)
 	{
@@ -107,21 +103,21 @@ public class Slug extends Unit
 			
 		}
 		
-		timer++;
+		attackTimer++;
 		
 		ArrayList<Unit> enemiesDetected = detectEnemy(characterList, true);
 		
 		if(enemiesDetected.size() > 0)
 		{
-			if(timer > cooldown)
+			if(attackTimer > attackCooldown)
 			{
-				timer = 0;
+				attackTimer = 0;
 //				System.out.println("FIRE THE FIREBALL!");
 				fireBallSmallCasting = true;
 			}
 		}
 		
-		if(timer > cooldown * 10) timer = cooldown;
+		if(attackTimer > attackCooldown * 10) attackTimer = attackCooldown;
 		
 
 	}

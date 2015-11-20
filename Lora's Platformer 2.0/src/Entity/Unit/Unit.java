@@ -16,6 +16,7 @@ import Entity.Projectile.FireBallSmall;
 import Entity.Projectile.Projectile;
 import Entity.Projectile.ProjectileData;
 import GameState.MainMap;
+import Main.Content;
 import TileMap.TileMap;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -270,6 +271,7 @@ public class Unit extends MapObject
 		this.friendly = friendly;
 		this.activatable = activatable;
 		this.name = name;
+		setName();
 		this.unitType = unitType;
 		this.invulnerable = invulnerable;
 		this.untouchable = untouchable;
@@ -330,6 +332,8 @@ public class Unit extends MapObject
 		animation.setFrames(sprites.get(animationState[0]));
 		animation.setDelay(400);
 	}
+	
+	public void setName() { }
 	
 	public void setMainMap(MainMap mainMap) 
 	{ 
@@ -1463,42 +1467,6 @@ public class Unit extends MapObject
 	{
 		setMapPosition();
 		
-//		try
-//		{
-//			BufferedImage bossHealthBar = ImageIO.read
-//			(
-//				getClass().getResource
-//				(
-//					"/Art/HUD/Bars/BossHealthBar.png"
-//				)
-//			);
-//			
-//			
-//			graphics.drawImage
-//			(
-//				bossHealthBar,
-//				locationX,
-//				locationY,
-//				50,
-//				20,
-//				null
-//			);
-//			
-//			
-//			BufferedImage bossBar = ImageIO.read
-//			(
-//				getClass().getResource
-//				(
-//					"/Art/HUD/Bars/BossHealthBarFrame.png"
-//				)
-//			);
-//		}
-//		catch(Exception exception)
-//		{
-//			exception.printStackTrace();
-//		}
-
-		
 		// Draw Summoning Effect
 		if(summoningEffect != null)
 		{
@@ -1511,6 +1479,78 @@ public class Unit extends MapObject
 		if(spawning) return;
 		
 		
-		super.draw(graphics);
+		super.draw(graphics);		
+	}
+	
+	public void drawNamePlate(Graphics2D graphics)
+	{
+		try
+		{
+			if(player)
+			{
+				return;
+			}
+			
+			if(name == null)
+			{
+				System.out.println("what?");
+				System.out.println("unitType: " + unitType);
+			}
+			
+			graphics.setFont(new Font("Arial", Font.PLAIN, 14));
+			graphics.setColor(Color.WHITE);
+			
+			int length = (int)graphics.getFontMetrics().getStringBounds(name, graphics).getWidth();
+			int height = (int)graphics.getFontMetrics().getStringBounds(name, graphics).getHeight();
+			int drawX = (int)(locationX + mapPositionX) - length / 2;
+			int drawY = (int) (locationY + mapPositionY) - height * 2;
+
+			graphics.drawString(name, drawX, drawY);
+			
+		}
+		catch(Exception exception)
+		{
+			exception.printStackTrace();
+		}
+	}
+	
+	public void drawHealthBars(Graphics2D graphics)
+	{
+		try
+		{
+			if(player)
+			{
+				return;
+			}
+			
+			int length = 75;
+			int height = 20;
+			int drawX = (int)(locationX + mapPositionX) - length / 2;
+			int drawY = (int)(locationY + mapPositionY) + this.height / 2;
+			
+			graphics.drawImage
+			(
+				Content.bossBar,
+				drawX,
+				drawY,
+				length,
+				height,
+				null
+			);
+
+			graphics.drawImage
+			(
+				Content.bossHealthBar,
+				drawX,
+				drawY,
+				(int)((health/maxHealth) * length),
+				height,
+				null
+			);
+		}
+		catch(Exception exception)
+		{
+			exception.printStackTrace();
+		}
 	}
 }

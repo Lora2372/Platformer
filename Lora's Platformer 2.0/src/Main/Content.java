@@ -93,7 +93,8 @@ public class Content
 	public static BufferedImage[][] OptionBackground		= load("/Art/HUD/Foregrounds/OptionBackground.png", 424, 348);
 	
 //	public static BufferedImage[][] BossHealthBarFrame		= load("/Art/HUD/Bars/BossHealthBarFrame.png")
-	
+	public static BufferedImage bossBar;
+	public static BufferedImage bossHealthBar;
 	
 	// Portraits
 	public static BufferedImage[][] PortraitPlayer			=load("/Art/HUD/Portraits/PortraitPlayer.png", 94, 94);
@@ -251,6 +252,22 @@ public class Content
 	{						
 		try
 		{
+			bossHealthBar = ImageIO.read
+			(
+				Content.class.getResource
+				(
+					"/Art/HUD/Bars/BossHealthBar.png"
+				)
+			);
+			
+			bossBar = ImageIO.read
+			(
+				Content.class.getResource
+				(
+					"/Art/HUD/Bars/BossHealthBarFrame.png"
+				)
+			);
+			
 			if(Content.class.getResource(Content.class.getSimpleName() + ".class").getFile().startsWith("/"))
 			{
 				System.out.println("Running within Eclipse.");

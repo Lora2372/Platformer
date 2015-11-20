@@ -14,8 +14,8 @@ import Main.Content;
 
 public class Fiona extends Unit
 {
-	protected int cooldown;
-	protected int timer;
+	protected int attackCooldown;
+	protected int attackTimer;
 	
 	protected boolean arcaneBallMode;
 	protected int arcaneBallMoving;
@@ -112,8 +112,8 @@ public class Fiona extends Unit
 		this.unitType = "Fiona";
 		this.player = player;
 		this.fionasSanctum = fionasSanctum;
-		timer = 0;
-		cooldown = 300;
+		attackTimer = 0;
+		attackCooldown = 300;
 		
 		conversation = player.getConversation();
 		
@@ -418,10 +418,10 @@ public class Fiona extends Unit
 			
 			if((electricBall == null || electricBall.getHit()) && directionX == 0 && directionY == 0)
 			{
-				timer++;
-				if(timer > cooldown)
+				attackTimer++;
+				if(attackTimer > attackCooldown)
 				{	
-					timer = 0;
+					attackTimer = 0;
 					playerHit = false;
 					
 					if(mainMap.RNG(1, 2) == 1)
