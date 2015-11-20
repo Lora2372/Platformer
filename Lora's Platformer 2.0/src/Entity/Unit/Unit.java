@@ -1130,7 +1130,6 @@ public class Unit extends MapObject
 				animation.setDelay(animationDelay[0]);
 			}
 		}
-		
 		animation.update();
 		
 		// Set direction

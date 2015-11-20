@@ -224,7 +224,7 @@ public class Chest extends Doodad
 						
 						if(item != null)
 						{
-							conversationPiece += item.getStacks() + (item.getStacks() > 1 ? "s, " : ", ");
+							conversationPiece += item.getStacks() + " " + CreateItem.itemDescriptionName.get(item.getItemType()) + (item.getStacks() > 1 ? "s, " : ", ");
 							
 							if(item.getItemType().equals(CreateItem.Coins.Silver.toString()))
 							{

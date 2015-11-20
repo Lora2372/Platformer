@@ -47,11 +47,19 @@ public class Animation
 			startTime = System.nanoTime();
 		}
 		// We have to make sure that we don't go past the amount of frames we have.
-		if(currentFrame == frames.length)
+		if(frames != null)
 		{
-			currentFrame = 0;
-			playedOnce = true;
+			if(currentFrame == frames.length)
+			{
+				currentFrame = 0;
+				playedOnce = true;
+			}
 		}
+		else
+		{
+			System.out.println("null");
+		}
+
 	}
 	
 	

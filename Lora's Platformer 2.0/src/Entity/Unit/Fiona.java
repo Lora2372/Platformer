@@ -187,6 +187,11 @@ public class Fiona extends Unit
 		player.getConversationState().startConversation(player, this, null, conversation.fionaDefeated, conversation.fionaDefeatedWhoTalks);
 	}
 	
+	public void update(ArrayList<Unit> characterList)
+	{
+		super.update(characterList);
+		
+	}
 	
 	public void updateAI(ArrayList<Unit> characterList)
 	{
@@ -201,7 +206,6 @@ public class Fiona extends Unit
 		
 		//If the player moves to one corner, she moves to the other!
 		
-		super.update(characterList);
 		
 		if(used)
 		{

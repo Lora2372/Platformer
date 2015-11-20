@@ -218,8 +218,10 @@ public class ConversationState  extends GameState
 			BufferedImage[] tempIcon = null;
 			
 			
-			System.out.println("whoTalks.length: " + whoTalks.length + "\nconversationTracker: " + conversationTracker);
-			
+			if(conversationTracker > whoTalks.length - 1)
+			{
+				System.out.println("Error?");
+			}
 			
 			if(whoTalks[conversationTracker] == 0)
 			{
