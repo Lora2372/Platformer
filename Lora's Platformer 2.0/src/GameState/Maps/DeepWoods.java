@@ -17,6 +17,8 @@ public class DeepWoods extends MainMap
 {
 	protected Door door;
 	
+	protected double startLocationX = 400;
+	protected double startLocationY = 200;
 	
 	public DeepWoods(GameStateManager gameStatemanager,
 			TileMap tileMap,
@@ -31,27 +33,15 @@ public class DeepWoods extends MainMap
 				
 				);
 		
-		try
-		{
-			tileMap.loadTiles(ImageIO.read(getClass().getResource("/Art/Tilesets/LorasTileset.png")));
-			tileMap.loadMap("/Maps/DeepWoodsA.map");
-			tileMap.setPosition(0, 0);
-			
-			background = new Background(getClass().getResource("/Art/Backgrounds/DeepWoods01.png"), 0.1);
-			gameoverScreen = new GameOver(getClass().getResource("/Art/HUD/Foregrounds/GameOver.png"));
-		}
-		catch(IOException e)
-		{
-			e.printStackTrace();
-		}
+
 		
 		player.setTileMap(tileMap);
-		player.setCurrentMap("DeepWoods");
+		
 
 		if(!player.getLoaded())
 		{
-			player.setPosition(400, 200);
-			player.setSpawnPoint(400, 200);
+			player.setPosition(startLocationX, startLocationY);
+			player.setSpawnPoint(startLocationX, startLocationY);
 		}
 		else
 		{
@@ -70,17 +60,41 @@ public class DeepWoods extends MainMap
 		
 		door = spawnDoor(3030,  890, false, 0, "Village");
 		
+		
 		player.setSpawning(true);
 		player.setUnkillable(false);
+		
+	}
+	
+	public void initialize()
+	{
+		super.initialize();
+		player.setCurrentMap("DeepWoods");
+		
+		try
+		{
+			tileMap.loadTiles(ImageIO.read(getClass().getResource("/Art/Tilesets/LorasTileset.png")));
+			tileMap.loadMap("/Maps/DeepWoodsA.map");
+			tileMap.setPosition(0, 0);
+			
+			background = new Background(getClass().getResource("/Art/Backgrounds/DeepWoods01.png"), 0.1);
+			gameoverScreen = new GameOver(getClass().getResource("/Art/HUD/Foregrounds/GameOver.png"));
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
+		
 		doneInitializing = true;
 	}
+	
+	public double getStartingLocationX() { return startLocationX; }
+	public double getStartingLocationY() { return startLocationY; }
 	
 	
 	public void update()
 	{
 		super.update();
-		
-
 		
 	}
 	

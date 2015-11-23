@@ -44,6 +44,8 @@ public class MainMap extends GameState
 	
 	protected boolean mousePressed;
 	
+	protected boolean holdingInteractButton;
+	
 	protected boolean displayHealthBars;
 	protected boolean displayNamePlates;
 	
@@ -107,7 +109,7 @@ public class MainMap extends GameState
 	
 	public void loadMenu()
 	{
-		gameStateManager.setState(0);
+		gameStateManager.setState(0, false);
 	}
 	
 	public void checkProjectiles()
@@ -640,6 +642,11 @@ public class MainMap extends GameState
 	
 	public void interact()
 	{
+		if(holdingInteractButton)
+		{
+			return;
+		}
+		holdingInteractButton = true;
 		if(player.getInConversation())
 		{
 			player.getConversationState().progressConversation();
@@ -861,6 +868,7 @@ public class MainMap extends GameState
 		if(key == KeyEvent.VK_SPACE) player.setJumping(false);
 		if(key == KeyEvent.VK_UP) player.setUp(false);
 		if(key == KeyEvent.VK_R) player.setGliding(false);
+		if(key == KeyEvent.VK_E) holdingInteractButton = false;
 		
 		if(key == KeyEvent.VK_A) player.setCastingSmallFireBall();
 		if(key == KeyEvent.VK_S) player.setCastingLargeFireBall();

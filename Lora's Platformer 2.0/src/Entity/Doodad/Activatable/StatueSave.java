@@ -92,13 +92,12 @@ public class StatueSave extends Doodad
 					
 					JSONWriter.saveFile(player, (int)spawnX, (int)spawnY);
 					JukeBox.play("Save");
-					return;
 				}
 				else
 				{
 					player.getConversationState().startConversation(player, null, this, conversation.statueSaveChoiceNo(), conversation.statueSaveChoiceNoWhoTalks());	
-					return;
 				}
+				return;
 			}
 		}
 		

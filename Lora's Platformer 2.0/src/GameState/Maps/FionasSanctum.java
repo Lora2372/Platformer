@@ -33,7 +33,7 @@ public class FionasSanctum extends MainMap
 	
 	protected Conversation conversation;
 	
-	protected Door door;
+	protected Door bossDoor;
 	
 	public FionasSanctum(
 			GameStateManager gameStatemanager,
@@ -49,19 +49,7 @@ public class FionasSanctum extends MainMap
 				
 				);
 		
-		try
-		{
-			tileMap.loadTiles(ImageIO.read(getClass().getResource("/Art/Tilesets/LorasTileset.png")));
-			tileMap.loadMap("/Maps/FionasSanctumA.map");
-			tileMap.setPosition(0, 0);
-			
-//			background = new Background(getClass().getResource("/Art/Backgrounds/UndergroundBackground.png"), 0.1);
-			gameoverScreen = new GameOver(getClass().getResource("/Art/HUD/Foregrounds/GameOver.png"));
-		}
-		catch(IOException e)
-		{
-			e.printStackTrace();
-		}
+
 		
 		conversation = player.getConversation();
 		
@@ -81,16 +69,16 @@ public class FionasSanctum extends MainMap
 		activatables.add(activatableShrine);
 		stuff.add(activatableShrine);
 		
-		door = new Door(tileMap, gameStatemanager, 120, 780, false, 2, "Boss");
-		activatables.add(door);
-		stuff.add(door);
+		bossDoor = new Door(tileMap, gameStatemanager, 120, 780, false, 2, "Boss");
+		activatables.add(bossDoor);
+		stuff.add(bossDoor);
 		
-		player.setCurrentMap("FionasSanctum");
+		
 
 		if(!player.getLoaded())
 		{
-			player.setPosition(door.getLocationX(), door.getLocationY());
-			player.setSpawnPoint(door.getLocationX(), door.getLocationY());
+			player.setPosition(bossDoor.getLocationX(), bossDoor.getLocationY());
+			player.setSpawnPoint(bossDoor.getLocationX(), bossDoor.getLocationY());
 		}
 		else
 		{
@@ -103,10 +91,31 @@ public class FionasSanctum extends MainMap
 		bossEngaged = false;
 		bossDefeated = false;
 		
+		
+	}
+	
+	public void initialize()
+	{
+		super.initialize();
+		player.setCurrentMap("FionasSanctum");
+		try
+		{
+			tileMap.loadTiles(ImageIO.read(getClass().getResource("/Art/Tilesets/LorasTileset.png")));
+			tileMap.loadMap("/Maps/FionasSanctumA.map");
+			tileMap.setPosition(0, 0);
+			
+//			background = new Background(getClass().getResource("/Art/Backgrounds/UndergroundBackground.png"), 0.1);
+			gameoverScreen = new GameOver(getClass().getResource("/Art/HUD/Foregrounds/GameOver.png"));
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
+		
 		doneInitializing = true;
 	}
 	
-	public Door getDoor() { return door; }
+	public Door getDoor() { return bossDoor; }
 	
 	public ArrayList<Entity.Unit.Unit> getCharacterList()
 	{
@@ -130,6 +139,11 @@ public class FionasSanctum extends MainMap
 	public void update()
 	{
 		super.update();
+		
+		if(!fiona.getHidden())
+		{
+			System.out.println("fiona is no longer hidden");
+		}
 		
 		// We don't want the player to be able to progress the conversation whilst Fiona is spawning
 		

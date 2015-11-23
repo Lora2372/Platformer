@@ -271,7 +271,6 @@ public class Unit extends MapObject
 		this.friendly = friendly;
 		this.activatable = activatable;
 		this.name = name;
-		setName();
 		this.unitType = unitType;
 		this.invulnerable = invulnerable;
 		this.untouchable = untouchable;
@@ -333,7 +332,6 @@ public class Unit extends MapObject
 		animation.setDelay(400);
 	}
 	
-	public void setName() { }
 	
 	public void setMainMap(MainMap mainMap) 
 	{ 
@@ -1482,11 +1480,31 @@ public class Unit extends MapObject
 		super.draw(graphics);		
 	}
 	
+	protected int shiftNorth(int coordinate, int distance) 
+	{
+	   return (coordinate - distance);
+	}
+	
+	protected int shiftSouth(int coordinate, int distance) {
+	   return (coordinate + distance);
+	}
+	
+	protected int shiftEast(int coordinate, int distance) 
+	{
+	   return (coordinate + distance);
+	}
+	
+	protected int shiftWest(int coordinate, int distance) 
+	{
+	   return (coordinate - distance);
+	}
+	
+	
 	public void drawNamePlate(Graphics2D graphics)
 	{
 		try
 		{
-			if(player)
+			if(player || hidden)
 			{
 				return;
 			}
@@ -1497,14 +1515,20 @@ public class Unit extends MapObject
 				System.out.println("unitType: " + unitType);
 			}
 			
-			graphics.setFont(new Font("Arial", Font.PLAIN, 14));
-			graphics.setColor(Color.WHITE);
-			
 			int length = (int)graphics.getFontMetrics().getStringBounds(name, graphics).getWidth();
 			int height = (int)graphics.getFontMetrics().getStringBounds(name, graphics).getHeight();
 			int drawX = (int)(locationX + mapPositionX) - length / 2;
-			int drawY = (int) (locationY + mapPositionY) - height * 2;
-
+			int drawY = (int) (locationY + mapPositionY) - 25 - height * 2;
+			
+//			graphics.setFont(new Font("Arial", Font.PLAIN, 16));
+//			graphics.setColor(Color.BLACK);
+//			graphics.drawString(name, shiftWest( (int) locationX, 1), shiftNorth( (int) locationY, 1));
+//			graphics.drawString(name, shiftWest( (int) locationX, 1), shiftSouth( (int) locationY, 1));
+//			graphics.drawString(name, shiftEast( (int) locationX, 1), shiftNorth( (int) locationY, 1));
+//			graphics.drawString(name, shiftEast( (int) locationX, 1), shiftSouth( (int) locationY, 1));
+						
+			graphics.setColor(friendly ? Color.BLUE : Color.RED);
+			graphics.setFont(new Font("Arial", Font.PLAIN, 14));
 			graphics.drawString(name, drawX, drawY);
 			
 		}
@@ -1518,7 +1542,7 @@ public class Unit extends MapObject
 	{
 		try
 		{
-			if(player)
+			if(player || hidden )
 			{
 				return;
 			}
@@ -1526,7 +1550,7 @@ public class Unit extends MapObject
 			int length = 75;
 			int height = 20;
 			int drawX = (int)(locationX + mapPositionX) - length / 2;
-			int drawY = (int)(locationY + mapPositionY) + this.height / 2;
+			int drawY = (int)(locationY + mapPositionY) - this.height / 2;
 			
 			graphics.drawImage
 			(

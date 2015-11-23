@@ -92,6 +92,7 @@ public abstract class MapObject
 	protected Inventory inventory;
 	
 	public void setHidden(boolean b) { hidden = b; }
+	public boolean getHidden() { return hidden; }
 	
 	// Constructor
 	public MapObject(TileMap tileMap)

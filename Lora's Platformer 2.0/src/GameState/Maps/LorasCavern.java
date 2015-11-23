@@ -20,20 +20,20 @@ public class LorasCavern extends MainMap
 	
 	
 	public LorasCavern
-		(
-			GameStateManager gameStateManager,
-			TileMap tileMap,
-			Player player,
-			ConversationState conversationState
-		) 
+	(
+		GameStateManager gameStateManager,
+		TileMap tileMap,
+		Player player,
+		ConversationState conversationState
+	) 
 	{
 		super
-			(
-				gameStateManager, 
-				tileMap,
-				player,
-				conversationState
-			);
+		(
+			gameStateManager, 
+			tileMap,
+			player,
+			conversationState
+		);
 	
 		try
 		{						
@@ -148,7 +148,7 @@ public class LorasCavern extends MainMap
 		if(player.getLocationX() < 3750 && player.getLocationY() > 2640)
 		{
 			
-			gameStateManager.setState(GameStateManager.MysteriousDungeon);
+			gameStateManager.setState(GameStateManager.MysteriousDungeon, false);
 		}
 	}
 	

@@ -47,16 +47,12 @@ public class ActivatableCave extends Doodad
 	public void interact(Player player)
 	{
 
-		if(gameStateManager.getState() == GameStateManager.FionasSanctum)
-		{
-			gameStateManager.setState(GameStateManager.DeepWoods);
-		}
 			
 	}
 	
 	public void activateSound() 
 	{ 
-//		JukeBox.play("OpenChestCommon");
+//		JukeBox.play("EnterCave");
 	}
 	
 }

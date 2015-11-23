@@ -44,7 +44,7 @@ public class ToggleObject extends OptionObject
 			currentState = !player.getUseMouse() ? 1 : 2;
 		}
 		
-		if(name.equals("displayHealthBar"))
+		if(name.equals("displayHealthBars"))
 		{
 			currentState = !player.getDisplayHealthBars() ? 1 : 2;
 		}
@@ -62,7 +62,7 @@ public class ToggleObject extends OptionObject
 		{
 			player.setUseMouse(!player.getUseMouse());
 		}
-		if(name.equals("displayHealthBar"))
+		if(name.equals("displayHealthBars"))
 		{
 			player.setDisplayHealthBars(!player.getDisplayHealthBars());
 		}

@@ -50,7 +50,7 @@ public class GameStateManager
 		gameStates = new GameState[NUMGAMESTATES];
 		
 		currentState = MENUSTATE;
-		loadState(currentState);
+		loadState(currentState, true);
 	}
 	
 	public void setPlayer(Player player) 
@@ -73,55 +73,79 @@ public class GameStateManager
 	}
 
 	
-	private void loadState(int state) 
+	private void loadState(int state, boolean fresh) 
 	{
 		if(state == TutorialState)
 		{
 			JukeBox.loop("Tutorial");
-			if(gameStates[state] == null)
+			if(gameStates[state] == null || fresh)
 			{
 				gameStates[state] = new Tutorial(this, tileMap, player, conversationState);		
+			}
+			else
+			{
+				gameStates[state].initialize();
 			}
 		}
 		else if(state == MENUSTATE)
 		{		
 			JukeBox.loop("Menu");
-			if(gameStates[state] == null)
+			if(gameStates[state] == null || fresh)
 			{
 				gameStates[state] = new MenuState(this, conversationState);
+			}
+			else
+			{
+				gameStates[state].initialize();
 			}
 			
 		}
 		else if(state == LorasCavern)
 		{
 			JukeBox.loop("LorasCavern");
-			if(gameStates[state] == null)
+			if(gameStates[state] == null || fresh)
 			{
 				gameStates[state] = new LorasCavern(this, tileMap, player, conversationState);
+			}
+			else
+			{
+				gameStates[state].initialize();
 			}
 		}
 		else if(state == MysteriousDungeon)
 		{
 			JukeBox.loop("MysteriousDungeon");
-			if(gameStates[state] == null)
+			if(gameStates[state] == null || fresh)
 			{
 				gameStates[state] = new MysteriousDungeon(this, tileMap, player, conversationState);
+			}
+			else
+			{
+				gameStates[state].initialize();
 			}
 		}
 		else if(state == FionasSanctum)
 		{
 			JukeBox.loop("FionasSanctum");
-			if(gameStates[state] == null)
+			if(gameStates[state] == null || fresh)
 			{
 				gameStates[state] = new FionasSanctum(this, tileMap, player, conversationState);
+			}
+			else
+			{
+				gameStates[state].initialize();
 			}
 		}
 		else if(state == DeepWoods)
 		{
 			JukeBox.loop("DeepWoods");
-			if(gameStates[state] == null)
+			if(gameStates[state] == null || fresh)
 			{
 				gameStates[state] = new DeepWoods(this, tileMap, player, conversationState);			
+			}
+			else
+			{
+				gameStates[state].initialize();
 			}
 		}
 	}
@@ -138,17 +162,21 @@ public class GameStateManager
 	private void unloadState(int state) 
 	{
 		stopMusic();
+//		gameStates[state].reset();
 		gameStates[state] = null;
 	}
 	
-	public void setState(int state)
+	public void setState(int state, boolean fresh)
 	{
 		unloadState(currentState);
 		currentState = state;
-		loadState(currentState);
+		loadState(currentState, fresh);
 	}
 	
-	public int getState() { return currentState; }
+	public GameState getState(int whichState) { return gameStates[whichState]; }
+	
+	public int getCurrentState() { return currentState; }
+	
 	
 	public GameState[] getStates()
 	{
@@ -157,7 +185,8 @@ public class GameStateManager
 	
 	public void update() 
 	{
-		try {
+		try 
+		{
 			
 			if(options)
 			{

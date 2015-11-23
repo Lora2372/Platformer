@@ -182,13 +182,13 @@ public class MenuState extends GameState
 		if(currentChoice == 0)
 		{
 			// Tutorial
-			gameStateManager.setState(GameStateManager.TutorialState);
+			gameStateManager.setState(GameStateManager.TutorialState, true);
 
 		}
 		else if(currentChoice == 1)
 		{
 			// New Game
-			gameStateManager.setState(GameStateManager.LorasCavern);
+			gameStateManager.setState(GameStateManager.LorasCavern, true);
 		}
 		else if(currentChoice == 2)
 		{
@@ -202,22 +202,22 @@ public class MenuState extends GameState
 				String currentMap = player.getCurrentMap();
 				if(currentMap.equals("LorasCavern"))
 				{
-					gameStateManager.setState(GameStateManager.LorasCavern);
+					gameStateManager.setState(GameStateManager.LorasCavern, true);
 				}
 				else if(currentMap.equals("MysteriousDungeon"))
 				{
-					gameStateManager.setState(GameStateManager.MysteriousDungeon);
+					gameStateManager.setState(GameStateManager.MysteriousDungeon, true);
 				}
 				else if(currentMap.equals("DeepWoods"))
 				{
-					gameStateManager.setState(GameStateManager.DeepWoods);
+					gameStateManager.setState(GameStateManager.DeepWoods, true);
 				}
 			}
 			else
 			{
 				player.setLoaded(false);
 				System.out.println("Couldn't find it.");
-				gameStateManager.setState(GameStateManager.LorasCavern);
+				gameStateManager.setState(GameStateManager.LorasCavern, true);
 				
 			}
 		}

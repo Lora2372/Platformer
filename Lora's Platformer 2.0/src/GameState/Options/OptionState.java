@@ -80,7 +80,7 @@ public class OptionState extends GameState implements ChangeListener
 				Content.LeverOpened[0][0], 
 				Content.LeverClosed[0][0] 
 			},
-			"displayHealthBar",
+			"displayHealthBars",
 			player
 		);
 		optionObjects.add(displayHealthBars);
@@ -227,7 +227,7 @@ public class OptionState extends GameState implements ChangeListener
 					graphics.drawString(textString, shiftEast(locationX, 1), shiftNorth(locationY, 1));
 					graphics.drawString(textString, shiftEast(locationX, 1), shiftSouth(locationY, 1));
 					
-					graphics.setColor(Color.WHITE);					
+					graphics.setColor(Color.WHITE);			
 					graphics.drawString(textString, locationX, locationY);
 
 				}

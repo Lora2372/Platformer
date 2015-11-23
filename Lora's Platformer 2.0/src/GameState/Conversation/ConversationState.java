@@ -202,6 +202,10 @@ public class ConversationState  extends GameState
 	
 	public void draw(Graphics2D graphics)
 	{
+		if(conversationOver)
+		{
+			return;
+		}
 		try
 		{
 			graphics.drawImage(
@@ -216,12 +220,6 @@ public class ConversationState  extends GameState
 			String tempName = "";
 			
 			BufferedImage[] tempIcon = null;
-			
-			
-			if(conversationTracker > whoTalks.length - 1)
-			{
-				System.out.println("Error?");
-			}
 			
 			if(whoTalks[conversationTracker] == 0)
 			{
@@ -276,6 +274,10 @@ public class ConversationState  extends GameState
 				graphics.drawString(tempName, (int)locationX + 21, (int)locationY + 25);	
 			}
 				
+			if(conversation == null)
+			{
+				System.out.println("conversation is null");
+			}
 			
 			String[] myString = conversation[conversationTracker].split(" ");
 			int tempX = 0;

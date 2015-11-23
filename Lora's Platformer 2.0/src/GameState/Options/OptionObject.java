@@ -54,19 +54,20 @@ public class OptionObject
 		
 		
 		rectangle = new Rectangle
-			(
-				(int)locationX,
-				(int)locationY,
-				width,
-				height
-			);
-		
+		(
+			(int)locationX,
+			(int)locationY,
+			width,
+			height
+		);
 	}
 	
 	public void setLocation(double locationX, double locationY) 
 	{ 
 		this.locationX = locationX;
 		this.locationY = locationY;
+		this.rectangle.x = (int)locationX;
+		this.rectangle.y = (int)locationY;
 	}
 	
 	public double getLocationX() { return locationX; }

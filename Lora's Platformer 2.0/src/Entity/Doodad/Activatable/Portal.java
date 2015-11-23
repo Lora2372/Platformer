@@ -4,6 +4,7 @@ import Audio.JukeBox;
 import Entity.Doodad.Doodad;
 import Entity.Player.Player;
 import GameState.GameStateManager;
+import GameState.Maps.DeepWoods;
 import Main.Content;
 import TileMap.TileMap;
 
@@ -45,7 +46,6 @@ public class Portal extends Doodad
 				DoodadData.doodadName.get("Portal")
 				);
 
-		setDoodadType("Portal");
 		this.gameStateManager = gameStateManager;
 	}
 	
@@ -56,14 +56,21 @@ public class Portal extends Doodad
 	
 	public void interact(Player player)
 	{
-		if(gameStateManager.getState() == GameStateManager.FionasSanctum)
+		if(gameStateManager.getCurrentState() == GameStateManager.FionasSanctum)
 		{
-			gameStateManager.setState(GameStateManager.DeepWoods);
+			DeepWoods deepWoods = (DeepWoods) gameStateManager.getState(GameStateManager.DeepWoods);
+			if(deepWoods != null)
+			{
+				player.setPosition(deepWoods.getStartingLocationX(), deepWoods.getStartingLocationY());
+				player.setSpawning(true);
+			}
+
+			gameStateManager.setState(GameStateManager.DeepWoods, false);
 		}
 	}
 	
 	public void playSound() 
 	{ 
-		JukeBox.play("OpenChest" + doodadType);
+		JukeBox.play("EnterPortal");
 	}
 }

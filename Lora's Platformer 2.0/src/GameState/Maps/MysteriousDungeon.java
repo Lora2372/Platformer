@@ -41,18 +41,6 @@ public class MysteriousDungeon extends MainMap
 				
 				);
 		
-		try
-		{
-			tileMap.loadTiles(ImageIO.read(getClass().getResource("/Art/Tilesets/LorasTileset.png")));
-			tileMap.loadMap("/Maps/MysteriousDungeonA.map");
-			tileMap.setPosition(0, 0);
-			gameoverScreen = new GameOver(getClass().getResource("/Art/HUD/Foregrounds/GameOver.png"));
-		}
-		catch(IOException e)
-		{
-			e.printStackTrace();
-		}
-		
 		conversation = player.getConversation();
 		
 		spawnTorch(109, 440);
@@ -110,7 +98,7 @@ public class MysteriousDungeon extends MainMap
 		door = spawnDoor(3045,  780, true, 0, CreateItem.Keys.Boss.toString());
 		
 		
-		player.setCurrentMap("MysteriousDungeon");
+		
 
 		if(!player.getLoaded())
 		{
@@ -122,6 +110,26 @@ public class MysteriousDungeon extends MainMap
 			dungeonIntroduction = true;
 			player.setLoaded(false);
 			player.setPosition(player.getSpawnX(), player.getSpawnY());
+		}
+		
+
+	}
+	
+	public void initialize()
+	{
+		super.initialize();
+		player.setCurrentMap("MysteriousDungeon");
+		
+		try
+		{
+			tileMap.loadTiles(ImageIO.read(getClass().getResource("/Art/Tilesets/LorasTileset.png")));
+			tileMap.loadMap("/Maps/MysteriousDungeonA.map");
+			tileMap.setPosition(0, 0);
+			gameoverScreen = new GameOver(getClass().getResource("/Art/HUD/Foregrounds/GameOver.png"));
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
 		}
 		
 		doneInitializing = true;

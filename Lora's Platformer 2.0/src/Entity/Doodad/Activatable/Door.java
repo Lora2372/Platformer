@@ -7,6 +7,7 @@ import Entity.Player.Player;
 import GameState.GameStateManager;
 import GameState.Conversation.Conversation;
 import GameState.Conversation.ConversationState;
+import GameState.Maps.FionasSanctum;
 import Main.Content;
 import TileMap.TileMap;
 
@@ -39,24 +40,26 @@ public class Door extends Doodad
 			String doorType
 		) 
 	{
-		super(tileMap, 
-				spawnX, 
-				spawnY, 
-				120, 
-				120,
-				120,
-				120,
-				0.3, 
-				8, 
-				false, 
-				true, 
-				false,
-				true,
-				false,
-				currentAction,
-				doorType,
-				DoodadData.doodadName.get(doorType)
-				);
+		super
+		(
+			tileMap, 
+			spawnX, 
+			spawnY, 
+			120, 
+			120,
+			120,
+			120,
+			0.3, 
+			8, 
+			false, 
+			true, 
+			false,
+			true,
+			false,
+			currentAction,
+			doorType,
+			DoodadData.doodadName.get(doorType)
+		);
 		
 		this.locked = locked;
 		this.doorName = DoodadData.doodadName.get(doodadType);
@@ -117,10 +120,25 @@ public class Door extends Doodad
 		// If the door is already open, we walk through it.
 		if(used && !player.getInConversation())
 		{
-			if(gameStateManager.getState() == GameStateManager.MysteriousDungeon)
+			if(gameStateManager.getCurrentState() == GameStateManager.MysteriousDungeon)
 			{
-				gameStateManager.setState(GameStateManager.FionasSanctum);
+				FionasSanctum fionasSanctum = (FionasSanctum) gameStateManager.getState(GameStateManager.FionasSanctum);
+				if(fionasSanctum != null)
+				{
+					player.setSpawnPoint(fionasSanctum.getDoor().getLocationX(), fionasSanctum.getDoor().getLocationY());
+				}
+				
+				gameStateManager.setState(GameStateManager.FionasSanctum, false);
 			}
+//			else if(gameStateManager.getCurrentState() == GameStateManager.FionasSanctum)
+//			{
+//				MysteriousDungeon mysteriousDungeon = (MysteriousDungeon) gameStateManager.getState(GameStateManager.MysteriousDungeon);
+//				if(mysteriousDungeon != null)
+//				{
+//					player.setSpawnPoint(mysteriousDungeon.getDoor().getLocationX(), mysteriousDungeon.getDoor().getLocationY());
+//				}
+//				gameStateManager.setState(GameStateManager.MysteriousDungeon, false);
+//			}
 			return;
 		}
 		
