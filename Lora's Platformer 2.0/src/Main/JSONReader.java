@@ -8,10 +8,13 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import Entity.Item.CreateItem;
 import Entity.Player.Player;
+import Entity.Unit.CreateUnit;
+import Entity.Unit.UnitData;
+import TileMap.TileMap;
 
 public class JSONReader 
 {
-	public static boolean load(Player player)
+	public static boolean load(Player player, TileMap tileMap)
 	{
 		CreateItem createItem = new CreateItem(player.getTileMap());
 		JSONParser jsonParser = new JSONParser();
@@ -23,6 +26,33 @@ public class JSONReader
 			
 			Object object = jsonParser.parse(new FileReader(System.getProperty("user.home") + "\\Loras Platformer\\SaveFile.json"));
 			JSONObject jsonObject = (JSONObject) object;
+			
+			int whileCounter = 0;
+			
+			System.out.println("whileCheck: " + "Unit" + (whileCounter < 10 ? "0" : "") + whileCounter);
+			
+			while(jsonObject.get("Unit" + (whileCounter < 10 ? "0" : "") + whileCounter) != null)
+			{
+				JSONObject jsonObjectInner = (JSONObject) jsonObject.get("Unit" + (whileCounter < 10 ? "0" : "") + whileCounter);
+				String unitType = (String) jsonObjectInner.get("UnitType");
+				System.out.println("unitType: " + unitType);
+
+				boolean facingRight = (Boolean) jsonObjectInner.get("FacingRight");
+				boolean friendly = (Boolean) jsonObjectInner.get("Friendly");
+				boolean untouchable = (Boolean) jsonObjectInner.get("Untouchable");
+				boolean invulnerable = (Boolean) jsonObjectInner.get("Invulnerable");
+				boolean unkillable = (Boolean) jsonObjectInner.get("unkillable");
+				String name = (String) jsonObjectInner.get("Name");
+				double spawnLocationX = (Double) jsonObjectInner.get("SpawnLocationX");
+				double spawnLocationY = (Double) jsonObjectInner.get("SpawnLocationY");
+				String currentMap = (String) jsonObjectInner.get("Map");
+				
+				UnitData unitData = new UnitData(facingRight, friendly, untouchable, invulnerable, unkillable, name, spawnLocationX, spawnLocationY, currentMap, unitType);
+				CreateUnit.loadUnitList(currentMap, unitData);
+				
+				
+				whileCounter++;
+			}
 			
 			String name = (String) jsonObject.get("Name");
 			System.out.println("name: " + name);

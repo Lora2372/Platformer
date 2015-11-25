@@ -106,7 +106,8 @@ public class Fiona extends Unit
 				"Fiona",
 				spawnX,
 				spawnY,
-				fionasSanctum
+				fionasSanctum,
+				"FionasSanctum"
 				);
 		
 		this.unitType = "Fiona";

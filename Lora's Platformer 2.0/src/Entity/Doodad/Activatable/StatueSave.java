@@ -4,6 +4,7 @@ import Audio.JukeBox;
 import Entity.Doodad.Doodad;
 import Entity.Player.Player;
 import GameState.GameStateManager;
+import GameState.MainMap;
 import GameState.Conversation.Conversation;
 import GameState.Conversation.ConversationState;
 import Main.Content;
@@ -23,11 +24,14 @@ public class StatueSave extends Doodad
 	
 	protected GameStateManager gameStateManager;
 	
+	protected MainMap mainMap;
+	
 	public StatueSave(
 			TileMap tileMap, 
 			double spawnX,
 			double spawnY,
-			GameStateManager gameStateManager
+			GameStateManager gameStateManager,
+			MainMap mainMap
 			) 
 	{
 		super(tileMap, 
@@ -53,6 +57,7 @@ public class StatueSave extends Doodad
 		this.spawnX = spawnX;
 		this.spawnY = spawnY;
 		this.gameStateManager = gameStateManager;
+		this.mainMap = mainMap;
 	}
 	
 	public void setDoodad(int currentAction)
@@ -90,7 +95,7 @@ public class StatueSave extends Doodad
 				{
 					player.getConversationState().startConversation(player, null, this, conversation.statueSaveChoiceYes(), conversation.statueSaveChoiceYesWhoTalks());
 					
-					JSONWriter.saveFile(player, (int)spawnX, (int)spawnY);
+					JSONWriter.saveFile(player, (int)spawnX, (int)spawnY, mainMap.getCharacterList());
 					JukeBox.play("Save");
 				}
 				else

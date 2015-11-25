@@ -241,7 +241,7 @@ public class Tutorial extends MainMap
 				if(!player.getInConversation())
 				{
 					hud.setQuestCurrent(9);
-					succubus = spawnSuccubus(3500, player.getLocationY(), false);
+					succubus = spawnSuccubus(3500, player.getLocationY(), false, "Tutorial");
 					characterList.add(succubus);
 					
 					

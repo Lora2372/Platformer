@@ -83,7 +83,8 @@ public class LiadrinFirstEncounter extends Unit
 				"LiadrinFirstEncounter",
 				spawnX,
 				spawnY,
-				mainMap
+				mainMap,
+				"LorasCavern"
 				);
 
 		active = true;

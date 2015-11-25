@@ -235,6 +235,7 @@ public class HUD
 			// YARR, there be gold and silver a plenty!
 			//			(Drawing currency)
 			graphics.setFont(new Font("Arial", Font.PLAIN, 14));
+			graphics.setColor(Color.WHITE);
 			int currencyX = GamePanel.WIDTH - 100;
 			int currencyY = GamePanel.HEIGHT - 100;
 			graphics.drawString("" + player.getSilver(), currencyX, currencyY);

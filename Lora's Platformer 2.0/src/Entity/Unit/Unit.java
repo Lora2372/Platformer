@@ -30,6 +30,8 @@ public class Unit extends MapObject
 	protected String name;
 	protected boolean player;
 	
+	protected String currentMap;
+	
 	protected int silver;
 	protected int gold;
 	
@@ -181,55 +183,57 @@ public class Unit extends MapObject
 //	protected static final int animationState[15] 					= 15;
 	
 	// Constructor
-	public Unit(
-			TileMap tileMap,
-			int width,
-			int height,
-			int collisionWidth,
-			int collisionHeight,
-			double moveSpeed,
-			double maxSpeed,
-			double stopSpeed,
-			double fallSpeed,
-			double maxFallSpeed,
-			double jumpStart,
-			double stopJumpSpeed,
-			boolean facingRight,
-			boolean inControl,
-			double health,
-			double maxHealth,
-			double healthRegen,	
-			double mana, 
-			double maxMana,
-			double manaRegen,
-			double stamina,
-			double maxStamina,
-			double staminaRegen,
-			int sightRangeX,
-			int sightRangeY,
-			int punchCost,
-			int punchDamage,			
-			int punchRange,
-			int dashCost,
-			int dashDamage,	
-			int dashRange,
-			double dashSpeed,
-			String spritePath,
-			int[] animationState,
-			int[] numFrames,
-			int[] animationDelay,
-			int damageOnTouch,
-			boolean friendly,
-			boolean untouchable,
-			boolean invulnerable,
-			boolean unkillable,
-			boolean activatable,
-			String name,
-			String unitType,
-			double spawnX,
-			double spawnY,
-			MainMap mainMap
-			)
+	public Unit
+	(
+		TileMap tileMap,
+		int width,
+		int height,
+		int collisionWidth,
+		int collisionHeight,
+		double moveSpeed,
+		double maxSpeed,
+		double stopSpeed,
+		double fallSpeed,
+		double maxFallSpeed,
+		double jumpStart,
+		double stopJumpSpeed,
+		boolean facingRight,
+		boolean inControl,
+		double health,
+		double maxHealth,
+		double healthRegen,	
+		double mana, 
+		double maxMana,
+		double manaRegen,
+		double stamina,
+		double maxStamina,
+		double staminaRegen,
+		int sightRangeX,
+		int sightRangeY,
+		int punchCost,
+		int punchDamage,			
+		int punchRange,
+		int dashCost,
+		int dashDamage,	
+		int dashRange,
+		double dashSpeed,
+		String spritePath,
+		int[] animationState,
+		int[] numFrames,
+		int[] animationDelay,
+		int damageOnTouch,
+		boolean friendly,
+		boolean untouchable,
+		boolean invulnerable,
+		boolean unkillable,
+		boolean activatable,
+		String name,
+		String unitType,
+		double spawnX,
+		double spawnY,
+		MainMap mainMap,
+		String currentMap
+	)
 	{
 		super(tileMap);		
 		this.width = width;
@@ -277,8 +281,7 @@ public class Unit extends MapObject
 		this.unkillable = unkillable;
 		this.spawnX = spawnX;
 		this.spawnY = spawnY;
-		this.mainMap = mainMap;
-				
+		this.currentMap = currentMap;
 		
 		setPosition(spawnX, spawnY);		
 		
@@ -335,7 +338,7 @@ public class Unit extends MapObject
 	
 	public void setMainMap(MainMap mainMap) 
 	{ 
-		this.mainMap = mainMap; 
+		this.mainMap = mainMap;
 	}
 	
 	public TileMap getTileMap() { return tileMap; }
@@ -366,7 +369,8 @@ public class Unit extends MapObject
 				if(up)
 					tempY -= 25;
 				else if(down)
-					tempY += 25;		}
+					tempY += 25;		
+			}
 		}
 		else
 		{
@@ -454,6 +458,7 @@ public class Unit extends MapObject
 	
 	public boolean getUntouchable() { return untouchable; }
 	public boolean getInvulnerable() { return invulnerable; }
+	public boolean getUnkillable() { return unkillable; }
 	
 	public boolean getFalling() { return falling; }
 	public boolean getJumping() { return jumping; }
@@ -538,6 +543,9 @@ public class Unit extends MapObject
 	public String getName() { return name; }
 	
 	public String getUnitType() { return unitType; }
+	
+	public String getCurrentMap() { return currentMap; }
+	public void setCurrentMap(String newMap) { currentMap = newMap; }
 	
 	public int getSilver() { return silver; }
 	public int getGold() { return gold; }
@@ -1174,12 +1182,12 @@ public class Unit extends MapObject
 				if(facingRight || !onlyInFrontOfYou)
 				{
 					if
-						(		
-							character.getLocationX() > locationX &&
-							character.getLocationX() < locationX + sightRangeX &&
-							character.getLocationY() > locationY - height - sightRangeY /2 &&
-							character.getLocationY() < locationY + height / 2 + sightRangeY / 2
-						)
+					(		
+						character.getLocationX() > locationX &&
+						character.getLocationX() < locationX + sightRangeX &&
+						character.getLocationY() > locationY - height - sightRangeY /2 &&
+						character.getLocationY() < locationY + height / 2 + sightRangeY / 2
+					)
 					{
 						enemiesDetected.add(character);
 					}
@@ -1187,12 +1195,12 @@ public class Unit extends MapObject
 				if(!facingRight || !onlyInFrontOfYou)
 				{
 					if
-						(
-								character.getLocationX() < locationX &&
-								character.getLocationX() > locationX - sightRangeX &&
-								character.getLocationY() > locationY - height - sightRangeY /2 &&
-								character.getLocationY() < locationY + height / 2 + sightRangeY / 2
-						)
+					(
+						character.getLocationX() < locationX &&
+						character.getLocationX() > locationX - sightRangeX &&
+						character.getLocationY() > locationY - height - sightRangeY /2 &&
+						character.getLocationY() < locationY + height / 2 + sightRangeY / 2
+					)
 					{
 						enemiesDetected.add(character);
 					}
@@ -1213,10 +1221,10 @@ public class Unit extends MapObject
 			{
 				if
 				(
-						projectile.getLocationX() > locationX &&
-						projectile.getLocationX() < locationX + punchRange &&
-						projectile.getLocationY() > locationY - height / 2 &&
-						projectile.getLocationY() < locationY + height / 2
+					projectile.getLocationX() > locationX &&
+					projectile.getLocationX() < locationX + punchRange &&
+					projectile.getLocationY() > locationY - height / 2 &&
+					projectile.getLocationY() < locationY + height / 2
 				)
 				{
 					projectile.bounce();
@@ -1226,10 +1234,10 @@ public class Unit extends MapObject
 			{
 				if
 				(
-						projectile.getLocationX() < locationX &&
-						projectile.getLocationX() > locationX - punchRange &&
-						projectile.getLocationY() > locationY - height / 2 &&
-						projectile.getLocationY() < locationY + height / 2
+					projectile.getLocationX() < locationX &&
+					projectile.getLocationX() > locationX - punchRange &&
+					projectile.getLocationY() > locationY - height / 2 &&
+					projectile.getLocationY() < locationY + height / 2
 				)
 				{
 					projectile.bounce();
@@ -1245,10 +1253,10 @@ public class Unit extends MapObject
 			{
 				if
 				(
-						projectile.getLocationX() > locationX &&
-						projectile.getLocationX() < locationX + 100 &&
-						projectile.getLocationY() > locationY - 60 &&
-						projectile.getLocationY() < locationY + 60
+					projectile.getLocationX() > locationX &&
+					projectile.getLocationX() < locationX + 100 &&
+					projectile.getLocationY() > locationY - 60 &&
+					projectile.getLocationY() < locationY + 60
 				)
 				{
 
@@ -1256,9 +1264,7 @@ public class Unit extends MapObject
 					{
 						tennisTimer = 0;
 						
-						Random randomizer = new Random();
-						int random2 = randomizer.nextInt((100 - 0) + 1);
-						if(random2 < 70)
+						if(mainMap.RNG(0, 100) < 70)
 						{
 							startPunch = true;
 							projectile.bounce();
@@ -1270,10 +1276,10 @@ public class Unit extends MapObject
 			{
 				if
 				(
-						projectile.getLocationX() < locationX &&
-						projectile.getLocationX() > locationX - 100 &&
-						projectile.getLocationY() > locationY - 60 &&
-						projectile.getLocationY() < locationY + 60
+					projectile.getLocationX() < locationX &&
+					projectile.getLocationX() > locationX - 100 &&
+					projectile.getLocationY() > locationY - 60 &&
+					projectile.getLocationY() < locationY + 60
 				)
 				{
 					if(tennisTimer >= tennisCooldown)
@@ -1314,10 +1320,10 @@ public class Unit extends MapObject
 					{
 						if
 						(
-								character.getLocationX() > locationX &&
-								character.getLocationX() < locationX + punchRange &&
-								character.getLocationY() > locationY - height / 2 &&
-								character.getLocationY() < locationY + height / 2
+							character.getLocationX() > locationX &&
+							character.getLocationX() < locationX + punchRange &&
+							character.getLocationY() > locationY - height / 2 &&
+							character.getLocationY() < locationY + height / 2
 						)
 						{
 							charactersHit.add(character);
@@ -1338,7 +1344,6 @@ public class Unit extends MapObject
 							character.hit(punchDamage);
 						}
 					}
-					
 				}
 
 				//********************************************************************************
@@ -1350,10 +1355,10 @@ public class Unit extends MapObject
 					{
 						if
 						(
-								character.getLocationX() > locationX &&
-								character.getLocationX() < locationX + dashRange &&
-								character.getLocationY() > locationY - height / 2 &&
-								character.getLocationY() < locationY + height / 2
+							character.getLocationX() > locationX &&
+							character.getLocationX() < locationX + dashRange &&
+							character.getLocationY() > locationY - height / 2 &&
+							character.getLocationY() < locationY + height / 2
 						)
 						{
 							charactersHit.add(character);
@@ -1518,19 +1523,18 @@ public class Unit extends MapObject
 			int length = (int)graphics.getFontMetrics().getStringBounds(name, graphics).getWidth();
 			int height = (int)graphics.getFontMetrics().getStringBounds(name, graphics).getHeight();
 			int drawX = (int)(locationX + mapPositionX) - length / 2;
-			int drawY = (int) (locationY + mapPositionY) - 25 - height * 2;
+			int drawY = (int) (locationY + mapPositionY) - height / 2 - 25;
 			
-//			graphics.setFont(new Font("Arial", Font.PLAIN, 16));
-//			graphics.setColor(Color.BLACK);
-//			graphics.drawString(name, shiftWest( (int) locationX, 1), shiftNorth( (int) locationY, 1));
-//			graphics.drawString(name, shiftWest( (int) locationX, 1), shiftSouth( (int) locationY, 1));
-//			graphics.drawString(name, shiftEast( (int) locationX, 1), shiftNorth( (int) locationY, 1));
-//			graphics.drawString(name, shiftEast( (int) locationX, 1), shiftSouth( (int) locationY, 1));
+			graphics.setFont(new Font("Arial", Font.PLAIN, 16));
+			graphics.setColor(Color.BLACK);
+			graphics.drawString(name, shiftWest( (int) locationX, 1), shiftNorth( (int) locationY, 1));
+			graphics.drawString(name, shiftWest( (int) locationX, 1), shiftSouth( (int) locationY, 1));
+			graphics.drawString(name, shiftEast( (int) locationX, 1), shiftNorth( (int) locationY, 1));
+			graphics.drawString(name, shiftEast( (int) locationX, 1), shiftSouth( (int) locationY, 1));
 						
 			graphics.setColor(friendly ? Color.BLUE : Color.RED);
 			graphics.setFont(new Font("Arial", Font.PLAIN, 14));
 			graphics.drawString(name, drawX, drawY);
-			
 		}
 		catch(Exception exception)
 		{

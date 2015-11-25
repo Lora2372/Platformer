@@ -21,7 +21,6 @@ public class Player extends Unit
 	protected double mouseLocationX;
 	protected double mouseLocationY;	
 	
-	protected String currentMap;
 	
 	protected Conversation conversation;
 	protected ConversationState conversationState;
@@ -86,6 +85,7 @@ public class Player extends Unit
 			"Player",
 			0,
 			0,
+			null,
 			null
 				
 		);
@@ -102,9 +102,6 @@ public class Player extends Unit
 	public Conversation getConversation() { return conversation; }
 	
 	public ConversationState getConversationState() { return conversationState; }
-	
-	public String getCurrentMap() { return currentMap; }
-	public void setCurrentMap(String newMap) { currentMap = newMap; }
 	
 	public boolean getLoaded() { return loaded; }
 	public void setLoaded(boolean loaded) { this.loaded = loaded; }

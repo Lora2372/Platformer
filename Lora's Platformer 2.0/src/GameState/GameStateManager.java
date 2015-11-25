@@ -173,9 +173,15 @@ public class GameStateManager
 		loadState(currentState, fresh);
 	}
 	
-	public GameState getState(int whichState) { return gameStates[whichState]; }
+	public GameState getState(int whichState) 
+	{ 
+		return gameStates[whichState]; 
+	}
 	
-	public int getCurrentState() { return currentState; }
+	public int getCurrentState() 
+	{ 
+		return currentState; 
+	}
 	
 	
 	public GameState[] getStates()

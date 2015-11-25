@@ -118,27 +118,30 @@ public class Door extends Doodad
 	public void interact(Player player)
 	{
 		// If the door is already open, we walk through it.
-		if(used && !player.getInConversation())
+		if(used)
 		{
-			if(gameStateManager.getCurrentState() == GameStateManager.MysteriousDungeon)
+			if(!player.getInConversation())
 			{
-				FionasSanctum fionasSanctum = (FionasSanctum) gameStateManager.getState(GameStateManager.FionasSanctum);
-				if(fionasSanctum != null)
+				if(gameStateManager.getCurrentState() == GameStateManager.MysteriousDungeon)
 				{
-					player.setSpawnPoint(fionasSanctum.getDoor().getLocationX(), fionasSanctum.getDoor().getLocationY());
+					FionasSanctum fionasSanctum = (FionasSanctum) gameStateManager.getState(GameStateManager.FionasSanctum);
+					if(fionasSanctum != null)
+					{
+						player.setSpawnPoint(fionasSanctum.getDoor().getLocationX(), fionasSanctum.getDoor().getLocationY());
+					}
+					
+					gameStateManager.setState(GameStateManager.FionasSanctum, false);
 				}
-				
-				gameStateManager.setState(GameStateManager.FionasSanctum, false);
-			}
-//			else if(gameStateManager.getCurrentState() == GameStateManager.FionasSanctum)
-//			{
-//				MysteriousDungeon mysteriousDungeon = (MysteriousDungeon) gameStateManager.getState(GameStateManager.MysteriousDungeon);
-//				if(mysteriousDungeon != null)
+//				else if(gameStateManager.getCurrentState() == GameStateManager.FionasSanctum)
 //				{
-//					player.setSpawnPoint(mysteriousDungeon.getDoor().getLocationX(), mysteriousDungeon.getDoor().getLocationY());
+//					MysteriousDungeon mysteriousDungeon = (MysteriousDungeon) gameStateManager.getState(GameStateManager.MysteriousDungeon);
+//					if(mysteriousDungeon != null)
+//					{
+//						player.setSpawnPoint(mysteriousDungeon.getDoor().getLocationX(), mysteriousDungeon.getDoor().getLocationY());
+//					}
+//					gameStateManager.setState(GameStateManager.MysteriousDungeon, false);
 //				}
-//				gameStateManager.setState(GameStateManager.MysteriousDungeon, false);
-//			}
+			}
 			return;
 		}
 		
@@ -198,7 +201,6 @@ public class Door extends Doodad
 		
 		if(player.getInConversation())
 		{
-			
 			if(conversationBox.getConversationOver())
 			{
 				conversationBox.endConversation();

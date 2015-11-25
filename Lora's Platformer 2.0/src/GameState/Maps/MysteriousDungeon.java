@@ -59,15 +59,15 @@ public class MysteriousDungeon extends MainMap
 		spawnKey(380, 1550, "Boss");
 		
 		
-		Wolf wolf = spawnWolf(537, 1760, true);
+		Wolf wolf = spawnWolf(537, 1760, true, "MysteriousDungeon");
 		dropPotion("Any", 25, 1, wolf);
-		wolf = spawnWolf(537, 1760, false);
+		wolf = spawnWolf(537, 1760, false, "MysteriousDungeon");
 		dropPotion("Any", 25, 1, wolf);
 		
-		Slug slug = spawnSlug(1788, 1250, true, null);
+		Slug slug = spawnSlug(1788, 1250, true, null, "MysteriousDungeon");
 		dropPotion("Any", 25, 1, slug);
 		
-		slug = spawnSlug(1788, 1250, false, null);
+		slug = spawnSlug(1788, 1250, false, null, "MysteriousDungeon");
 		dropPotion("Any", 25, 1, slug);
 		
 		spawnStatueSave(250, 780);
@@ -80,16 +80,16 @@ public class MysteriousDungeon extends MainMap
 		chest = spawnChest(3262, 1620, false, "Common");
 		dropPotion(CreateItem.Potions.Stamina.toString(), 100, 1, chest);
 		
-		Succubus succubus = spawnSuccubus(500, 1550, true);
+		Succubus succubus = spawnSuccubus(500, 1550, true, "MysteriousDungeon");
 		dropPotion("Any", 25, 1, succubus);
 		
-		succubus = spawnSuccubus(937, 430, false);
+		succubus = spawnSuccubus(937, 430, false, "MysteriousDungeon");
 		dropPotion("Any", 25, 1, succubus);
 		
-		succubus = spawnSuccubus(3150, 1620, false);
+		succubus = spawnSuccubus(3150, 1620, false, "MysteriousDungeon");
 		dropPotion("Any", 25, 1, succubus);
 		
-		succubus = spawnSuccubus(2833, 780, false);
+		succubus = spawnSuccubus(2833, 780, false, "MysteriousDungeon");
 		dropPotion("Any", 25, 1, succubus);
 		
 		spawnStatueSave(2900, 780);
@@ -111,8 +111,6 @@ public class MysteriousDungeon extends MainMap
 			player.setLoaded(false);
 			player.setPosition(player.getSpawnX(), player.getSpawnY());
 		}
-		
-
 	}
 	
 	public void initialize()

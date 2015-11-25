@@ -193,7 +193,7 @@ public class MenuState extends GameState
 		else if(currentChoice == 2)
 		{
 			// Load Game
-			if(JSONReader.load(player))
+			if(JSONReader.load(player, tileMap))
 			{
 				player.setLoaded(true);
 				player.setPosition(player.getSpawnX(), player.getSpawnY());

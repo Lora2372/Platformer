@@ -20,7 +20,7 @@ public class GamePanel
 	public static int WIDTH = 1200;
 	public static int HEIGHT = 900;
 	
-	public static final String version = "0.1.066";
+	public static final String version = "0.1.067";
 		
 	// Game thread
 	private Thread thread;
@@ -44,9 +44,10 @@ public class GamePanel
 		if(HEIGHT > screenSize.getHeight()) HEIGHT = (int) screenSize.getHeight() - 100;
 		if(WIDTH > screenSize.getWidth()) WIDTH = (int) screenSize.getWidth();
 		
-		setPreferredSize(
-				new Dimension(WIDTH, HEIGHT)
-				);
+		setPreferredSize
+		(
+			new Dimension(WIDTH, HEIGHT)
+		);
 		setFocusable(true);
 		requestFocus();
 		
@@ -61,9 +62,9 @@ public class GamePanel
 		}
 		
 		
-	      addMouseListener(new MouseAdapter() 
-	      {
-	          
+		
+	    addMouseListener(new MouseAdapter() 
+	    {  
 	      	public void mouseClicked(MouseEvent mouse) 
 	    	{
 	      		if(gameStateManager != null && mouse != null)

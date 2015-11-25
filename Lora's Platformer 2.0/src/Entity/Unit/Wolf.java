@@ -20,7 +20,8 @@ public class Wolf extends Unit
 			String name,
 			double spawnX,
 			double spawnY,
-			MainMap mainMap
+			MainMap mainMap,
+			String currentMap
 			) 
 	{
 		super(
@@ -70,7 +71,8 @@ public class Wolf extends Unit
 				"Wolf",
 				spawnX,
 				spawnY,
-				mainMap
+				mainMap,
+				currentMap
 				);
 		
 		attackTimer = 200;

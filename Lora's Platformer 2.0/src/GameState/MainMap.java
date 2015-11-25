@@ -502,7 +502,28 @@ public class MainMap extends GameState
 		return random.nextInt((max - min) + 1) + min;
 	}
 	
-	public Slug spawnSlug(double locationX, double locationY, boolean facingRight, String name)
+	public Unit spawnUnit(UnitData unitData)
+	{
+		if(unitData.getUnitType().equals("Slug"))
+		{
+			return spawnSlug(unitData.getFacingRight(), unitData.getFriendly(), unitData.getUntouchable(), unitData.getInvulnerable(), unitData.getUnkillable(), unitData.getName(), unitData.getSpawnLocationX(), unitData.getSpawnLocationY(), unitData.getCurrentMap());
+		}
+		
+		return null;
+	}
+	
+	public Slug spawnSlug
+		(			
+			boolean facingRight,
+			boolean friendly,
+			boolean untouchable,
+			boolean invulnerable,
+			boolean unkillable,
+			String name,
+			double spawnLocationX,
+			double spawnLocationY,
+			String currentMap	
+		)
 	{	
 		String[] slugNames = new String[]
 		{
@@ -514,12 +535,35 @@ public class MainMap extends GameState
 				"John"			
 		};
 		
-		Slug slug = new Slug(tileMap, facingRight, false, false, false, false, slugNames[RNG(0, slugNames.length - 1)], locationX, locationY, this);
+		if(name == null)
+		{
+			name = slugNames[RNG(0, slugNames.length - 1)];
+		}
+		
+		Slug slug = new Slug(tileMap, facingRight, friendly, untouchable, invulnerable, unkillable, name, spawnLocationX, spawnLocationY, this, currentMap);
+		slug.setCurrentMap(currentMap);
 		characterList.add(slug);
 		return slug;
 	}
 	
-	public Succubus spawnSuccubus(double locationX, double locationY, boolean facingRight)
+	public Slug spawnSlug(double spawnLocationX, double spawnLocationY, boolean facingRight, String name, String currentMap)
+	{
+		return spawnSlug(facingRight, false, false, false, false, name, spawnLocationX, spawnLocationY, currentMap);
+	}
+	
+	
+	public Succubus spawnSuccubus
+		(			
+			boolean facingRight,
+			boolean friendly,
+			boolean untouchable,
+			boolean invulnerable,
+			boolean unkillable,
+			String name,
+			double spawnLocationX,
+			double spawnLocationY,
+			String currentMap
+		)
 	{
 		
 		String[] succubiNames = new String[]
@@ -537,12 +581,34 @@ public class MainMap extends GameState
 			"Nimnys"
 		};
 		
-		Succubus succubus = new Succubus(tileMap, facingRight,false, false, false, false, succubiNames[RNG(0, succubiNames.length - 1)], locationX, locationY, this);
+		if(name == null)
+		{
+			name = succubiNames[RNG(0, succubiNames.length - 1)];
+		}
+				
+		Succubus succubus = new Succubus(tileMap, facingRight, friendly, untouchable, invulnerable, unkillable, name, spawnLocationX, spawnLocationY, this, currentMap);
+		System.out.println(currentMap);
 		characterList.add(succubus);
 		return succubus;
 	}
 	
-	public Wolf spawnWolf(double locationX, double locationY, boolean facingRight)
+	public Succubus spawnSuccubus(double spawnLocationX, double spawnLocationY, boolean facingRight, String currentMap)
+	{
+		return spawnSuccubus(facingRight, false, false, false, false, null, spawnLocationX, spawnLocationY, currentMap);
+	}
+	
+	public Wolf spawnWolf
+		(			
+			boolean facingRight,
+			boolean friendly,
+			boolean untouchable,
+			boolean invulnerable,
+			boolean unkillable,
+			String name,
+			double spawnLocationX,
+			double spawnLocationY,
+			String currentMap
+		)
 	{
 		
 		String[] wolfNames = new String[]
@@ -556,14 +622,23 @@ public class MainMap extends GameState
 			"Drootom"
 		};
 		
-		Wolf wolf = new Wolf(tileMap, facingRight, false, false, false, false, wolfNames[RNG(0, wolfNames.length - 1)], locationX, locationY, this);
-		characterList.add(wolf);
+		if(name == null)
+		{
+			name = wolfNames[RNG(0, wolfNames.length - 1)];
+		}
+		
+		Wolf wolf = new Wolf(tileMap, facingRight, friendly, untouchable, invulnerable, unkillable, name, spawnLocationX, spawnLocationY, this, currentMap);
 		return wolf;
 	}
 	
-	public Skeleton spawnSkeleton(double locationX, double locationY, boolean facingRight)
+	public Wolf spawnWolf(double spawnLocationX, double spawnLocationY, boolean facingRight, String currentMap)
 	{
-		Skeleton skeleton = new Skeleton(tileMap, facingRight, false, false, false, false, "Jesse Cox", locationX, locationY, this);
+		return spawnWolf(facingRight, false, false, false, false, null, spawnLocationX, spawnLocationY, currentMap);
+	}
+	
+	public Skeleton spawnSkeleton(double locationX, double locationY, boolean facingRight, String currentMap)
+	{
+		Skeleton skeleton = new Skeleton(tileMap, facingRight, false, false, false, false, "Jesse Cox", locationX, locationY, this, currentMap);
 		characterList.add(skeleton);
 		return skeleton;
 	}
@@ -676,6 +751,11 @@ public class MainMap extends GameState
 		}
 	}
 	
+	public GameStateManager getGameStateManager()
+	{
+		return gameStateManager;
+	}
+	
 	public void spawnWaterfall(double locationX, double locationY)
 	{
 		Waterfall waterfall = new Waterfall(tileMap, locationX, locationY);
@@ -759,14 +839,13 @@ public class MainMap extends GameState
 	
 	public void spawnStatueSave(double locationX, double locationY)
 	{
-		StatueSave statueSave = new StatueSave(tileMap, locationX, locationY + 10, gameStateManager);
+		StatueSave statueSave = new StatueSave(tileMap, locationX, locationY + 10, gameStateManager, this);
 		activatables.add(statueSave);
 		stuff.add(statueSave);
 	}
 	
 	public void GPS()
 	{
-//		spawnEnemies();
 		System.out.println("player X: " + player.getLocationX() + ", playerY: " + player.getLocationY());
 	}
 	
@@ -851,11 +930,6 @@ public class MainMap extends GameState
 			player.restoreMana(100);
 			player.restoreStamina(100);
 		}
-
-		if(key == KeyEvent.VK_P) spawnSlug(player.getLocationX(), player.getLocationY(), player.getFacingRight(), null); 
-		if(key == KeyEvent.VK_O) spawnSuccubus(player.getLocationX(), player.getLocationY(), player.getFacingRight()); 
-		if(key == KeyEvent.VK_I) spawnWaterfall(player.getLocationX(), player.getLocationY()); 
-		if(key == KeyEvent.VK_U) spawnSummonEffect(player.getLocationX(), player.getLocationY()); 
 		if(key == KeyEvent.VK_G) GPS(); 
 	}
 	
