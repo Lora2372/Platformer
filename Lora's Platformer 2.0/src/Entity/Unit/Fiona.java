@@ -53,8 +53,8 @@ public class Fiona extends Unit
 			boolean invulnerable,
 			boolean unkillable,
 			String name,
-			double spawnX,
-			double spawnY,
+			double spawnLocationX,
+			double spawnLocationY,
 			FionasSanctum fionasSanctum,
 			Player player
 			) 
@@ -104,8 +104,8 @@ public class Fiona extends Unit
 				false,
 				name,
 				"Fiona",
-				spawnX,
-				spawnY,
+				spawnLocationX,
+				spawnLocationY,
 				fionasSanctum,
 				"FionasSanctum"
 				);

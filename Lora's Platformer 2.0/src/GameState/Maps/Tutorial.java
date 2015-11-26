@@ -38,7 +38,8 @@ public class Tutorial extends MainMap
 		super(gameStatemanager, 
 				tileMap,
 				player,
-				conversationState
+				conversationState,
+				"Tutorial"
 				
 				);
 		
@@ -66,15 +67,15 @@ public class Tutorial extends MainMap
 		spawnTorch(3810, 400);
 		spawnTorch(4650, 400);
 		
-		if(!player.getLoaded())
+		if(!player.getLoading())
 		{
 			player.setPosition(400, 200);
 			player.setSpawnPoint(400, 200);
 		}
 		else
 		{
-			player.setLoaded(false);
-			player.setPosition(player.getSpawnX(), player.getSpawnY());
+			player.setLoading(false);
+			player.setPosition(player.getSpawnLocationX(), player.getSpawnLocationY());
 		}
 		player.setSpawning(true);
 		

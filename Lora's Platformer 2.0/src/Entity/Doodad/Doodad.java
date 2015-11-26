@@ -29,8 +29,8 @@ public class Doodad extends MapObject
 	
 	public Doodad(
 			TileMap tileMap, 
-			double spawnX, 
-			double spawnY,
+			double spawnLocationX, 
+			double spawnLocationY,
 			int width,
 			int height,
 			int collisionWidth,
@@ -63,12 +63,12 @@ public class Doodad extends MapObject
 		this.doodadType = doodadType;
 		this.doodadName = descriptionName;
 				
-		locationX = spawnX;
-		locationY = spawnY;
+		locationX = spawnLocationX;
+		locationY = spawnLocationY;
 		
 		facingRight = false;
 		
-		setPosition(spawnX, spawnY);
+		setPosition(spawnLocationX, spawnLocationY);
 		this.currentAction = currentAction;
 		setDoodad(currentAction);
 		animation.setFrames(sprites);

@@ -19,16 +19,16 @@ public class Sign extends Doodad
 	// We need a class that draws the basic "sign background" and then write text on top of that, the stuff below is temporary...
 	public Sign(
 			TileMap tileMap, 
-			double spawnX,
-			double spawnY,
+			double spawnLocationX,
+			double spawnLocationY,
 			Player player,
 			String[] conversation,
 			int[] whoTalks
 			) 
 	{
 		super(tileMap, 
-				spawnX, 
-				spawnY, 
+				spawnLocationX, 
+				spawnLocationY, 
 				50, 
 				50,
 				50,

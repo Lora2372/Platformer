@@ -13,13 +13,13 @@ public class ActivatableCave extends Doodad
 	public ActivatableCave(
 			TileMap tileMap,
 			GameStateManager gameStateManager,
-			double spawnX,
-			double spawnY
+			double spawnLocationX,
+			double spawnLocationY
 			) 
 	{
 		super(tileMap, 
-				spawnX, 
-				spawnY, 
+				spawnLocationX, 
+				spawnLocationY, 
 				100, 
 				96,
 				100,

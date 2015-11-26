@@ -22,14 +22,14 @@ public class Portal extends Doodad
 	public Portal(
 			TileMap tileMap, 
 			GameStateManager gameStateManager,
-			double spawnX,
-			double spawnY
+			double spawnLocationX,
+			double spawnLocationY
 			) 
 	{
 		super(
 				tileMap, 
-				spawnX, 
-				spawnY, 
+				spawnLocationX, 
+				spawnLocationY, 
 				120, 
 				120,
 				120,

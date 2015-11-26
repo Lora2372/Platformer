@@ -14,14 +14,14 @@ public class CampFire extends Doodad
 	public CampFire(
 			TileMap tileMap, 
 			GameStateManager gameStateManager,
-			double spawnX,
-			double spawnY
+			double spawnLocationX,
+			double spawnLocationY
 			) 
 	{
 		super(
 				tileMap, 
-				spawnX, 
-				spawnY, 
+				spawnLocationX, 
+				spawnLocationY, 
 				128, 
 				128,
 				128,

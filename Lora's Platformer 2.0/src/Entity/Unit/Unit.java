@@ -50,8 +50,8 @@ public class Unit extends MapObject
 	
 	protected BufferedImage[] portrait;
 	
-	protected double spawnX;
-	protected double spawnY;
+	protected double spawnLocationX;
+	protected double spawnLocationY;
 	
 	protected double aim;
 		
@@ -229,8 +229,8 @@ public class Unit extends MapObject
 		boolean activatable,
 		String name,
 		String unitType,
-		double spawnX,
-		double spawnY,
+		double spawnLocationX,
+		double spawnLocationY,
 		MainMap mainMap,
 		String currentMap
 	)
@@ -279,11 +279,12 @@ public class Unit extends MapObject
 		this.invulnerable = invulnerable;
 		this.untouchable = untouchable;
 		this.unkillable = unkillable;
-		this.spawnX = spawnX;
-		this.spawnY = spawnY;
+		this.spawnLocationX = spawnLocationX;
+		this.spawnLocationY = spawnLocationY;
+		this.mainMap = mainMap;
 		this.currentMap = currentMap;
 		
-		setPosition(spawnX, spawnY);		
+		setPosition(spawnLocationX, spawnLocationY);		
 		
 		numberofSounds = new int[soundTypes.values().length];
 		for(int i = 0; i < numberofSounds.length; i++)
@@ -343,7 +344,6 @@ public class Unit extends MapObject
 	
 	public TileMap getTileMap() { return tileMap; }
 	
-	public void setUnkillable(boolean unkillable) { this.unkillable = unkillable; }
 	
 	public void calculateAim(Unit character)
 	{
@@ -438,27 +438,70 @@ public class Unit extends MapObject
 
 	}
 	
-	public void setSpawnPoint(double spawnX, double spawnY) 
+	public void setSpawnPoint(double spawnLocationX, double spawnLocationY) 
 	{
-		this.spawnX = spawnX;
-		this.spawnY = spawnY;
+		this.spawnLocationX = spawnLocationX;
+		this.spawnLocationY = spawnLocationY;
 	}
 	
 	public void respawn()
 	{
-		locationX = spawnX;
-		locationY = spawnY;
+		locationX = spawnLocationX;
+		locationY = spawnLocationY;
 		dead = false;
 		health = maxHealth;
 	}
 	
 	public void inControl(boolean b) {inControl = b;}
-	public void untouchable(boolean b) { untouchable = b; }
-	public void invulnerable(boolean b) { invulnerable = b; }
 	
+	public boolean getFacingRight() { return facingRight; }
+	public boolean getFriendly() { return friendly; }
 	public boolean getUntouchable() { return untouchable; }
 	public boolean getInvulnerable() { return invulnerable; }
 	public boolean getUnkillable() { return unkillable; }
+	public String getName() { return name; }
+	public String getCurrentMap() { return currentMap; }
+	public String getUnitType() { return unitType; }
+	
+	
+	public int getSilver() { return silver; }
+	public int getGold() { return gold; }
+	
+	public void addSilver(int silver) { this.silver += silver; }
+	public void addGold(int gold) { this.gold += gold; }
+	
+	
+	public double getDirectionX() { return directionX; }
+	public double getDirectionY() { return directionY; }
+	
+
+	
+	public boolean getInConversation() { return inConversation; }
+	public void setInConversation(boolean b) 
+	{ 
+		inConversation = b; 
+		
+	}
+	
+	public void setFacingRight(boolean facingRight) { this.facingRight = facingRight; }
+	public void setFriendly(boolean friendly) { this.friendly = friendly; }
+	public void setUntouchable(boolean untouchable) { this.untouchable = untouchable; }
+	public void setInvulnerable(boolean invulnerable) { this.invulnerable = invulnerable; }
+	public void setUnkillable(boolean unkillable) { this.unkillable = unkillable; }
+	public void setName(String name) { this.name = name; }
+	public void setSpawnLocationX(double spawnLocationX) { this.spawnLocationX = spawnLocationX; }
+	public void setSpawnLocationY(double spawnLocationY) { this.spawnLocationY = spawnLocationY; }
+	public void setCurrentMap(String currentMap) { this.currentMap = currentMap; }
+	public void setUnitType(String unitType) { this.unitType = unitType; }
+
+	public boolean isDead() { return dead; }
+	
+	public boolean getSpawning() { return spawning; };
+	public void setSpawning(boolean b) { initializeSpawning = b; }
+	
+	public double getSpawnLocationX() { return spawnLocationX; }
+	public double getSpawnLocationY() { return spawnLocationY; }
+	
 	
 	public boolean getFalling() { return falling; }
 	public boolean getJumping() { return jumping; }
@@ -540,51 +583,15 @@ public class Unit extends MapObject
 	public void setSexytime1() { sexytime1 = true; }
 	public void setSexytime2() { sexytime2 = true; }
 	
-	public String getName() { return name; }
-	
-	public String getUnitType() { return unitType; }
-	
-	public String getCurrentMap() { return currentMap; }
-	public void setCurrentMap(String newMap) { currentMap = newMap; }
-	
-	public int getSilver() { return silver; }
-	public int getGold() { return gold; }
-	
-	public void addSilver(int silver) { this.silver += silver; }
-	public void addGold(int gold) { this.gold += gold; }
-	
-	
-	public double getDirectionX() { return directionX; }
-	public double getDirectionY() { return directionY; }
-	
 
-	
-	public boolean getInConversation() { return inConversation; }
-	public void setInConversation(boolean b) 
-	{ 
-		inConversation = b; 
-		
-	}
 	
 	public void updateAI(ArrayList<Unit> characterList){}
 	
 	public int getPunchRange() { return punchRange; }
-	
-	public boolean getFacingRight() { return facingRight; }
-	public void setFacingRight(boolean well) { facingRight = well; }
-	
-	public boolean getFriendly() { return friendly; }
-
-	public boolean isDead() { return dead; }
-	
-	public boolean getSpawning() { return spawning; };
-	public void setSpawning(boolean b) { initializeSpawning = b; }
-	
-	public double getSpawnX() { return spawnX; }
-	public double getSpawnY() { return spawnY; }
 		
 	public void hit(int damage)
 	{
+		System.out.println("Damaging " + name + " for: " + damage + " damage.");
 		if(dead || invulnerable)
 		{
 			return;
@@ -628,7 +635,7 @@ public class Unit extends MapObject
 		
 		if(locationX > tileMap.getWidth() || locationX < 0 || locationY > tileMap.getHeight())
 		{
-			setPosition(spawnX, spawnY);
+			setPosition(spawnLocationX, spawnLocationY);
 			initializeSpawning = true;
 			directionX = 0;
 			directionY = 0;

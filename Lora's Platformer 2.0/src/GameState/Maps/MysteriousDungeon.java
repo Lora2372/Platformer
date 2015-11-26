@@ -37,7 +37,8 @@ public class MysteriousDungeon extends MainMap
 		super(gameStatemanager, 
 				tileMap,
 				player,
-				conversationState
+				conversationState,
+				"MysteriousDungeon"
 				
 				);
 		
@@ -100,7 +101,7 @@ public class MysteriousDungeon extends MainMap
 		
 		
 
-		if(!player.getLoaded())
+		if(!player.getLoading())
 		{
 			player.setPosition(109, 200);
 			player.setSpawnPoint(109, 200);
@@ -108,8 +109,8 @@ public class MysteriousDungeon extends MainMap
 		else
 		{
 			dungeonIntroduction = true;
-			player.setLoaded(false);
-			player.setPosition(player.getSpawnX(), player.getSpawnY());
+			player.setLoading(false);
+			player.setPosition(player.getSpawnLocationX(), player.getSpawnLocationY());
 		}
 	}
 	

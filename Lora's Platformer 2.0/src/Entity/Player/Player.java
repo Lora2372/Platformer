@@ -103,8 +103,8 @@ public class Player extends Unit
 	
 	public ConversationState getConversationState() { return conversationState; }
 	
-	public boolean getLoaded() { return loaded; }
-	public void setLoaded(boolean loaded) { this.loaded = loaded; }
+	public boolean getLoading() { return loaded; }
+	public void setLoading(boolean loaded) { this.loaded = loaded; }
 	
 	public boolean getUseMouse() { return useMouse; }
 	public void setUseMouse(boolean well) { useMouse = well; }

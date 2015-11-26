@@ -7,15 +7,15 @@ public class Torch extends Doodad
 {
 	public Torch(
 			TileMap tileMap,
-			double spawnX,
-			double spawnY
+			double spawnLocationX,
+			double spawnLocationY
 			
 			)
 	{
 		super(
 				tileMap,
-				spawnX,
-				spawnY,
+				spawnLocationX,
+				spawnLocationY,
 				150,
 				150,
 				150,

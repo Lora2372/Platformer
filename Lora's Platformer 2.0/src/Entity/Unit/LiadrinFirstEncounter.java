@@ -31,8 +31,8 @@ public class LiadrinFirstEncounter extends Unit
 			boolean invulnerable,
 			boolean unkillable,
 			String name,
-			double spawnX,
-			double spawnY,
+			double spawnLocationX,
+			double spawnLocationY,
 			MainMap mainMap
 			) 
 	{
@@ -81,8 +81,8 @@ public class LiadrinFirstEncounter extends Unit
 				true,
 				name,
 				"LiadrinFirstEncounter",
-				spawnX,
-				spawnY,
+				spawnLocationX,
+				spawnLocationY,
 				mainMap,
 				"LorasCavern"
 				);

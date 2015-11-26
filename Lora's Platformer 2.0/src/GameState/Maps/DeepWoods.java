@@ -29,8 +29,8 @@ public class DeepWoods extends MainMap
 		super(gameStatemanager, 
 				tileMap,
 				player,
-				conversationState
-				
+				conversationState,
+				"DeepWoods"
 				);
 		
 
@@ -38,15 +38,15 @@ public class DeepWoods extends MainMap
 		player.setTileMap(tileMap);
 		
 
-		if(!player.getLoaded())
+		if(!player.getLoading())
 		{
 			player.setPosition(startLocationX, startLocationY);
 			player.setSpawnPoint(startLocationX, startLocationY);
 		}
 		else
 		{
-			player.setLoaded(false);
-			player.setPosition(player.getSpawnX(), player.getSpawnY());
+			player.setLoading(false);
+			player.setPosition(player.getSpawnLocationX(), player.getSpawnLocationY());
 		}
 		
 		if(player.getAnimation().getFrames() == null)

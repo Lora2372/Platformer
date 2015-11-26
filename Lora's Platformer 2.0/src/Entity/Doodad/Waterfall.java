@@ -7,15 +7,15 @@ public class Waterfall extends Doodad
 {
 	public Waterfall(
 			TileMap tileMap,
-			double spawnX,
-			double spawnY
+			double spawnLocationX,
+			double spawnLocationY
 			
 			)
 	{
 		super(
 				tileMap,
-				spawnX,
-				spawnY,
+				spawnLocationX,
+				spawnLocationY,
 				192,
 				192,
 				192,

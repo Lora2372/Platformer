@@ -28,15 +28,15 @@ public class StatueSave extends Doodad
 	
 	public StatueSave(
 			TileMap tileMap, 
-			double spawnX,
-			double spawnY,
+			double spawnLocationX,
+			double spawnLocationY,
 			GameStateManager gameStateManager,
 			MainMap mainMap
 			) 
 	{
 		super(tileMap, 
-				spawnX, 
-				spawnY, 
+				spawnLocationX, 
+				spawnLocationY, 
 				116, 
 				110,
 				116,
@@ -54,8 +54,8 @@ public class StatueSave extends Doodad
 				);
 				
 		
-		this.spawnX = spawnX;
-		this.spawnY = spawnY;
+		this.spawnLocationX = spawnLocationX;
+		this.spawnLocationY = spawnLocationY;
 		this.gameStateManager = gameStateManager;
 		this.mainMap = mainMap;
 	}
@@ -95,8 +95,11 @@ public class StatueSave extends Doodad
 				{
 					player.getConversationState().startConversation(player, null, this, conversation.statueSaveChoiceYes(), conversation.statueSaveChoiceYesWhoTalks());
 					
-					JSONWriter.saveFile(player, (int)spawnX, (int)spawnY, mainMap.getCharacterList());
+					player.setSpawnLocationX(spawnLocationX);
+					player.setSpawnLocationY(spawnLocationY);
+					mainMap.reset();
 					JukeBox.play("Save");
+					JSONWriter.saveFile(player);
 				}
 				else
 				{

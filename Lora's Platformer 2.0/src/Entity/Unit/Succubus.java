@@ -18,8 +18,8 @@ public class Succubus extends Unit
 			boolean invulnerable,
 			boolean unkillable,
 			String name,
-			double spawnX,
-			double spawnY,
+			double spawnLocationX,
+			double spawnLocationY,
 			MainMap mainMap,
 			String currentMap
 			) 
@@ -70,8 +70,8 @@ public class Succubus extends Unit
 			false,
 			name,
 			"Succubus",
-			spawnX,
-			spawnY,
+			spawnLocationX,
+			spawnLocationY,
 			mainMap,
 			currentMap
 		);

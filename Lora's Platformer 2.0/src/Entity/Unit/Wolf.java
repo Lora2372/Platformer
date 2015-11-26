@@ -18,8 +18,8 @@ public class Wolf extends Unit
 			boolean invulnerable,
 			boolean unkillable,
 			String name,
-			double spawnX,
-			double spawnY,
+			double spawnLocationX,
+			double spawnLocationY,
 			MainMap mainMap,
 			String currentMap
 			) 
@@ -69,8 +69,8 @@ public class Wolf extends Unit
 				false,
 				name,
 				"Wolf",
-				spawnX,
-				spawnY,
+				spawnLocationX,
+				spawnLocationY,
 				mainMap,
 				currentMap
 				);

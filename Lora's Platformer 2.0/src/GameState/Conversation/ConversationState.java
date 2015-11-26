@@ -129,7 +129,7 @@ public class ConversationState  extends GameState
 		whoTalks = newWhoTalks;
 		
 		player.inControl(false);
-		player.invulnerable(true);
+		player.setInvulnerable(true);
 		
 		conversationOver = false;
 		
@@ -149,7 +149,7 @@ public class ConversationState  extends GameState
 		player.setInConversation(false);
 		
 		player.inControl(true);
-		player.invulnerable(false);
+		player.setInvulnerable(false);
 		
 		player.setInConversation(false);
 		

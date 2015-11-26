@@ -2,8 +2,6 @@ package GameState.Maps;
 
 
 import java.io.IOException;
-import java.util.ArrayList;
-
 import javax.imageio.ImageIO;
 import Entity.Doodad.Activatable.Chest;
 import Entity.Item.CreateItem;
@@ -34,7 +32,8 @@ public class LorasCavern extends MainMap
 			gameStateManager, 
 			tileMap,
 			player,
-			conversationState
+			conversationState,
+			"LorasCavern"
 		);
 	
 		try
@@ -65,30 +64,11 @@ public class LorasCavern extends MainMap
 		
 		this.player = player;
 
+		spawnEnemies();
+		
 		player.setCurrentMap("LorasCavern");
-		if(!player.getLoaded())
-		{
-			player.setPosition(720, 2200);
-			player.setSpawnPoint(720, 2200);
-			
-			ArrayList<UnitData> unitDataArray = CreateUnit.getUnits("LorasCavern");
-			
-			for(int i = 0; i < unitDataArray.size(); i++)
-			{
-				UnitData unitData = unitDataArray.get(i);
-				spawnUnit(unitData);
-				
-				
-			}
-			
-			
-		}
-		else
-		{
-			spawnEnemies();
-			player.setLoaded(false);
-
-		}
+		
+		
 
 		player.setSpawning(true);
 		player.setUnkillable(false);	
@@ -97,25 +77,34 @@ public class LorasCavern extends MainMap
 	
 	public void spawnEnemies()
 	{
-		Slug slug = spawnSlug(1690, 1600, false, "Steve", "LorasCavern");
-		dropPotion(CreateItem.Potions.Healing.toString(), 100, 1, slug);
-		
-		Succubus succubus;
-		succubus = spawnSuccubus(2700, 1400, false, "LorasCavern");
-		dropCoin(CreateItem.Coins.Silver.toString(), 100, 2, succubus);
-		dropPotion("Any", 25, 1, succubus);
-		
-		succubus = spawnSuccubus(1339,1900, true, "LorasCavern");
-		dropPotion("Any", 25, 1, succubus);
-		
-		succubus = spawnSuccubus(2700, 2100, true, "LorasCavern");
-		dropPotion("Any", 25, 1, succubus);
-		
-		succubus = spawnSuccubus(1423, 650, true, "LorasCavern");
-		dropPotion("Any", 25, 1, succubus);
-		
-		succubus = spawnSuccubus(3689, 1430, false, "LorasCavern");
-		dropPotion("Any", 25, 1, succubus);
+		if(!player.getLoading())
+		{
+			player.setPosition(720, 2200);
+			player.setSpawnPoint(720, 2200);
+			
+			System.out.println("Goor morning");
+			Slug slug = spawnSlug(1690, 1600, false, "Steve", "LorasCavern");
+			dropPotion(CreateItem.Potions.Healing.toString(), 100, 1, slug);
+			
+			Succubus succubus;
+			succubus = spawnSuccubus(2700, 1400, false, "LorasCavern");
+			dropCoin(CreateItem.Coins.Silver.toString(), 100, 2, succubus);
+			dropPotion("Any", 25, 1, succubus);
+			
+			succubus = spawnSuccubus(1339,1900, true, "LorasCavern");
+			dropPotion("Any", 25, 1, succubus);
+			
+			succubus = spawnSuccubus(2700, 2100, true, "LorasCavern");
+			dropPotion("Any", 25, 1, succubus);
+			
+			succubus = spawnSuccubus(1423, 650, true, "LorasCavern");
+			dropPotion("Any", 25, 1, succubus);
+			
+			succubus = spawnSuccubus(3689, 1430, false, "LorasCavern");
+			dropPotion("Any", 25, 1, succubus);
+		}
+		player.setLoading(false);
+
 		
 		Chest chest;
 		chest = spawnChest(1923, 1170, true, "Uncommon");
@@ -165,11 +154,5 @@ public class LorasCavern extends MainMap
 			
 			gameStateManager.setState(GameStateManager.MysteriousDungeon, false);
 		}
-	}
-	
-	public void reset()
-	{
-		super.update();
-		
 	}
 }

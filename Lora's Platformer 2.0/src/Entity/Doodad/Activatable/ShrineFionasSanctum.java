@@ -36,15 +36,15 @@ public class ShrineFionasSanctum extends Doodad
 			TileMap tileMap,
 			GameStateManager gameStateManager,
 			FionasSanctum fionasSanctum,
-			double spawnX,
-			double spawnY,
+			double spawnLocationX,
+			double spawnLocationY,
 			Fiona fiona
 			) 
 	{
 		super(
 				tileMap, 
-				spawnX, 
-				spawnY, 
+				spawnLocationX, 
+				spawnLocationY, 
 				160, 
 				160,
 				160,

@@ -55,11 +55,14 @@ public class MainMap extends GameState
 	
 	protected boolean gameover;
 	
+	protected String currentMap;
+	
 	public MainMap(
 			GameStateManager gameStatemanager,
 			TileMap tileMap,
 			Player player,
-			ConversationState conversationState
+			ConversationState conversationState,
+			String currentMap
 			
 			)
 	{
@@ -67,6 +70,7 @@ public class MainMap extends GameState
 		this.conversationState = conversationState;
 		this.tileMap = tileMap;
 		this.player = player;
+		this.currentMap = currentMap;
 		initialize();
 	}
 	
@@ -94,6 +98,26 @@ public class MainMap extends GameState
 		}
 		player.setMainMap(this);
 		characterList.add(player);
+		
+		if(player.getLoading())
+		{
+			ArrayList<UnitData> unitDataArray = CreateUnit.getUnitDataList("LorasCavern");
+			
+			for(int i = 0; i < unitDataArray.size(); i++)
+			{
+				UnitData unitData = unitDataArray.get(i);
+				if(!unitData.getUnitType().equals("Player"))
+				{
+					if(unitData.getCurrentMap().equals(currentMap))
+					{
+						spawnUnit(unitData);
+					}
+				}
+
+				
+			}
+			System.out.println("Goodbye");
+		}
 	}
 	
 	public void GameOverUpdate()
@@ -281,8 +305,8 @@ public class MainMap extends GameState
 						Poff poff = new Poff(tileMap,characterList.get(i).getLocationX(), characterList.get(i).getLocationY());
 						stuff.add(poff);
 						
-						int tempRows = character.getInventory().getRows();
-						int tempColumns = character.getInventory().getColumns();
+						int tempRows = character.getInventory().getNumberOfRows();
+						int tempColumns = character.getInventory().getNumberOfColumns();
 						
 						Item items[][] = character.getInventory().getItems();
 						
@@ -367,8 +391,45 @@ public class MainMap extends GameState
 	
 	public void reset()
 	{
-		projectiles = new ArrayList<Projectile>();
-		explosions = new ArrayList<Explosion>();
+//		projectiles = new ArrayList<Projectile>();
+//		explosions = new ArrayList<Explosion>();
+		CreateUnit.resetUnitList(currentMap);
+		
+		for(int i = 0; i < characterList.size(); i++)
+		{
+			Unit unit = characterList.get(i);
+			ArrayList<Item> items = new ArrayList<Item>();
+			for(int y = 0; y < unit.getInventory().getNumberOfRows(); y++)
+			{
+				for(int x = 0; x < unit.getInventory().getNumberOfColumns(); x++)
+				{
+					if(unit.getInventory().getItem(x, y) != null)
+					{
+						items.add(unit.getInventory().getItem(x, y));
+					}
+				}
+			}
+			
+			UnitData unitData = new UnitData
+					(
+							unit.getFacingRight(), 
+							unit.getFriendly(), 
+							unit.getUntouchable(), 
+							unit.getInvulnerable(), 
+							unit.getUnkillable(), 
+							unit.getName(),
+							(int)unit.getHealth(),
+							unit.getSpawnLocationX(), 
+							unit.getSpawnLocationY(), 
+							currentMap, 
+							unit.getUnitType(),
+							unit.getSilver(),
+							unit.getGold(),
+							items
+					);
+			
+			CreateUnit.addUnit(currentMap, unitData);
+		}
 	}
 	
 
@@ -506,8 +567,52 @@ public class MainMap extends GameState
 	{
 		if(unitData.getUnitType().equals("Slug"))
 		{
-			return spawnSlug(unitData.getFacingRight(), unitData.getFriendly(), unitData.getUntouchable(), unitData.getInvulnerable(), unitData.getUnkillable(), unitData.getName(), unitData.getSpawnLocationX(), unitData.getSpawnLocationY(), unitData.getCurrentMap());
+			return spawnSlug
+					(
+						unitData.getFacingRight(),
+						unitData.getFriendly(),
+						unitData.getUntouchable(), 
+						unitData.getInvulnerable(), 
+						unitData.getUnkillable(),
+						unitData.getName(),
+						unitData.getSpawnLocationX(),
+						unitData.getSpawnLocationY(),
+						unitData.getCurrentMap()
+					);
 		}
+		
+		if(unitData.getUnitType().equals("Succubus"))
+		{
+			return spawnSuccubus
+					(
+						unitData.getFacingRight(),
+						unitData.getFriendly(),
+						unitData.getUntouchable(), 
+						unitData.getInvulnerable(), 
+						unitData.getUnkillable(),
+						unitData.getName(),
+						unitData.getSpawnLocationX(),
+						unitData.getSpawnLocationY(),
+						unitData.getCurrentMap()
+					);
+		}
+		
+		if(unitData.getUnitType().equals("Wolf"))
+		{
+			return spawnWolf
+					(
+						unitData.getFacingRight(),
+						unitData.getFriendly(),
+						unitData.getUntouchable(), 
+						unitData.getInvulnerable(), 
+						unitData.getUnkillable(),
+						unitData.getName(),
+						unitData.getSpawnLocationX(),
+						unitData.getSpawnLocationY(),
+						unitData.getCurrentMap()
+					);
+		}
+		
 		
 		return null;
 	}

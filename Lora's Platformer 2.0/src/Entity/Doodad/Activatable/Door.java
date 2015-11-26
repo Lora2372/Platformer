@@ -33,8 +33,8 @@ public class Door extends Doodad
 		(
 			TileMap tileMap, 
 			GameStateManager gameStateManager,
-			double spawnX,
-			double spawnY,
+			double spawnLocationX,
+			double spawnLocationY,
 			boolean locked,
 			int currentAction,
 			String doorType
@@ -43,8 +43,8 @@ public class Door extends Doodad
 		super
 		(
 			tileMap, 
-			spawnX, 
-			spawnY, 
+			spawnLocationX, 
+			spawnLocationY, 
 			120, 
 			120,
 			120,

@@ -35,8 +35,8 @@ public abstract class MapObject
 	protected double directionX;
 	protected double directionY;
 	
-	protected double spawnX;
-	protected double spawnY;
+	protected double spawnLocationX;
+	protected double spawnLocationY;
 	
 	// Dimensions
 	protected int width;

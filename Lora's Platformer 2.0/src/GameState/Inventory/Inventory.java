@@ -46,8 +46,6 @@ public class Inventory
 
 	}
 	
-	public int getColumns() { return numberOfColumns; }
-	public int getRows() { return numberOfRows; }
 	
 	public boolean addItem(Item item)
 	{
@@ -120,6 +118,11 @@ public class Inventory
 	public Item[][] getItems()
 	{
 		return items;
+	}
+	
+	public Item getItem(int x, int y)
+	{
+		return items[y][x];
 	}
 	
 	public int getNumberOfColumns()

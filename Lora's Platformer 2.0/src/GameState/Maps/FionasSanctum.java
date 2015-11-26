@@ -45,7 +45,8 @@ public class FionasSanctum extends MainMap
 		super(gameStatemanager, 
 				tileMap,
 				player,
-				conversationState
+				conversationState,
+				"FionasSanctum"
 				
 				);
 		
@@ -75,15 +76,15 @@ public class FionasSanctum extends MainMap
 		
 		
 
-		if(!player.getLoaded())
+		if(!player.getLoading())
 		{
 			player.setPosition(bossDoor.getLocationX(), bossDoor.getLocationY());
 			player.setSpawnPoint(bossDoor.getLocationX(), bossDoor.getLocationY());
 		}
 		else
 		{
-			player.setLoaded(false);
-			player.setPosition(player.getSpawnX(), player.getSpawnY());
+			player.setLoading(false);
+			player.setPosition(player.getSpawnLocationX(), player.getSpawnLocationY());
 		}
 		
 		fiona.inControl(false);

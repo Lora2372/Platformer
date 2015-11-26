@@ -9,6 +9,7 @@ import Entity.Doodad.Activatable.DoodadData;
 import Entity.Item.CreateItem;
 import Entity.Player.*;
 import Entity.Projectile.ProjectileData;
+import Entity.Unit.CreateUnit;
 import GameState.Conversation.ConversationState;
 import Main.GamePanel;
 import Main.JSONReader;
@@ -60,6 +61,8 @@ public class MenuState extends GameState
 		DoodadData doodadData = new DoodadData(tileMap);
 		@SuppressWarnings("unused")
 		ProjectileData projectileData = new ProjectileData(tileMap);
+		@SuppressWarnings("unused")
+		CreateUnit createUnit = new CreateUnit(tileMap);
 		
 		player = new Player("Lora", tileMap, conversationState);
 		
@@ -195,9 +198,9 @@ public class MenuState extends GameState
 			// Load Game
 			if(JSONReader.load(player, tileMap))
 			{
-				player.setLoaded(true);
-				player.setPosition(player.getSpawnX(), player.getSpawnY());
-				player.setSpawnPoint(player.getSpawnX(), player.getSpawnY());
+				player.setLoading(true);
+				player.setPosition(player.getSpawnLocationX(), player.getSpawnLocationY());
+				player.setSpawnPoint(player.getSpawnLocationX(), player.getSpawnLocationY());
 				
 				String currentMap = player.getCurrentMap();
 				if(currentMap.equals("LorasCavern"))
@@ -215,7 +218,7 @@ public class MenuState extends GameState
 			}
 			else
 			{
-				player.setLoaded(false);
+				player.setLoading(false);
 				System.out.println("Couldn't find it.");
 				gameStateManager.setState(GameStateManager.LorasCavern, true);
 				

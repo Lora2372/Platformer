@@ -20,8 +20,8 @@ public class Skeleton extends Unit
 			boolean invulnerable,
 			boolean unkillable,
 			String name,
-			double spawnX,
-			double spawnY,
+			double spawnLocationX,
+			double spawnLocationY,
 			MainMap mainMap,
 			String currentMap
 			) 
@@ -71,8 +71,8 @@ public class Skeleton extends Unit
 				false,
 				name,
 				"Skeleton",
-				spawnX,
-				spawnY,
+				spawnLocationX,
+				spawnLocationY,
 				mainMap,
 				currentMap
 				);

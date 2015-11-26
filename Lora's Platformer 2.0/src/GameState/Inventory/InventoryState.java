@@ -82,8 +82,8 @@ public class InventoryState extends GameState
 		}
 		this.inventory = player.getInventory();
 		
-		numberOfColumns = inventory.getColumns();
-		numberOfRows = inventory.getRows();
+		numberOfColumns = inventory.getNumberOfColumns();
+		numberOfRows = inventory.getNumberOfRows();
 		numberOfSlots = numberOfColumns * numberOfRows;
 		
 		inventorySlotRectangles = new Rectangle[numberOfRows][numberOfColumns];

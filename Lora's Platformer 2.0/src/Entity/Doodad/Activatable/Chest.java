@@ -31,15 +31,15 @@ public class Chest extends Doodad
 	
 	public Chest(
 			TileMap tileMap, 
-			double spawnX,
-			double spawnY,
+			double spawnLocationX,
+			double spawnLocationY,
 			boolean locked,
 			String chestType
 			) 
 	{
 		super(tileMap, 
-				spawnX, 
-				spawnY, 
+				spawnLocationX, 
+				spawnLocationY, 
 				60, 
 				60,
 				60,
@@ -213,8 +213,8 @@ public class Chest extends Doodad
 				active = true;
 				conversationPiece = "You found ";
 						
-				int tempRows = inventory.getRows();
-				int tempColumns = inventory.getColumns();
+				int tempRows = inventory.getNumberOfRows();
+				int tempColumns = inventory.getNumberOfColumns();
 				Item[][] items = inventory.getItems();
 				for(int i = 0; i < tempRows; i++)
 				{

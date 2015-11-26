@@ -18,8 +18,8 @@ public class Slug extends Unit
 			boolean invulnerable,
 			boolean unkillable,
 			String name,
-			double spawnX,
-			double spawnY,
+			double spawnLocationX,
+			double spawnLocationY,
 			MainMap mainMap,
 			String currentMap
 			) 
@@ -69,8 +69,8 @@ public class Slug extends Unit
 				false,
 				name,
 				"Slug",
-				spawnX,
-				spawnY,
+				spawnLocationX,
+				spawnLocationY,
 				mainMap,
 				currentMap
 				

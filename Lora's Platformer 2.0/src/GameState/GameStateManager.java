@@ -162,7 +162,7 @@ public class GameStateManager
 	private void unloadState(int state) 
 	{
 		stopMusic();
-//		gameStates[state].reset();
+		gameStates[state].reset();
 		gameStates[state] = null;
 	}
 	

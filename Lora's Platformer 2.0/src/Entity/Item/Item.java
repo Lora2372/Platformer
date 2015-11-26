@@ -196,7 +196,7 @@ public class Item extends MapObject
 		
 		if(locationX > tileMap.getWidth() || locationX < 0 || locationY > tileMap.getHeight())
 		{
-			setPosition(spawnX, spawnY);
+			setPosition(spawnLocationX, spawnLocationY);
 			initializeSpawning = true;
 			directionX = 0;
 			directionY = 0;

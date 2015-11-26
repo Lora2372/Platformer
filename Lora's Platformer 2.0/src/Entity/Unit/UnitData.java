@@ -1,5 +1,10 @@
 package Entity.Unit;
 
+
+import java.util.ArrayList;
+
+import Entity.Item.Item;
+
 public class UnitData 
 {
 	boolean facingRight;
@@ -8,10 +13,15 @@ public class UnitData
 	boolean invulnerable;
 	boolean unkillable;
 	String name;
+	int health;
 	double spawnLocationX;
 	double spawnLocationY;
 	String currentMap;
 	String unitType;
+	int gold;
+	int silver;
+	ArrayList<Item> items;
+	
 	
 	public UnitData
 	(
@@ -21,10 +31,14 @@ public class UnitData
 		boolean invulnerable,
 		boolean unkillable,
 		String name,
+		int health,
 		double spawnLocationX,
 		double spawnLocationY,
 		String currentMap,
-		String unitType
+		String unitType,
+		int silver,
+		int gold,
+		ArrayList<Item> items
 	)
 	{
 		this.facingRight = facingRight;
@@ -33,10 +47,16 @@ public class UnitData
 		this.invulnerable = invulnerable;
 		this.unkillable = unkillable;
 		this.name = name;
+		this.health = health;
 		this.spawnLocationX = spawnLocationX;
 		this.spawnLocationY = spawnLocationY;
 		this.currentMap = currentMap;
 		this.unitType = unitType;
+		this.gold = gold;
+		this.silver = silver;
+		this.items = items;
+		
+		
 	}
 	
 	public boolean getFacingRight()
@@ -69,6 +89,11 @@ public class UnitData
 		return name;
 	}
 	
+	public int getHealth()
+	{
+		return health;
+	}
+	
 	public double getSpawnLocationX()
 	{
 		return spawnLocationX;
@@ -87,6 +112,21 @@ public class UnitData
 	public String getUnitType()
 	{
 		return unitType;
+	}
+	
+	public int getSilver()
+	{
+		return silver;
+	}
+	
+	public int getGold()
+	{
+		return gold;
+	}
+	
+	public ArrayList<Item> getItems()
+	{
+		return items;
 	}
 	
 }

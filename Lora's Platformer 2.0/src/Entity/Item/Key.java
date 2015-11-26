@@ -30,7 +30,7 @@ public class Key extends Item
 				locationX, 
 				locationY,
 				owner, 
-				false, 
+				true, 
 				stacks, 
 				true, 
 				keyType,
