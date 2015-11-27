@@ -22,12 +22,15 @@ public class Doodad extends MapObject
 	protected boolean active;
 	protected boolean spent;
 	
+	protected boolean locked;
+	
 	protected int stopAt;
 	
 	protected String doodadType;
 	protected String doodadName;
 	
-	public Doodad(
+	public Doodad
+		(
 			TileMap tileMap, 
 			double spawnLocationX, 
 			double spawnLocationY,
@@ -45,7 +48,7 @@ public class Doodad extends MapObject
 			int currentAction,
 			String doodadType,
 			String descriptionName
-			)
+		)
 	{
 		super(tileMap);
 		
@@ -63,8 +66,10 @@ public class Doodad extends MapObject
 		this.doodadType = doodadType;
 		this.doodadName = descriptionName;
 				
-		locationX = spawnLocationX;
-		locationY = spawnLocationY;
+		this.locationX = spawnLocationX;
+		this.locationY = spawnLocationY;
+		this.spawnLocationX = spawnLocationX;
+		this.spawnLocationY = spawnLocationY;
 		
 		facingRight = false;
 		
@@ -87,6 +92,30 @@ public class Doodad extends MapObject
 	public void playSound() { }
 	
 	public boolean getActive() { return active; }
+	public void setActive(boolean active) { this.active = active; }
+	
+	public boolean getFacingRight() { return facingRight; }
+	public boolean getUntouchable() { return untouchable; }
+	public boolean getInvulnerable() { return invulnerable; }
+	public boolean getUnkillable() { return unkillable; }
+	public String getDoodadType() { return doodadType; }
+	public double getSpawnLocationX() { return spawnLocationX; }
+	public double getSpawnLocationY() { return spawnLocationY; }
+	public int getCurrentAction() { return currentAction; }
+	public boolean getLocked() { return locked; }
+	
+	public void setCurrentAction(int currentAction) { this.currentAction = currentAction; }
+	
+	public void setDoodadType(String newDoodadType)
+	{
+		doodadType = newDoodadType;
+	}
+	
+	
+	public String getDoodadName()
+	{
+		return doodadName;
+	}
 	
 	public void update()
 	{		
@@ -138,20 +167,4 @@ public class Doodad extends MapObject
 			return;
 		super.draw(graphics);
 	}
-
-	public void setDoodadType(String newDoodadType)
-	{
-		doodadType = newDoodadType;
-	}
-	
-	public String getDoodadType()
-	{
-		return doodadType;
-	}
-	
-	public String getDoodadName()
-	{
-		return doodadName;
-	}
-	
 }

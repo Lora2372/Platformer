@@ -37,7 +37,6 @@ public class GameOver
 	{
 		if(graphics == null)
 		{
-			System.out.println("graphics is null!");
 			return;
 		}
 //		AlphaComposite alphacomposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 50);

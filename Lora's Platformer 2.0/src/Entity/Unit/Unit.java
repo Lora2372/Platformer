@@ -453,6 +453,7 @@ public class Unit extends MapObject
 	}
 	
 	public void inControl(boolean b) {inControl = b;}
+	public boolean getInControl() { return inControl; }
 	
 	public boolean getFacingRight() { return facingRight; }
 	public boolean getFriendly() { return friendly; }
@@ -1521,23 +1522,17 @@ public class Unit extends MapObject
 				return;
 			}
 			
-			if(name == null)
-			{
-				System.out.println("what?");
-				System.out.println("unitType: " + unitType);
-			}
-			
 			int length = (int)graphics.getFontMetrics().getStringBounds(name, graphics).getWidth();
 			int height = (int)graphics.getFontMetrics().getStringBounds(name, graphics).getHeight();
 			int drawX = (int)(locationX + mapPositionX) - length / 2;
-			int drawY = (int) (locationY + mapPositionY) - height / 2 - 25;
+			int drawY = (int)(locationY + mapPositionY) - this.height / 2 - (height / 3);
 			
-			graphics.setFont(new Font("Arial", Font.PLAIN, 16));
+			graphics.setFont(new Font("Arial", Font.PLAIN, 14));
 			graphics.setColor(Color.BLACK);
-			graphics.drawString(name, shiftWest( (int) locationX, 1), shiftNorth( (int) locationY, 1));
-			graphics.drawString(name, shiftWest( (int) locationX, 1), shiftSouth( (int) locationY, 1));
-			graphics.drawString(name, shiftEast( (int) locationX, 1), shiftNorth( (int) locationY, 1));
-			graphics.drawString(name, shiftEast( (int) locationX, 1), shiftSouth( (int) locationY, 1));
+			graphics.drawString(name, shiftWest( (int) drawX, 1), shiftNorth( (int) drawY, 1));
+			graphics.drawString(name, shiftWest( (int) drawX, 1), shiftSouth( (int) drawY, 1));
+			graphics.drawString(name, shiftEast( (int) drawX, 1), shiftNorth( (int) drawY, 1));
+			graphics.drawString(name, shiftEast( (int) drawX, 1), shiftSouth( (int) drawY, 1));
 						
 			graphics.setColor(friendly ? Color.BLUE : Color.RED);
 			graphics.setFont(new Font("Arial", Font.PLAIN, 14));

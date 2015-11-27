@@ -35,7 +35,7 @@ public class CampFire extends Doodad
 				false,
 				0,
 				"CampFire",
-				DoodadData.doodadName.get("CampFire")
+				CreateDoodad.doodadName.get("CampFire")
 				);
 
 		this.gameStateManager = gameStateManager;

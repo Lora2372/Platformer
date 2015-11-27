@@ -88,7 +88,6 @@ public class Succubus extends Unit
 	public void updateAI(ArrayList<Unit> characterList)
 	{
 //		if(!friendly) return;
-		//System.out.println("dx: " + dx + ", turnTimer: " + turnTimer);
 		
 		
 		

@@ -43,7 +43,7 @@ public class Portal extends Doodad
 				false,
 				0,
 				"Portal",
-				DoodadData.doodadName.get("Portal")
+				CreateDoodad.doodadName.get("Portal")
 				);
 
 		this.gameStateManager = gameStateManager;
@@ -58,14 +58,12 @@ public class Portal extends Doodad
 	{
 		if(gameStateManager.getCurrentState() == GameStateManager.FionasSanctum)
 		{
-			DeepWoods deepWoods = (DeepWoods) gameStateManager.getState(GameStateManager.DeepWoods);
-			if(deepWoods != null)
-			{
-				player.setPosition(deepWoods.getStartingLocationX(), deepWoods.getStartingLocationY());
-				player.setSpawning(true);
-			}
 
-			gameStateManager.setState(GameStateManager.DeepWoods, false);
+			player.setPosition(DeepWoods.startLocationX, DeepWoods.startLocationY);
+			player.setSpawning(true);
+			
+
+			gameStateManager.setState(GameStateManager.DeepWoods);
 		}
 	}
 	

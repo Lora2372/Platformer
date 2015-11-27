@@ -274,10 +274,6 @@ public class ConversationState  extends GameState
 				graphics.drawString(tempName, (int)locationX + 21, (int)locationY + 25);	
 			}
 				
-			if(conversation == null)
-			{
-				System.out.println("conversation is null");
-			}
 			
 			String[] myString = conversation[conversationTracker].split(" ");
 			int tempX = 0;

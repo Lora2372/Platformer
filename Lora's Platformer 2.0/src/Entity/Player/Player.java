@@ -1,6 +1,9 @@
 package Entity.Player;
 
+import java.util.ArrayList;
+
 import Entity.Unit.Unit;
+import GameState.GameStateManager;
 import GameState.Conversation.Conversation;
 import GameState.Conversation.ConversationState;
 import Main.Content;
@@ -8,12 +11,9 @@ import TileMap.TileMap;
 
 public class Player extends Unit
 {
-	
-
-	
 	protected HUD hud;
 	
-	protected boolean loaded = false;
+	protected ArrayList<Boolean> loading;
 	protected boolean useMouse = false;
 	protected boolean displayHealthBars = true;
 	protected boolean displayNamePlates = true;
@@ -89,6 +89,14 @@ public class Player extends Unit
 			null
 				
 		);
+		loading = new ArrayList<Boolean>();
+		
+		for(int i = 0; i < GameStateManager.GameMaps.values().length; i++)
+		{
+			boolean newBoolean = false;
+			loading.add(newBoolean);
+		}
+		
 		conversation = new Conversation(this);
 		this.conversationState = conversationState;
 		player = true;
@@ -103,8 +111,11 @@ public class Player extends Unit
 	
 	public ConversationState getConversationState() { return conversationState; }
 	
-	public boolean getLoading() { return loaded; }
-	public void setLoading(boolean loaded) { this.loaded = loaded; }
+	public boolean getLoading(int index) { return loading.get(index); }
+	public void setLoading(int i, boolean loading) 
+	{ 
+		this.loading.set(i, loading);
+	}
 	
 	public boolean getUseMouse() { return useMouse; }
 	public void setUseMouse(boolean well) { useMouse = well; }

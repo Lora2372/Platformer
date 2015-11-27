@@ -33,11 +33,11 @@ public class MainMap extends GameState
 	protected ArrayList<Unit> characterList;
 	protected ArrayList<Doodad> stuff;
 	protected ArrayList<Doodad> activatables;
+	protected ArrayList<Doodad> activatablesUsableOnce;
 	protected ArrayList<Item> items;
 	protected ArrayList<Projectile> projectiles;
 	protected ArrayList<Explosion> explosions;
 	protected boolean doneInitializing;
-	
 	
 	protected double mouseLocationX;
 	protected double mouseLocationY;
@@ -57,14 +57,15 @@ public class MainMap extends GameState
 	
 	protected String currentMap;
 	
-	public MainMap(
+	public MainMap
+		(
 			GameStateManager gameStatemanager,
 			TileMap tileMap,
 			Player player,
 			ConversationState conversationState,
 			String currentMap
 			
-			)
+		)
 	{
 		this.gameStateManager = gameStatemanager;
 		this.conversationState = conversationState;
@@ -80,43 +81,45 @@ public class MainMap extends GameState
 		characterList = new ArrayList<Unit>();
 		stuff = new ArrayList<Doodad>();
 		activatables = new ArrayList<Doodad>();
+		activatablesUsableOnce = new ArrayList<Doodad>();
 		items = new ArrayList<Item>();
 		
 		projectiles = new ArrayList<Projectile>();
 		explosions = new ArrayList<Explosion>();
 		soundTimer = 0;
 		
-		if(tileMap == null)
-		{
-			System.out.println("The tileMap is null");
-		}
-		
 		if(player == null)
 		{
-			System.out.println("Player created");
 			player = new Player("Lora", tileMap, conversationState);
 		}
 		player.setMainMap(this);
 		characterList.add(player);
 		
-		if(player.getLoading())
+		int index = 0;
+		for(int i = 0; i < GameStateManager.GameMaps.values().length; i++)
 		{
-			ArrayList<UnitData> unitDataArray = CreateUnit.getUnitDataList("LorasCavern");
+			if(currentMap.equals(GameStateManager.GameMaps.values()[i].toString()))
+			{
+				index = i;
+			}
+		}
+		
+		if(player.getLoading(index))
+		{
+			ArrayList<DoodadData> doodadDataArray = CreateDoodad.getDoodadDataList(currentMap);
+			
+			for(int i = 0; i < doodadDataArray.size(); i++)
+			{
+				spawnDoodad(doodadDataArray.get(i));
+			}
+			
+			
+			ArrayList<UnitData> unitDataArray = CreateUnit.getUnitDataList(currentMap);
 			
 			for(int i = 0; i < unitDataArray.size(); i++)
 			{
-				UnitData unitData = unitDataArray.get(i);
-				if(!unitData.getUnitType().equals("Player"))
-				{
-					if(unitData.getCurrentMap().equals(currentMap))
-					{
-						spawnUnit(unitData);
-					}
-				}
-
-				
+				spawnUnit(unitDataArray.get(i));
 			}
-			System.out.println("Goodbye");
 		}
 	}
 	
@@ -133,7 +136,7 @@ public class MainMap extends GameState
 	
 	public void loadMenu()
 	{
-		gameStateManager.setState(0, false);
+		gameStateManager.setState(0);
 	}
 	
 	public void checkProjectiles()
@@ -327,7 +330,6 @@ public class MainMap extends GameState
 					else
 					{
 						// Player died...
-						System.out.println("Game Over...");
 						
 						gameover = true;
 						
@@ -391,44 +393,89 @@ public class MainMap extends GameState
 	
 	public void reset()
 	{
-//		projectiles = new ArrayList<Projectile>();
-//		explosions = new ArrayList<Explosion>();
+
 		CreateUnit.resetUnitList(currentMap);
+		CreateDoodad.resetDoodadList(currentMap);
 		
-		for(int i = 0; i < characterList.size(); i++)
+		for(int i = 0; i < GameStateManager.GameMaps.values().length; i++)
 		{
-			Unit unit = characterList.get(i);
-			ArrayList<Item> items = new ArrayList<Item>();
-			for(int y = 0; y < unit.getInventory().getNumberOfRows(); y++)
+			if(currentMap.equals(GameStateManager.GameMaps.values()[i].toString()))
 			{
-				for(int x = 0; x < unit.getInventory().getNumberOfColumns(); x++)
+				player.setLoading(i, true);
+			}
+		}
+		
+		
+		for(int i = 0; i < activatablesUsableOnce.size(); i++)
+		{
+			Doodad thing = activatablesUsableOnce.get(i);
+			
+			ArrayList<Item> items = new ArrayList<Item>();
+			for(int y = 0; y < thing.getInventory().getNumberOfRows(); y++)
+			{
+				for(int x = 0; x < thing.getInventory().getNumberOfColumns(); x++)
 				{
-					if(unit.getInventory().getItem(x, y) != null)
+					if(thing.getInventory().getItem(x, y) != null)
 					{
-						items.add(unit.getInventory().getItem(x, y));
+						items.add(thing.getInventory().getItem(x, y));
 					}
 				}
 			}
 			
-			UnitData unitData = new UnitData
-					(
-							unit.getFacingRight(), 
-							unit.getFriendly(), 
-							unit.getUntouchable(), 
-							unit.getInvulnerable(), 
-							unit.getUnkillable(), 
-							unit.getName(),
-							(int)unit.getHealth(),
-							unit.getSpawnLocationX(), 
-							unit.getSpawnLocationY(), 
-							currentMap, 
-							unit.getUnitType(),
-							unit.getSilver(),
-							unit.getGold(),
-							items
-					);
+			DoodadData doodadData = new DoodadData
+				(
+					thing.getUntouchable(),
+					thing.getInvulnerable(), 
+					thing.getActive(), 
+					thing.getCurrentAction(), 
+					thing.getLocked(), 
+					thing.getSpawnLocationX(),
+					thing.getSpawnLocationY(),
+					thing.getDoodadType(), 
+					items
+				);
 			
-			CreateUnit.addUnit(currentMap, unitData);
+			CreateDoodad.addDoodad(currentMap, doodadData);
+		}
+		
+		
+		for(int i = 0; i < characterList.size(); i++)
+		{
+			Unit unit = characterList.get(i);
+			if(unit != player)
+			{
+				ArrayList<Item> items = new ArrayList<Item>();
+				for(int y = 0; y < unit.getInventory().getNumberOfRows(); y++)
+				{
+					for(int x = 0; x < unit.getInventory().getNumberOfColumns(); x++)
+					{
+						if(unit.getInventory().getItem(x, y) != null)
+						{
+							items.add(unit.getInventory().getItem(x, y));
+						}
+					}
+				}
+				
+				UnitData unitData = new UnitData
+				(
+					unit.getFacingRight(), 
+					unit.getFriendly(), 
+					unit.getUntouchable(), 
+					unit.getInvulnerable(), 
+					unit.getUnkillable(), 
+					unit.getName(),
+					(int)unit.getHealth(),
+					unit.getSpawnLocationX(), 
+					unit.getSpawnLocationY(),
+					unit.getUnitType(),
+					unit.getSilver(),
+					unit.getGold(),
+					items
+				);
+				
+				CreateUnit.addUnit(currentMap, unitData);
+			}
+
 		}
 	}
 	
@@ -490,10 +537,6 @@ public class MainMap extends GameState
 					{
 						items.get(i).draw(graphics);
 					}
-					else
-					{
-						System.out.println("item is null");
-					}
 				}
 			}
 			catch(Exception e)
@@ -528,7 +571,6 @@ public class MainMap extends GameState
 			}
 			catch(NullPointerException exception)
 			{
-				System.out.println("Null...");
 				exception.printStackTrace();
 			}
 		}
@@ -563,11 +605,61 @@ public class MainMap extends GameState
 		return random.nextInt((max - min) + 1) + min;
 	}
 	
+	public Doodad spawnDoodad(DoodadData doodadData)
+	{
+		Doodad doodad = null;
+		
+		for(int i = 0; i < CreateDoodad.Doors.values().length; i++)
+		{
+			if(doodadData.getDoodadType().equals(CreateDoodad.Doors.values()[i].toString()))
+			{
+				doodad = spawnDoor
+					(
+						doodadData.getSpawnLocationX(),
+						doodadData.getSpawnLocationY(),
+						doodadData.getLocked(),
+						doodadData.getCurrentAction(),
+						doodadData.getDoodadType()
+					);
+			}
+		}
+		
+		for(int i = 0; i < CreateDoodad.Chests.values().length; i++)
+		{
+			if(doodadData.getDoodadType().equals(CreateDoodad.Chests.values()[i].toString()))
+			{
+				doodad = spawnChest
+					(
+						doodadData.getSpawnLocationX(),
+						doodadData.getSpawnLocationY(),
+						doodadData.getLocked(),
+						doodadData.getCurrentAction(),
+						doodadData.getDoodadType()
+					);
+			}
+		}
+		
+		if(doodad != null)
+		{
+			for(int i = 0; i < doodadData.getItems().size(); i++)
+			{
+				Item item = doodadData.getItems().get(i);
+				doodad.getInventory().addItem(item);
+				items.add(item);
+			}
+			return doodad;
+		}
+		
+		return null;
+	}
+	
 	public Unit spawnUnit(UnitData unitData)
 	{
+		Unit unit = null;
+		
 		if(unitData.getUnitType().equals("Slug"))
 		{
-			return spawnSlug
+			unit = spawnSlug
 					(
 						unitData.getFacingRight(),
 						unitData.getFriendly(),
@@ -576,14 +668,14 @@ public class MainMap extends GameState
 						unitData.getUnkillable(),
 						unitData.getName(),
 						unitData.getSpawnLocationX(),
-						unitData.getSpawnLocationY(),
-						unitData.getCurrentMap()
+						unitData.getSpawnLocationY()
 					);
+
 		}
 		
 		if(unitData.getUnitType().equals("Succubus"))
 		{
-			return spawnSuccubus
+			unit = spawnSuccubus
 					(
 						unitData.getFacingRight(),
 						unitData.getFriendly(),
@@ -592,14 +684,13 @@ public class MainMap extends GameState
 						unitData.getUnkillable(),
 						unitData.getName(),
 						unitData.getSpawnLocationX(),
-						unitData.getSpawnLocationY(),
-						unitData.getCurrentMap()
+						unitData.getSpawnLocationY()
 					);
 		}
 		
 		if(unitData.getUnitType().equals("Wolf"))
 		{
-			return spawnWolf
+			unit = spawnWolf
 					(
 						unitData.getFacingRight(),
 						unitData.getFriendly(),
@@ -608,11 +699,19 @@ public class MainMap extends GameState
 						unitData.getUnkillable(),
 						unitData.getName(),
 						unitData.getSpawnLocationX(),
-						unitData.getSpawnLocationY(),
-						unitData.getCurrentMap()
+						unitData.getSpawnLocationY()
 					);
 		}
-		
+		if(unit != null)
+		{
+			for(int i = 0; i < unitData.getItems().size(); i++)
+			{
+				Item item = unitData.getItems().get(i);
+				unit.getInventory().addItem(item);
+				items.add(item);
+			}
+			return unit;
+		}
 		
 		return null;
 	}
@@ -626,8 +725,7 @@ public class MainMap extends GameState
 			boolean unkillable,
 			String name,
 			double spawnLocationX,
-			double spawnLocationY,
-			String currentMap	
+			double spawnLocationY
 		)
 	{	
 		String[] slugNames = new String[]
@@ -651,9 +749,9 @@ public class MainMap extends GameState
 		return slug;
 	}
 	
-	public Slug spawnSlug(double spawnLocationX, double spawnLocationY, boolean facingRight, String name, String currentMap)
+	public Slug spawnSlug(double spawnLocationX, double spawnLocationY, boolean facingRight, String name)
 	{
-		return spawnSlug(facingRight, false, false, false, false, name, spawnLocationX, spawnLocationY, currentMap);
+		return spawnSlug(facingRight, false, false, false, false, name, spawnLocationX, spawnLocationY);
 	}
 	
 	
@@ -666,8 +764,7 @@ public class MainMap extends GameState
 			boolean unkillable,
 			String name,
 			double spawnLocationX,
-			double spawnLocationY,
-			String currentMap
+			double spawnLocationY
 		)
 	{
 		
@@ -692,14 +789,13 @@ public class MainMap extends GameState
 		}
 				
 		Succubus succubus = new Succubus(tileMap, facingRight, friendly, untouchable, invulnerable, unkillable, name, spawnLocationX, spawnLocationY, this, currentMap);
-		System.out.println(currentMap);
 		characterList.add(succubus);
 		return succubus;
 	}
 	
-	public Succubus spawnSuccubus(double spawnLocationX, double spawnLocationY, boolean facingRight, String currentMap)
+	public Succubus spawnSuccubus(double spawnLocationX, double spawnLocationY, boolean facingRight)
 	{
-		return spawnSuccubus(facingRight, false, false, false, false, null, spawnLocationX, spawnLocationY, currentMap);
+		return spawnSuccubus(facingRight, false, false, false, false, null, spawnLocationX, spawnLocationY);
 	}
 	
 	public Wolf spawnWolf
@@ -711,8 +807,7 @@ public class MainMap extends GameState
 			boolean unkillable,
 			String name,
 			double spawnLocationX,
-			double spawnLocationY,
-			String currentMap
+			double spawnLocationY
 		)
 	{
 		
@@ -736,9 +831,9 @@ public class MainMap extends GameState
 		return wolf;
 	}
 	
-	public Wolf spawnWolf(double spawnLocationX, double spawnLocationY, boolean facingRight, String currentMap)
+	public Wolf spawnWolf(double spawnLocationX, double spawnLocationY, boolean facingRight)
 	{
-		return spawnWolf(facingRight, false, false, false, false, null, spawnLocationX, spawnLocationY, currentMap);
+		return spawnWolf(facingRight, false, false, false, false, null, spawnLocationX, spawnLocationY);
 	}
 	
 	public Skeleton spawnSkeleton(double locationX, double locationY, boolean facingRight, String currentMap)
@@ -753,34 +848,40 @@ public class MainMap extends GameState
 		int oneToOneHundred = RNG(0, 100);
 		int potionDropped = RNG(1,3);
 		
-		if(oneToOneHundred <= chance)
+		try
 		{
-			Potion potion = null;
-			if(!potionType.equals("Any"))
+			if(oneToOneHundred <= chance)
 			{
-				potion = new Potion(tileMap, false, 0, 0, owner, stacks, potionType);
-			}
-			else
-			{
-				if(potionDropped == 1)
+				Potion potion = null;
+				if(!potionType.equals("Any"))
 				{
-					potion = new Potion(tileMap, false, 0, 0, owner, stacks, CreateItem.Potions.Healing.toString());
+					potion = new Potion(tileMap, false, 0, 0, owner, stacks, potionType);
 				}
-				else if(potionDropped == 2)
+				else
 				{
-					potion= new Potion(tileMap, false, 0, 0, owner, stacks, CreateItem.Potions.Mana.toString());
+					if(potionDropped == 1)
+					{
+						potion = new Potion(tileMap, false, 0, 0, owner, stacks, CreateItem.Potions.Healing.toString());
+					}
+					else if(potionDropped == 2)
+					{
+						potion= new Potion(tileMap, false, 0, 0, owner, stacks, CreateItem.Potions.Mana.toString());
+					}
+					else if(potionDropped == 3)
+					{
+						potion = new Potion(tileMap, false, 0, 0, owner, stacks, CreateItem.Potions.Stamina.toString());
+					}
 				}
-				else if(potionDropped == 3)
+				if(potion == null)
 				{
-					potion = new Potion(tileMap, false, 0, 0, owner, stacks, CreateItem.Potions.Stamina.toString());
+					return;
 				}
+				owner.getInventory().addItem(potion);
+				items.add(potion);
 			}
-			if(potion == null)
-			{
-				System.out.println("Why is it null?");
-			}
-			owner.getInventory().addItem(potion);
-			items.add(potion);
+		}catch(Exception e)
+		{
+			e.printStackTrace();
 		}
 	}
 	
@@ -900,7 +1001,13 @@ public class MainMap extends GameState
 	public Door spawnDoor(double locationX, double locationY, boolean locked, int currentAction, String doorType)
 	{
 		Door door = new Door(tileMap, gameStateManager, locationX, locationY, locked, currentAction, doorType);
+		if(currentAction == 2)
+		{
+			door.setActive(true);
+			door.setUsed(true);
+		}
 		activatables.add(door);
+		activatablesUsableOnce.add(door);
 		stuff.add(door);
 		return door;
 	}
@@ -913,10 +1020,17 @@ public class MainMap extends GameState
 		return lever;
 	}
 	
-	public Chest spawnChest(double locationX, double locationY, boolean locked,String chestType)
+	public Chest spawnChest(double locationX, double locationY, boolean locked, int currentAction, String chestType)
 	{
-		Chest chest = new Chest(tileMap, locationX, locationY, locked, chestType);
+		Chest chest = new Chest(tileMap, locationX, locationY, locked, currentAction, chestType);
+		if(currentAction == 2)
+		{
+			chest.setActive(true);
+			chest.setUsed(true);
+		}
+		
 		activatables.add(chest);
+		activatablesUsableOnce.add(chest);
 		stuff.add(chest);
 		return chest;
 	}

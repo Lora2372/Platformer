@@ -85,8 +85,6 @@ public class Slug extends Unit
 	
 	public void updateAI(ArrayList<Unit> characterList)
 	{
-		//System.out.println("directionX: " + directionX + ", turnTimer: " + turnTimer);
-
 		
 		if(directionX == 0)
 		{
@@ -114,7 +112,6 @@ public class Slug extends Unit
 			if(attackTimer > attackCooldown)
 			{
 				attackTimer = 0;
-//				System.out.println("FIRE THE FIREBALL!");
 				fireBallSmallCasting = true;
 			}
 		}

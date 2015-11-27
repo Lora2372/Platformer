@@ -5,7 +5,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 import Audio.JukeBox;
-import Entity.Doodad.Activatable.DoodadData;
+import Entity.Doodad.Activatable.CreateDoodad;
 import Entity.Item.CreateItem;
 import Entity.Player.*;
 import Entity.Projectile.ProjectileData;
@@ -58,7 +58,7 @@ public class MenuState extends GameState
 		@SuppressWarnings("unused")
 		CreateItem createItem = new CreateItem(tileMap);
 		@SuppressWarnings("unused")
-		DoodadData doodadData = new DoodadData(tileMap);
+		CreateDoodad doodadData = new CreateDoodad(tileMap);
 		@SuppressWarnings("unused")
 		ProjectileData projectileData = new ProjectileData(tileMap);
 		@SuppressWarnings("unused")
@@ -185,42 +185,44 @@ public class MenuState extends GameState
 		if(currentChoice == 0)
 		{
 			// Tutorial
-			gameStateManager.setState(GameStateManager.TutorialState, true);
+			gameStateManager.setState(GameStateManager.TutorialState);
 
 		}
 		else if(currentChoice == 1)
 		{
 			// New Game
-			gameStateManager.setState(GameStateManager.LorasCavern, true);
+			for(int i = 0; i < GameStateManager.GameMaps.values().length; i++)
+			{
+					player.setLoading(i, false);
+			}
+			gameStateManager.setState(GameStateManager.LorasCavern);
 		}
 		else if(currentChoice == 2)
 		{
 			// Load Game
 			if(JSONReader.load(player, tileMap))
 			{
-				player.setLoading(true);
 				player.setPosition(player.getSpawnLocationX(), player.getSpawnLocationY());
 				player.setSpawnPoint(player.getSpawnLocationX(), player.getSpawnLocationY());
 				
 				String currentMap = player.getCurrentMap();
-				if(currentMap.equals("LorasCavern"))
+				if(currentMap.equals(GameStateManager.GameMaps.LorasCavern.toString()))
 				{
-					gameStateManager.setState(GameStateManager.LorasCavern, true);
+					gameStateManager.setState(GameStateManager.LorasCavern);
 				}
-				else if(currentMap.equals("MysteriousDungeon"))
+				else if(currentMap.equals(GameStateManager.GameMaps.MysteriousDungeon.toString()))
 				{
-					gameStateManager.setState(GameStateManager.MysteriousDungeon, true);
+					gameStateManager.setState(GameStateManager.MysteriousDungeon);
 				}
 				else if(currentMap.equals("DeepWoods"))
 				{
-					gameStateManager.setState(GameStateManager.DeepWoods, true);
+					gameStateManager.setState(GameStateManager.DeepWoods);
 				}
 			}
 			else
 			{
-				player.setLoading(false);
 				System.out.println("Couldn't find it.");
-				gameStateManager.setState(GameStateManager.LorasCavern, true);
+				gameStateManager.setState(GameStateManager.LorasCavern);
 				
 			}
 		}

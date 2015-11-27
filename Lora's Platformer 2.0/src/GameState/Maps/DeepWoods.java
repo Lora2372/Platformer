@@ -17,8 +17,8 @@ public class DeepWoods extends MainMap
 {
 	protected Door door;
 	
-	protected double startLocationX = 400;
-	protected double startLocationY = 200;
+	public static int startLocationX = 400;
+	public static int startLocationY = 200;
 	
 	public DeepWoods(GameStateManager gameStatemanager,
 			TileMap tileMap,
@@ -26,50 +26,14 @@ public class DeepWoods extends MainMap
 			ConversationState conversationState
 			) 
 	{
-		super(gameStatemanager, 
+		super
+			(
+				gameStatemanager, 
 				tileMap,
 				player,
 				conversationState,
 				"DeepWoods"
-				);
-		
-
-		
-		player.setTileMap(tileMap);
-		
-
-		if(!player.getLoading())
-		{
-			player.setPosition(startLocationX, startLocationY);
-			player.setSpawnPoint(startLocationX, startLocationY);
-		}
-		else
-		{
-			player.setLoading(false);
-			player.setPosition(player.getSpawnLocationX(), player.getSpawnLocationY());
-		}
-		
-		if(player.getAnimation().getFrames() == null)
-		{
-			player.setAnimationState(0);
-		}
-		
-		spawnStatueSave(600, 780);
-		
-		spawnCampFire(2830,  910);
-		
-		door = spawnDoor(3030,  890, false, 0, "Village");
-		
-		
-		player.setSpawning(true);
-		player.setUnkillable(false);
-		
-	}
-	
-	public void initialize()
-	{
-		super.initialize();
-		player.setCurrentMap("DeepWoods");
+			);
 		
 		try
 		{
@@ -84,6 +48,50 @@ public class DeepWoods extends MainMap
 		{
 			e.printStackTrace();
 		}
+		
+		player.setTileMap(tileMap);
+		
+		int index = 0;
+		for(int i = 0; i < GameStateManager.GameMaps.values().length; i++)
+		{
+			if(currentMap.equals(GameStateManager.GameMaps.values()[i].toString()))
+			{
+				index = i;
+			}
+		}
+		if(!player.getLoading(index))
+		{
+			player.setPosition(startLocationX, startLocationY);
+			player.setSpawnPoint(startLocationX, startLocationY);
+			
+			spawnCampFire(2830,  910);
+			
+			door = spawnDoor(3030,  890, false, 0, "Village");
+		}
+		else
+		{
+			player.setPosition(player.getSpawnLocationX(), player.getSpawnLocationY());
+		}
+		
+		if(player.getAnimation().getFrames() == null)
+		{
+			player.setAnimationState(0);
+		}
+		
+		spawnStatueSave(600, 780);
+		
+
+		
+		
+		player.setSpawning(true);
+		player.setUnkillable(false);
+		
+	}
+	
+	public void initialize()
+	{
+		super.initialize();
+		player.setCurrentMap("DeepWoods");
 		
 		doneInitializing = true;
 	}

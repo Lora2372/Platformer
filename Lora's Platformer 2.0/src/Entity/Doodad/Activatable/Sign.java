@@ -42,7 +42,7 @@ public class Sign extends Doodad
 				false,
 				0,
 				"Sign",
-				DoodadData.doodadName.get("Sign")
+				CreateDoodad.doodadName.get("Sign")
 				);
 				
 		this.conversation = conversation;
@@ -67,24 +67,26 @@ public class Sign extends Doodad
 	
 	public void interact(Player player)
 	{
-		this.player = player;
-		
-		if(player == null)
+		try
 		{
-			System.out.println("player is null");
-		}
-		
-		if(!player.getInConversation()) 
-		{
-			startConversation();
-		}
-		
-		if(player.getConversationState().getConversationTracker() >= conversation.length)
-		{
+			this.player = player;
 			
-			active = false;
-			player.inControl(true);
-			player.getConversationState().endConversation();
+			if(!player.getInConversation()) 
+			{
+				startConversation();
+			}
+			
+			if(player.getConversationState().getConversationTracker() >= conversation.length)
+			{
+				
+				active = false;
+				player.inControl(true);
+				player.getConversationState().endConversation();
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
 		}
 	}
 		

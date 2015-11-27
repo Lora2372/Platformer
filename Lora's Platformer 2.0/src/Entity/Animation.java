@@ -55,10 +55,6 @@ public class Animation
 				playedOnce = true;
 			}
 		}
-		else
-		{
-			System.out.println("null");
-		}
 
 	}
 	

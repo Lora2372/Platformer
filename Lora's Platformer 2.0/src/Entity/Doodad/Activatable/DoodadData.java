@@ -1,57 +1,90 @@
 package Entity.Doodad.Activatable;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 
-import TileMap.TileMap;
+import Entity.Item.Item;
 
 public class DoodadData 
 {
-
-	protected TileMap tileMap;
 	
-	public DoodadData(TileMap tileMap)
+	boolean untouchable;
+	boolean invulnerable;
+	boolean active;
+	int currentAction;
+	boolean locked;
+	double spawnLocationX;
+	double spawnLocationY;
+	String doodadType;
+	ArrayList<Item> items;
+	
+	
+	public DoodadData
+		(
+			boolean untouchable,
+			boolean invulnerable,
+			boolean active,
+			int currentAction,
+			boolean locked,
+			double spawnLocationX,
+			double spawnLocationY,
+			String doodadType,
+			ArrayList<Item> items
+		)
 	{
-		this.tileMap = tileMap;
-		
-		
-		doodadName = new HashMap<String, String>();
-		doodadName.put(Doors.Boss.toString(), "Boss Door");
-		
-		doodadName.put(Chests.Common.toString(), "Common Chest");
-		doodadName.put(Chests.Uncommon.toString(), "Uncommon Chest");
-		doodadName.put(Chests.Rare.toString(), "Rare Chest");
-		
-		doodadName.put(Other.CampFire.toString(), "Campfire");
-		doodadName.put(Other.Lever.toString(), "Lever");
-		doodadName.put(Other.Portal.toString(), "Portal");
-		doodadName.put(Other.Shrine.toString(), "Shrine");
-		doodadName.put(Other.Sign.toString(), "Sign");
-		doodadName.put(Other.StatueSave.toString(), "Shrine of Saving");		
+		this.untouchable = untouchable;
+		this.invulnerable = invulnerable;
+		this.active = active;
+		this.currentAction = currentAction;
+		this.locked = locked;
+		this.spawnLocationX = spawnLocationX;
+		this.spawnLocationY = spawnLocationY;
+		this.doodadType = doodadType;
+		this.items = items;
 	}
 	
-	public static enum Doors
+	public boolean getUntouchable()
 	{
-		Boss,
-		Village
+		return untouchable;
 	}
 	
-	public static enum Chests
+	public boolean getInvulnerable()
 	{
-		Common,
-		Uncommon,
-		Rare
+		return invulnerable;
 	}
 	
-	public static enum Other
+	public boolean getActive()
 	{
-		CampFire,
-		Lever,
-		Portal,
-		Shrine,
-		Sign,
-		StatueSave
+		return active;
 	}
 	
+	public double getSpawnLocationX()
+	{
+		return spawnLocationX;
+	}
 	
-	public static HashMap<String, String> doodadName = new HashMap<String, String>();
+	public double getSpawnLocationY()
+	{
+		return spawnLocationY;
+	}
+	
+	public int getCurrentAction()
+	{
+		return currentAction;
+	}
+	
+	public boolean getLocked()
+	{
+		return locked;
+	}
+	
+	public String getDoodadType()
+	{
+		return doodadType;
+	}
+	
+	public ArrayList<Item> getItems()
+	{
+		return items;
+	}
+	
 }

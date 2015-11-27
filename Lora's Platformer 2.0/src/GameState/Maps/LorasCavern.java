@@ -16,8 +16,9 @@ import TileMap.TileMap;
 
 public class LorasCavern extends MainMap
 {
-
 	
+	public static int startLocationX = 700;
+	public static int startLocationY = 2200;
 	
 	public LorasCavern
 	(
@@ -33,7 +34,7 @@ public class LorasCavern extends MainMap
 			tileMap,
 			player,
 			conversationState,
-			"LorasCavern"
+			GameStateManager.GameMaps.LorasCavern.toString()
 		);
 	
 		try
@@ -61,65 +62,60 @@ public class LorasCavern extends MainMap
 		spawnTorch(1830, 1310);
 		spawnTorch(2610, 2030);
 		
-		
 		this.player = player;
-
-		spawnEnemies();
 		
-		player.setCurrentMap("LorasCavern");
-		
-		
-
-		player.setSpawning(true);
-		player.setUnkillable(false);	
-		doneInitializing = true;
-	}
-	
-	public void spawnEnemies()
-	{
-		if(!player.getLoading())
+		int index = 0;
+		for(int i = 0; i < GameStateManager.GameMaps.values().length; i++)
 		{
-			player.setPosition(720, 2200);
-			player.setSpawnPoint(720, 2200);
+			if(currentMap.equals(GameStateManager.GameMaps.values()[i].toString()))
+			{
+				index = i;
+			}
+		}
+
+		if(!player.getLoading(index))
+		{
+			player.setPosition(startLocationX, startLocationY);
+			player.setSpawnPoint(startLocationX, startLocationY);
 			
-			System.out.println("Goor morning");
-			Slug slug = spawnSlug(1690, 1600, false, "Steve", "LorasCavern");
+			Slug slug = spawnSlug(1690, 1600, false, "Steve");
 			dropPotion(CreateItem.Potions.Healing.toString(), 100, 1, slug);
 			
 			Succubus succubus;
-			succubus = spawnSuccubus(2700, 1400, false, "LorasCavern");
+			succubus = spawnSuccubus(2700, 1400, false);
 			dropCoin(CreateItem.Coins.Silver.toString(), 100, 2, succubus);
 			dropPotion("Any", 25, 1, succubus);
 			
-			succubus = spawnSuccubus(1339,1900, true, "LorasCavern");
+			succubus = spawnSuccubus(1339,1900, true);
 			dropPotion("Any", 25, 1, succubus);
 			
-			succubus = spawnSuccubus(2700, 2100, true, "LorasCavern");
+			succubus = spawnSuccubus(2700, 2100, true);
 			dropPotion("Any", 25, 1, succubus);
 			
-			succubus = spawnSuccubus(1423, 650, true, "LorasCavern");
+			succubus = spawnSuccubus(1423, 650, true);
 			dropPotion("Any", 25, 1, succubus);
 			
-			succubus = spawnSuccubus(3689, 1430, false, "LorasCavern");
+			succubus = spawnSuccubus(3689, 1430, false);
 			dropPotion("Any", 25, 1, succubus);
+		
+			LiadrinFirstEncounter liadrinFirstEncounter = new LiadrinFirstEncounter(tileMap, false, true, false, true, true, "Liadrin", 2680, 1800, this);
+			characterList.add(liadrinFirstEncounter);
+			
+			Chest chest;
+			chest = spawnChest(1923, 1170, true, 0, "Uncommon");
+			dropPotion(CreateItem.Potions.Healing.toString(), 100, 1, chest);
+			dropPotion(CreateItem.Potions.Mana.toString(), 100, 2, chest);
+			dropCoin(CreateItem.Coins.Silver.toString(), 100, 3, chest);
+			
+			spawnKey(1712, 		2610, CreateItem.Keys.Uncommon.toString());
 		}
-		player.setLoading(false);
-
 		
-		Chest chest;
-		chest = spawnChest(1923, 1170, true, "Uncommon");
-		dropPotion(CreateItem.Potions.Healing.toString(), 100, 1, chest);
-		dropPotion(CreateItem.Potions.Mana.toString(), 100, 2, chest);
-		dropCoin(CreateItem.Coins.Silver.toString(), 100, 3, chest);
-		
-		spawnKey(1712, 		2610, CreateItem.Keys.Uncommon.toString());
-		
+		player.setCurrentMap(GameStateManager.GameMaps.LorasCavern.toString());
 		
 		spawnStatueSave(3300, 1700);
 		
-		LiadrinFirstEncounter liadrinFirstEncounter = new LiadrinFirstEncounter(tileMap, false, true, false, true, true, "Liadrin", 2680, 1800, this);
-		characterList.add(liadrinFirstEncounter);
-				
+
+		
 		spawnSign(
 				3805, 
 				1480, 
@@ -144,6 +140,16 @@ public class LorasCavern extends MainMap
 						0
 					}
 				);
+
+		player.setSpawning(true);
+		player.setUnkillable(false);	
+		doneInitializing = true;
+	}
+	
+	public void initialize()
+	{
+		super.initialize();
+		player.setCurrentMap(GameStateManager.GameMaps.LorasCavern.toString());
 	}
 	
 	public void update()
@@ -151,8 +157,8 @@ public class LorasCavern extends MainMap
 		super.update();
 		if(player.getLocationX() < 3750 && player.getLocationY() > 2640)
 		{
-			
-			gameStateManager.setState(GameStateManager.MysteriousDungeon, false);
+			player.setSpawnPoint(MysteriousDungeon.startLocationX, MysteriousDungeon.startLocationY);
+			gameStateManager.setState(GameStateManager.MysteriousDungeon);
 		}
 	}
 }

@@ -13,10 +13,9 @@ public class UnitData
 	boolean invulnerable;
 	boolean unkillable;
 	String name;
-	int health;
+	double health;
 	double spawnLocationX;
 	double spawnLocationY;
-	String currentMap;
 	String unitType;
 	int gold;
 	int silver;
@@ -31,10 +30,9 @@ public class UnitData
 		boolean invulnerable,
 		boolean unkillable,
 		String name,
-		int health,
+		double health,
 		double spawnLocationX,
 		double spawnLocationY,
-		String currentMap,
 		String unitType,
 		int silver,
 		int gold,
@@ -50,7 +48,6 @@ public class UnitData
 		this.health = health;
 		this.spawnLocationX = spawnLocationX;
 		this.spawnLocationY = spawnLocationY;
-		this.currentMap = currentMap;
 		this.unitType = unitType;
 		this.gold = gold;
 		this.silver = silver;
@@ -89,7 +86,7 @@ public class UnitData
 		return name;
 	}
 	
-	public int getHealth()
+	public double getHealth()
 	{
 		return health;
 	}
@@ -102,11 +99,6 @@ public class UnitData
 	public double getSpawnLocationY()
 	{
 		return spawnLocationY;
-	}
-	
-	public String getCurrentMap()
-	{
-		return currentMap;
 	}
 	
 	public String getUnitType()

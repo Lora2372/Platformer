@@ -57,7 +57,6 @@ public class Background
 	{
 		if(graphics == null)
 		{
-			System.out.println("G is null!");
 			System.exit(0);
 		}
 		

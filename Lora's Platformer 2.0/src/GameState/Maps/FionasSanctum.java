@@ -35,6 +35,9 @@ public class FionasSanctum extends MainMap
 	
 	protected Door bossDoor;
 	
+	public static int startLocationX = 120;
+	public static int startLocationY = 780;
+	
 	public FionasSanctum(
 			GameStateManager gameStatemanager,
 			TileMap tileMap,
@@ -70,20 +73,26 @@ public class FionasSanctum extends MainMap
 		activatables.add(activatableShrine);
 		stuff.add(activatableShrine);
 		
-		bossDoor = new Door(tileMap, gameStatemanager, 120, 780, false, 2, "Boss");
+		bossDoor = new Door(tileMap, gameStatemanager, startLocationX, startLocationY, false, 2, "Boss");
 		activatables.add(bossDoor);
 		stuff.add(bossDoor);
 		
-		
+		int index = 0;
+		for(int i = 0; i < GameStateManager.GameMaps.values().length; i++)
+		{
+			if(currentMap.equals(GameStateManager.GameMaps.values()[i].toString()))
+			{
+				index = i;
+			}
+		}
 
-		if(!player.getLoading())
+		if(!player.getLoading(index))
 		{
 			player.setPosition(bossDoor.getLocationX(), bossDoor.getLocationY());
 			player.setSpawnPoint(bossDoor.getLocationX(), bossDoor.getLocationY());
 		}
 		else
 		{
-			player.setLoading(false);
 			player.setPosition(player.getSpawnLocationX(), player.getSpawnLocationY());
 		}
 		
@@ -141,11 +150,6 @@ public class FionasSanctum extends MainMap
 	{
 		super.update();
 		
-		if(!fiona.getHidden())
-		{
-			System.out.println("fiona is no longer hidden");
-		}
-		
 		// We don't want the player to be able to progress the conversation whilst Fiona is spawning
 		
 		if(unlockOnce != 2)
@@ -173,7 +177,7 @@ public class FionasSanctum extends MainMap
 			{
 				bossEngaged = false;
 				JukeBox.stop("MysteriousBattle");
-				JukeBox.loop("MysteriousDungeon");
+				JukeBox.loop(GameStateManager.GameMaps.MysteriousDungeon.toString());
 				
 				Portal portal = new Portal(tileMap, gameStateManager, 1468, 790);
 				stuff.add(portal);

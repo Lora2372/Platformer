@@ -152,7 +152,7 @@ public class PauseState extends GameState
 			currentChoice = 0;
 			gameStateManager.pause(false);
 			gameStateManager.options(false);
-			gameStateManager.setState(0, false);
+			gameStateManager.setState(0);
 		}
 		if(currentChoice == 3)
 		{

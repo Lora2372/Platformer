@@ -2,6 +2,8 @@ package Entity.Unit;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import GameState.GameStateManager;
 import TileMap.TileMap;
 
 public class CreateUnit 
@@ -10,34 +12,28 @@ public class CreateUnit
 	protected TileMap tileMap;
 	
 	static ArrayList<ArrayList<UnitData>> characterList;
-//	ArrayList<ArrayList<Individual>> group = new ArrayList<ArrayList<Individual>>(4);
 	
 	public CreateUnit(TileMap tileMap)
 	{
 		this.tileMap = tileMap;
 		units = new HashMap<String, ArrayList<UnitData>>();
-		characterList = new ArrayList<ArrayList<UnitData>>(4);
+		characterList = new ArrayList<ArrayList<UnitData>>(GameStateManager.GameMaps.values().length - 1);
 		
-		for(int i = 0; i < 4; i++)
+		for(int i = 0; i < GameStateManager.GameMaps.values().length - 1; i++)
 		{
 			ArrayList<UnitData> tempList = new ArrayList<UnitData>();
 			characterList.add(tempList);
-		}
-		
-		units.put("LorasCavern", characterList.get(0));
-		units.put("MysteriousDungeon", characterList.get(1));
-		units.put("FionasSanctum", characterList.get(2));
-		units.put("DeepWoods", characterList.get(3));
-		
-		
+			units.put(GameStateManager.GameMaps.values()[i + 1].toString(), characterList.get(i));
+			
+		}		
 		
 	}
 	
 	public static int getCharacterListSize() { return characterList.size(); }
 	
-	public static void addUnit(String map, UnitData unitData)
+	public static void addUnit(String currentMap, UnitData unitData)
 	{
-		units.get(unitData.getCurrentMap()).add(unitData);
+		units.get(currentMap).add(unitData);
 	}
 	
 	public static void resetUnitList(String map)
@@ -48,43 +44,6 @@ public class CreateUnit
 	public static ArrayList<UnitData> getUnitDataList(String map)
 	{
 		return units.get(map);
-	}
-	
-	public static ArrayList<UnitData> getUnitDataList(int index)
-	{
-		try
-		{
-			if(index == 0)
-			{
-				if(units.get("LorasCavern") != null)
-				{
-					return units.get("LorasCavern");
-				}
-				
-			}
-			else if(index == 1)
-			{
-				if(units.get("LorasCavern") != null)
-				{
-					return units.get("MysteriousDungeon");
-				}
-			}
-			else if(index == 2)
-			{
-				return units.get("FionasSanctum");
-			}
-			else if(index == 3)
-			{
-				return units.get("DeepWoods");
-			}
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		}
-
-	
-		return null;
 	}
 	
 	

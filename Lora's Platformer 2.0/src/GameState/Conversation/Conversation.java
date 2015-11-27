@@ -10,7 +10,6 @@ public class Conversation
 	public Conversation(Player player)
 	{
 		this.player = player;
-		System.out.println("player: " + player.getName());
 	}
 	
 	

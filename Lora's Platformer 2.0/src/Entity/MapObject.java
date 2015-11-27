@@ -252,7 +252,6 @@ public abstract class MapObject
 			}
 			
 			// Falling
-//			System.out.println("character name: " + getName() + ", falling: " + falling);
 			if( (falling || swimming) && !flying)
 			{
 				if(directionY > 0 && gliding) directionY += fallSpeed * 0.1;
@@ -285,11 +284,9 @@ public abstract class MapObject
 		if(!swimming && (topLeft == 2 || topRight == 2))
 		{
 			swimming = true;
-//			System.out.println("swimming is true");
 		}
 		else if(swimming)
 		{
-//			System.out.println("swimming is false");
 			swimming = false;
 		}
 		

@@ -7,6 +7,7 @@ import javax.imageio.ImageIO;
 import Audio.JukeBox;
 import Entity.Doodad.Doodad;
 import Entity.Doodad.Activatable.Chest;
+import Entity.Doodad.Activatable.CreateDoodad;
 import Entity.Doodad.Activatable.Door;
 import Entity.Item.CreateItem;
 import Entity.Player.Player;
@@ -28,6 +29,11 @@ public class MysteriousDungeon extends MainMap
 	
 	protected Door door;
 	
+	public static int startLocationX = 109;
+	public static int startLocationY = 200;
+	public static int doorLocationX = 3045;
+	public static int doorLocationY = 780;
+	
 	public MysteriousDungeon(GameStateManager gameStatemanager,
 			TileMap tileMap,
 			Player player,
@@ -38,14 +44,13 @@ public class MysteriousDungeon extends MainMap
 				tileMap,
 				player,
 				conversationState,
-				"MysteriousDungeon"
+				GameStateManager.GameMaps.MysteriousDungeon.toString()
 				
 				);
 		
 		conversation = player.getConversation();
 		
-		spawnTorch(109, 440);
-		
+		spawnTorch(109, 440);		
 		
 		spawnTorch(3508, 410 + 240);
 		
@@ -56,68 +61,13 @@ public class MysteriousDungeon extends MainMap
 		
 		spawnTorch(690, 1250);
 		spawnTorch(690, 1730);
-		
-		spawnKey(380, 1550, "Boss");
-		
-		
-		Wolf wolf = spawnWolf(537, 1760, true, "MysteriousDungeon");
-		dropPotion("Any", 25, 1, wolf);
-		wolf = spawnWolf(537, 1760, false, "MysteriousDungeon");
-		dropPotion("Any", 25, 1, wolf);
-		
-		Slug slug = spawnSlug(1788, 1250, true, null, "MysteriousDungeon");
-		dropPotion("Any", 25, 1, slug);
-		
-		slug = spawnSlug(1788, 1250, false, null, "MysteriousDungeon");
-		dropPotion("Any", 25, 1, slug);
-		
+
 		spawnStatueSave(250, 780);
-		
-		Chest chest = spawnChest(800, 850, false, "Common");
-		dropPotion(CreateItem.Potions.Mana.toString(), 100, 1, chest);
-		
-		spawnSign(400, 810, conversation.mysteriousDungeonDirectionMessage, conversation.mysteriousDungeonDirectionMessageWhoTalks);
-		
-		chest = spawnChest(3262, 1620, false, "Common");
-		dropPotion(CreateItem.Potions.Stamina.toString(), 100, 1, chest);
-		
-		Succubus succubus = spawnSuccubus(500, 1550, true, "MysteriousDungeon");
-		dropPotion("Any", 25, 1, succubus);
-		
-		succubus = spawnSuccubus(937, 430, false, "MysteriousDungeon");
-		dropPotion("Any", 25, 1, succubus);
-		
-		succubus = spawnSuccubus(3150, 1620, false, "MysteriousDungeon");
-		dropPotion("Any", 25, 1, succubus);
-		
-		succubus = spawnSuccubus(2833, 780, false, "MysteriousDungeon");
-		dropPotion("Any", 25, 1, succubus);
 		
 		spawnStatueSave(2900, 780);
 
 		
-		door = spawnDoor(3045,  780, true, 0, CreateItem.Keys.Boss.toString());
-		
-		
-		
-
-		if(!player.getLoading())
-		{
-			player.setPosition(109, 200);
-			player.setSpawnPoint(109, 200);
-		}
-		else
-		{
-			dungeonIntroduction = true;
-			player.setLoading(false);
-			player.setPosition(player.getSpawnLocationX(), player.getSpawnLocationY());
-		}
-	}
-	
-	public void initialize()
-	{
-		super.initialize();
-		player.setCurrentMap("MysteriousDungeon");
+		door = spawnDoor(doorLocationX,  doorLocationY, true, 0, CreateDoodad.Doors.Boss.toString());
 		
 		try
 		{
@@ -131,9 +81,72 @@ public class MysteriousDungeon extends MainMap
 			e.printStackTrace();
 		}
 		
-		doneInitializing = true;
+		int index = 0;
+		for(int i = 0; i < GameStateManager.GameMaps.values().length; i++)
+		{
+			if(currentMap.equals(GameStateManager.GameMaps.values()[i].toString()))
+			{
+				index = i;
+			}
+		}
+		
+		if(!player.getLoading(index))
+		{
+			player.setPosition(109, 200);
+			player.setSpawnPoint(109, 200);
+			
+			Chest chest = spawnChest(800, 850, false, 0, "Common");
+			dropPotion(CreateItem.Potions.Mana.toString(), 100, 1, chest);
+			
+			spawnSign(400, 810, conversation.mysteriousDungeonDirectionMessage, conversation.mysteriousDungeonDirectionMessageWhoTalks);
+			
+			chest = spawnChest(3262, 1620, false, 0, "Common");
+			dropPotion(CreateItem.Potions.Stamina.toString(), 100, 1, chest);
+			
+			Succubus succubus = spawnSuccubus(500, 1550, true);
+			dropPotion("Any", 25, 1, succubus);
+			
+			succubus = spawnSuccubus(937, 430, false);
+			dropPotion("Any", 25, 1, succubus);
+			
+			succubus = spawnSuccubus(3150, 1620, false);
+			dropPotion("Any", 25, 1, succubus);
+			
+			succubus = spawnSuccubus(2833, 780, false);
+			dropPotion("Any", 25, 1, succubus);
+			
+			Wolf wolf = spawnWolf(537, 1760, true);
+			dropPotion("Any", 25, 1, wolf);
+			wolf = spawnWolf(537, 1760, false);
+			dropPotion("Any", 25, 1, wolf);
+			
+			Slug slug = spawnSlug(1788, 1250, true, null);
+			dropPotion("Any", 25, 1, slug);
+			
+			slug = spawnSlug(1788, 1250, false, null);
+			dropPotion("Any", 25, 1, slug);
+			
+			spawnKey(380, 1550, "Boss");
+			
+		}
+		else
+		{
+			dungeonIntroduction = true;
+			player.setPosition(player.getSpawnLocationX(), player.getSpawnLocationY());
+		}
+
+
 	}
 	
+	public void initialize()
+	{
+		super.initialize();
+		player.setCurrentMap(GameStateManager.GameMaps.MysteriousDungeon.toString());
+		
+
+		
+		doneInitializing = true;
+	}
 	
 	public Door getDoor() { return door; }
 	

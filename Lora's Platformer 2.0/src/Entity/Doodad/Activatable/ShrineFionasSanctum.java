@@ -58,7 +58,7 @@ public class ShrineFionasSanctum extends Doodad
 				false,
 				0,
 				"ShrineFionasSanctum",
-				DoodadData.doodadName.get("ShrineFionasSanctum")
+				CreateDoodad.doodadName.get("ShrineFionasSanctum")
 				);
 		
 		this.fiona = fiona;

@@ -217,7 +217,6 @@ public class Fiona extends Unit
 					if(summoningEffect == null && conversationProgress == 0)
 					{
 						player.getConversationState().lockConversation(true);
-						System.out.println("locking conversation");
 						summoningEffect = new SummoningEffect(tileMap, locationX, locationY);
 						mainMap.addEffect(summoningEffect);
 						player.getHUD().removeBoss();

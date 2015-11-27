@@ -17,7 +17,6 @@ public class Chest extends Doodad
 	protected int silver = 0;
 	protected int gold = 0;
 	
-	protected boolean locked;
 	protected boolean successfullyOpened;
 	
 	protected int choiceMade;
@@ -34,10 +33,13 @@ public class Chest extends Doodad
 			double spawnLocationX,
 			double spawnLocationY,
 			boolean locked,
+			int currentAction,
 			String chestType
 			) 
 	{
-		super(tileMap, 
+		super
+			(
+				tileMap, 
 				spawnLocationX, 
 				spawnLocationY, 
 				60, 
@@ -51,18 +53,18 @@ public class Chest extends Doodad
 				false,
 				true,
 				false,
-				0,
+				currentAction,
 				chestType,
-				DoodadData.doodadName.get(chestType)
-				);
+				CreateDoodad.doodadName.get(chestType)
+			);
 		
 		this.locked = locked;
-		this.chestName = DoodadData.doodadName.get(chestType);
+		this.chestName = CreateDoodad.doodadName.get(chestType);
 	}
 	
 	public void setDoodad(int currentAction)
 	{
-		if(doodadType.equals(DoodadData.Chests.Common.toString()))
+		if(doodadType.equals(CreateDoodad.Chests.Common.toString()))
 		{
 			portrait = Content.PortraitChestCommon[0];
 			if(currentAction == 0)
@@ -78,7 +80,7 @@ public class Chest extends Doodad
 				sprites = Content.ChestCommonOpened[0];
 			}
 		}
-		else if(doodadType.equals(DoodadData.Chests.Uncommon.toString()))
+		else if(doodadType.equals(CreateDoodad.Chests.Uncommon.toString()))
 		{
 			portrait = Content.PortraitChestUncommon[0];
 			if(currentAction == 0)
@@ -94,7 +96,7 @@ public class Chest extends Doodad
 				sprites = Content.ChestUncommonOpened[0];
 			}
 		}
-		else if(doodadType.equals(DoodadData.Chests.Rare.toString()))
+		else if(doodadType.equals(CreateDoodad.Chests.Rare.toString()))
 		{
 			portrait = Content.PortraitChestRare[0];
 			if(currentAction == 0)
@@ -110,6 +112,11 @@ public class Chest extends Doodad
 				sprites = Content.ChestRareOpened[0];
 			}
 		}
+	}
+	
+	public void setUsed(boolean used)
+	{
+		this.used = used;
 	}
 	
 	public void interact(Player player)

@@ -67,14 +67,22 @@ public class Tutorial extends MainMap
 		spawnTorch(3810, 400);
 		spawnTorch(4650, 400);
 		
-		if(!player.getLoading())
+		int index = 0;
+		for(int i = 0; i < GameStateManager.GameMaps.values().length; i++)
+		{
+			if(currentMap.equals(GameStateManager.GameMaps.values()[i].toString()))
+			{
+				index = i;
+			}
+		}
+		
+		if(!player.getLoading(index))
 		{
 			player.setPosition(400, 200);
 			player.setSpawnPoint(400, 200);
 		}
 		else
 		{
-			player.setLoading(false);
 			player.setPosition(player.getSpawnLocationX(), player.getSpawnLocationY());
 		}
 		player.setSpawning(true);
@@ -242,7 +250,7 @@ public class Tutorial extends MainMap
 				if(!player.getInConversation())
 				{
 					hud.setQuestCurrent(9);
-					succubus = spawnSuccubus(3500, player.getLocationY(), false, "Tutorial");
+					succubus = spawnSuccubus(3500, player.getLocationY(), false);
 					characterList.add(succubus);
 					
 					

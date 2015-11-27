@@ -27,13 +27,25 @@ public class GameStateManager
 	private GameState[] gameStates;
 	private int currentState;
 	
-	public static final int NUMGAMESTATES = 6;
+	
+	public static enum GameMaps
+	{
+		Tutorial,
+		LorasCavern,
+		MysteriousDungeon,
+		FionasSanctum,
+		DeepWoods
+	}
+	
+	public static final int NUMGAMESTATES = GameMaps.values().length + 1;
 	public static final int MENUSTATE = 0;
 	public static final int TutorialState = 1;
 	public static final int LorasCavern = 2;
 	public static final int MysteriousDungeon = 3;
 	public static final int FionasSanctum = 4;
 	public static final int DeepWoods = 5;
+	
+
 	
 	protected Player player;
 	protected TileMap tileMap;
@@ -50,7 +62,7 @@ public class GameStateManager
 		gameStates = new GameState[NUMGAMESTATES];
 		
 		currentState = MENUSTATE;
-		loadState(currentState, true);
+		loadState(currentState);
 	}
 	
 	public void setPlayer(Player player) 
@@ -73,80 +85,38 @@ public class GameStateManager
 	}
 
 	
-	private void loadState(int state, boolean fresh) 
+	private void loadState(int state) 
 	{
 		if(state == TutorialState)
 		{
 			JukeBox.loop("Tutorial");
-			if(gameStates[state] == null || fresh)
-			{
-				gameStates[state] = new Tutorial(this, tileMap, player, conversationState);		
-			}
-			else
-			{
-				gameStates[state].initialize();
-			}
+			gameStates[state] = new Tutorial(this, tileMap, player, conversationState);		
 		}
 		else if(state == MENUSTATE)
 		{		
 			JukeBox.loop("Menu");
-			if(gameStates[state] == null || fresh)
-			{
-				gameStates[state] = new MenuState(this, conversationState);
-			}
-			else
-			{
-				gameStates[state].initialize();
-			}
+			gameStates[state] = new MenuState(this, conversationState);
 			
 		}
 		else if(state == LorasCavern)
 		{
-			JukeBox.loop("LorasCavern");
-			if(gameStates[state] == null || fresh)
-			{
-				gameStates[state] = new LorasCavern(this, tileMap, player, conversationState);
-			}
-			else
-			{
-				gameStates[state].initialize();
-			}
+			JukeBox.loop(GameStateManager.GameMaps.LorasCavern.toString());
+			gameStates[state] = new LorasCavern(this, tileMap, player, conversationState);
 		}
 		else if(state == MysteriousDungeon)
 		{
-			JukeBox.loop("MysteriousDungeon");
-			if(gameStates[state] == null || fresh)
-			{
-				gameStates[state] = new MysteriousDungeon(this, tileMap, player, conversationState);
-			}
-			else
-			{
-				gameStates[state].initialize();
-			}
+			JukeBox.loop(GameStateManager.GameMaps.MysteriousDungeon.toString());
+			gameStates[state] = new MysteriousDungeon(this, tileMap, player, conversationState);
 		}
 		else if(state == FionasSanctum)
 		{
 			JukeBox.loop("FionasSanctum");
-			if(gameStates[state] == null || fresh)
-			{
-				gameStates[state] = new FionasSanctum(this, tileMap, player, conversationState);
-			}
-			else
-			{
-				gameStates[state].initialize();
-			}
+			gameStates[state] = new FionasSanctum(this, tileMap, player, conversationState);
 		}
 		else if(state == DeepWoods)
 		{
 			JukeBox.loop("DeepWoods");
-			if(gameStates[state] == null || fresh)
-			{
-				gameStates[state] = new DeepWoods(this, tileMap, player, conversationState);			
-			}
-			else
-			{
-				gameStates[state].initialize();
-			}
+			gameStates[state] = new DeepWoods(this, tileMap, player, conversationState);			
 		}
 	}
 	
@@ -166,11 +136,11 @@ public class GameStateManager
 		gameStates[state] = null;
 	}
 	
-	public void setState(int state, boolean fresh)
+	public void setState(int state)
 	{
 		unloadState(currentState);
 		currentState = state;
-		loadState(currentState, fresh);
+		loadState(currentState);
 	}
 	
 	public GameState getState(int whichState) 

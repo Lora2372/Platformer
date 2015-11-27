@@ -8,6 +8,7 @@ import GameState.GameStateManager;
 import GameState.Conversation.Conversation;
 import GameState.Conversation.ConversationState;
 import GameState.Maps.FionasSanctum;
+import GameState.Maps.MysteriousDungeon;
 import Main.Content;
 import TileMap.TileMap;
 
@@ -58,11 +59,11 @@ public class Door extends Doodad
 			false,
 			currentAction,
 			doorType,
-			DoodadData.doodadName.get(doorType)
+			CreateDoodad.doodadName.get(doorType)
 		);
 		
 		this.locked = locked;
-		this.doorName = DoodadData.doodadName.get(doodadType);
+		this.doorName = CreateDoodad.doodadName.get(doodadType);
 		
 		if(currentAction == 2)
 		{
@@ -78,7 +79,7 @@ public class Door extends Doodad
 	{
 		this.currentAction = currentAction;
 		
-		if(doodadType.equals(DoodadData.Doors.Boss.toString()))
+		if(doodadType.equals(CreateDoodad.Doors.Boss.toString()))
 		{
 			portrait = Content.PortraitDoorBoss[0];
 			if(currentAction == 0)
@@ -95,7 +96,7 @@ public class Door extends Doodad
 			}
 		}
 		
-		if(doodadType.equals(DoodadData.Doors.Village.toString()))
+		if(doodadType.equals(CreateDoodad.Doors.Village.toString()))
 		{
 			portrait = Content.PortraitDoorVillage[0];
 			if(currentAction == 0)
@@ -115,6 +116,12 @@ public class Door extends Doodad
 		animation.setFrames(sprites);
 	}
 	
+	
+	public void setUsed(boolean used)
+	{
+		this.used = used;
+	}
+	
 	public void interact(Player player)
 	{
 		// If the door is already open, we walk through it.
@@ -124,23 +131,25 @@ public class Door extends Doodad
 			{
 				if(gameStateManager.getCurrentState() == GameStateManager.MysteriousDungeon)
 				{
-					FionasSanctum fionasSanctum = (FionasSanctum) gameStateManager.getState(GameStateManager.FionasSanctum);
-					if(fionasSanctum != null)
-					{
-						player.setSpawnPoint(fionasSanctum.getDoor().getLocationX(), fionasSanctum.getDoor().getLocationY());
-					}
+
+					player.setSpawnPoint(FionasSanctum.startLocationX, FionasSanctum.startLocationY);
 					
-					gameStateManager.setState(GameStateManager.FionasSanctum, false);
+					gameStateManager.setState(GameStateManager.FionasSanctum);
 				}
-//				else if(gameStateManager.getCurrentState() == GameStateManager.FionasSanctum)
-//				{
-//					MysteriousDungeon mysteriousDungeon = (MysteriousDungeon) gameStateManager.getState(GameStateManager.MysteriousDungeon);
-//					if(mysteriousDungeon != null)
-//					{
-//						player.setSpawnPoint(mysteriousDungeon.getDoor().getLocationX(), mysteriousDungeon.getDoor().getLocationY());
-//					}
-//					gameStateManager.setState(GameStateManager.MysteriousDungeon, false);
-//				}
+				else if(gameStateManager.getCurrentState() == GameStateManager.FionasSanctum)
+				{
+					player.setSpawnPoint(MysteriousDungeon.doorLocationX, MysteriousDungeon.doorLocationY);
+					gameStateManager.setState(GameStateManager.MysteriousDungeon);
+				}
+			}
+			
+			if(player.getInConversation())
+			{
+				if(conversationBox.getConversationOver())
+				{
+					conversationBox.endConversation();
+					choiceMade = 0;
+				}
 			}
 			return;
 		}
@@ -207,6 +216,7 @@ public class Door extends Doodad
 				choiceMade = 0;
 			}
 		}
+		
 		
 		if(successfullyOpened && !used)
 		{

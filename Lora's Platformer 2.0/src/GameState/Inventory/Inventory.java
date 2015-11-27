@@ -16,12 +16,15 @@ public class Inventory
 	
 	protected Item[][] items;
 	
-	public Inventory(
+	protected MapObject owner;
+	
+	public Inventory
+		(
 			int numberOfColumns,
 			int numberOfRows,
 			ArrayList<Item> items,
 			MapObject owner
-			)
+		)
 	{
 		
 		if(numberOfColumns > maxColumns)
@@ -34,7 +37,8 @@ public class Inventory
 		else
 			this.numberOfRows = numberOfRows;
 		
-
+		this.owner = owner;
+		
 		this.items = new Item[this.numberOfColumns][this.numberOfRows];
 		if(items != null)
 		{
@@ -50,7 +54,9 @@ public class Inventory
 	public boolean addItem(Item item)
 	{
 		item.setInWorld(false);
-				
+		
+		item.setOwner(owner);
+		
 		Item tempItem = hasItem(item.getItemType());
 		if(tempItem != null)
 		{

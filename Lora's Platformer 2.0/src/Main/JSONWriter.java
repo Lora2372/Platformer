@@ -10,11 +10,15 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import org.json.simple.JSONObject;
+
+import Entity.Doodad.Activatable.CreateDoodad;
+import Entity.Doodad.Activatable.DoodadData;
 import Entity.Item.CreateItem;
 import Entity.Item.Item;
 import Entity.Player.Player;
 import Entity.Unit.CreateUnit;
 import Entity.Unit.UnitData;
+import GameState.GameStateManager;
 
 public class JSONWriter 
 {  
@@ -33,80 +37,128 @@ public class JSONWriter
             myFile.mkdir();
             
             Path path = Paths.get(System.getProperty("user.home") + "\\Loras Platformer\\SaveFile.json");
-         
+            
             OutputStream outputStream = Files.newOutputStream(path);
+            
+            // Main jsonobject, contains everything
             JSONObject jsonObjectOuter = new JSONObject();
             
-            for(int characterListIndex = 0; characterListIndex < CreateUnit.getCharacterListSize(); characterListIndex++)
-            {
-            	if(characterListIndex == 1)
-            	{
-            		System.out.println(".");
-            	}
-    	    	for(int unitDataIndex = 0; unitDataIndex < CreateUnit.getUnitDataList(characterListIndex).size(); unitDataIndex++)
-    	    	{
-    	    		UnitData unit = CreateUnit.getUnitDataList(characterListIndex).get(unitDataIndex);
-    	            JSONObject jsonObjectInner = new JSONObject();
-    	            
-    	    		jsonObjectInner.put("Name", unit.getName());
-    	    		jsonObjectInner.put("Map", unit.getCurrentMap());
-    	    		jsonObjectInner.put("SpawnLocationX", unit.getSpawnLocationX());
-    	    		jsonObjectInner.put("SpawnLocationY", unit.getSpawnLocationY());
-    	    		jsonObjectInner.put(CreateItem.Coins.Silver.toString(), unit.getSilver());
-    	    		jsonObjectInner.put(CreateItem.Coins.Gold, unit.getGold());
-    	    		jsonObjectInner.put("Friendly", unit.getFriendly());
-    	    		jsonObjectInner.put("Health", unit.getHealth());
-    	    		jsonObjectInner.put("UnitType", unit.getUnitType());
-    	    		jsonObjectInner.put("FacingRight", unit.getFacingRight());
-    	    		jsonObjectInner.put("Invulnerable", unit.getInvulnerable());
-    	    		jsonObjectInner.put("Untouchable", unit.getUntouchable());
-    	    		jsonObjectInner.put("Unkillable", unit.getUnkillable());
-    	    		
-    	    		if(unit.getUnitType().equals("Player"))
-    	    		{
-    	    			jsonObjectInner.put("UseMouse", player.getUseMouse());
-    	    			jsonObjectInner.put("DisplayHealthBars", player.getDisplayHealthBars());
-    	    			jsonObjectInner.put("DisplayNamePlates", player.getDisplayNamePlates());	
-    	    		}
-    	    		
-    		        ArrayList<Item> items = unit.getItems();
-    		        for(int i = 0; i < items.size(); i++)
-    		        {
-    		        	jsonObjectInner.put("Item:" + (i), items.get(i).getItemType());
-	        			jsonObjectInner.put("Stack:" + (i), items.get(i).getStacks());
-    		        }
-//    		        jsonArray.add(jsonObjectInner);
-    		        jsonObjectOuter.put("Unit" + (unitDataIndex < 10 ? "0" : "") + unitDataIndex, jsonObjectInner);
-    	    	}
-            }
+            // Player object, contains all player data
+            JSONObject jsonObjectPlayer = new JSONObject();
+    		jsonObjectPlayer.put("Name", player.getName());
+    		jsonObjectPlayer.put("Map", player.getCurrentMap());
+    		jsonObjectPlayer.put("SpawnLocationX", player.getSpawnLocationX());
+    		jsonObjectPlayer.put("SpawnLocationY", player.getSpawnLocationY());
+    		jsonObjectPlayer.put(CreateItem.Coins.Silver.toString(), player.getSilver());
+    		jsonObjectPlayer.put(CreateItem.Coins.Gold, player.getGold());
+    		jsonObjectPlayer.put("Friendly", player.getFriendly());
+    		jsonObjectPlayer.put("Health", (int)player.getHealth());
+    		jsonObjectPlayer.put("UnitType", player.getUnitType());
+    		jsonObjectPlayer.put("FacingRight", player.getFacingRight());
+    		jsonObjectPlayer.put("Invulnerable", player.getInvulnerable());
+    		jsonObjectPlayer.put("Untouchable", player.getUntouchable());
+    		jsonObjectPlayer.put("Unkillable", player.getUnkillable());
+			jsonObjectPlayer.put("UseMouse", player.getUseMouse());
+			jsonObjectPlayer.put("DisplayHealthBars", player.getDisplayHealthBars());
+			jsonObjectPlayer.put("DisplayNamePlates", player.getDisplayNamePlates());	
+			
+			JSONObject jsonObjectItems = new JSONObject();
+			
+			
+	        Item[][] items = player.getInventory().getItems();
+	        for(int i = 0; i < player.getInventory().getNumberOfRows(); i++)
+	        {
+	        	for(int j = 0; j < player.getInventory().getNumberOfColumns(); j++)
+	        	{
+	        		if( items[i][j] != null)
+	        		{
+	        			int currentItem = i + j;
+	        			jsonObjectItems.put("Item:" + (currentItem < 10 ? "0" : "") + currentItem, items[i][j].getItemType());
+	        			jsonObjectItems.put("Stack:" + (currentItem < 10 ? "0" : "") + currentItem, items[i][j].getStacks());
+	        		}
+	        	}
+	        }
+			jsonObjectPlayer.put("Items", jsonObjectItems);
+			jsonObjectOuter.put("Player", jsonObjectPlayer);
+            
+            // Map objects, contains all the maps
+			for(int i = 0; i < GameStateManager.GameMaps.values().length; i++)
+			{
+				String gameMap = GameStateManager.GameMaps.values()[i].toString();
+				JSONObject jsonObjectMap = new JSONObject();
+				jsonObjectMap.put("Loading", player.getLoading(i));
+				
+				
+				if(!gameMap.equals("Tutorial"))
+				{	
+					if(CreateDoodad.getDoodadDataList(gameMap) == null)
+					{
+						CreateDoodad.getDoodadDataList(gameMap);
+						System.out.println("null");
+					}
+					
+					for(int j = 0; j < CreateDoodad.getDoodadDataList(gameMap).size(); j++)
+					{
+						DoodadData doodad = CreateDoodad.getDoodadDataList(gameMap).get(j);
+						JSONObject jsonObjectDoodad = new JSONObject();
+						
+						jsonObjectDoodad.put("Untouchable", doodad.getUntouchable());
+						jsonObjectDoodad.put("Invulnerable", doodad.getInvulnerable());
+						jsonObjectDoodad.put("Active", doodad.getActive());
+						jsonObjectDoodad.put("CurrentAction", doodad.getCurrentAction());
+						jsonObjectDoodad.put("Locked", doodad.getLocked());
+		    	    	jsonObjectDoodad.put("SpawnLocationX", doodad.getSpawnLocationX());
+	    	    		jsonObjectDoodad.put("SpawnLocationY", doodad.getSpawnLocationY());
+						jsonObjectDoodad.put("DoodadType", doodad.getDoodadType());
+
+	    	    		jsonObjectItems = new JSONObject();
+	    	    		
+	    		        ArrayList<Item> itemsList = doodad.getItems();
+	    		        for(int x = 0; x < itemsList.size(); x++)
+	    		        {
+	    		        	jsonObjectItems.put("Item:" + (x < 10 ? "0" : "") + x, itemsList.get(x).getItemType());
+		        			jsonObjectItems.put("Stack:" + (x < 10 ? "0" : "") + x, itemsList.get(x).getStacks());
+	    		        }
+	    		        jsonObjectDoodad.put("Items", jsonObjectItems);
+	    		        jsonObjectMap.put("Doodad" + (j < 10 ? "0" : "") + j, jsonObjectDoodad);
+		    	    	
+					}
+					
+	    	    	for(int j = 0; j < CreateUnit.getUnitDataList(gameMap).size(); j++)
+	    	    	{
+	    	    		UnitData unit = CreateUnit.getUnitDataList(gameMap).get(j);
+	    	            JSONObject jsonObjectUnit = new JSONObject();
+	    	            
+		    	    	jsonObjectUnit.put("Name", unit.getName());
+		    	    	jsonObjectUnit.put("SpawnLocationX", unit.getSpawnLocationX());
+	    	    		jsonObjectUnit.put("SpawnLocationY", unit.getSpawnLocationY());
+	    	    		jsonObjectUnit.put(CreateItem.Coins.Silver.toString(), unit.getSilver());
+	    	    		jsonObjectUnit.put(CreateItem.Coins.Gold, unit.getGold());
+	    	    		jsonObjectUnit.put("Friendly", unit.getFriendly());
+	    	    		jsonObjectUnit.put("Health", (int)unit.getHealth());
+	    	    		jsonObjectUnit.put("UnitType", unit.getUnitType());
+	    	    		jsonObjectUnit.put("FacingRight", unit.getFacingRight());
+	    	    		jsonObjectUnit.put("Invulnerable", unit.getInvulnerable());
+	    	    		jsonObjectUnit.put("Untouchable", unit.getUntouchable());
+	    	    		jsonObjectUnit.put("Unkillable", unit.getUnkillable());
+	    	    		
+	    	    		jsonObjectItems = new JSONObject();
+	    	    		
+	    		        ArrayList<Item> itemsList = unit.getItems();
+	    		        for(int x = 0; x < itemsList.size(); x++)
+	    		        {
+	    		        	jsonObjectItems.put("Item:" + (x < 10 ? "0" : "") + x, itemsList.get(x).getItemType());
+		        			jsonObjectItems.put("Stack:" + (x < 10 ? "0" : "") + x, itemsList.get(x).getStacks());
+	    		        }
+	    		        jsonObjectUnit.put("Items", jsonObjectItems);
+	    		        jsonObjectMap.put("Unit" + (j < 10 ? "0" : "") + j, jsonObjectUnit);
+	    	    	}
+					jsonObjectOuter.put(GameStateManager.GameMaps.values()[i], jsonObjectMap); 
+					
+				}
+			}
 
 	    	outputStream.write(jsonObjectOuter.toJSONString().getBytes(Charset.forName("UTF-8")));
-//	        JSONObject jsonObject = new JSONObject();  
-//	        jsonObject.put("Name", player.getName());  
-//	        jsonObject.put("Map", player.getCurrentMap());  
-//	        jsonObject.put("SpawnLocationX", spawnLocationX);
-//	        jsonObject.put("SpawnLocationY", spawnLocationY);
-//	        jsonObject.put(CreateItem.Coins.Silver.toString(), player.getSilver());
-//	        jsonObject.put(CreateItem.Coins.Gold.toString(), player.getGold());
-//	        jsonObject.put("UseMouse", player.getUseMouse());
-//	        jsonObject.put("DisplayHealthBars", player.getDisplayHealthBars());
-//	        
-//	        Item[][] items = player.getInventory().getItems();
-//	        for(int i = 0; i < player.getInventory().getNumberOfRows(); i++)
-//	        {
-//	        	for(int j = 0; j < player.getInventory().getNumberOfColumns(); j++)
-//	        	{
-//	        		if( items[i][j] != null)
-//	        		{
-//	        			jsonObject.put("Item:" + (i + j), items[i][j].getItemType());
-//	        			jsonObject.put("Stack:" + (i + j), items[i][j].getStacks());
-//	        		}
-//	        	}
-//	        }
-	        
-	
-	       
-	        
 	        outputStream.flush();
 	        outputStream.close();
         } 
