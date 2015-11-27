@@ -16,7 +16,6 @@ public class Door extends Doodad
 {
 	protected boolean used;
 		
-	protected boolean locked;
 	protected boolean successfullyOpened;
 	protected GameStateManager gameStateManager;
 	
@@ -127,6 +126,11 @@ public class Door extends Doodad
 		// If the door is already open, we walk through it.
 		if(used)
 		{
+			// If the door has been closed (programmatically), prevent the player from walking through it.
+			if(currentAction != 2)
+			{
+				return;
+			}
 			if(!player.getInConversation())
 			{
 				if(gameStateManager.getCurrentState() == GameStateManager.MysteriousDungeon)

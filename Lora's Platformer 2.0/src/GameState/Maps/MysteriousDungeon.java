@@ -65,9 +65,6 @@ public class MysteriousDungeon extends MainMap
 		spawnStatueSave(250, 780);
 		
 		spawnStatueSave(2900, 780);
-
-		
-		door = spawnDoor(doorLocationX,  doorLocationY, true, 0, CreateDoodad.Doors.Boss.toString());
 		
 		try
 		{
@@ -92,8 +89,11 @@ public class MysteriousDungeon extends MainMap
 		
 		if(!player.getLoading(index))
 		{
-			player.setPosition(109, 200);
-			player.setSpawnPoint(109, 200);
+			
+			door = spawnDoor(doorLocationX,  doorLocationY, true, 0, CreateDoodad.Doors.Boss.toString());
+			
+			player.setPosition(startLocationX, startLocationY);
+			player.setSpawnPoint(startLocationX, startLocationY);
 			
 			Chest chest = spawnChest(800, 850, false, 0, "Common");
 			dropPotion(CreateItem.Potions.Mana.toString(), 100, 1, chest);
