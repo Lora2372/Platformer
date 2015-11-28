@@ -22,6 +22,8 @@ public class Player extends Unit
 	protected double mouseLocationY;	
 	
 	
+	protected String currentMap;
+	
 	protected Conversation conversation;
 	protected ConversationState conversationState;
 	//  Animations 
@@ -85,7 +87,6 @@ public class Player extends Unit
 			"Player",
 			0,
 			0,
-			null,
 			null
 				
 		);
@@ -116,6 +117,9 @@ public class Player extends Unit
 	{ 
 		this.loading.set(i, loading);
 	}
+	
+	public void setCurrentMap(String currentMap) { this.currentMap = currentMap; }
+	public String getCurrentMap() { return currentMap; }
 	
 	public boolean getUseMouse() { return useMouse; }
 	public void setUseMouse(boolean well) { useMouse = well; }

@@ -40,6 +40,8 @@ public class CreateItem
 		itemDescriptionName.put(Coins.Silver.toString(), "Silver Coin");
 		itemDescriptionName.put(Coins.Gold.toString(), "Gold Coin");
 		
+		itemDescriptionName.put(Herbs.Sun.toString(), "Sun Herb");
+		
 		itemDescription = new HashMap<String, String>();
 		itemDescription.put(Potions.Healing.toString(), "A magical red potion which heals wounds when consumed.");
 		itemDescription.put(Potions.Mana.toString(), "A magical blue potion which replenishes mana when consumed.");
@@ -52,6 +54,7 @@ public class CreateItem
 		itemDescription.put(Coins.Silver.toString(), "Common currency of the realm.");
 		itemDescription.put(Coins.Gold.toString(), "Rare currency of the realm.");
 		
+		itemDescription.put(Herbs.Sun.toString(), "A common herb used in alchemy.");
 	}
 	
 	public static enum Potions
@@ -72,6 +75,11 @@ public class CreateItem
 	{
 		Silver,
 		Gold
+	}
+	
+	public static enum Herbs
+	{
+		Sun
 	}
 	
 	public static HashMap<String, String> itemDescriptionName = new HashMap<String, String>();
@@ -118,14 +126,20 @@ public class CreateItem
 			return new Coin(tileMap, false, 0, 0, owner, stacks, itemType);
 		}
 		
-		else if(lookForKey(itemType))
+		if(lookForKey(itemType))
 		{
 			return new Key(tileMap, false, 0, 0, owner, stacks, itemType);
 		}
-		else if(lookForPotion(itemType))
+		if(lookForPotion(itemType))
 		{
 			return new Potion(tileMap, false, 0, 0, owner, stacks, itemType);
 		}
+		
+		if(lookForHerbs(itemType))
+		{
+			return new Herb(tileMap, false, 0, 0, owner, stacks, itemType);
+		}
+
 		
 		return null;
 	}
@@ -164,6 +178,18 @@ public class CreateItem
 			}
 		}
 		
+		return false;
+	}
+	
+	public boolean lookForHerbs(String itemType)
+	{
+		for(int i = 0; i < Herbs.values().length; i++)
+		{
+			if(Herbs.values()[i].toString().equals(itemType))
+			{
+				return true;
+			}
+		}
 		return false;
 	}
 	

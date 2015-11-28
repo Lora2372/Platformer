@@ -129,7 +129,7 @@ public class InventoryState extends GameState
 		player.getConversationState().displayItem(player, items[selectedSlotY][selectedSlotX]);
 	}
 	
-	public void saveLocally()
+	public void saveToRAM()
 	{
 		
 	}

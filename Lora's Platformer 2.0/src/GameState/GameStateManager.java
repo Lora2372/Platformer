@@ -132,7 +132,7 @@ public class GameStateManager
 	private void unloadState(int state) 
 	{
 		stopMusic();
-		gameStates[state].saveLocally();
+		gameStates[state].saveToRAM();
 		gameStates[state] = null;
 	}
 	

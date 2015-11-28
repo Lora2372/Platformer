@@ -2,6 +2,7 @@ package GameState.MainMap;
 
 import Entity.Item.Coin;
 import Entity.Item.CreateItem;
+import Entity.Item.Herb;
 import Entity.Item.Item;
 import Entity.Item.ItemData;
 import Entity.Item.Key;
@@ -17,14 +18,12 @@ public class SpawnItem {
 	}
 	
 	public Item spawn(ItemData itemData)
-	{
-		Item item = null;
-		
+	{		
 		for(int i = 0; i < CreateItem.Coins.values().length; i++)
 		{
 			if(itemData.getItemType().equals(CreateItem.Coins.values()[i].toString()))
 			{
-				item = spawnCoin(itemData.getSpawnLocationX(), itemData.getSpawnLocationY(), itemData.getItemType(), itemData.getStacks());
+				return spawnCoin(itemData.getSpawnLocationX(), itemData.getSpawnLocationY(), itemData.getItemType(), itemData.getStacks());
 			}
 		}
 		
@@ -32,7 +31,7 @@ public class SpawnItem {
 		{
 			if(itemData.getItemType().equals(CreateItem.Keys.values()[i].toString()))
 			{
-				item = spawnKey(itemData.getSpawnLocationX(), itemData.getSpawnLocationY(), itemData.getItemType(), itemData.getStacks());
+				return spawnKey(itemData.getSpawnLocationX(), itemData.getSpawnLocationY(), itemData.getItemType(), itemData.getStacks());
 			}
 		}
 		
@@ -40,15 +39,17 @@ public class SpawnItem {
 		{
 			if(itemData.getItemType().equals(CreateItem.Potions.values()[i].toString()))
 			{
-				item = spawnPotion(itemData.getSpawnLocationX(), itemData.getSpawnLocationY(), itemData.getItemType(), itemData.getStacks());
+				return spawnPotion(itemData.getSpawnLocationX(), itemData.getSpawnLocationY(), itemData.getItemType(), itemData.getStacks());
 			}
 		}
 		
-		if(item != null)
+		for(int i = 0; i < CreateItem.Herbs.values().length; i++)
 		{
-			return item;
+			if(itemData.getItemType().equals(CreateItem.Herbs.values()[i].toString()))
+			{
+				return spawnHerb(itemData.getSpawnLocationX(), itemData.getSpawnLocationY(), itemData.getItemType(), itemData.getStacks());
+			}
 		}
-		
 		
 		return null;
 	}
@@ -72,6 +73,16 @@ public class SpawnItem {
 		Coin coin = new Coin(mainMap.tileMap, true, locationX, locationY, null, stacks, coinType);
 		mainMap.items.add(coin);
 		return coin;
+	}
+	
+	public Herb spawnHerb(double locationX, double locationY, String herbType, int stacks)
+	{
+		Herb herb = new Herb(mainMap.tileMap, true, locationX, locationY, null, stacks, herbType);
+		mainMap.items.add(herb);
+		return herb;
+		
+		
+		
 	}
 	
 }

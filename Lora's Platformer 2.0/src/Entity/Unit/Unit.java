@@ -30,7 +30,6 @@ public class Unit extends MapObject
 	protected String name;
 	protected boolean player;
 	
-	protected String currentMap;
 	
 	protected int silver;
 	protected int gold;
@@ -231,8 +230,7 @@ public class Unit extends MapObject
 		String unitType,
 		double spawnLocationX,
 		double spawnLocationY,
-		MainMap mainMap,
-		String currentMap
+		MainMap mainMap
 	)
 	{
 		super(tileMap);		
@@ -282,7 +280,6 @@ public class Unit extends MapObject
 		this.spawnLocationX = spawnLocationX;
 		this.spawnLocationY = spawnLocationY;
 		this.mainMap = mainMap;
-		this.currentMap = currentMap;
 		
 		setPosition(spawnLocationX, spawnLocationY);		
 		
@@ -461,7 +458,6 @@ public class Unit extends MapObject
 	public boolean getInvulnerable() { return invulnerable; }
 	public boolean getUnkillable() { return unkillable; }
 	public String getName() { return name; }
-	public String getCurrentMap() { return currentMap; }
 	public String getUnitType() { return unitType; }
 	
 	
@@ -492,7 +488,6 @@ public class Unit extends MapObject
 	public void setName(String name) { this.name = name; }
 	public void setSpawnLocationX(double spawnLocationX) { this.spawnLocationX = spawnLocationX; }
 	public void setSpawnLocationY(double spawnLocationY) { this.spawnLocationY = spawnLocationY; }
-	public void setCurrentMap(String currentMap) { this.currentMap = currentMap; }
 	public void setUnitType(String unitType) { this.unitType = unitType; }
 
 	public boolean isDead() { return dead; }
@@ -1560,7 +1555,7 @@ public class Unit extends MapObject
 			
 			graphics.drawImage
 			(
-				Content.bossBar,
+				Content.bossHealthBarFrame[0][0],
 				drawX,
 				drawY,
 				length,
@@ -1570,7 +1565,7 @@ public class Unit extends MapObject
 
 			graphics.drawImage
 			(
-				Content.bossHealthBar,
+				Content.bossHealthBar[0][0],
 				drawX,
 				drawY,
 				(int)((health/maxHealth) * length),

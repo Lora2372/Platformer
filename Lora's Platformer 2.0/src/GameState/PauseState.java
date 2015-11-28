@@ -68,7 +68,7 @@ public class PauseState extends GameState
 		background.update();
 	}
 	
-	public void saveLocally()
+	public void saveToRAM()
 	{
 
 	}

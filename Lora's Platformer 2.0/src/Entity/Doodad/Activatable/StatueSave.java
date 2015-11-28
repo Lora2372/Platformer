@@ -97,7 +97,7 @@ public class StatueSave extends Doodad
 					
 					player.setSpawnLocationX(spawnLocationX);
 					player.setSpawnLocationY(spawnLocationY);
-					mainMap.saveLocally();
+					mainMap.saveToRAM();
 					JukeBox.play("Save");
 					JSONWriter.saveFile(player);
 				}

@@ -1,10 +1,7 @@
 package GameState.Maps;
 
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
-
-import Entity.Doodad.Activatable.Door;
 import Entity.Player.Player;
 import GameState.GameStateManager;
 import GameState.Conversation.ConversationState;
@@ -15,7 +12,6 @@ import TileMap.TileMap;
 
 public class DeepWoods extends MainMap
 {
-	protected Door door;
 	
 	public static int startLocationX = 400;
 	public static int startLocationY = 200;
@@ -66,7 +62,11 @@ public class DeepWoods extends MainMap
 			
 			spawnDoodad.spawnCampFire(2830,  910);
 			
-			door = spawnDoodad.spawnDoor(3030,  890, false, 0, "Village");
+			spawnDoodad.spawnDoor(3030,  890, false, 0, "Village");
+			spawnDoodad.spawnDoor(4970,  230, false, 0, "Village");
+			
+			spawnUnit.spawnBunny(200, 200, true);
+			
 		}
 		else
 		{

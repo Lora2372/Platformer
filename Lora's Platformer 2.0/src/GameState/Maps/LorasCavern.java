@@ -108,6 +108,8 @@ public class LorasCavern extends MainMap
 			dropCoin(CreateItem.Coins.Silver.toString(), 100, 3, chest);
 			
 			spawnItem.spawnKey(1712, 		2610, CreateItem.Keys.Uncommon.toString(), 1);
+			spawnItem.spawnHerb(2276, 1450, CreateItem.Herbs.Sun.toString(), 1);
+			spawnItem.spawnHerb(3004, 1270, CreateItem.Herbs.Sun.toString(), 1);
 		}
 		
 		player.setCurrentMap(GameStateManager.GameMaps.LorasCavern.toString());

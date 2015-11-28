@@ -20,8 +20,7 @@ public class Slug extends Unit
 			String name,
 			double spawnLocationX,
 			double spawnLocationY,
-			MainMap mainMap,
-			String currentMap
+			MainMap mainMap
 			) 
 	{
 		super(
@@ -71,8 +70,7 @@ public class Slug extends Unit
 				"Slug",
 				spawnLocationX,
 				spawnLocationY,
-				mainMap,
-				currentMap
+				mainMap
 				
 				);
 		

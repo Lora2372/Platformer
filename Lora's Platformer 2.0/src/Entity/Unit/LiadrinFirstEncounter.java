@@ -6,7 +6,6 @@ import Entity.Doodad.SummoningEffect;
 import Entity.Item.CreateItem;
 import Entity.Item.Potion;
 import Entity.Player.Player;
-import GameState.GameStateManager;
 import GameState.Conversation.ConversationState;
 import GameState.MainMap.MainMap;
 import Main.Content;
@@ -84,8 +83,7 @@ public class LiadrinFirstEncounter extends Unit
 				"LiadrinFirstEncounter",
 				spawnLocationX,
 				spawnLocationY,
-				mainMap,
-				GameStateManager.GameMaps.LorasCavern.toString()
+				mainMap
 				);
 
 		active = true;

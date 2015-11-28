@@ -45,7 +45,8 @@ public class Fiona extends Unit
 		
 	protected FionasSanctum fionasSanctum;
 	
-	public Fiona(
+	public Fiona
+		(
 			TileMap tileMap,
 			boolean facingRight,
 			boolean friendly,
@@ -57,9 +58,10 @@ public class Fiona extends Unit
 			double spawnLocationY,
 			FionasSanctum fionasSanctum,
 			Player player
-			) 
+		) 
 	{
-		super(
+		super
+			(
 				tileMap,  															// TileMap
 				100, 	 															// Width
 				100, 	 															// Height
@@ -106,11 +108,8 @@ public class Fiona extends Unit
 				"Fiona",
 				spawnLocationX,
 				spawnLocationY,
-				fionasSanctum,
-				"FionasSanctum"
-				);
-		
-		this.unitType = "Fiona";
+				fionasSanctum
+			);
 		this.player = player;
 		this.fionasSanctum = fionasSanctum;
 		attackTimer = 0;

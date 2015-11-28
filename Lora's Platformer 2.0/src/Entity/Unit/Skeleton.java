@@ -23,8 +23,7 @@ public class Skeleton extends Unit
 			String name,
 			double spawnLocationX,
 			double spawnLocationY,
-			MainMap mainMap,
-			String currentMap
+			MainMap mainMap
 			) 
 	{
 		super(
@@ -74,8 +73,7 @@ public class Skeleton extends Unit
 				"Skeleton",
 				spawnLocationX,
 				spawnLocationY,
-				mainMap,
-				currentMap
+				mainMap
 				);
 		
 		timer = 200;

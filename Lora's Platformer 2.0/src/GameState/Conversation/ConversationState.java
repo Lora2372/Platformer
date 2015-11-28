@@ -398,7 +398,7 @@ public class ConversationState  extends GameState
 		
 	}
 	
-	public void saveLocally()
+	public void saveToRAM()
 	{
 		
 	}

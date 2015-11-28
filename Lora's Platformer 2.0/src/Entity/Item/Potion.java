@@ -9,7 +9,8 @@ import TileMap.TileMap;
 public class Potion extends Item
 {
 
-	public Potion(
+	public Potion
+		(
 			TileMap tileMap,
 			boolean inWorld, 
 			double locationX, 
@@ -17,7 +18,7 @@ public class Potion extends Item
 			MapObject owner, 
 			int stacks,
 			String potionType
-			) 
+		) 
 	{
 		super(
 				tileMap, 
@@ -36,8 +37,8 @@ public class Potion extends Item
 				stacks, 
 				true, 
 				potionType,
-				CreateItem.getDescriptionName(potionType.toString()),
-				CreateItem.getDescription(potionType.toString())
+				CreateItem.getDescriptionName(potionType),
+				CreateItem.getDescription(potionType)
 				);
 
 	}

@@ -99,7 +99,7 @@ public class MenuState extends GameState
 		backGround.update();
 	}
 	
-	public void saveLocally()
+	public void saveToRAM()
 	{
 
 	}

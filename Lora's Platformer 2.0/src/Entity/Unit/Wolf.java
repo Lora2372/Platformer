@@ -10,7 +10,8 @@ public class Wolf extends Unit
 	protected int attackCooldown;
 	protected int attackTimer;
 	
-	public Wolf(
+	public Wolf
+		(
 			TileMap tileMap,
 			boolean facingRight,
 			boolean friendly,
@@ -20,9 +21,8 @@ public class Wolf extends Unit
 			String name,
 			double spawnLocationX,
 			double spawnLocationY,
-			MainMap mainMap,
-			String currentMap
-			) 
+			MainMap mainMap
+		) 
 	{
 		super(
 				tileMap,  															// TileMap
@@ -71,8 +71,7 @@ public class Wolf extends Unit
 				"Wolf",
 				spawnLocationX,
 				spawnLocationY,
-				mainMap,
-				currentMap
+				mainMap
 				);
 		
 		attackTimer = 200;

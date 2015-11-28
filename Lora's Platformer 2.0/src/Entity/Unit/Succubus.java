@@ -21,8 +21,7 @@ public class Succubus extends Unit
 			String name,
 			double spawnLocationX,
 			double spawnLocationY,
-			MainMap mainMap,
-			String currentMap
+			MainMap mainMap
 			) 
 	{
 		super
@@ -73,8 +72,7 @@ public class Succubus extends Unit
 			"Succubus",
 			spawnLocationX,
 			spawnLocationY,
-			mainMap,
-			currentMap
+			mainMap
 		);
 		
 		attackTimer = 0;
