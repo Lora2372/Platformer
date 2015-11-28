@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import Audio.JukeBox;
 import Entity.MapObject;
 import Entity.Unit.Unit;
-import GameState.MainMap;
+import GameState.MainMap.MainMap;
 import TileMap.TileMap;
 
 public class Projectile extends MapObject

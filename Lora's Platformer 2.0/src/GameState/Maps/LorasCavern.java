@@ -8,8 +8,8 @@ import Entity.Item.CreateItem;
 import Entity.Player.*;
 import Entity.Unit.*;
 import GameState.GameStateManager;
-import GameState.MainMap;
 import GameState.Conversation.ConversationState;
+import GameState.MainMap.MainMap;
 import TileMap.Background;
 import TileMap.GameOver;
 import TileMap.TileMap;
@@ -51,16 +51,16 @@ public class LorasCavern extends MainMap
 			e.printStackTrace();
 		}
 		
-		spawnTorch(810, 1610);
-		spawnTorch(1230, 1610);
-		spawnTorch(1710, 1610);
+		spawnDoodad.spawnTorch(810, 1610);
+		spawnDoodad.spawnTorch(1230, 1610);
+		spawnDoodad.spawnTorch(1710, 1610);
 		
-		spawnTorch(810, 1910);
-		spawnTorch(1230, 1910);
-		spawnTorch(1710, 1910);
+		spawnDoodad.spawnTorch(810, 1910);
+		spawnDoodad.spawnTorch(1230, 1910);
+		spawnDoodad.spawnTorch(1710, 1910);
 		
-		spawnTorch(1830, 1310);
-		spawnTorch(2610, 2030);
+		spawnDoodad.spawnTorch(1830, 1310);
+		spawnDoodad.spawnTorch(2610, 2030);
 		
 		this.player = player;
 		
@@ -78,45 +78,45 @@ public class LorasCavern extends MainMap
 			player.setPosition(startLocationX, startLocationY);
 			player.setSpawnPoint(startLocationX, startLocationY);
 			
-			Slug slug = spawnSlug(1690, 1600, false, "Steve");
+			Slug slug = spawnUnit.spawnSlug(1690, 1600, false, "Steve");
 			dropPotion(CreateItem.Potions.Healing.toString(), 100, 1, slug);
 			
 			Succubus succubus;
-			succubus = spawnSuccubus(2700, 1400, false);
+			succubus = spawnUnit.spawnSuccubus(2700, 1400, false);
 			dropCoin(CreateItem.Coins.Silver.toString(), 100, 2, succubus);
 			dropPotion("Any", 25, 1, succubus);
 			
-			succubus = spawnSuccubus(1339,1900, true);
+			succubus = spawnUnit.spawnSuccubus(1339,1900, true);
 			dropPotion("Any", 25, 1, succubus);
 			
-			succubus = spawnSuccubus(2700, 2100, true);
+			succubus = spawnUnit.spawnSuccubus(2700, 2100, true);
 			dropPotion("Any", 25, 1, succubus);
 			
-			succubus = spawnSuccubus(1423, 650, true);
+			succubus = spawnUnit.spawnSuccubus(1423, 650, true);
 			dropPotion("Any", 25, 1, succubus);
 			
-			succubus = spawnSuccubus(3689, 1430, false);
+			succubus = spawnUnit.spawnSuccubus(3689, 1430, false);
 			dropPotion("Any", 25, 1, succubus);
 		
 			LiadrinFirstEncounter liadrinFirstEncounter = new LiadrinFirstEncounter(tileMap, false, true, false, true, true, "Liadrin", 2680, 1800, this);
 			characterList.add(liadrinFirstEncounter);
 			
 			Chest chest;
-			chest = spawnChest(1923, 1170, true, 0, "Uncommon");
+			chest = spawnDoodad.spawnChest(1923, 1170, true, 0, "Uncommon");
 			dropPotion(CreateItem.Potions.Healing.toString(), 100, 1, chest);
 			dropPotion(CreateItem.Potions.Mana.toString(), 100, 2, chest);
 			dropCoin(CreateItem.Coins.Silver.toString(), 100, 3, chest);
 			
-			spawnKey(1712, 		2610, CreateItem.Keys.Uncommon.toString());
+			spawnItem.spawnKey(1712, 		2610, CreateItem.Keys.Uncommon.toString(), 1);
 		}
 		
 		player.setCurrentMap(GameStateManager.GameMaps.LorasCavern.toString());
 		
-		spawnStatueSave(3300, 1700);
+		spawnDoodad.spawnStatueSave(3300, 1700);
 		
 
 		
-		spawnSign(
+		spawnDoodad.spawnSign(
 				3805, 
 				1480, 
 				new String[] 

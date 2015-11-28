@@ -1,7 +1,8 @@
 package Entity.Unit;
 
 import java.util.ArrayList;
-import GameState.MainMap;
+
+import GameState.MainMap.MainMap;
 import TileMap.TileMap;
 
 public class Skeleton extends Unit

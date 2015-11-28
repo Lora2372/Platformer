@@ -1,7 +1,7 @@
 package Entity.Projectile;
 
 import Entity.Explosion.FireBallSmallExplosion;
-import GameState.MainMap;
+import GameState.MainMap.MainMap;
 import Main.Content;
 import TileMap.TileMap;
 

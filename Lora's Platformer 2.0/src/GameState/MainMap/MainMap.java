@@ -1,4 +1,4 @@
-package GameState;
+package GameState.MainMap;
 
 
 import java.awt.Color;
@@ -9,6 +9,7 @@ import Entity.Explosion.Explosion;
 import Entity.Item.Coin;
 import Entity.Item.CreateItem;
 import Entity.Item.Item;
+import Entity.Item.ItemData;
 import Entity.Item.Key;
 import Entity.Item.Potion;
 import Entity.MapObject;
@@ -17,6 +18,8 @@ import Entity.Doodad.Activatable.*;
 import Entity.Player.*;
 import Entity.Projectile.Projectile;
 import Entity.Unit.*;
+import GameState.GameState;
+import GameState.GameStateManager;
 import GameState.Conversation.ConversationState;
 import Audio.JukeBox;
 import java.awt.event.KeyEvent;
@@ -57,6 +60,11 @@ public class MainMap extends GameState
 	
 	protected String currentMap;
 	
+	protected SpawnUnit spawnUnit;
+	protected SpawnDoodad spawnDoodad;
+	protected SpawnItem spawnItem;
+	
+	
 	public MainMap
 		(
 			GameStateManager gameStatemanager,
@@ -72,6 +80,11 @@ public class MainMap extends GameState
 		this.tileMap = tileMap;
 		this.player = player;
 		this.currentMap = currentMap;
+		
+		spawnUnit	= new SpawnUnit(this);
+		spawnDoodad	= new SpawnDoodad(this);
+		spawnItem	= new SpawnItem(this);
+		
 		initialize();
 	}
 	
@@ -106,6 +119,13 @@ public class MainMap extends GameState
 		
 		if(player.getLoading(index))
 		{
+			
+			ArrayList<ItemData> itemDataArray = CreateItem.getItemDataList(currentMap);
+			for(int i = 0; i < itemDataArray.size(); i++)
+			{
+				spawnItem.spawn(itemDataArray.get(i));
+			}
+			
 			ArrayList<DoodadData> doodadDataArray = CreateDoodad.getDoodadDataList(currentMap);
 			
 			for(int i = 0; i < doodadDataArray.size(); i++)
@@ -118,7 +138,7 @@ public class MainMap extends GameState
 			
 			for(int i = 0; i < unitDataArray.size(); i++)
 			{
-				spawnUnit(unitDataArray.get(i));
+				spawnUnit.spawn(unitDataArray.get(i));
 			}
 		}
 	}
@@ -391,11 +411,12 @@ public class MainMap extends GameState
 		
 	}
 	
-	public void reset()
+	public void saveLocally()
 	{
 
 		CreateUnit.resetUnitList(currentMap);
 		CreateDoodad.resetDoodadList(currentMap);
+		CreateItem.resetItemList(currentMap);
 		
 		for(int i = 0; i < GameStateManager.GameMaps.values().length; i++)
 		{
@@ -405,19 +426,36 @@ public class MainMap extends GameState
 			}
 		}
 		
+		for(int i = 0; i < items.size(); i++)
+		{
+			
+			Item item = items.get(i);
+			if(item.getInWorld())
+			{
+				ItemData itemData = new ItemData
+					(
+						item.getItemType(),
+						item.getStacks(),
+						item.getLocationX(), 
+						item.getLocationY()
+					);
+				CreateItem.addItem(currentMap, itemData);
+			}
+		}
+		
 		
 		for(int i = 0; i < activatablesUsableOnce.size(); i++)
 		{
 			Doodad thing = activatablesUsableOnce.get(i);
 			
-			ArrayList<Item> items = new ArrayList<Item>();
+			ArrayList<Item> tempItems = new ArrayList<Item>();
 			for(int y = 0; y < thing.getInventory().getNumberOfRows(); y++)
 			{
 				for(int x = 0; x < thing.getInventory().getNumberOfColumns(); x++)
 				{
 					if(thing.getInventory().getItem(x, y) != null)
 					{
-						items.add(thing.getInventory().getItem(x, y));
+						tempItems.add(thing.getInventory().getItem(x, y));
 					}
 				}
 			}
@@ -432,7 +470,7 @@ public class MainMap extends GameState
 					thing.getSpawnLocationX(),
 					thing.getSpawnLocationY(),
 					thing.getDoodadType(), 
-					items
+					tempItems
 				);
 			
 			CreateDoodad.addDoodad(currentMap, doodadData);
@@ -444,14 +482,14 @@ public class MainMap extends GameState
 			Unit unit = characterList.get(i);
 			if(unit != player)
 			{
-				ArrayList<Item> items = new ArrayList<Item>();
+				ArrayList<Item> tempItems = new ArrayList<Item>();
 				for(int y = 0; y < unit.getInventory().getNumberOfRows(); y++)
 				{
 					for(int x = 0; x < unit.getInventory().getNumberOfColumns(); x++)
 					{
 						if(unit.getInventory().getItem(x, y) != null)
 						{
-							items.add(unit.getInventory().getItem(x, y));
+							tempItems.add(unit.getInventory().getItem(x, y));
 						}
 					}
 				}
@@ -470,7 +508,7 @@ public class MainMap extends GameState
 					unit.getUnitType(),
 					unit.getSilver(),
 					unit.getGold(),
-					items
+					tempItems
 				);
 				
 				CreateUnit.addUnit(currentMap, unitData);
@@ -605,6 +643,8 @@ public class MainMap extends GameState
 		return random.nextInt((max - min) + 1) + min;
 	}
 	
+
+	
 	public Doodad spawnDoodad(DoodadData doodadData)
 	{
 		Doodad doodad = null;
@@ -613,7 +653,7 @@ public class MainMap extends GameState
 		{
 			if(doodadData.getDoodadType().equals(CreateDoodad.Doors.values()[i].toString()))
 			{
-				doodad = spawnDoor
+				doodad = spawnDoodad.spawnDoor
 					(
 						doodadData.getSpawnLocationX(),
 						doodadData.getSpawnLocationY(),
@@ -628,7 +668,7 @@ public class MainMap extends GameState
 		{
 			if(doodadData.getDoodadType().equals(CreateDoodad.Chests.values()[i].toString()))
 			{
-				doodad = spawnChest
+				doodad = spawnDoodad.spawnChest
 					(
 						doodadData.getSpawnLocationX(),
 						doodadData.getSpawnLocationY(),
@@ -653,195 +693,9 @@ public class MainMap extends GameState
 		return null;
 	}
 	
-	public Unit spawnUnit(UnitData unitData)
-	{
-		Unit unit = null;
-		
-		if(unitData.getUnitType().equals("Slug"))
-		{
-			unit = spawnSlug
-					(
-						unitData.getFacingRight(),
-						unitData.getFriendly(),
-						unitData.getUntouchable(), 
-						unitData.getInvulnerable(), 
-						unitData.getUnkillable(),
-						unitData.getName(),
-						unitData.getSpawnLocationX(),
-						unitData.getSpawnLocationY()
-					);
+	
+	
 
-		}
-		
-		if(unitData.getUnitType().equals("Succubus"))
-		{
-			unit = spawnSuccubus
-					(
-						unitData.getFacingRight(),
-						unitData.getFriendly(),
-						unitData.getUntouchable(), 
-						unitData.getInvulnerable(), 
-						unitData.getUnkillable(),
-						unitData.getName(),
-						unitData.getSpawnLocationX(),
-						unitData.getSpawnLocationY()
-					);
-		}
-		
-		if(unitData.getUnitType().equals("Wolf"))
-		{
-			unit = spawnWolf
-					(
-						unitData.getFacingRight(),
-						unitData.getFriendly(),
-						unitData.getUntouchable(), 
-						unitData.getInvulnerable(), 
-						unitData.getUnkillable(),
-						unitData.getName(),
-						unitData.getSpawnLocationX(),
-						unitData.getSpawnLocationY()
-					);
-		}
-		if(unit != null)
-		{
-			for(int i = 0; i < unitData.getItems().size(); i++)
-			{
-				Item item = unitData.getItems().get(i);
-				unit.getInventory().addItem(item);
-				items.add(item);
-			}
-			return unit;
-		}
-		
-		return null;
-	}
-	
-	public Slug spawnSlug
-		(			
-			boolean facingRight,
-			boolean friendly,
-			boolean untouchable,
-			boolean invulnerable,
-			boolean unkillable,
-			String name,
-			double spawnLocationX,
-			double spawnLocationY
-		)
-	{	
-		String[] slugNames = new String[]
-		{
-				"Cookie",
-				"Steven",
-				"Morgan",
-				"Tom",
-				"Carl",
-				"John"			
-		};
-		
-		if(name == null)
-		{
-			name = slugNames[RNG(0, slugNames.length - 1)];
-		}
-		
-		Slug slug = new Slug(tileMap, facingRight, friendly, untouchable, invulnerable, unkillable, name, spawnLocationX, spawnLocationY, this, currentMap);
-		slug.setCurrentMap(currentMap);
-		characterList.add(slug);
-		return slug;
-	}
-	
-	public Slug spawnSlug(double spawnLocationX, double spawnLocationY, boolean facingRight, String name)
-	{
-		return spawnSlug(facingRight, false, false, false, false, name, spawnLocationX, spawnLocationY);
-	}
-	
-	
-	public Succubus spawnSuccubus
-		(			
-			boolean facingRight,
-			boolean friendly,
-			boolean untouchable,
-			boolean invulnerable,
-			boolean unkillable,
-			String name,
-			double spawnLocationX,
-			double spawnLocationY
-		)
-	{
-		
-		String[] succubiNames = new String[]
-		{
-			"Rui",
-			"Domwena",
-			"Elerlith",
-			"Synys",
-			"Kallith",
-			"Fierneth",
-			"Catvina",
-			"Bronlissa",
-			"Cariel",
-			"Darxia",
-			"Nimnys"
-		};
-		
-		if(name == null)
-		{
-			name = succubiNames[RNG(0, succubiNames.length - 1)];
-		}
-				
-		Succubus succubus = new Succubus(tileMap, facingRight, friendly, untouchable, invulnerable, unkillable, name, spawnLocationX, spawnLocationY, this, currentMap);
-		characterList.add(succubus);
-		return succubus;
-	}
-	
-	public Succubus spawnSuccubus(double spawnLocationX, double spawnLocationY, boolean facingRight)
-	{
-		return spawnSuccubus(facingRight, false, false, false, false, null, spawnLocationX, spawnLocationY);
-	}
-	
-	public Wolf spawnWolf
-		(			
-			boolean facingRight,
-			boolean friendly,
-			boolean untouchable,
-			boolean invulnerable,
-			boolean unkillable,
-			String name,
-			double spawnLocationX,
-			double spawnLocationY
-		)
-	{
-		
-		String[] wolfNames = new String[]
-		{
-			"Rhuudym",
-			"Pryyfenn",
-			"Phathun",
-			"Jhazeem",
-			"Maahzon",
-			"Gzaalum",
-			"Drootom"
-		};
-		
-		if(name == null)
-		{
-			name = wolfNames[RNG(0, wolfNames.length - 1)];
-		}
-		
-		Wolf wolf = new Wolf(tileMap, facingRight, friendly, untouchable, invulnerable, unkillable, name, spawnLocationX, spawnLocationY, this, currentMap);
-		return wolf;
-	}
-	
-	public Wolf spawnWolf(double spawnLocationX, double spawnLocationY, boolean facingRight)
-	{
-		return spawnWolf(facingRight, false, false, false, false, null, spawnLocationX, spawnLocationY);
-	}
-	
-	public Skeleton spawnSkeleton(double locationX, double locationY, boolean facingRight, String currentMap)
-	{
-		Skeleton skeleton = new Skeleton(tileMap, facingRight, false, false, false, false, "Jesse Cox", locationX, locationY, this, currentMap);
-		characterList.add(skeleton);
-		return skeleton;
-	}
 	
 	public void dropPotion(String potionType, int chance, int stacks, MapObject owner)
 	{
@@ -911,7 +765,7 @@ public class MainMap extends GameState
 
 	public void spawnPlayer(double locationX, double y)
 	{
-		// find me
+		
 	}
 	
 	
@@ -962,106 +816,7 @@ public class MainMap extends GameState
 		return gameStateManager;
 	}
 	
-	public void spawnWaterfall(double locationX, double locationY)
-	{
-		Waterfall waterfall = new Waterfall(tileMap, locationX, locationY);
-		stuff.add(waterfall);
-		
-	}
-	
-	public void spawnSummonEffect(double locationX, double locationY)
-	{
-		SummoningEffect summoningEffect = new SummoningEffect(tileMap, locationX, locationY);
-		stuff.add(summoningEffect);
-		
-	}
-	
-	public void spawnTorch(double locationX, double locationY)
-	{
-		Torch torch = new Torch(tileMap, locationX, locationY);
-		stuff.add(torch);
-	}
-	
-	public CampFire spawnCampFire(double locationX, double locationY)
-	{
-		CampFire campFire = new CampFire(tileMap, gameStateManager, locationX, locationY);
-		stuff.add(campFire);
-		activatables.add(campFire);
-		return campFire;
-		
-	}
-	
-	public void spawnSign(double locationX, double locationY, String[] conversation, int[] whoTalks)
-	{
-		Sign activatableSign = new Sign(tileMap, locationX, locationY, player, conversation, whoTalks);
-		activatables.add(activatableSign);
-		stuff.add(activatableSign);
-	}
-	
-	public Door spawnDoor(double locationX, double locationY, boolean locked, int currentAction, String doorType)
-	{
-		Door door = new Door(tileMap, gameStateManager, locationX, locationY, locked, currentAction, doorType);
-		if(currentAction == 2)
-		{
-			door.setActive(true);
-			door.setUsed(true);
-		}
-		activatables.add(door);
-		activatablesUsableOnce.add(door);
-		stuff.add(door);
-		return door;
-	}
-	
-	public Lever spawnLever(double locationX, double locationY, int currentAction)
-	{
-		Lever lever = new Lever(tileMap, gameStateManager, locationX, locationY, currentAction);
-		activatables.add(lever);
-		stuff.add(lever);
-		return lever;
-	}
-	
-	public Chest spawnChest(double locationX, double locationY, boolean locked, int currentAction, String chestType)
-	{
-		Chest chest = new Chest(tileMap, locationX, locationY, locked, currentAction, chestType);
-		if(currentAction == 2)
-		{
-			chest.setActive(true);
-			chest.setUsed(true);
-		}
-		
-		activatables.add(chest);
-		activatablesUsableOnce.add(chest);
-		stuff.add(chest);
-		return chest;
-	}
-	
-	public Key spawnKey(double locationX, double locationY, String keyType)
-	{
-		Key key = new Key(tileMap, true, locationX, locationY, null, 1, keyType);
-		items.add(key);
-		return key;
-	}
-	
-	public Potion spawnPotion(double locationX, double locationY, String potionType)
-	{
-		Potion potion = new Potion(tileMap, true, locationX, locationY, null, 1, potionType);
-		items.add(potion);
-		return potion;
-	}
-	
-	public Coin spawnCoin(double locationX, double locationY, String coinType)
-	{
-		Coin coin = new Coin(tileMap, true, locationX, locationY, null, 1, coinType);
-		items.add(coin);
-		return coin;
-	}
-	
-	public void spawnStatueSave(double locationX, double locationY)
-	{
-		StatueSave statueSave = new StatueSave(tileMap, locationX, locationY + 10, gameStateManager, this);
-		activatables.add(statueSave);
-		stuff.add(statueSave);
-	}
+
 	
 	public void GPS()
 	{
@@ -1073,7 +828,7 @@ public class MainMap extends GameState
 	{
 		if(key == KeyEvent.VK_ESCAPE) 
 		{
-			gameStateManager.paused = !gameStateManager.getPaused();
+			gameStateManager.setPaused(!gameStateManager.getPaused());
 			gameStateManager.setBrowsingInventory(false);
 		}
 		
@@ -1084,10 +839,10 @@ public class MainMap extends GameState
 				return;
 			}
 			gameStateManager.setBrowsingInventory(!gameStateManager.getBrowsingInventory());
-			gameStateManager.pause(gameStateManager.getBrowsingInventory());
+			gameStateManager.setPaused(gameStateManager.getBrowsingInventory());
 		}
 		
-		if(gameStateManager.paused) return;
+		if(gameStateManager.getPaused()) return;
 		
 		if(key == KeyEvent.VK_LEFT) player.setLeft(true);
 		if(key == KeyEvent.VK_RIGHT) player.setRight(true);

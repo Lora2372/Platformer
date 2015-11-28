@@ -2,8 +2,8 @@ package Entity.Unit;
 
 import java.util.ArrayList;
 
+import GameState.MainMap.MainMap;
 import TileMap.TileMap;
-import GameState.MainMap;
 
 public class Slug extends Unit
 {

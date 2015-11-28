@@ -15,7 +15,7 @@ import Entity.Projectile.FireBallLarge;
 import Entity.Projectile.FireBallSmall;
 import Entity.Projectile.Projectile;
 import Entity.Projectile.ProjectileData;
-import GameState.MainMap;
+import GameState.MainMap.MainMap;
 import Main.Content;
 import TileMap.TileMap;
 import java.awt.*;

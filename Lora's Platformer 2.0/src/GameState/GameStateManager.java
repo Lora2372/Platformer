@@ -77,7 +77,7 @@ public class GameStateManager
 	
 	public void setBrowsingInventory(boolean b) { browsingInventory = b; }
 	public boolean getBrowsingInventory() { return browsingInventory; }
-	public void pause(boolean b) { paused = b; }
+	public void setPaused(boolean paused) { this.paused = paused; }
 	public boolean getPaused() { return paused; }
 	public void options(boolean well)
 	{ 
@@ -132,7 +132,7 @@ public class GameStateManager
 	private void unloadState(int state) 
 	{
 		stopMusic();
-		gameStates[state].reset();
+		gameStates[state].saveLocally();
 		gameStates[state] = null;
 	}
 	

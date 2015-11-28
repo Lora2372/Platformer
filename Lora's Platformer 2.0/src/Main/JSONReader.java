@@ -11,6 +11,7 @@ import Entity.Doodad.Activatable.CreateDoodad;
 import Entity.Doodad.Activatable.DoodadData;
 import Entity.Item.CreateItem;
 import Entity.Item.Item;
+import Entity.Item.ItemData;
 import Entity.Player.Player;
 import Entity.Unit.CreateUnit;
 import Entity.Unit.UnitData;
@@ -110,12 +111,34 @@ public class JSONReader
 					boolean loading = (Boolean) jsonObjectMap.get("Loading");
 					player.setLoading(i, loading);
 					
-					// Load regular doodads
+					
+					// Load items in the world
+					jsonObjectItems = (JSONObject) jsonObjectMap.get("Items");
 					whileCounter = 0;
-					while(jsonObjectMap.get("Doodad" + (whileCounter < 10 ? "0" : "") + whileCounter) != null)
+					while(jsonObjectItems.get("Item" + (whileCounter < 10 ? "0" : "") + whileCounter) != null)
+					{
+						JSONObject jsonObjectItem = (JSONObject) jsonObjectItems.get("Item" + (whileCounter < 10 ? "0" : "") + whileCounter);
+						String itemType = (String) jsonObjectItem.get("ItemType");
+						int stacks = ((Long) jsonObjectItem.get("Stack")).intValue();
+						spawnLocationX = (Double) jsonObjectItem.get("SpawnLocationX");
+						spawnLocationY = (Double) jsonObjectItem.get("SpawnLocationY");
+						
+						ItemData itemData = new ItemData(itemType, stacks, spawnLocationX, spawnLocationY);
+						CreateItem.addItem(currentMap, itemData);
+						
+						whileCounter++;
+					}
+					
+					
+					
+					// Load regular doodads
+					JSONObject jsonObjectDoodads = (JSONObject) jsonObjectMap.get("Doodads");
+					whileCounter = 0;
+					
+					while(jsonObjectDoodads.get("Doodad" + (whileCounter < 10 ? "0" : "") + whileCounter) != null)
 					{
 						
-						JSONObject jsonObjectDoodad = (JSONObject) jsonObjectMap.get("Doodad" + (whileCounter < 10 ? "0" : "") + whileCounter);
+						JSONObject jsonObjectDoodad = (JSONObject) jsonObjectDoodads.get("Doodad" + (whileCounter < 10 ? "0" : "") + whileCounter);
 						String doodadType = (String) jsonObjectDoodad.get("DoodadType");
 						
 						untouchable = (Boolean) jsonObjectDoodad.get("Untouchable");
@@ -147,9 +170,7 @@ public class JSONReader
 							{
 								x = -1;
 							}
-							
 						} while(x != -1);
-						
 						
 						DoodadData unitData = new DoodadData
 						(
@@ -168,16 +189,16 @@ public class JSONReader
 						
 						CreateDoodad.addDoodad(currentMap, unitData);
 						
-						whileCounter++;
-						
+						whileCounter++;	
 					}
 					
-					
-					whileCounter = 0;
 					// Load regular units:
-					while(jsonObjectMap.get("Unit" + (whileCounter < 10 ? "0" : "") + whileCounter) != null)
+					JSONObject jsonObjectUnits = (JSONObject) jsonObjectMap.get("Units");
+					whileCounter = 0;
+					
+					while(jsonObjectUnits.get("Unit" + (whileCounter < 10 ? "0" : "") + whileCounter) != null)
 					{
-						JSONObject jsonObjectUnit = (JSONObject) jsonObjectMap.get("Unit" + (whileCounter < 10 ? "0" : "") + whileCounter);
+						JSONObject jsonObjectUnit = (JSONObject) jsonObjectUnits.get("Unit" + (whileCounter < 10 ? "0" : "") + whileCounter);
 						String unitType = (String) jsonObjectUnit.get("UnitType");
 
 						facingRight = (Boolean) jsonObjectUnit.get("FacingRight");

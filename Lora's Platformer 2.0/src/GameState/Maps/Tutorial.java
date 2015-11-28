@@ -9,9 +9,9 @@ import Entity.Player.HUD;
 import Entity.Player.Player;
 import Entity.Unit.Succubus;
 import GameState.GameStateManager;
-import GameState.MainMap;
 import GameState.Conversation.Conversation;
 import GameState.Conversation.ConversationState;
+import GameState.MainMap.MainMap;
 import TileMap.Background;
 import TileMap.GameOver;
 import TileMap.TileMap;
@@ -64,8 +64,8 @@ public class Tutorial extends MainMap
 		player.setTileMap(tileMap);
 		player.setCurrentMap("DeepWoods");
 		
-		spawnTorch(3810, 400);
-		spawnTorch(4650, 400);
+		spawnDoodad.spawnTorch(3810, 400);
+		spawnDoodad.spawnTorch(4650, 400);
 		
 		int index = 0;
 		for(int i = 0; i < GameStateManager.GameMaps.values().length; i++)
@@ -250,7 +250,7 @@ public class Tutorial extends MainMap
 				if(!player.getInConversation())
 				{
 					hud.setQuestCurrent(9);
-					succubus = spawnSuccubus(3500, player.getLocationY(), false);
+					succubus = spawnUnit.spawnSuccubus(3500, player.getLocationY(), false);
 					characterList.add(succubus);
 					
 					

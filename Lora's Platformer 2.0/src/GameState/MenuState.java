@@ -99,9 +99,9 @@ public class MenuState extends GameState
 		backGround.update();
 	}
 	
-	public void reset()
+	public void saveLocally()
 	{
-		currentChoice = 0;
+
 	}
 	
 	public void updateChoice(int choice)

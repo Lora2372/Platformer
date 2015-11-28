@@ -1,6 +1,6 @@
 package Entity.Explosion;
 
-import GameState.MainMap;
+import GameState.MainMap.MainMap;
 import Main.Content;
 import TileMap.TileMap;
 

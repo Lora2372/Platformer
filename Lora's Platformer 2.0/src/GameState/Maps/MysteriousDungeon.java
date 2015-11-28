@@ -15,9 +15,9 @@ import Entity.Unit.Slug;
 import Entity.Unit.Succubus;
 import Entity.Unit.Wolf;
 import GameState.GameStateManager;
-import GameState.MainMap;
 import GameState.Conversation.Conversation;
 import GameState.Conversation.ConversationState;
+import GameState.MainMap.MainMap;
 import TileMap.GameOver;
 import TileMap.TileMap;
 
@@ -50,21 +50,21 @@ public class MysteriousDungeon extends MainMap
 		
 		conversation = player.getConversation();
 		
-		spawnTorch(109, 440);		
+		spawnDoodad.spawnTorch(109, 440);		
 		
-		spawnTorch(3508, 410 + 240);
+		spawnDoodad.spawnTorch(3508, 410 + 240);
 		
-		spawnTorch(3928, 410 + 240);
+		spawnDoodad.spawnTorch(3928, 410 + 240);
 		
-		spawnTorch(390, 1250);
-		spawnTorch(390, 1730);
+		spawnDoodad.spawnTorch(390, 1250);
+		spawnDoodad.spawnTorch(390, 1730);
 		
-		spawnTorch(690, 1250);
-		spawnTorch(690, 1730);
+		spawnDoodad.spawnTorch(690, 1250);
+		spawnDoodad.spawnTorch(690, 1730);
 
-		spawnStatueSave(250, 780);
+		spawnDoodad.spawnStatueSave(250, 780);
 		
-		spawnStatueSave(2900, 780);
+		spawnDoodad.spawnStatueSave(2900, 780);
 		
 		try
 		{
@@ -90,43 +90,43 @@ public class MysteriousDungeon extends MainMap
 		if(!player.getLoading(index))
 		{
 			
-			door = spawnDoor(doorLocationX,  doorLocationY, true, 0, CreateDoodad.Doors.Boss.toString());
+			door = spawnDoodad.spawnDoor(doorLocationX,  doorLocationY, true, 0, CreateDoodad.Doors.Boss.toString());
 			
 			player.setPosition(startLocationX, startLocationY);
 			player.setSpawnPoint(startLocationX, startLocationY);
 			
-			Chest chest = spawnChest(800, 850, false, 0, "Common");
+			Chest chest = spawnDoodad.spawnChest(800, 850, false, 0, "Common");
 			dropPotion(CreateItem.Potions.Mana.toString(), 100, 1, chest);
 			
-			spawnSign(400, 810, conversation.mysteriousDungeonDirectionMessage, conversation.mysteriousDungeonDirectionMessageWhoTalks);
+			spawnDoodad.spawnSign(400, 810, conversation.mysteriousDungeonDirectionMessage, conversation.mysteriousDungeonDirectionMessageWhoTalks);
 			
-			chest = spawnChest(3262, 1620, false, 0, "Common");
+			chest = spawnDoodad.spawnChest(3262, 1620, false, 0, "Common");
 			dropPotion(CreateItem.Potions.Stamina.toString(), 100, 1, chest);
 			
-			Succubus succubus = spawnSuccubus(500, 1550, true);
+			Succubus succubus = spawnUnit.spawnSuccubus(500, 1550, true);
 			dropPotion("Any", 25, 1, succubus);
 			
-			succubus = spawnSuccubus(937, 430, false);
+			succubus = spawnUnit.spawnSuccubus(937, 430, false);
 			dropPotion("Any", 25, 1, succubus);
 			
-			succubus = spawnSuccubus(3150, 1620, false);
+			succubus = spawnUnit.spawnSuccubus(3150, 1620, false);
 			dropPotion("Any", 25, 1, succubus);
 			
-			succubus = spawnSuccubus(2833, 780, false);
+			succubus = spawnUnit.spawnSuccubus(2833, 780, false);
 			dropPotion("Any", 25, 1, succubus);
 			
-			Wolf wolf = spawnWolf(537, 1760, true);
+			Wolf wolf = spawnUnit.spawnWolf(537, 1760, true);
 			dropPotion("Any", 25, 1, wolf);
-			wolf = spawnWolf(537, 1760, false);
+			wolf = spawnUnit.spawnWolf(537, 1760, false);
 			dropPotion("Any", 25, 1, wolf);
 			
-			Slug slug = spawnSlug(1788, 1250, true, null);
+			Slug slug = spawnUnit.spawnSlug(1788, 1250, true, null);
 			dropPotion("Any", 25, 1, slug);
 			
-			slug = spawnSlug(1788, 1250, false, null);
+			slug = spawnUnit.spawnSlug(1788, 1250, false, null);
 			dropPotion("Any", 25, 1, slug);
 			
-			spawnKey(380, 1550, "Boss");
+			spawnItem.spawnKey(380, 1550, "Boss", 1);
 			
 		}
 		else

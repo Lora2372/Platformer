@@ -1,16 +1,32 @@
 package Entity.Item;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-
 import Entity.Unit.Unit;
+import GameState.GameStateManager;
 import TileMap.TileMap;
 
 public class CreateItem 
 {
 	protected TileMap tileMap;
+	
+	
+	public static ArrayList<ArrayList<ItemData>> itemList;
+	
 	public CreateItem(TileMap tileMap)
 	{
 		this.tileMap = tileMap;
+		
+		items = new HashMap<String, ArrayList<ItemData>>();
+		itemList = new ArrayList<ArrayList<ItemData>>();
+		
+		for(int i = 0; i <  GameStateManager.GameMaps.values().length - 1; i++)
+		{
+			ArrayList<ItemData> tempList = new ArrayList<ItemData>();
+			itemList.add(tempList);
+			items.put(GameStateManager.GameMaps.values()[i + 1].toString(), itemList.get(i));
+		}
+		
 		
     	itemDescriptionName = new HashMap<String, String>();
 		itemDescriptionName.put(Potions.Healing.toString(), "Healing Potion");
@@ -61,7 +77,26 @@ public class CreateItem
 	public static HashMap<String, String> itemDescriptionName = new HashMap<String, String>();
 
 	public static HashMap<String, String> itemDescription = new HashMap<String, String>();
+	
+	public static HashMap<String, ArrayList<ItemData>> items = new HashMap<String, ArrayList<ItemData>>();
 
+	public static int getItemListSize() { return itemList.size(); }
+	
+	public static void addItem(String currentMap, ItemData itemData)
+	{
+		items.get(currentMap).add(itemData);
+	}
+	
+	public static void resetItemList(String map)
+	{
+		items.get(map).clear();
+	}
+	
+	public static ArrayList<ItemData> getItemDataList(String map)
+	{
+		return items.get(map);
+	}
+	
 	
 	public static String getDescriptionName(String key)
 	{		
@@ -118,8 +153,8 @@ public class CreateItem
 		}
 		return false;
 	}
-		public boolean lookForPotion(String itemType)
-		{
+	public boolean lookForPotion(String itemType)
+	{
 		
 		for(int i = 0; i < Potions.values().length; i++)
 		{
@@ -132,5 +167,6 @@ public class CreateItem
 		return false;
 	}
 	
+		
 	
 }

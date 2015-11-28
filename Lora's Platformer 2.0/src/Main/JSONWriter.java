@@ -15,6 +15,7 @@ import Entity.Doodad.Activatable.CreateDoodad;
 import Entity.Doodad.Activatable.DoodadData;
 import Entity.Item.CreateItem;
 import Entity.Item.Item;
+import Entity.Item.ItemData;
 import Entity.Player.Player;
 import Entity.Unit.CreateUnit;
 import Entity.Unit.UnitData;
@@ -91,39 +92,9 @@ public class JSONWriter
 				
 				if(!gameMap.equals("Tutorial"))
 				{	
-					if(CreateDoodad.getDoodadDataList(gameMap) == null)
-					{
-						CreateDoodad.getDoodadDataList(gameMap);
-						System.out.println("null");
-					}
 					
-					for(int j = 0; j < CreateDoodad.getDoodadDataList(gameMap).size(); j++)
-					{
-						DoodadData doodad = CreateDoodad.getDoodadDataList(gameMap).get(j);
-						JSONObject jsonObjectDoodad = new JSONObject();
-						
-						jsonObjectDoodad.put("Untouchable", doodad.getUntouchable());
-						jsonObjectDoodad.put("Invulnerable", doodad.getInvulnerable());
-						jsonObjectDoodad.put("Active", doodad.getActive());
-						jsonObjectDoodad.put("CurrentAction", doodad.getCurrentAction());
-						jsonObjectDoodad.put("Locked", doodad.getLocked());
-		    	    	jsonObjectDoodad.put("SpawnLocationX", doodad.getSpawnLocationX());
-	    	    		jsonObjectDoodad.put("SpawnLocationY", doodad.getSpawnLocationY());
-						jsonObjectDoodad.put("DoodadType", doodad.getDoodadType());
-
-	    	    		jsonObjectItems = new JSONObject();
-	    	    		
-	    		        ArrayList<Item> itemsList = doodad.getItems();
-	    		        for(int x = 0; x < itemsList.size(); x++)
-	    		        {
-	    		        	jsonObjectItems.put("Item:" + (x < 10 ? "0" : "") + x, itemsList.get(x).getItemType());
-		        			jsonObjectItems.put("Stack:" + (x < 10 ? "0" : "") + x, itemsList.get(x).getStacks());
-	    		        }
-	    		        jsonObjectDoodad.put("Items", jsonObjectItems);
-	    		        jsonObjectMap.put("Doodad" + (j < 10 ? "0" : "") + j, jsonObjectDoodad);
-		    	    	
-					}
-					
+					// Saving units
+					JSONObject jsonObjectUnits = new JSONObject();
 	    	    	for(int j = 0; j < CreateUnit.getUnitDataList(gameMap).size(); j++)
 	    	    	{
 	    	    		UnitData unit = CreateUnit.getUnitDataList(gameMap).get(j);
@@ -151,10 +122,59 @@ public class JSONWriter
 		        			jsonObjectItems.put("Stack:" + (x < 10 ? "0" : "") + x, itemsList.get(x).getStacks());
 	    		        }
 	    		        jsonObjectUnit.put("Items", jsonObjectItems);
-	    		        jsonObjectMap.put("Unit" + (j < 10 ? "0" : "") + j, jsonObjectUnit);
+	    		        jsonObjectUnits.put("Unit" + (j < 10 ? "0" : "") + j, jsonObjectUnit);
 	    	    	}
-					jsonObjectOuter.put(GameStateManager.GameMaps.values()[i], jsonObjectMap); 
+	    	    	jsonObjectMap.put("Units", jsonObjectUnits);
 					
+	    	    	
+					// Saving doodads
+					JSONObject jsonObjectDoodads = new JSONObject();
+					for(int j = 0; j < CreateDoodad.getDoodadDataList(gameMap).size(); j++)
+					{
+						DoodadData doodad = CreateDoodad.getDoodadDataList(gameMap).get(j);
+						JSONObject jsonObjectDoodad = new JSONObject();
+						
+						jsonObjectDoodad.put("Untouchable", doodad.getUntouchable());
+						jsonObjectDoodad.put("Invulnerable", doodad.getInvulnerable());
+						jsonObjectDoodad.put("Active", doodad.getActive());
+						jsonObjectDoodad.put("CurrentAction", doodad.getCurrentAction());
+						jsonObjectDoodad.put("Locked", doodad.getLocked());
+		    	    	jsonObjectDoodad.put("SpawnLocationX", doodad.getSpawnLocationX());
+	    	    		jsonObjectDoodad.put("SpawnLocationY", doodad.getSpawnLocationY());
+						jsonObjectDoodad.put("DoodadType", doodad.getDoodadType());
+
+	    	    		jsonObjectItems = new JSONObject();
+	    	    		
+	    		        ArrayList<Item> itemsList = doodad.getItems();
+	    		        for(int x = 0; x < itemsList.size(); x++)
+	    		        {
+	    		        	jsonObjectItems.put("Item:" + (x < 10 ? "0" : "") + x, itemsList.get(x).getItemType());
+		        			jsonObjectItems.put("Stack:" + (x < 10 ? "0" : "") + x, itemsList.get(x).getStacks());
+	    		        }
+	    		        jsonObjectDoodad.put("Items", jsonObjectItems);
+	    		        jsonObjectDoodads.put("Doodad" + (j < 10 ? "0" : "") + j, jsonObjectDoodad);
+					}
+					jsonObjectMap.put("Doodads", jsonObjectDoodads);
+					
+					
+					// Saving items in the world:
+					jsonObjectItems = new JSONObject();
+					
+					for(int j = 0; j < CreateItem.getItemDataList(gameMap).size(); j++)
+					{
+						ItemData item = CreateItem.getItemDataList(gameMap).get(j);
+						JSONObject jsonObjectItem = new JSONObject();
+						jsonObjectItem.put("ItemType", item.getItemType());
+						jsonObjectItem.put("Stack", item.getStacks());
+						jsonObjectItem.put("SpawnLocationX", item.getSpawnLocationX());
+						jsonObjectItem.put("SpawnLocationY", item.getSpawnLocationY());
+						
+						jsonObjectItems.put("Item" + (j < 10 ? "0" : "") + j, jsonObjectItem);
+					}
+					jsonObjectMap.put("Items", jsonObjectItems);
+					
+					// Saving all of the map's data
+					jsonObjectOuter.put(GameStateManager.GameMaps.values()[i], jsonObjectMap); 
 				}
 			}
 

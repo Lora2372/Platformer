@@ -4,9 +4,9 @@ import Audio.JukeBox;
 import Entity.Doodad.Doodad;
 import Entity.Player.Player;
 import GameState.GameStateManager;
-import GameState.MainMap;
 import GameState.Conversation.Conversation;
 import GameState.Conversation.ConversationState;
+import GameState.MainMap.MainMap;
 import Main.Content;
 import Main.JSONWriter;
 import TileMap.TileMap;
@@ -97,7 +97,7 @@ public class StatueSave extends Doodad
 					
 					player.setSpawnLocationX(spawnLocationX);
 					player.setSpawnLocationY(spawnLocationY);
-					mainMap.reset();
+					mainMap.saveLocally();
 					JukeBox.play("Save");
 					JSONWriter.saveFile(player);
 				}

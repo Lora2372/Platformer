@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import Entity.MapObject;
 import Entity.Unit.Unit;
-import GameState.MainMap;
+import GameState.MainMap.MainMap;
 import TileMap.TileMap;
 
 public class Explosion extends MapObject

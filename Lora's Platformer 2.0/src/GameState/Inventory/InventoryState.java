@@ -129,7 +129,7 @@ public class InventoryState extends GameState
 		player.getConversationState().displayItem(player, items[selectedSlotY][selectedSlotX]);
 	}
 	
-	public void reset()
+	public void saveLocally()
 	{
 		
 	}
@@ -263,7 +263,7 @@ public class InventoryState extends GameState
 		{
 			player.getConversationState().endConversation();
 			gameStateManager.setBrowsingInventory(false);
-			gameStateManager.pause(false);
+			gameStateManager.setPaused(false);
 		}
 		
 		if(k == KeyEvent.VK_ENTER)

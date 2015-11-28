@@ -7,8 +7,8 @@ import javax.imageio.ImageIO;
 import Entity.Doodad.Activatable.Door;
 import Entity.Player.Player;
 import GameState.GameStateManager;
-import GameState.MainMap;
 import GameState.Conversation.ConversationState;
+import GameState.MainMap.MainMap;
 import TileMap.Background;
 import TileMap.GameOver;
 import TileMap.TileMap;
@@ -64,9 +64,9 @@ public class DeepWoods extends MainMap
 			player.setPosition(startLocationX, startLocationY);
 			player.setSpawnPoint(startLocationX, startLocationY);
 			
-			spawnCampFire(2830,  910);
+			spawnDoodad.spawnCampFire(2830,  910);
 			
-			door = spawnDoor(3030,  890, false, 0, "Village");
+			door = spawnDoodad.spawnDoor(3030,  890, false, 0, "Village");
 		}
 		else
 		{
@@ -78,7 +78,7 @@ public class DeepWoods extends MainMap
 			player.setAnimationState(0);
 		}
 		
-		spawnStatueSave(600, 780);
+		spawnDoodad.spawnStatueSave(600, 780);
 		
 
 		

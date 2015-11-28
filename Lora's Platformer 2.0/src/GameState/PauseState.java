@@ -68,9 +68,9 @@ public class PauseState extends GameState
 		background.update();
 	}
 	
-	public void reset()
+	public void saveLocally()
 	{
-		currentChoice = 0;
+
 	}
 	
 	public void updateChoice(int choice)
@@ -141,7 +141,7 @@ public class PauseState extends GameState
 		if(currentChoice == 0)
 		{
 			// Resume
-			gameStateManager.pause(false);
+			gameStateManager.setPaused(false);
 		}
 		if(currentChoice == 1)
 		{
@@ -150,7 +150,7 @@ public class PauseState extends GameState
 		if(currentChoice == 2)
 		{
 			currentChoice = 0;
-			gameStateManager.pause(false);
+			gameStateManager.setPaused(false);
 			gameStateManager.options(false);
 			gameStateManager.setState(0);
 		}

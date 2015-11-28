@@ -1,8 +1,9 @@
 package Entity.Unit;
 
 import java.util.ArrayList;
+
+import GameState.MainMap.MainMap;
 import TileMap.TileMap;
-import GameState.MainMap;
 import Main.Content;
 
 public class Succubus extends Unit

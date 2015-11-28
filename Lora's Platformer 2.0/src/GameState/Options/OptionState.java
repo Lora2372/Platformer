@@ -162,7 +162,7 @@ public class OptionState extends GameState implements ChangeListener
 		}
 	}
 	
-	public void reset()
+	public void saveLocally()
 	{
 		
 	}

@@ -12,9 +12,9 @@ import Entity.Doodad.Activatable.Portal;
 import Entity.Player.Player;
 import Entity.Unit.Fiona;
 import GameState.GameStateManager;
-import GameState.MainMap;
 import GameState.Conversation.Conversation;
 import GameState.Conversation.ConversationState;
+import GameState.MainMap.MainMap;
 import TileMap.GameOver;
 import TileMap.TileMap;
 
@@ -57,11 +57,11 @@ public class FionasSanctum extends MainMap
 		
 		conversation = player.getConversation();
 		
-		spawnTorch(390, 410);
-		spawnTorch(810, 410);
+		spawnDoodad.spawnTorch(390, 410);
+		spawnDoodad.spawnTorch(810, 410);
 
-		spawnTorch(390, 650);
-		spawnTorch(810, 650);
+		spawnDoodad.spawnTorch(390, 650);
+		spawnDoodad.spawnTorch(810, 650);
 
 
 		
@@ -183,11 +183,11 @@ public class FionasSanctum extends MainMap
 				stuff.add(portal);
 				activatables.add(portal);
 				
-				spawnTorch(1350, 410);
-				spawnTorch(1590, 410);
+				spawnDoodad.spawnTorch(1350, 410);
+				spawnDoodad.spawnTorch(1590, 410);
 				
-				spawnTorch(1350, 650);
-				spawnTorch(1590, 650);
+				spawnDoodad.spawnTorch(1350, 650);
+				spawnDoodad.spawnTorch(1590, 650);
 				
 			}
 		}
