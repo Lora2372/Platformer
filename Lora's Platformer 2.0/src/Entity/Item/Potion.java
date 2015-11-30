@@ -2,6 +2,7 @@ package Entity.Item;
 
 import Audio.JukeBox;
 import Entity.MapObject;
+import Entity.Player.CreateBuff;
 import Entity.Unit.Unit;
 import Main.Content;
 import TileMap.TileMap;
@@ -70,7 +71,9 @@ public class Potion extends Item
 		
 		if(itemType.equals(CreateItem.Potions.Healing.toString()))
 		{
-			user.restoreHealth(50);
+			
+			user.addBuff(CreateBuff.createBuff(CreateBuff.Buffs.RestoreHealth, 5, 50, user, sprites[0]));
+//			user.restoreHealth(50);
 		}
 		else if(itemType.equals(CreateItem.Potions.Mana.toString()))
 		{

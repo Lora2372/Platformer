@@ -8,6 +8,7 @@ import Entity.Animation;
 import Entity.MapObject;
 import Entity.Doodad.*;
 import Entity.Item.Item;
+import Entity.Player.Buff;
 import Entity.Player.Player;
 import Entity.Projectile.ArcaneBall;
 import Entity.Projectile.ElectricBall;
@@ -17,6 +18,7 @@ import Entity.Projectile.Projectile;
 import Entity.Projectile.ProjectileData;
 import GameState.MainMap.MainMap;
 import Main.Content;
+import Main.GamePanel;
 import TileMap.TileMap;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -30,6 +32,8 @@ public class Unit extends MapObject
 	protected String name;
 	protected boolean player;
 	
+	
+	protected ArrayList<Buff> buffs;
 	
 	protected int silver;
 	protected int gold;
@@ -281,6 +285,8 @@ public class Unit extends MapObject
 		this.spawnLocationY = spawnLocationY;
 		this.mainMap = mainMap;
 		
+		buffs = new ArrayList<Buff>();
+		
 		setPosition(spawnLocationX, spawnLocationY);		
 		
 		numberofSounds = new int[soundTypes.values().length];
@@ -387,6 +393,12 @@ public class Unit extends MapObject
 	
 	public double getHealth() { return health; }
 	public double getMaxHealth() { return maxHealth; }
+	
+	public void addHealth(double healthRestored)
+	{
+		health += healthRestored;
+		if(health > maxHealth) health = maxHealth;
+	}
 	
 	public void restoreHealth(double healthRestored) 
 	{ 
@@ -605,11 +617,30 @@ public class Unit extends MapObject
 	
 	public void update(ArrayList<Unit> characterList)
 	{
+		
+		int buffLocationX = GamePanel.WIDTH - 50;
+		int buffLocationY = 50;
+		
+		for(int i = 0; i < buffs.size(); i++)
+		{
+			Buff buff = buffs.get(i);
+			buff.setLocation(buffLocationX, buffLocationY);
+			buff.update();
+			
+			if(buff.getExpired())
+			{
+				buffs.remove(i);
+				i--;
+			}
+			
+			buffLocationX += buff.getWidth() + 2;
+		}
+		
 		// Update position
 		getNextPosition();
 		checkTileMapCollision();
 		setPosition(xtemp, ytemp);
-				
+		
 		if(initializeSpawning)
 		{
 			summoningEffect = new SummoningEffect(tileMap, locationX, locationY);
@@ -1385,6 +1416,11 @@ public class Unit extends MapObject
 				}
 			}
 		} // End for loop		
+	}
+	
+	public void addBuff(Buff buff)
+	{
+		buffs.add(buff);
 	}
 	
 	public void drinkPotion(String potionType)

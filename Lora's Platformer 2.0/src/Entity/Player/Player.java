@@ -1,7 +1,7 @@
 package Entity.Player;
 
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-
 import Entity.Unit.Unit;
 import GameState.GameStateManager;
 import GameState.Conversation.Conversation;
@@ -26,6 +26,7 @@ public class Player extends Unit
 	
 	protected Conversation conversation;
 	protected ConversationState conversationState;
+	
 	//  Animations 
 	
 	
@@ -132,7 +133,6 @@ public class Player extends Unit
 
 	public HUD getHUD() { return hud; }
 	
-	
 	public void calculateAim(Unit character)
 	{
 		double tempX;
@@ -179,15 +179,29 @@ public class Player extends Unit
 		aim = Math.atan2(tempY - locationY, tempX - locationX);
 	}
 	
-	
-	public void setMouseLocationX(double mouse)
+	public void mouseClicked(MouseEvent mouse) 
 	{
-		this.mouseLocationX = mouse;
+		for(int i = 0; i < buffs.size(); i++)
+		{
+			buffs.get(i).mouseClicked(mouse);
+		}
 	}
 	
-	public void setMouseLocationY(double mouse)
+	public void mouseMoved(MouseEvent mouse) 
 	{
-		this.mouseLocationY = mouse;
+		this.mouseLocationX = mouse.getX();
+		this.mouseLocationY = mouse.getY();
+		
+		for(int i = 0; i < buffs.size(); i++)
+		{
+			buffs.get(i).mouseMoved(mouse);
+		}
+		
 	}
 	
+	public void mouseDragged(MouseEvent mouse) 
+	{
+		this.mouseLocationX = mouse.getX();
+		this.mouseLocationY = mouse.getY();
+	}
 }

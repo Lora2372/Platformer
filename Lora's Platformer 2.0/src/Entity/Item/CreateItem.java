@@ -106,14 +106,14 @@ public class CreateItem
 	}
 	
 	
-	public static String getDescriptionName(String key)
+	public static String getDescriptionName(String item)
 	{		
-		return itemDescriptionName.get(key);
+		return itemDescriptionName.get(item);
 	}
 	
-	public static String getDescription(String key)
+	public static String getDescription(String item)
 	{
-		return itemDescription.get(key);
+		return itemDescription.get(item);
 	}
 	
 	
@@ -130,12 +130,13 @@ public class CreateItem
 		{
 			return new Key(tileMap, false, 0, 0, owner, stacks, itemType);
 		}
+		
 		if(lookForPotion(itemType))
 		{
 			return new Potion(tileMap, false, 0, 0, owner, stacks, itemType);
 		}
 		
-		if(lookForHerbs(itemType))
+		if(lookForHerb(itemType))
 		{
 			return new Herb(tileMap, false, 0, 0, owner, stacks, itemType);
 		}
@@ -156,6 +157,7 @@ public class CreateItem
 		}
 		return false;
 	}
+	
 	public boolean lookForKey(String itemType)
 	{
 		for(int i = 0; i < Keys.values().length; i++)
@@ -167,6 +169,7 @@ public class CreateItem
 		}
 		return false;
 	}
+	
 	public boolean lookForPotion(String itemType)
 	{
 		
@@ -181,7 +184,7 @@ public class CreateItem
 		return false;
 	}
 	
-	public boolean lookForHerbs(String itemType)
+	public boolean lookForHerb(String itemType)
 	{
 		for(int i = 0; i < Herbs.values().length; i++)
 		{

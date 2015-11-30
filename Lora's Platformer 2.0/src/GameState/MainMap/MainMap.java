@@ -937,7 +937,7 @@ public class MainMap extends GameState
 
 	public void mouseClicked(MouseEvent mouse) 
 	{
-		
+		player.mouseClicked(mouse);
 	}
 
 
@@ -968,8 +968,7 @@ public class MainMap extends GameState
 		mouseLocationX = mouse.getX();
 		mouseLocationY = mouse.getY();
 		
-		player.setMouseLocationX(mouseLocationX);
-		player.setMouseLocationY(mouseLocationY);
+		player.mouseMoved(mouse);
 	}
 	
 	public void mouseDragged(MouseEvent mouse) 
@@ -977,7 +976,6 @@ public class MainMap extends GameState
 		mouseLocationX = mouse.getX();
 		mouseLocationY = mouse.getY();
 		
-		player.setMouseLocationX(mouseLocationX);
-		player.setMouseLocationY(mouseLocationY);
+		player.mouseDragged(mouse);
 	}
 }
