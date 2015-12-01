@@ -18,6 +18,7 @@ import Entity.Projectile.Projectile;
 import Entity.Projectile.ProjectileData;
 import GameState.MainMap.MainMap;
 import Main.Content;
+import Main.DrawingConstants;
 import Main.GamePanel;
 import TileMap.TileMap;
 import java.awt.*;
@@ -69,20 +70,14 @@ public class Unit extends MapObject
 	protected double health;
 	protected double maxHealth;
 	protected double healthRegen;
-	protected double healthRestorationAmount;
-	protected double healthRestorationPerTick = 1;
 	
 	protected double mana;
 	protected double maxMana;
 	protected double manaRegen;
-	protected double manaRestorationAmount;
-	protected double manaRestorationPerTick = 1;
 	
 	protected double stamina;
 	protected double maxStamina;
 	protected double staminaRegen;
-	protected double staminaRestorationAmount;
-	protected double staminaRestorationPerTick = 1;
 	
 	protected int damageOnTouch;
 	protected boolean friendly;
@@ -394,47 +389,30 @@ public class Unit extends MapObject
 	public double getHealth() { return health; }
 	public double getMaxHealth() { return maxHealth; }
 	
-	public void addHealth(double healthRestored)
+	public void restoreHealth(double healthRestored)
 	{
 		health += healthRestored;
 		if(health > maxHealth) health = maxHealth;
 	}
 	
-	public void restoreHealth(double healthRestored) 
-	{ 
-		this.healthRestorationAmount = healthRestored;
-		
-		if(this.healthRestorationAmount > maxHealth)
-		{
-			this.healthRestorationAmount = maxHealth;
-		}
-	}
-	
 	public double getMana() { return mana; }
 	public double getMaxMana() { return maxMana; }
 	
-	public void restoreMana(double manaRestored) 
-	{ 
-		this.manaRestorationAmount = manaRestored;
-		
-		if(this.manaRestorationAmount > maxMana)
-		{
-			this.manaRestorationAmount = maxMana;
-		}
+	public void restoreMana(double manaRestored)
+	{
+		mana += manaRestored;
+		if(mana > maxMana) mana = maxMana;
 	}
 	
 	public double getStamina() { return stamina; }
 	public double getMaxStamina() { return maxStamina; }
 
-	public void restoreStamina(double staminaRestored) 
-	{ 
-		this.staminaRestorationAmount = staminaRestored;
-		
-		if(this.staminaRestorationAmount > maxStamina)
-		{
-			this.staminaRestorationAmount = maxStamina;
-		}
+	public void restoreStamina(double staminaRestored)
+	{
+		stamina += staminaRestored;
+		if(stamina > maxStamina) stamina = maxStamina;
 	}
+	
 	
 	
 	public int getDashStaminaCost()  { return dashCost; }
@@ -618,7 +596,7 @@ public class Unit extends MapObject
 	public void update(ArrayList<Unit> characterList)
 	{
 		
-		int buffLocationX = GamePanel.WIDTH - 50;
+		int buffLocationX = GamePanel.WIDTH - 100;
 		int buffLocationY = 50;
 		
 		for(int i = 0; i < buffs.size(); i++)
@@ -633,7 +611,7 @@ public class Unit extends MapObject
 				i--;
 			}
 			
-			buffLocationX += buff.getWidth() + 2;
+			buffLocationX -= buff.getWidth() + 10;
 		}
 		
 		// Update position
@@ -674,12 +652,6 @@ public class Unit extends MapObject
 		{
 			health += healthRegen;
 		}
-
-		if(healthRestorationAmount > 0)
-		{
-			health += healthRestorationPerTick;
-			healthRestorationAmount -= healthRestorationPerTick;
-		}
 		
 		if(health > maxHealth) 
 		{
@@ -690,12 +662,6 @@ public class Unit extends MapObject
 		if(manaRegen > 0)
 		{
 			mana += manaRegen;
-		}
-
-		if(manaRestorationAmount > 0)
-		{
-			mana += manaRestorationPerTick;
-			manaRestorationAmount -= manaRestorationPerTick;
 		}
 		
 		if(mana > maxMana) 
@@ -708,12 +674,6 @@ public class Unit extends MapObject
 		if(staminaRegen > 0)
 		{
 			stamina += staminaRegen;
-		}
-
-		if(staminaRestorationAmount > 0)
-		{
-			stamina += staminaRestorationPerTick;
-			staminaRestorationAmount -= staminaRestorationPerTick;
 		}
 		
 		if(stamina > maxStamina) 
@@ -1420,7 +1380,20 @@ public class Unit extends MapObject
 	
 	public void addBuff(Buff buff)
 	{
+		for(int i = 0; i < buffs.size(); i++)
+		{
+			if(buffs.get(i).getBuff().equals(buff.getBuff()))
+			{
+				buffs.remove(i);
+				i--;
+			}
+		}
 		buffs.add(buff);
+	}
+	
+	public ArrayList<Buff> getBuffs()
+	{
+		return buffs;
 	}
 	
 	public void drinkPotion(String potionType)
@@ -1524,26 +1497,6 @@ public class Unit extends MapObject
 		super.draw(graphics);		
 	}
 	
-	protected int shiftNorth(int coordinate, int distance) 
-	{
-	   return (coordinate - distance);
-	}
-	
-	protected int shiftSouth(int coordinate, int distance) {
-	   return (coordinate + distance);
-	}
-	
-	protected int shiftEast(int coordinate, int distance) 
-	{
-	   return (coordinate + distance);
-	}
-	
-	protected int shiftWest(int coordinate, int distance) 
-	{
-	   return (coordinate - distance);
-	}
-	
-	
 	public void drawNamePlate(Graphics2D graphics)
 	{
 		try
@@ -1560,10 +1513,10 @@ public class Unit extends MapObject
 			
 			graphics.setFont(new Font("Arial", Font.PLAIN, 14));
 			graphics.setColor(Color.BLACK);
-			graphics.drawString(name, shiftWest( (int) drawX, 1), shiftNorth( (int) drawY, 1));
-			graphics.drawString(name, shiftWest( (int) drawX, 1), shiftSouth( (int) drawY, 1));
-			graphics.drawString(name, shiftEast( (int) drawX, 1), shiftNorth( (int) drawY, 1));
-			graphics.drawString(name, shiftEast( (int) drawX, 1), shiftSouth( (int) drawY, 1));
+			graphics.drawString(name, DrawingConstants.shiftWest( (int) drawX, 1), DrawingConstants.shiftNorth( (int) drawY, 1));
+			graphics.drawString(name, DrawingConstants.shiftWest( (int) drawX, 1), DrawingConstants.shiftSouth( (int) drawY, 1));
+			graphics.drawString(name, DrawingConstants.shiftEast( (int) drawX, 1), DrawingConstants.shiftNorth( (int) drawY, 1));
+			graphics.drawString(name, DrawingConstants.shiftEast( (int) drawX, 1), DrawingConstants.shiftSouth( (int) drawY, 1));
 						
 			graphics.setColor(friendly ? Color.BLUE : Color.RED);
 			graphics.setFont(new Font("Arial", Font.PLAIN, 14));

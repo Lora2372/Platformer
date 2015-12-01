@@ -178,6 +178,13 @@ public class HUD
 		try
 		{
 			
+			// Draw buffs
+			
+			for(int i = 0; i < player.getBuffs().size(); i++)
+			{
+				player.getBuffs().get(i).draw(graphics);
+			}
+			
 		
 			// Draw the health bar
 			double currentValue = player.getHealth();

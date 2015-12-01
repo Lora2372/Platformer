@@ -3,21 +3,16 @@ package Entity.Player;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import Entity.Unit.Unit;
-import TileMap.TileMap;
 
 public class CreateBuff 
 {
-	protected TileMap tileMap;
 	
 	public static ArrayList<ArrayList<BuffData>> buffList;
 	
 	
-	public CreateBuff(TileMap tileMap)
-	{
-		this.tileMap = tileMap;
-		
+	public CreateBuff()
+	{		
 		
 		buffDescriptionName = new HashMap<String, String>();
 		buffDescriptionName.put(Buffs.RestoreHealth.toString(), "Restore health");

@@ -93,6 +93,8 @@ public class Content
 	public static BufferedImage[][] bossHealthBarFrame		= load("/Art/HUD/Bars/BossHealthBarFrame.png", 900, 60);
 	public static BufferedImage[][] bossHealthBar 			= load("/Art/HUD/Bars/BossHealthBar.png", 900, 60);
 	
+	public static BufferedImage[][] BuffIcon				= load("/Art/HUD/Foregrounds/BuffIcon.png", 64, 64);
+	
 	// Portraits
 	public static BufferedImage[][] PortraitPlayer			=load("/Art/HUD/Portraits/PortraitPlayer.png", 94, 94);
 	public static BufferedImage[][] PortraitSuccubus		=load("/Art/HUD/Portraits/PortraitSuccubus.png", 94, 94);

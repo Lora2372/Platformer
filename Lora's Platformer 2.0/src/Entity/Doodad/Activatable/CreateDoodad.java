@@ -4,18 +4,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import GameState.GameStateManager;
-import TileMap.TileMap;
 
 public class CreateDoodad 
 {
-
-	protected TileMap tileMap;
 	
 	static ArrayList<ArrayList<DoodadData>> doodadList;
 	
-	public CreateDoodad(TileMap tileMap)
+	public CreateDoodad()
 	{
-		this.tileMap = tileMap;
 		
 		doodads = new HashMap<String, ArrayList<DoodadData>>();
 		doodadList = new ArrayList<ArrayList<DoodadData>>(GameStateManager.GameMaps.values().length - 1);

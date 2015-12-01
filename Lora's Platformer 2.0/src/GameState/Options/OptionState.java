@@ -13,6 +13,7 @@ import Entity.Player.Player;
 import GameState.GameState;
 import GameState.GameStateManager;
 import Main.Content;
+import Main.DrawingConstants;
 import Main.GamePanel;
 
 
@@ -167,26 +168,6 @@ public class OptionState extends GameState implements ChangeListener
 		
 	}
 	
-	
-	protected int shiftNorth(int coordinate, int distance) 
-	{
-	   return (coordinate - distance);
-	}
-	
-	protected int shiftSouth(int coordinate, int distance) {
-	   return (coordinate + distance);
-	}
-	
-	protected int shiftEast(int coordinate, int distance) 
-	{
-	   return (coordinate + distance);
-	}
-	
-	protected int shiftWest(int coordinate, int distance) 
-	{
-	   return (coordinate - distance);
-	}
-	
 
 	public void draw(Graphics2D graphics) 
 	{
@@ -222,10 +203,10 @@ public class OptionState extends GameState implements ChangeListener
 					String textString = optionObject.getText();
 					
 					graphics.setColor(Color.BLACK);
-					graphics.drawString(textString, shiftWest(locationX, 1), shiftNorth(locationY, 1));
-					graphics.drawString(textString, shiftWest(locationX, 1), shiftSouth(locationY, 1));
-					graphics.drawString(textString, shiftEast(locationX, 1), shiftNorth(locationY, 1));
-					graphics.drawString(textString, shiftEast(locationX, 1), shiftSouth(locationY, 1));
+					graphics.drawString(textString, DrawingConstants.shiftWest(locationX, 1), DrawingConstants.shiftNorth(locationY, 1));
+					graphics.drawString(textString, DrawingConstants.shiftWest(locationX, 1), DrawingConstants.shiftSouth(locationY, 1));
+					graphics.drawString(textString, DrawingConstants.shiftEast(locationX, 1), DrawingConstants.shiftNorth(locationY, 1));
+					graphics.drawString(textString, DrawingConstants.shiftEast(locationX, 1), DrawingConstants.shiftSouth(locationY, 1));
 					
 					graphics.setColor(Color.WHITE);			
 					graphics.drawString(textString, locationX, locationY);

@@ -2,18 +2,10 @@ package Entity.Projectile;
 
 import java.util.HashMap;
 
-import TileMap.TileMap;
-
 public class ProjectileData 
 {
-	
-	
-	protected TileMap tileMap;
-	
-	public ProjectileData(TileMap tileMap)
+	public ProjectileData()
 	{
-		this.tileMap = tileMap;
-		
 		projectileCost = new HashMap<String, Integer>();
 		projectileCost.put(Projectiles.ArcaneBall.toString(), 20);
 		projectileCost.put(Projectiles.ElectricBall.toString(), 20);

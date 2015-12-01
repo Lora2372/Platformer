@@ -2,20 +2,15 @@ package Entity.Unit;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import GameState.GameStateManager;
-import TileMap.TileMap;
 
 public class CreateUnit 
 {
-	
-	protected TileMap tileMap;
-	
+
 	static ArrayList<ArrayList<UnitData>> characterList;
 	
-	public CreateUnit(TileMap tileMap)
+	public CreateUnit()
 	{
-		this.tileMap = tileMap;
 		units = new HashMap<String, ArrayList<UnitData>>();
 		characterList = new ArrayList<ArrayList<UnitData>>(GameStateManager.GameMaps.values().length - 1);
 		

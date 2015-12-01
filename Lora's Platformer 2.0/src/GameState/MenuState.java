@@ -3,7 +3,6 @@ package GameState;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-
 import Audio.JukeBox;
 import Entity.Doodad.Activatable.CreateDoodad;
 import Entity.Item.CreateItem;
@@ -11,6 +10,7 @@ import Entity.Player.*;
 import Entity.Projectile.ProjectileData;
 import Entity.Unit.CreateUnit;
 import GameState.Conversation.ConversationState;
+import Main.DrawingConstants;
 import Main.GamePanel;
 import Main.JSONReader;
 import TileMap.Background;
@@ -55,14 +55,19 @@ public class MenuState extends GameState
 		this.gameStateManager = gameStateManager;
 		tileMap = new TileMap(60);
 		
+		// Initializing public static classes:
 		@SuppressWarnings("unused")
 		CreateItem createItem = new CreateItem(tileMap);
 		@SuppressWarnings("unused")
-		CreateDoodad doodadData = new CreateDoodad(tileMap);
+		CreateDoodad doodadData = new CreateDoodad();
 		@SuppressWarnings("unused")
-		ProjectileData projectileData = new ProjectileData(tileMap);
+		ProjectileData projectileData = new ProjectileData();
 		@SuppressWarnings("unused")
-		CreateUnit createUnit = new CreateUnit(tileMap);
+		CreateUnit createUnit = new CreateUnit();
+		@SuppressWarnings("unused")
+		CreateBuff createBuff = new CreateBuff();
+		@SuppressWarnings("unused")
+		DrawingConstants drawingConstants = new DrawingConstants();
 		
 		player = new Player("Lora", tileMap, conversationState);
 		
@@ -74,10 +79,12 @@ public class MenuState extends GameState
 			backGround.setVector(0.3, 0);
 			
 			titleColor = new Color(128, 0, 0);
-			titleFont = new Font(
+			titleFont = new Font
+				(
 					"Century Gophic",
 					Font.PLAIN,
-					50);
+					50
+				);
 			
 			font = new Font("Arial", Font.PLAIN, 28);
 		}
@@ -122,7 +129,7 @@ public class MenuState extends GameState
 		graphics.setColor(titleColor);
 		graphics.setFont(titleFont);
 		
-		int stringLength = (int)graphics.getFontMetrics().getStringBounds(title, graphics).getWidth();
+		int stringLength = DrawingConstants.getStringWidth(title, graphics);
 		int textX = GamePanel.WIDTH/2 - stringLength/2;
 		
 		

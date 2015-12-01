@@ -2,6 +2,7 @@ package Entity.Doodad.Activatable;
 
 import Audio.JukeBox;
 import Entity.Doodad.Doodad;
+import Entity.Player.CreateBuff;
 import Entity.Player.Player;
 import GameState.GameStateManager;
 import GameState.Conversation.Conversation;
@@ -79,9 +80,9 @@ public class StatueSave extends Doodad
 		if(!player.getInConversation() && choiceMade == 0)
 		{
 			JukeBox.play("Restore");
-			player.restoreHealth(player.getMaxHealth());
-			player.restoreMana(player.getMaxMana());
-			player.restoreStamina(player.getMaxStamina());
+			player.addBuff(CreateBuff.createBuff(CreateBuff.Buffs.RestoreHealth, 5, 100, player, sprites[0]));
+			player.addBuff(CreateBuff.createBuff(CreateBuff.Buffs.RestoreMana, 5, 100, player, sprites[0]));
+			player.addBuff(CreateBuff.createBuff(CreateBuff.Buffs.RestoreStamina, 5, 100, player, sprites[0]));
 			player.getConversationState().startConversation(player, null, this, conversation.statueSave(), conversation.statueSaveWhoTalks());
 			return;
 		}

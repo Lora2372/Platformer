@@ -71,17 +71,15 @@ public class Potion extends Item
 		
 		if(itemType.equals(CreateItem.Potions.Healing.toString()))
 		{
-			
 			user.addBuff(CreateBuff.createBuff(CreateBuff.Buffs.RestoreHealth, 5, 50, user, sprites[0]));
-//			user.restoreHealth(50);
 		}
 		else if(itemType.equals(CreateItem.Potions.Mana.toString()))
 		{
-			user.restoreMana(50);
+			user.addBuff(CreateBuff.createBuff(CreateBuff.Buffs.RestoreMana, 5, 50, user, sprites[0]));
 		}
 		else if(itemType.equals(CreateItem.Potions.Stamina.toString()))
 		{
-			user.restoreStamina(50);
+			user.addBuff(CreateBuff.createBuff(CreateBuff.Buffs.RestoreStamina, 5, 50, user, sprites[0]));
 		}
 	}
 	

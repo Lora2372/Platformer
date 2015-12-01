@@ -1,10 +1,17 @@
 package Entity.Player;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
+import javax.swing.SwingUtilities;
+
 import Entity.Unit.Unit;
+import Main.Content;
+import Main.DrawingConstants;
 
 public class Buff 
 {
@@ -20,30 +27,25 @@ public class Buff
 	protected String buffDescription;
 	protected String buffDescriptionName;
 	
-	protected int duration;
-	protected int startDuration;
+	protected double duration;
+	protected double startDuration;
 	
-	protected double restoreHealthAmount;
-	protected double restoreManaAmount;
-	protected double restoreStaminaAmount;
-	
-	protected int restoreHealthAmountRemaining;
-	protected int restoreManaAmountRemaining;
-	protected int restoreStaminaAmountRemaining;
-	
+	protected double restoreAmount;	
 	
 	protected Rectangle rectangle;
 	
-	protected long elapsed;
-	protected long start;
+	protected double start;
+	protected double tick = 0;
 	
 	protected boolean expired;
 	
 	protected Unit owner;
 	
-	protected double totalHealingDone = 0;
+	protected double totalRestoringDone = 0;
 	
-	protected int tick = 0;
+	protected boolean mouseOver = false;
+	
+	protected CreateBuff.Buffs buff;
 	
 	public Buff
 		(
@@ -54,46 +56,74 @@ public class Buff
 			BufferedImage sprites
 		)
 	{
-		this.restoreHealthAmount = restoreAmount;
+		this.buff = buff;
+		this.restoreAmount = restoreAmount;
 		this.duration = duration;
-		this.startDuration = duration;
+		this.startDuration = this.duration;
 		this.buffDescriptionName = CreateBuff.getDescriptionName(buff.toString());
 		this.buffDescription = CreateBuff.getDescription(buff.toString());
 		this.owner = owner;
 		rectangle = new Rectangle(0, 0, width, height);
-
-		start = System.nanoTime() / 100000000;
-		System.out.println("Duration: " + (duration) );
+		this.sprites = sprites;
+		
+		start = System.currentTimeMillis();
+		
+		System.out.println("Duration: " + (this.duration) );
 		
 	}
 	
 	
 	public void update()
-	{													//1000000000
-		if( (System.nanoTime() / 100000000) - start > 1)
-		{							//  10000000
-			start = System.nanoTime() / 100000000;
-			owner.addHealth(restoreHealthAmount / startDuration / 10);
-			System.out.println("Tick, healing: " + (restoreHealthAmount / startDuration / 10));
+	{
+		double currentTime = System.currentTimeMillis();
+		System.out.println("time passed: " + (currentTime - start) );
+		if( (currentTime - start)  >= 16)
+		{
+
+			start = currentTime;
+			double restoreAmountPiece = restoreAmount / startDuration / 62;
+			System.out.println("Restore amount piece: " + restoreAmountPiece);
+			if(buff.equals(CreateBuff.Buffs.RestoreHealth))
+			{
+				owner.restoreHealth(restoreAmountPiece);
+			}
+			else if(buff.equals(CreateBuff.Buffs.RestoreMana))
+			{
+				owner.restoreMana(restoreAmountPiece);
+			}
+			else if(buff.equals(CreateBuff.Buffs.RestoreStamina))
+			{
+				owner.restoreStamina(restoreAmountPiece);
+			}
+			totalRestoringDone += restoreAmountPiece;
 			
-			totalHealingDone += (restoreHealthAmount / startDuration / 10);
 			tick++;
-			
-			if(tick >= 10)
+			if(tick >= 62)
 			{
 				tick = 0;
 				duration--;
-				System.out.println("Duration: " + (duration) );
+				System.out.println("Duration: " + duration);
 			}
 		}
 		
+//		if( (currentTime) - start >= 1000)
+//		{
+//			start = System.currentTimeMillis();
+//
+//		}
+		
 		if(duration <= 0)
 		{
-			System.out.println("Amount to restore: " + restoreHealthAmount + "\nTotal health restored: " + totalHealingDone);
+			System.out.println("Amount to restore: " + restoreAmount + "\nTotal " + buff.toString() + " restored: " + totalRestoringDone);
 			expired = true;
 		}
 		
 		
+	}
+	
+	public CreateBuff.Buffs getBuff()
+	{
+		return buff;
 	}
 	
 	public boolean getExpired()
@@ -101,7 +131,7 @@ public class Buff
 		return expired;
 	}
 	
-	public int getDuration()
+	public double getDuration()
 	{
 		return duration;
 	}
@@ -135,12 +165,85 @@ public class Buff
 	
 	public void mouseMoved(MouseEvent mouse) 
 	{
-		
+		mouseOver = rectangle.intersects(new Rectangle((int)mouse.getX(), (int)mouse.getY(), 1, 1) );
 	}
 	
 	public void mouseClicked(MouseEvent mouse) 
 	{
-		
+		if(SwingUtilities.isRightMouseButton(mouse))
+		if(mouseOver)
+		{
+			System.out.println("Click!");
+			expired = true;
+		}
 	}
 	
+	public void draw(Graphics2D graphics)
+	{
+		try
+		{
+			graphics.drawImage
+			(
+				Content.BuffIcon[0][0],
+				locationX,
+				locationY,
+				width,
+				height,
+				null
+			);
+			
+			graphics.drawImage
+			(
+				sprites,
+				locationX + 5,
+				locationY + 5,
+				width - 10,
+				height - 10,
+				null
+			);
+			
+
+			int stringX = locationX + width / 2;
+			int stringY = locationY + height + 10;
+
+			graphics.setFont (new Font("Arial", Font.PLAIN, 14) );
+			graphics.setColor(Color.BLACK);
+			graphics.drawString( (int)duration + "", DrawingConstants.shiftWest( (int) stringX, 1), DrawingConstants.shiftNorth( (int) stringY, 1));
+			graphics.drawString( (int)duration + "", DrawingConstants.shiftWest( (int) stringX, 1), DrawingConstants.shiftSouth( (int) stringY, 1));
+			graphics.drawString( (int)duration + "", DrawingConstants.shiftEast( (int) stringX, 1), DrawingConstants.shiftNorth( (int) stringY, 1));
+			graphics.drawString( (int)duration + "", DrawingConstants.shiftEast( (int) stringX, 1), DrawingConstants.shiftSouth( (int) stringY, 1));
+			
+			graphics.setColor(Color.WHITE);
+			graphics.drawString( (int)duration + "", stringX , stringY);
+			
+
+			if(mouseOver)
+			{
+				int stringLength = DrawingConstants.getStringWidth(CreateBuff.getDescriptionName(buff.toString()), graphics);
+				int stringHeight = DrawingConstants.getStringHeight(CreateBuff.getDescriptionName(buff.toString()), graphics);
+				
+				stringX = locationX + - stringLength / 4;
+				stringY += 10;
+				
+				graphics.drawImage
+				(
+					Content.ConversationGUIEndConversation[0][0],
+					stringX,
+					stringY,
+					stringLength + 20,
+					stringHeight + 10,
+					null
+				);
+				
+				graphics.drawString(CreateBuff.getDescriptionName(buff.toString()), stringX + 10, stringY + 15);
+			}
+
+			
+			
+		}
+		catch(Exception exception)
+		{
+			exception.printStackTrace();
+		}
+	}
 }
