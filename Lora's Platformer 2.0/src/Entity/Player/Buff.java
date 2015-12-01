@@ -30,7 +30,7 @@ public class Buff
 	protected double duration;
 	protected double startDuration;
 	
-	protected double restoreAmount;	
+	protected double objectValueTotal;	
 	
 	protected Rectangle rectangle;
 	
@@ -51,13 +51,13 @@ public class Buff
 		(
 			CreateBuff.Buffs buff,
 			int duration,
-			double restoreAmount,
+			double objectValueTotal,
 			Unit owner,
 			BufferedImage sprites
 		)
 	{
 		this.buff = buff;
-		this.restoreAmount = restoreAmount;
+		this.objectValueTotal = objectValueTotal;
 		this.duration = duration;
 		this.startDuration = this.duration;
 		this.buffDescriptionName = CreateBuff.getDescriptionName(buff.toString());
@@ -81,21 +81,21 @@ public class Buff
 		{
 
 			start = currentTime;
-			double restoreAmountPiece = restoreAmount / startDuration / 62;
-			System.out.println("Restore amount piece: " + restoreAmountPiece);
+			double objectValueTotalPiece = objectValueTotal / startDuration / 62;
+			System.out.println("Restore amount piece: " + objectValueTotalPiece);
 			if(buff.equals(CreateBuff.Buffs.RestoreHealth))
 			{
-				owner.restoreHealth(restoreAmountPiece);
+				owner.restoreHealth(objectValueTotalPiece);
 			}
 			else if(buff.equals(CreateBuff.Buffs.RestoreMana))
 			{
-				owner.restoreMana(restoreAmountPiece);
+				owner.restoreMana(objectValueTotalPiece);
 			}
 			else if(buff.equals(CreateBuff.Buffs.RestoreStamina))
 			{
-				owner.restoreStamina(restoreAmountPiece);
+				owner.restoreStamina(objectValueTotalPiece);
 			}
-			totalRestoringDone += restoreAmountPiece;
+			totalRestoringDone += objectValueTotalPiece;
 			
 			tick++;
 			if(tick >= 62)
@@ -114,7 +114,7 @@ public class Buff
 		
 		if(duration <= 0)
 		{
-			System.out.println("Amount to restore: " + restoreAmount + "\nTotal " + buff.toString() + " restored: " + totalRestoringDone);
+			System.out.println("Amount to restore: " + objectValueTotal + "\nTotal " + buff.toString() + " restored: " + totalRestoringDone);
 			expired = true;
 		}
 		

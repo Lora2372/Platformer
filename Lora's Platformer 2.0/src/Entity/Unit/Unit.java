@@ -79,7 +79,11 @@ public class Unit extends MapObject
 	protected double maxStamina;
 	protected double staminaRegen;
 	
+	protected double bonusDamageMagical;
+	protected double bonusDamagePhysical;
+	
 	protected int damageOnTouch;
+	
 	protected boolean friendly;
 	
 	protected boolean activatable;
@@ -442,6 +446,12 @@ public class Unit extends MapObject
 	public void inControl(boolean b) {inControl = b;}
 	public boolean getInControl() { return inControl; }
 	
+	public double getBonusDamagePhysical() { return bonusDamagePhysical; }
+	public double getBonusDamageMagical() { return bonusDamageMagical; }
+	
+	public void setBonusDamagePhysical(double bonusDamagePhysical) { this.bonusDamagePhysical = bonusDamagePhysical; }
+	public void setBonusDamageMagical(double bonusDamageMagical) { this.bonusDamageMagical = bonusDamageMagical; }
+	
 	public boolean getFacingRight() { return facingRight; }
 	public boolean getFriendly() { return friendly; }
 	public boolean getUntouchable() { return untouchable; }
@@ -575,22 +585,39 @@ public class Unit extends MapObject
 	
 	public int getPunchRange() { return punchRange; }
 		
-	public void hit(int damage)
+	public void hit(double damage, Unit owner)
 	{
 		System.out.println("Damaging " + name + " for: " + damage + " damage.");
+		
 		if(dead || invulnerable)
 		{
 			return;
 		}
+		
 		health -= damage;
-		if( health < 0)health = 0;
+		
+		if( health < 0)
+		{
+			health = 0;
+		}
+		
 		if(health == 0 && !unkillable)
 		{
 			dead = true;
 		}
-		iAmHit();
-		if(!stunned)setStunned(500);
-		inControl = false;
+		
+		playIsHit();
+		
+		if(damage > 10)
+		{
+			if(!stunned)
+			{
+				setStunned(500);
+			}
+			inControl = false;
+		}
+		
+		
 	}
 	
 	public void update(ArrayList<Unit> characterList)
@@ -852,7 +879,7 @@ public class Unit extends MapObject
 			arcaneBallDoneCasting = true;
 			
 			
-			ArcaneBall arcaneBall = new ArcaneBall(tileMap, mainMap, facingRight, up, down, aim, friendly);
+			ArcaneBall arcaneBall = new ArcaneBall(tileMap, mainMap, this, facingRight, up, down, aim, friendly);
 			arcaneBall.setPosition(locationX, locationY - 20);
 			mainMap.addProjectile(arcaneBall);
 			
@@ -889,7 +916,7 @@ public class Unit extends MapObject
 		
 				calculateAim(null);
 				
-				FireBallSmall fireBall = new FireBallSmall(tileMap, mainMap, facingRight, up, down, aim, friendly);
+				FireBallSmall fireBall = new FireBallSmall(tileMap, mainMap, this, facingRight, up, down, aim, friendly);
 				fireBall.setPosition(locationX, locationY - 20);
 				mainMap.addProjectile(fireBall);
 				playCastSound();
@@ -951,7 +978,7 @@ public class Unit extends MapObject
 				}
 				
 				
-				electricBall = new ElectricBall(tileMap, mainMap, facingRight, up, down, aim, friendly);
+				electricBall = new ElectricBall(tileMap, mainMap, this, facingRight, up, down, aim, friendly);
 				electricBall.setPosition(locationX, locationY - 20);
 				mainMap.addProjectile(electricBall);
 				
@@ -994,7 +1021,7 @@ public class Unit extends MapObject
 				fireBallLargeDoneCasting = true;
 				
 				calculateAim(null);
-				FireBallLarge fireBall = new FireBallLarge(tileMap, mainMap, facingRight, up, down, aim, friendly);
+				FireBallLarge fireBall = new FireBallLarge(tileMap, mainMap, this, facingRight, up, down, aim, friendly);
 				fireBall.setPosition(locationX, locationY);
 				mainMap.addProjectile(fireBall);
 				
@@ -1321,7 +1348,7 @@ public class Unit extends MapObject
 						)
 						{
 							charactersHit.add(character);
-							character.hit(punchDamage);
+							character.hit(punchDamage, this);
 						}
 					}
 					else
@@ -1335,7 +1362,7 @@ public class Unit extends MapObject
 						)
 						{
 							charactersHit.add(character);
-							character.hit(punchDamage);
+							character.hit(punchDamage, this);
 						}
 					}
 				}
@@ -1356,7 +1383,7 @@ public class Unit extends MapObject
 						)
 						{
 							charactersHit.add(character);
-							character.hit(dashDamage);
+							character.hit(dashDamage, this);
 						}
 					}
 					else
@@ -1370,7 +1397,7 @@ public class Unit extends MapObject
 						)
 						{
 							charactersHit.add(character);
-							character.hit(dashDamage);
+							character.hit(dashDamage, this);
 						}
 					}
 				}
@@ -1421,7 +1448,7 @@ public class Unit extends MapObject
 		JukeBox.play(unitType + soundTypes.Attack + (RNG < 10 ? "0" : "") + RNG);
 	}
 	
-	public void iAmHit()
+	public void playIsHit()
 	{
 		int RNG = mainMap.RNG(1, numberofSounds[1]);
 		if(RNG == -1)

@@ -880,18 +880,7 @@ public class MainMap extends GameState
 		{
 			player.setPosition(player.getLocationX(), player.getLocationY() - 200);
 		}
-		
-		// Note: This is a built in cheat that is not supposed to be used to get the real game experience.
-		if(key == KeyEvent.VK_J)
-		{
-			for(int i = 0; i < characterList.size(); i++)
-			{
-				if(characterList.get(i).getUnitType().equals("Fiona"))
-				{
-					characterList.get(i).hit(70);
-				}
-			}
-		}
+
 		
 		// Note: This is a built in cheat that is not supposed to be used to get the real game experience.
 		if(key == KeyEvent.VK_L)

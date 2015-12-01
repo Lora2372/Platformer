@@ -29,9 +29,12 @@ public class Projectile extends MapObject
 	
 	protected MainMap mainMap;
 
+	protected Unit owner;
+	
 	public Projectile(
 			TileMap tileMap,
 			MainMap mainMap,
+			Unit owner,
 			boolean right,
 			boolean up,
 			boolean down,
@@ -47,6 +50,7 @@ public class Projectile extends MapObject
 	{
 		super(tileMap);
 		
+		this.owner = owner;
 		this.mainMap = mainMap;
 		this.facingRight = right;
 		this.up = up;

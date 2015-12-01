@@ -25,10 +25,13 @@ public class Explosion extends MapObject
 	protected String explosionType;
 	
 	protected MainMap mainMap;
-		
+	
+	protected Unit owner;
+	
 	public Explosion(
 			TileMap tileMap,
 			MainMap mainMap,
+			Unit owner,
 			boolean friendly,
 			double locationX,
 			double locationY,
@@ -43,6 +46,7 @@ public class Explosion extends MapObject
 		super(tileMap);
 		
 		this.mainMap = mainMap;
+		this.owner = owner;
 		this.friendly = friendly;
 		this.width = width;
 		this.height = height;
@@ -77,7 +81,7 @@ public class Explosion extends MapObject
 	{
 		checkTileMapCollision();
 		setPosition(xtemp, ytemp);
-			
+				
 		for(int i = 0; i < characterList.size(); i++)
 		{
 			Unit character = characterList.get(i);
@@ -88,16 +92,22 @@ public class Explosion extends MapObject
 					{
 						unitsHit.add(character);
 						
-//						double distance(int x1, int y1, int x2, int y2) {
-//						    int dx = x2 - x1;
-//						    int dy = y2 - y1;
-//						    return Math.sqrt(dx * dx + dy * dy);
-//						}
-//						
-//						double distanceX = character.getLocationX() - locationX;
-//						double distanceY = character.getLocationY() - locationY;
-//						double  distance = Math.sqrt(distanceX * distanceX * + distanceY * distanceY);
-						character.hit(damage);
+						double characterLocationX = character.getLocationX();
+						double characterLocationY = character.getLocationY();
+						
+						double distance = Math.sqrt((characterLocationX - locationX) * (characterLocationX - locationX) + (characterLocationY - locationY)*(characterLocationY - locationY));
+						
+						if(distance < 0)
+						{
+							System.out.println("distance was negative");
+							distance *= -1;
+						}
+						
+						double distanceDamageMultiplier = 1 - ( distance / ( (width + height) / 2 ) );		
+						
+						System.out.println("distanceDamageMultiplier: " + distanceDamageMultiplier);
+						
+						character.hit( (damage + owner.getBonusDamageMagical() ) * distanceDamageMultiplier, owner);
 					}
 			}
 		}
@@ -106,14 +116,10 @@ public class Explosion extends MapObject
 		animation.update();
 		
 		if(animation.hasPlayedOnce())
+		{
 			removeMe = true;
+		}
 	}
-	
-	public boolean interescts(MapObject object)
-	{
-		return false;
-	}
-	
 	
 	public void draw(Graphics2D graphics)
 	{				

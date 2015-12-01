@@ -1,5 +1,6 @@
 package Entity.Explosion;
 
+import Entity.Unit.Unit;
 import GameState.MainMap.MainMap;
 import Main.Content;
 import TileMap.TileMap;
@@ -9,6 +10,7 @@ public class CartoonExplosion extends Explosion
 	public CartoonExplosion(
 			TileMap tileMap, 
 			MainMap mainMap,
+			Unit owner,
 			double locationX, 
 			double locationY,
 			boolean friendly
@@ -18,6 +20,7 @@ public class CartoonExplosion extends Explosion
 		(
 				tileMap, 
 				mainMap,
+				owner,
 				friendly,
 				locationX, 
 				locationY, 

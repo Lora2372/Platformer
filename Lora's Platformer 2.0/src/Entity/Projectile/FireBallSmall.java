@@ -1,6 +1,7 @@
 package Entity.Projectile;
 
 import Entity.Explosion.FireBallSmallExplosion;
+import Entity.Unit.Unit;
 import GameState.MainMap.MainMap;
 import Main.Content;
 import TileMap.TileMap;
@@ -12,6 +13,7 @@ public class FireBallSmall extends Projectile
 	public FireBallSmall(
 			TileMap tileMap,
 			MainMap mainMap,
+			Unit owner,
 			boolean right, 
 			boolean up, 
 			boolean down,
@@ -23,6 +25,7 @@ public class FireBallSmall extends Projectile
 		super(
 				tileMap, 															//Tile map
 				mainMap,
+				owner,
 				right, 																// Facing right
 				up,  																// Holding up arrow
 				down,  																// Holding down arrow
@@ -44,7 +47,7 @@ public class FireBallSmall extends Projectile
 	
 		public void explode()
 		{
-			fireBallSmallExplosion = new FireBallSmallExplosion(tileMap, mainMap, locationX, locationY, friendly);
+			fireBallSmallExplosion = new FireBallSmallExplosion(tileMap, mainMap, owner, locationX, locationY, friendly);
 			mainMap.addExplosion(fireBallSmallExplosion);
 		}
 }

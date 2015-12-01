@@ -127,43 +127,40 @@ public class Fiona extends Unit
 		setTennisPlayer(true);
 	}
 	
-
-	
-	public void iAmHit()
+	public void hit(int damage, Unit owner)
 	{
-		int RNG = mainMap.RNG(1, numberofSounds[1]);
-		if(RNG == -1)
-			return;
-		JukeBox.play(unitType + soundTypes.Hurt + (RNG < 10 ? "0" : "") + RNG);
-		if(!isHit)
-		{
-			setStunned(5000);
-			isHit = true;
-		}
-	}
-	
-	public void hit(int damage)
-	{
-		if(dead || invulnerable)
+		if(dead || invulnerable || spawning || hidden)
 		{
 			return;
 		}
 		
 		if(!stunned)
 		{
-			if(damage != 70)
+			if(!owner.getName().equals(name))
 			{
 				return;
 			}
 		}
 		
 		health -= damage;
-		if( health < 0)health = 0;
+		if( health < 0)
+		{
+			health = 0;
+		}
+		
 		if(health == 0 && !unkillable)
 		{
 			dead = true;
 		}
-		iAmHit();
+		
+		
+		if(!isHit)
+		{
+			setStunned(5000);
+			isHit = true;
+		}
+		
+		playIsHit();
 		inControl = false;
 	}
 	
@@ -174,7 +171,7 @@ public class Fiona extends Unit
 		
 		
 		aim = Math.atan2(tempY - locationY, tempX - locationX);
-		ArcaneBall arcaneBall = new ArcaneBall(tileMap, mainMap, facingRight, up, down, aim, friendly);
+		ArcaneBall arcaneBall = new ArcaneBall(tileMap, mainMap, this, facingRight, up, down, aim, friendly);
 		arcaneBall.setPosition(locationX, locationY - 20);
 		mainMap.addProjectile(arcaneBall);
 	}

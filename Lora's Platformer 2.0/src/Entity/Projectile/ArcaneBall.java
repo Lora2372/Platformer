@@ -1,6 +1,7 @@
 package Entity.Projectile;
 
 import Entity.Explosion.ArcaneBallExplosion;
+import Entity.Unit.Unit;
 import GameState.MainMap.MainMap;
 import Main.Content;
 import TileMap.TileMap;
@@ -11,6 +12,7 @@ public class ArcaneBall extends Projectile
 	public ArcaneBall(
 			TileMap tileMap,
 			MainMap mainMap,
+			Unit owner,
 			boolean right, 
 			boolean up, 
 			boolean down, 
@@ -22,6 +24,7 @@ public class ArcaneBall extends Projectile
 		super(
 				tileMap, 															//Tile map
 				mainMap,
+				owner,
 				right, 																// Facing right
 				up,  																// Holding up arrow
 				down,  																// Holding down arrow
@@ -43,7 +46,7 @@ public class ArcaneBall extends Projectile
 	
 		public void explode()
 		{
-			ArcaneBallExplosion arcaneBallExplosion = new ArcaneBallExplosion(tileMap, mainMap, locationX, locationY, friendly);
+			ArcaneBallExplosion arcaneBallExplosion = new ArcaneBallExplosion(tileMap, mainMap, owner, locationX, locationY, friendly);
 			mainMap.addExplosion(arcaneBallExplosion);
 		}
 }
