@@ -7,6 +7,7 @@ import Entity.Player.Player;
 import GameState.GameStateManager;
 import GameState.Conversation.Conversation;
 import GameState.Conversation.ConversationState;
+import GameState.MainMap.MainMap;
 import GameState.Maps.FionasSanctum;
 import GameState.Maps.MysteriousDungeon;
 import Main.Content;
@@ -32,6 +33,7 @@ public class Door extends Doodad
 	public Door
 		(
 			TileMap tileMap, 
+			MainMap mainMap,
 			GameStateManager gameStateManager,
 			double spawnLocationX,
 			double spawnLocationY,
@@ -43,6 +45,7 @@ public class Door extends Doodad
 		super
 		(
 			tileMap, 
+			mainMap,
 			spawnLocationX, 
 			spawnLocationY, 
 			120, 

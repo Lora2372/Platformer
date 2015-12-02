@@ -1,24 +1,29 @@
 package Entity.Item;
 
 import Entity.MapObject;
+import GameState.MainMap.MainMap;
 import Main.Content;
 import TileMap.TileMap;
 
 public class Key extends Item
 {
 
-	public Key(
+	public Key
+		(
 			TileMap tileMap,
+			MainMap mainMap,
 			boolean inWorld, 
 			double locationX, 
 			double locationY, 
 			MapObject owner, 
 			int stacks,
 			String keyType
-			) 
+		) 
 	{
-		super(
-				tileMap, 
+		super
+			(
+				tileMap,
+				mainMap,
 				inWorld, 
 				60, 
 				60, 
@@ -36,8 +41,7 @@ public class Key extends Item
 				keyType,
 				CreateItem.getDescriptionName(keyType.toString()),
 				CreateItem.getDescription(keyType.toString())
-				
-				);
+			);
 
 	}
 	

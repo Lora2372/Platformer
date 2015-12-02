@@ -4,10 +4,15 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import TileMap.TileMap;
 import Entity.MapObject;
+import Entity.Doodad.Activatable.CreateDoodad;
 import Entity.Player.Player;
+import GameState.MainMap.MainMap;
 
 public class Doodad extends MapObject
 {
+	
+	protected MainMap mainMap;
+	
 	protected String spritePath;
 	
 	protected int[] animationState;
@@ -31,7 +36,8 @@ public class Doodad extends MapObject
 	
 	public Doodad
 		(
-			TileMap tileMap, 
+			TileMap tileMap,
+			MainMap mainMap,
 			double spawnLocationX, 
 			double spawnLocationY,
 			int width,
@@ -51,6 +57,8 @@ public class Doodad extends MapObject
 		)
 	{
 		super(tileMap);
+		
+		this.mainMap = mainMap;
 		
 		this.width = width;
 		this.height = height;
@@ -123,6 +131,29 @@ public class Doodad extends MapObject
 		checkTileMapCollision();
 		setPosition(xtemp, ytemp);
 
+		boolean hasPlayedOnce = (animation.getFrame() == animation.getFramesLength() - 1);
+		
+		// I'll change this to work with any toggle-able object later (assuming I ever add another one).
+		if(doodadType.equals(CreateDoodad.Other.Lever.toString()))
+		{
+			if(currentAction == 1)
+			{
+				if(hasPlayedOnce)
+				{
+					
+					setDoodad(2);
+					mainMap.useDoodad(this);
+				}
+			}
+			else if(currentAction == 3)
+			{
+				if(hasPlayedOnce)
+				{
+					setDoodad(0);
+					mainMap.useDoodad(this);
+				}
+			}
+		}
 		
 		if(!spent)
 		{
@@ -135,10 +166,9 @@ public class Doodad extends MapObject
 					animation.setFrames(sprites);
 					animation.setDelay(60);
 					playSound();
-					stopAt = animation.getFramesLength() - 1;
 				}
 				
-				if(animation.getFrame() == stopAt)
+				if(hasPlayedOnce)
 				{
 					if(currentAction != 2)
 					{
@@ -154,7 +184,7 @@ public class Doodad extends MapObject
 		
 		animation.update();
 		
-		if(animation.hasPlayedOnce() && runOnce)
+		if(hasPlayedOnce && runOnce)
 		{
 			removeMe = true;
 		}	

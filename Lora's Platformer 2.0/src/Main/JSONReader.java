@@ -83,7 +83,7 @@ public class JSONReader
 				if(itemType != null)
 				{
 					int itemStack =  ( (Long) ( jsonObjectItems.get("Stack:" + (i < 10 ? "0" : 0) + i) ) ).intValue();
-					player.getInventory().addItem(createItem.createItem(itemType, player, itemStack));
+					player.getInventory().addItem(createItem.createItem(player.getMainMap(), itemType, player, itemStack));
 					i++;
 				}
 				else
@@ -163,7 +163,7 @@ public class JSONReader
 							{
 								
 								int itemStack =  ( (Long) ( jsonObjectItems.get("Stack:" + (x < 10 ? "0" : "") + x) ) ).intValue();
-								items.add(createItem.createItem(itemType, null, itemStack));
+								items.add(createItem.createItem(player.getMainMap(), itemType, null, itemStack));
 								x++;
 							}
 							else
@@ -228,7 +228,7 @@ public class JSONReader
 							{
 								
 								int itemStack =  ( (Long) ( jsonObjectItems.get("Stack:" + (x < 10 ? "0" : "") + x) ) ).intValue();
-								items.add(createItem.createItem(itemType, null, itemStack));
+								items.add(createItem.createItem(player.getMainMap(), itemType, null, itemStack));
 								x++;
 							}
 							else

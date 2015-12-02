@@ -4,6 +4,7 @@ import Audio.JukeBox;
 import Entity.Doodad.Doodad;
 import Entity.Player.Player;
 import GameState.GameStateManager;
+import GameState.MainMap.MainMap;
 import GameState.Maps.DeepWoods;
 import Main.Content;
 import TileMap.TileMap;
@@ -21,13 +22,16 @@ public class Portal extends Doodad
 	
 	public Portal(
 			TileMap tileMap, 
+			MainMap mainMap,
 			GameStateManager gameStateManager,
 			double spawnLocationX,
 			double spawnLocationY
 			) 
 	{
-		super(
-				tileMap, 
+		super
+			(
+				tileMap,
+				mainMap,
 				spawnLocationX, 
 				spawnLocationY, 
 				120, 
@@ -44,7 +48,7 @@ public class Portal extends Doodad
 				0,
 				"Portal",
 				CreateDoodad.doodadName.get("Portal")
-				);
+			);
 
 		this.gameStateManager = gameStateManager;
 	}

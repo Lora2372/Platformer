@@ -8,6 +8,7 @@ import Entity.Unit.Fiona;
 import GameState.GameStateManager;
 import GameState.Conversation.Conversation;
 import GameState.Conversation.ConversationState;
+import GameState.MainMap.MainMap;
 import GameState.Maps.FionasSanctum;
 import Main.Content;
 
@@ -34,6 +35,7 @@ public class ShrineFionasSanctum extends Doodad
 	
 	public ShrineFionasSanctum(
 			TileMap tileMap,
+			MainMap mainMap,
 			GameStateManager gameStateManager,
 			FionasSanctum fionasSanctum,
 			double spawnLocationX,
@@ -41,8 +43,10 @@ public class ShrineFionasSanctum extends Doodad
 			Fiona fiona
 			) 
 	{
-		super(
-				tileMap, 
+		super
+			(
+				tileMap,
+				mainMap,
 				spawnLocationX, 
 				spawnLocationY, 
 				160, 
@@ -59,7 +63,7 @@ public class ShrineFionasSanctum extends Doodad
 				0,
 				"ShrineFionasSanctum",
 				CreateDoodad.doodadName.get("ShrineFionasSanctum")
-				);
+			);
 		
 		this.fiona = fiona;
 		this.gameStateManager = gameStateManager;

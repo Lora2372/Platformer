@@ -4,6 +4,7 @@ import Audio.JukeBox;
 import Entity.Doodad.Doodad;
 import Entity.Player.Player;
 import GameState.GameStateManager;
+import GameState.MainMap.MainMap;
 import Main.Content;
 import TileMap.TileMap;
 
@@ -18,7 +19,8 @@ public class Lever extends Doodad
 	
 	public Lever
 		(
-			TileMap tileMap, 
+			TileMap tileMap,
+			MainMap mainMap,
 			GameStateManager gameStateManager,
 			double locationX,
 			double locationY,
@@ -27,13 +29,14 @@ public class Lever extends Doodad
 	{
 		super
 			(
-				tileMap, 
+				tileMap,
+				mainMap,
 				locationX, 
 				locationY, 
-				26, 
-				29,
-				26,
-				29,
+				50, 
+				50,
+				50,
+				50,
 				0.3, 
 				8, 
 				false, 
@@ -60,7 +63,7 @@ public class Lever extends Doodad
 	{
 		this.currentAction = currentAction;
 		
-		if(doodadType.equals(CreateDoodad.Doors.Boss.toString()))
+		if(doodadType.equals(CreateDoodad.Other.Lever.toString()))
 		{
 			portrait = Content.PortraitLever[0];
 			if(currentAction == 0)
@@ -75,16 +78,28 @@ public class Lever extends Doodad
 			{
 				sprites = Content.LeverOpened[0];
 			}
+			else if(currentAction == 3)
+			{
+				sprites = Content.LeverClosing[0];
+			}
 		}
 		
 		animation.setFrames(sprites);
+		animation.setDelay(50);
 	}
 	
 	public void interact(Player player)
 	{
-		
-		active = true;
+		if(currentAction == 0)
+		{
+			setDoodad(1);
+		}
+		else if(currentAction == 2)
+		{
+			setDoodad(3);
+		}
 	}
+	
 	
 	public void playSound() 
 	{ 

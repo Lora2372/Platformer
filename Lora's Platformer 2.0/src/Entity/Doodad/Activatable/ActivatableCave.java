@@ -4,20 +4,26 @@ import TileMap.TileMap;
 import Entity.Doodad.Doodad;
 import Entity.Player.Player;
 import GameState.GameStateManager;
+import GameState.MainMap.MainMap;
 import Main.Content;
 
 public class ActivatableCave extends Doodad
 {
 	protected GameStateManager gameStateManager;
 	
-	public ActivatableCave(
+	public ActivatableCave
+		(
 			TileMap tileMap,
+			MainMap mainMap,
 			GameStateManager gameStateManager,
 			double spawnLocationX,
 			double spawnLocationY
-			) 
+		) 
 	{
-		super(tileMap, 
+		super
+			(
+				tileMap,
+				mainMap,
 				spawnLocationX, 
 				spawnLocationY, 
 				100, 

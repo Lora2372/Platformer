@@ -1,11 +1,10 @@
 package Entity.Doodad.Activatable;
 
-
 import Main.Content;
 import TileMap.TileMap;
 import Entity.Doodad.Doodad;
 import Entity.Player.Player;
-
+import GameState.MainMap.MainMap;
 
 public class Sign extends Doodad
 {
@@ -17,16 +16,21 @@ public class Sign extends Doodad
 	protected String name;
 	
 	// We need a class that draws the basic "sign background" and then write text on top of that, the stuff below is temporary...
-	public Sign(
+	public Sign
+		(
 			TileMap tileMap, 
+			MainMap mainMap,
 			double spawnLocationX,
 			double spawnLocationY,
 			Player player,
 			String[] conversation,
 			int[] whoTalks
-			) 
+		) 
 	{
-		super(tileMap, 
+		super
+			(
+				tileMap,
+				mainMap,
 				spawnLocationX, 
 				spawnLocationY, 
 				50, 
@@ -43,7 +47,7 @@ public class Sign extends Doodad
 				0,
 				"Sign",
 				CreateDoodad.doodadName.get("Sign")
-				);
+			);
 				
 		this.conversation = conversation;
 		

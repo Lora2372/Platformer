@@ -20,6 +20,7 @@ import Entity.Projectile.Projectile;
 import Entity.Unit.*;
 import GameState.GameState;
 import GameState.GameStateManager;
+import GameState.Conversation.Conversation;
 import GameState.Conversation.ConversationState;
 import Audio.JukeBox;
 import java.awt.event.KeyEvent;
@@ -41,6 +42,9 @@ public class MainMap extends GameState
 	protected ArrayList<Projectile> projectiles;
 	protected ArrayList<Explosion> explosions;
 	protected boolean doneInitializing;
+		
+	protected Conversation conversation;
+	protected ConversationState conversationState;
 	
 	protected double mouseLocationX;
 	protected double mouseLocationY;
@@ -52,7 +56,6 @@ public class MainMap extends GameState
 	protected boolean displayHealthBars;
 	protected boolean displayNamePlates;
 	
-	protected ConversationState conversationState;
 	
 	protected long soundTimer;
 	
@@ -64,6 +67,7 @@ public class MainMap extends GameState
 	protected SpawnDoodad spawnDoodad;
 	protected SpawnItem spawnItem;
 	
+	protected LiadrinFirstEncounter liadrin;
 	
 	public MainMap
 		(
@@ -80,6 +84,8 @@ public class MainMap extends GameState
 		this.tileMap = tileMap;
 		this.player = player;
 		this.currentMap = currentMap;
+		
+		this.conversation = player.getConversation();
 		
 		spawnUnit	= new SpawnUnit(this);
 		spawnDoodad	= new SpawnDoodad(this);
@@ -325,7 +331,7 @@ public class MainMap extends GameState
 				{
 					if(character != player)
 					{
-						Poff poff = new Poff(tileMap,characterList.get(i).getLocationX(), characterList.get(i).getLocationY());
+						Poff poff = new Poff(tileMap, this, characterList.get(i).getLocationX(), characterList.get(i).getLocationY());
 						stuff.add(poff);
 						
 						int tempRows = character.getInventory().getNumberOfRows();
@@ -709,21 +715,21 @@ public class MainMap extends GameState
 				Potion potion = null;
 				if(!potionType.equals("Any"))
 				{
-					potion = new Potion(tileMap, false, 0, 0, owner, stacks, potionType);
+					potion = new Potion(tileMap, this, false, 0, 0, owner, stacks, potionType);
 				}
 				else
 				{
 					if(potionDropped == 1)
 					{
-						potion = new Potion(tileMap, false, 0, 0, owner, stacks, CreateItem.Potions.Healing.toString());
+						potion = new Potion(tileMap, this, false, 0, 0, owner, stacks, CreateItem.Potions.Healing.toString());
 					}
 					else if(potionDropped == 2)
 					{
-						potion= new Potion(tileMap, false, 0, 0, owner, stacks, CreateItem.Potions.Mana.toString());
+						potion= new Potion(tileMap, this, false, 0, 0, owner, stacks, CreateItem.Potions.Mana.toString());
 					}
 					else if(potionDropped == 3)
 					{
-						potion = new Potion(tileMap, false, 0, 0, owner, stacks, CreateItem.Potions.Stamina.toString());
+						potion = new Potion(tileMap, this, false, 0, 0, owner, stacks, CreateItem.Potions.Stamina.toString());
 					}
 				}
 				if(potion == null)
@@ -744,7 +750,7 @@ public class MainMap extends GameState
 		int oneToOneHundred = RNG(0, 100);
 		if(oneToOneHundred <= chance)
 		{
-			Key key = new Key(tileMap, false, 0, 0, owner, 1, keyType);
+			Key key = new Key(tileMap, this, false, 0, 0, owner, 1, keyType);
 
 			owner.getInventory().addItem(key);
 			items.add(key);
@@ -756,24 +762,20 @@ public class MainMap extends GameState
 		int oneToOneHundred = RNG(0, 100);
 		if(oneToOneHundred <= chance)
 		{
-			Coin coin = new Coin(tileMap, false, 0, 0, owner, stacks, coinType);
+			Coin coin = new Coin(tileMap, this, false, 0, 0, owner, stacks, coinType);
 
 			owner.getInventory().addItem(coin);
 			items.add(coin);
 		}
 	}
-
-	public void spawnPlayer(double locationX, double y)
+	
+	// useDoodad differs from interact in that interact occurs whenever you interact with any object, 
+	// useDoodad only occurs if you successfully use the doodad. 
+	// Not all interactive doodads are usable (at the moment only the lever is).
+	public void useDoodad(Doodad lever)
 	{
 		
 	}
-	
-	
-	public void spawnEnemies()
-	{
-	}
-	
-
 	
 	public void interact()
 	{
@@ -828,6 +830,11 @@ public class MainMap extends GameState
 	{
 		if(key == KeyEvent.VK_ESCAPE) 
 		{
+			if(gameover)
+			{
+				gameStateManager.setState(GameStateManager.MENUSTATE);
+				return;
+			}
 			gameStateManager.setPaused(!gameStateManager.getPaused());
 			gameStateManager.setBrowsingInventory(false);
 		}
@@ -885,7 +892,7 @@ public class MainMap extends GameState
 		// Note: This is a built in cheat that is not supposed to be used to get the real game experience.
 		if(key == KeyEvent.VK_L)
 		{
-			Key myKey = new Key(tileMap, false, 0, 0, player, 1, "Boss");
+			Key myKey = new Key(tileMap, this, false, 0, 0, player, 1, "Boss");
 			player.getInventory().addItem(myKey);
 			items.add(myKey);
 		}
@@ -893,18 +900,19 @@ public class MainMap extends GameState
 		// Note: This is a built in cheat that is not supposed to be used to get the real game experience.
 		if(key == KeyEvent.VK_K)
 		{
-			Key myKey = new Key(tileMap, false, 0, 0, player, 1, "Uncommon");
+			Key myKey = new Key(tileMap, this, false, 0, 0, player, 1, "Uncommon");
 			player.getInventory().addItem(myKey);
 			items.add(myKey);
 		}
 		
 		// Note: This is a built in cheat that is not supposed to be used to get the real game experience.
-		if(key == KeyEvent.VK_9)
+		if(key == KeyEvent.VK_P)
 		{
-			player.restoreHealth(100);
-			player.restoreMana(100);
-			player.restoreStamina(100);
+			Potion myPotion = new Potion(tileMap, this, false, 0, 0, player, 1, CreateItem.Potions.Healing.toString());
+			player.getInventory().addItem(myPotion);
+			items.add(myPotion);
 		}
+		
 		if(key == KeyEvent.VK_G) GPS(); 
 	}
 	

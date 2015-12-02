@@ -3,6 +3,7 @@ package Entity.Doodad.Activatable;
 import Entity.Doodad.Doodad;
 import Entity.Player.Player;
 import GameState.GameStateManager;
+import GameState.MainMap.MainMap;
 import Main.Content;
 import TileMap.TileMap;
 
@@ -11,15 +12,18 @@ public class CampFire extends Doodad
 	
 	protected GameStateManager gameStateManager;
 	
-	public CampFire(
+	public CampFire
+		(
 			TileMap tileMap, 
+			MainMap mainMap,
 			GameStateManager gameStateManager,
 			double spawnLocationX,
 			double spawnLocationY
-			) 
+		) 
 	{
 		super(
-				tileMap, 
+				tileMap,
+				mainMap,
 				spawnLocationX, 
 				spawnLocationY, 
 				128, 

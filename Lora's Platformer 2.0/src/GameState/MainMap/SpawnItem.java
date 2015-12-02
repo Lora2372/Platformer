@@ -56,33 +56,30 @@ public class SpawnItem {
 	
 	public Key spawnKey(double locationX, double locationY, String keyType, int stacks)
 	{
-		Key key = new Key(mainMap.tileMap, true, locationX, locationY, null, stacks, keyType);
+		Key key = new Key(mainMap.tileMap, mainMap, true, locationX, locationY, null, stacks, keyType);
 		mainMap.items.add(key);
 		return key;
 	}
 	
 	public Potion spawnPotion(double locationX, double locationY, String potionType, int stacks)
 	{
-		Potion potion = new Potion(mainMap.tileMap, true, locationX, locationY, null, stacks, potionType);
+		Potion potion = new Potion(mainMap.tileMap, mainMap, true, locationX, locationY, null, stacks, potionType);
 		mainMap.items.add(potion);
 		return potion;
 	}
 	
 	public Coin spawnCoin(double locationX, double locationY, String coinType, int stacks)
 	{
-		Coin coin = new Coin(mainMap.tileMap, true, locationX, locationY, null, stacks, coinType);
+		Coin coin = new Coin(mainMap.tileMap, mainMap, true, locationX, locationY, null, stacks, coinType);
 		mainMap.items.add(coin);
 		return coin;
 	}
 	
 	public Herb spawnHerb(double locationX, double locationY, String herbType, int stacks)
 	{
-		Herb herb = new Herb(mainMap.tileMap, true, locationX, locationY, null, stacks, herbType);
+		Herb herb = new Herb(mainMap.tileMap, mainMap, true, locationX, locationY, null, stacks, herbType);
 		mainMap.items.add(herb);
 		return herb;
-		
-		
-		
 	}
 	
 }

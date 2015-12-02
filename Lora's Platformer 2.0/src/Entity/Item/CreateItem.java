@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import Entity.Unit.Unit;
 import GameState.GameStateManager;
+import GameState.MainMap.MainMap;
 import TileMap.TileMap;
 
 public class CreateItem 
@@ -118,27 +119,27 @@ public class CreateItem
 	
 	
 	
-	public Item createItem(String itemType, Unit owner, int stacks)
+	public Item createItem(MainMap mainMap, String itemType, Unit owner, int stacks)
 	{
 		
 		if(lookForCoin(itemType))
 		{
-			return new Coin(tileMap, false, 0, 0, owner, stacks, itemType);
+			return new Coin(tileMap, mainMap, false, 0, 0, owner, stacks, itemType);
 		}
 		
 		if(lookForKey(itemType))
 		{
-			return new Key(tileMap, false, 0, 0, owner, stacks, itemType);
+			return new Key(tileMap, mainMap, false, 0, 0, owner, stacks, itemType);
 		}
 		
 		if(lookForPotion(itemType))
 		{
-			return new Potion(tileMap, false, 0, 0, owner, stacks, itemType);
+			return new Potion(tileMap, mainMap, false, 0, 0, owner, stacks, itemType);
 		}
 		
 		if(lookForHerb(itemType))
 		{
-			return new Herb(tileMap, false, 0, 0, owner, stacks, itemType);
+			return new Herb(tileMap, mainMap, false, 0, 0, owner, stacks, itemType);
 		}
 
 		

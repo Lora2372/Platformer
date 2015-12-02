@@ -3,7 +3,10 @@ package GameState.Maps;
 
 import java.io.IOException;
 import javax.imageio.ImageIO;
+
+import Entity.Doodad.Doodad;
 import Entity.Doodad.Activatable.Chest;
+import Entity.Doodad.Activatable.CreateDoodad;
 import Entity.Item.CreateItem;
 import Entity.Player.*;
 import Entity.Unit.*;
@@ -17,25 +20,27 @@ import TileMap.TileMap;
 public class LorasCavern extends MainMap
 {
 	
-	public static int startLocationX = 700;
-	public static int startLocationY = 2200;
+	public static int startLocationX = 720;
+	public static int startLocationY = 2220;
+	
+	protected int welcomeMessage = 0; // 0 = unstarted, 1 = choice made, -1 = done
 	
 	public LorasCavern
-	(
-		GameStateManager gameStateManager,
-		TileMap tileMap,
-		Player player,
-		ConversationState conversationState
-	) 
+		(
+			GameStateManager gameStateManager,
+			TileMap tileMap,
+			Player player,
+			ConversationState conversationState
+		) 
 	{
 		super
-		(
-			gameStateManager, 
-			tileMap,
-			player,
-			conversationState,
-			GameStateManager.GameMaps.LorasCavern.toString()
-		);
+			(
+				gameStateManager, 
+				tileMap,
+				player,
+				conversationState,
+				GameStateManager.GameMaps.LorasCavern.toString()
+			);
 	
 		try
 		{						
@@ -74,7 +79,7 @@ public class LorasCavern extends MainMap
 		}
 
 		if(!player.getLoading(index))
-		{
+		{			
 			player.setPosition(startLocationX, startLocationY);
 			player.setSpawnPoint(startLocationX, startLocationY);
 			
@@ -98,19 +103,26 @@ public class LorasCavern extends MainMap
 			succubus = spawnUnit.spawnSuccubus(3689, 1430, false);
 			dropPotion("Any", 25, 1, succubus);
 		
-			LiadrinFirstEncounter liadrinFirstEncounter = new LiadrinFirstEncounter(tileMap, false, true, false, true, true, "Liadrin", 2680, 1800, this);
-			characterList.add(liadrinFirstEncounter);
+			liadrin = new LiadrinFirstEncounter(tileMap, false, true, false, true, true, 2680, 1800, this);
+			characterList.add(liadrin);
 			
-			Chest chest;
-			chest = spawnDoodad.spawnChest(1923, 1170, true, 0, "Uncommon");
+			Chest chest = spawnDoodad.spawnChest(1923, 1170, true, 0, "Uncommon");
 			dropPotion(CreateItem.Potions.Healing.toString(), 100, 1, chest);
 			dropPotion(CreateItem.Potions.Mana.toString(), 100, 2, chest);
 			dropCoin(CreateItem.Coins.Silver.toString(), 100, 3, chest);
+			
+			spawnDoodad.spawnLever(startLocationX + 180, startLocationY, 0);
 			
 			spawnItem.spawnKey(1712, 		2610, CreateItem.Keys.Uncommon.toString(), 1);
 			spawnItem.spawnHerb(2276, 1450, CreateItem.Herbs.Sun.toString(), 1);
 			spawnItem.spawnHerb(3004, 1270, CreateItem.Herbs.Sun.toString(), 1);
 		}
+		else
+		{
+			welcomeMessage = -1;
+		}
+		
+		liadrin.setHidden(true);
 		
 		player.setCurrentMap(GameStateManager.GameMaps.LorasCavern.toString());
 		
@@ -154,9 +166,87 @@ public class LorasCavern extends MainMap
 		player.setCurrentMap(GameStateManager.GameMaps.LorasCavern.toString());
 	}
 	
+	public void useDoodad(Doodad doodad)
+	{
+		
+		
+		if(doodad.getDoodadType().equals(CreateDoodad.Other.Lever.toString()))
+		{
+			try
+			{
+				if(doodad.getCurrentAction() == 2)
+				{
+					System.out.println("On?");
+					tileMap.loadMap("/Maps/LorasCavernA.map");
+					
+				}
+				
+				if(doodad.getCurrentAction() == 0)
+				{
+					System.out.println("Off?");
+					tileMap.loadMap("/Maps/LorasCavernA.map");
+				}
+			}
+			catch(Exception exception)
+			{
+				exception.printStackTrace();
+			}
+		}
+		
+	}
+	
 	public void update()
 	{
 		super.update();
+		
+		if(!player.getSpawning())
+		{
+			if(welcomeMessage == 0)
+			{
+				if(!player.getInConversation())
+				{
+					conversationState.startConversation(player, liadrin, null, conversation.lorasCavernWelcomeMessage, conversation.lorasCavernWelcomeMessageWhoTalks);
+				}
+				else
+				{
+					if(conversationState.getConversationOver())
+					{
+						if(conversationState.getChoiceMade() == 1)
+						{
+							conversationState.startConversation(player, liadrin, null, conversation.lorasCavernWelcomeMessageChoiceYes, conversation.lorasCavernWelcomeMessageWhoTalksChoiceYes);
+						}
+						else
+						{
+							conversationState.startConversation(player, liadrin, null, conversation.lorasCavernWelcomeMessageChoiceNo, conversation.lorasCavernWelcomeMessageWhoTalksChoiceNo);
+						}
+						
+						welcomeMessage = 1;
+					}
+				}
+			}
+			else if(welcomeMessage == 1)
+			{
+				if(conversationState.getConversationOver())
+				{
+					conversationState.endConversation();
+				}
+			}
+		}
+		
+		
+		if(liadrin.getHidden())
+		{
+			if(player.getLocationX() > 2500 && player.getLocationX() < 2600 && player.getLocationY() > 1850 && player.getLocationY() < 1950)
+			{
+				System.out.println("spawning Liadrin");
+				liadrin.setHidden(false);
+				liadrin.setSpawning(true);
+			}
+		}
+
+
+
+		
 		if(player.getLocationX() < 3750 && player.getLocationY() > 2640)
 		{
 			player.setSpawnPoint(MysteriousDungeon.startLocationX, MysteriousDungeon.startLocationY);

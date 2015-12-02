@@ -1,19 +1,23 @@
 package Entity.Doodad;
 
+import GameState.MainMap.MainMap;
 import Main.Content;
 import TileMap.TileMap;
 
 public class Waterfall extends Doodad
 {
-	public Waterfall(
+	public Waterfall
+		(
 			TileMap tileMap,
+			MainMap mainMap,
 			double spawnLocationX,
 			double spawnLocationY
-			
-			)
+		)
 	{
-		super(
+		super
+			(
 				tileMap,
+				mainMap,
 				spawnLocationX,
 				spawnLocationY,
 				192,
@@ -30,7 +34,7 @@ public class Waterfall extends Doodad
 				0,
 				"Waterfall",
 				""
-				);
+			);
 	}
 	public void setDoodad(int currentAction)
 	{

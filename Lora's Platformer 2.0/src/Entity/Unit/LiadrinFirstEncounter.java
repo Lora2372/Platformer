@@ -30,7 +30,6 @@ public class LiadrinFirstEncounter extends Unit
 			boolean untouchable,
 			boolean invulnerable,
 			boolean unkillable,
-			String name,
 			double spawnLocationX,
 			double spawnLocationY,
 			MainMap mainMap
@@ -79,7 +78,7 @@ public class LiadrinFirstEncounter extends Unit
 				invulnerable,
 				unkillable,
 				true,
-				name,
+				"Liadrin",
 				"LiadrinFirstEncounter",
 				spawnLocationX,
 				spawnLocationY,
@@ -147,7 +146,7 @@ public class LiadrinFirstEncounter extends Unit
 		{
 			if(conversationBox.getConversationTracker() >= player.getConversation().liadrinFirstEncounterChoiceHard().length)
 			{
-				Potion healingPotion = new Potion(tileMap, false, 0, 0, player, 2, CreateItem.Potions.Healing.toString());
+				Potion healingPotion = new Potion(tileMap, mainMap, false, 0, 0, player, 2, CreateItem.Potions.Healing.toString());
 				
 				player.getInventory().addItem(healingPotion);
 				active = false;
@@ -157,7 +156,7 @@ public class LiadrinFirstEncounter extends Unit
 		if(!active)
 		{
 			player.getConversationState().endConversation();
-			summoningEffect = new SummoningEffect(tileMap, locationX, locationY);
+			summoningEffect = new SummoningEffect(tileMap, mainMap, locationX, locationY);
 			mainMap.addEffect(summoningEffect);
 		}
 	}

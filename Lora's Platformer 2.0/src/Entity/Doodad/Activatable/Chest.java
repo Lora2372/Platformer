@@ -9,6 +9,7 @@ import Entity.Item.Item;
 import Entity.Player.Player;
 import GameState.Conversation.Conversation;
 import GameState.Conversation.ConversationState;
+import GameState.MainMap.MainMap;
 
 public class Chest extends Doodad
 {
@@ -28,18 +29,21 @@ public class Chest extends Doodad
 	
 	protected Player player;
 	
-	public Chest(
+	public Chest
+		(
 			TileMap tileMap, 
+			MainMap mainMap,
 			double spawnLocationX,
 			double spawnLocationY,
 			boolean locked,
 			int currentAction,
 			String chestType
-			) 
+		) 
 	{
 		super
 			(
-				tileMap, 
+				tileMap,
+				mainMap,
 				spawnLocationX, 
 				spawnLocationY, 
 				60, 

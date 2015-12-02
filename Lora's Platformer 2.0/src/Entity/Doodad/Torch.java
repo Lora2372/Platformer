@@ -1,19 +1,23 @@
 package Entity.Doodad;
 
+import GameState.MainMap.MainMap;
 import Main.Content;
 import TileMap.TileMap;
 
 public class Torch extends Doodad
 {
-	public Torch(
+	public Torch
+		(
 			TileMap tileMap,
+			MainMap mainMap,
 			double spawnLocationX,
 			double spawnLocationY
-			
-			)
+		)
 	{
-		super(
+		super
+			(
 				tileMap,
+				mainMap,
 				spawnLocationX,
 				spawnLocationY,
 				150,
@@ -30,7 +34,7 @@ public class Torch extends Doodad
 				0,
 				"Torch",
 				""
-				);
+			);
 	}
 	public void setDoodad(int currentAction)
 	{

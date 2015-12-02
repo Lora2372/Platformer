@@ -69,11 +69,11 @@ public class FionasSanctum extends MainMap
 		characterList.add(fiona);
 		fiona.setHidden(true);
 		
-		activatableShrine = new ShrineFionasSanctum(tileMap, gameStatemanager, this, 600, 760, fiona);
+		activatableShrine = new ShrineFionasSanctum(tileMap, this, gameStatemanager, this, 600, 760, fiona);
 		activatables.add(activatableShrine);
 		stuff.add(activatableShrine);
 		
-		bossDoor = new Door(tileMap, gameStatemanager, startLocationX, startLocationY, false, 2, "Boss");
+		bossDoor = new Door(tileMap, this, gameStatemanager, startLocationX, startLocationY, false, 2, "Boss");
 		activatables.add(bossDoor);
 		stuff.add(bossDoor);
 		
@@ -179,7 +179,7 @@ public class FionasSanctum extends MainMap
 				JukeBox.stop("MysteriousBattle");
 				JukeBox.loop(GameStateManager.GameMaps.MysteriousDungeon.toString());
 				
-				Portal portal = new Portal(tileMap, gameStateManager, 1468, 790);
+				Portal portal = new Portal(tileMap, this, gameStateManager, 1468, 790);
 				stuff.add(portal);
 				activatables.add(portal);
 				

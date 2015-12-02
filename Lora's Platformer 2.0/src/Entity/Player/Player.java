@@ -34,11 +34,11 @@ public class Player extends Unit
 	
 	// Constructor
 	public Player
-	(
+		(
 			String name, 
 			TileMap tileMap,
 			ConversationState conversationState
-	)
+		)
 	{
 		super
 		(

@@ -1,19 +1,23 @@
 package Entity.Doodad;
 
+import GameState.MainMap.MainMap;
 import Main.Content;
 import TileMap.TileMap;
 
 public class ElectricBallChargeUp extends Doodad
 {
 
-	public ElectricBallChargeUp(
-			TileMap tileMap, 
+	public ElectricBallChargeUp
+		(
+			TileMap tileMap,
+			MainMap mainMap,
 			double spawnLocationX,
 			double spawnLocationY
-			) 
+		) 
 	{
 		super(
-				tileMap, 
+				tileMap,
+				mainMap,
 				spawnLocationX, 
 				spawnLocationY, 
 				60, 

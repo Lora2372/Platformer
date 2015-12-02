@@ -275,22 +275,28 @@ public class HUD
 			// Draw the quest frame
 			if(questFrameShow)
 			{	
-				double textWidth = graphics.getFontMetrics().stringWidth(questName[questCurrent]);
-				
-				double locationX = GamePanel.WIDTH - 100 - textWidth;
-				double locationY = 100;
-				
-				graphics.drawImage
-				(
-					Content.ConversationGUIEndConversation[0][0],
-					(int)locationX - 20,
-					(int)locationY - 20,
-					(int)textWidth + 40,
-					30,
-					null
-				);
-				
-				graphics.drawString(questName[questCurrent], (int)locationX, (int)locationY);
+				if(questName != null)
+				{
+					if(questName[questCurrent] != null)
+					{
+						double textWidth = graphics.getFontMetrics().stringWidth(questName[questCurrent]);
+						
+						double locationX = GamePanel.WIDTH - 100 - textWidth;
+						double locationY = 100;
+						
+						graphics.drawImage
+						(
+							Content.ConversationGUIEndConversation[0][0],
+							(int)locationX - 20,
+							(int)locationY - 20,
+							(int)textWidth + 40,
+							30,
+							null
+						);
+						
+						graphics.drawString(questName[questCurrent], (int)locationX, (int)locationY);
+					}
+				}
 			}
 			
 			

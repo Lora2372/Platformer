@@ -344,6 +344,11 @@ public class Unit extends MapObject
 		this.mainMap = mainMap;
 	}
 	
+	public MainMap getMainMap()
+	{
+		return mainMap;
+	}
+	
 	public TileMap getTileMap() { return tileMap; }
 	
 	
@@ -648,7 +653,7 @@ public class Unit extends MapObject
 		
 		if(initializeSpawning)
 		{
-			summoningEffect = new SummoningEffect(tileMap, locationX, locationY);
+			summoningEffect = new SummoningEffect(tileMap, mainMap, locationX, locationY);
 			initializeSpawning = false;
 			spawning = true;
 		}
@@ -951,7 +956,7 @@ public class Unit extends MapObject
 				animation.setFrames(sprites.get(animationState[8]));
 				animation.setDelay(animationDelay[8] * 3);
 				
-				ElectricBallChargeUp electricBallChargeUp = new ElectricBallChargeUp(tileMap, locationX, locationY - 20);
+				ElectricBallChargeUp electricBallChargeUp = new ElectricBallChargeUp(tileMap, mainMap, locationX, locationY - 20);
 				mainMap.addEffect(electricBallChargeUp);
 				
 				if(directionY == 0) directionX = 0;
@@ -1061,7 +1066,7 @@ public class Unit extends MapObject
 				magicShieldCasting = false;
 				magicShieldDoneCasting = true;
 				
-				MagicShield magicShield = new MagicShield(tileMap, locationX, locationY);
+				MagicShield magicShield = new MagicShield(tileMap, mainMap, locationX, locationY);
 				mainMap.addEffect(magicShield);
 				
 				playCastSound();

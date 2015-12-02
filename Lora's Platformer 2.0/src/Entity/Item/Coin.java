@@ -3,24 +3,29 @@ package Entity.Item;
 import Audio.JukeBox;
 import Entity.MapObject;
 import Entity.Player.Player;
+import GameState.MainMap.MainMap;
 import Main.Content;
 import TileMap.TileMap;
 
 public class Coin extends Item
 {
 
-	public Coin(
+	public Coin
+		(
 			TileMap tileMap,
+			MainMap mainMap,
 			boolean inWorld, 
 			double locationX, 
 			double locationY, 
 			MapObject owner, 
 			int stacks,
 			String coinType
-			) 
+		) 
 	{
-		super(
-				tileMap, 
+		super
+			(
+				tileMap,
+				mainMap,
 				inWorld, 
 				60, 
 				60, 
@@ -38,8 +43,7 @@ public class Coin extends Item
 				coinType,
 				CreateItem.getDescriptionName(coinType.toString()),
 				CreateItem.getDescription(coinType.toString())
-				
-				);
+			);
 
 	}
 	

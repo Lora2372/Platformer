@@ -8,11 +8,13 @@ import Entity.MapObject;
 import Entity.Doodad.Poff;
 import Entity.Player.Player;
 import Entity.Unit.Unit;
+import GameState.MainMap.MainMap;
 import TileMap.TileMap;
 
 public class Item extends MapObject
 {
 	
+	protected MainMap mainMap;
 	
 	protected boolean inWorld; 				// If false, it's in an inventory/chest/whatever, otherwise in the world.
 	
@@ -39,8 +41,10 @@ public class Item extends MapObject
 	
 	protected BufferedImage[] sprites;
 	
-	public Item(
+	public Item
+		(
 			TileMap tileMap,
+			MainMap mainMap,
 			boolean inWorld,
 			int width,
 			int height,
@@ -58,9 +62,11 @@ public class Item extends MapObject
 			String itemType,
 			String descriptionName,
 			String description
-			) 
+		) 
 	{
 		super(tileMap);
+		
+		this.mainMap = mainMap;
 		
 		this.inWorld = inWorld;
 		
@@ -177,7 +183,7 @@ public class Item extends MapObject
 		
 		if(initializeSpawning)
 		{
-			poff = new Poff(tileMap, locationX, locationY);
+			poff = new Poff(tileMap, mainMap, locationX, locationY);
 			initializeSpawning = false;
 			spawning = true;
 		}

@@ -2,7 +2,6 @@ package GameState.Maps;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
 import javax.imageio.ImageIO;
 import Audio.JukeBox;
 import Entity.Doodad.Doodad;
@@ -15,7 +14,6 @@ import Entity.Unit.Slug;
 import Entity.Unit.Succubus;
 import Entity.Unit.Wolf;
 import GameState.GameStateManager;
-import GameState.Conversation.Conversation;
 import GameState.Conversation.ConversationState;
 import GameState.MainMap.MainMap;
 import TileMap.GameOver;
@@ -25,7 +23,6 @@ public class MysteriousDungeon extends MainMap
 {
 	protected boolean dungeonIntroduction;
 	
-	protected Conversation conversation;
 	
 	protected Door door;
 	
@@ -34,21 +31,24 @@ public class MysteriousDungeon extends MainMap
 	public static int doorLocationX = 3045;
 	public static int doorLocationY = 780;
 	
-	public MysteriousDungeon(GameStateManager gameStatemanager,
+	public MysteriousDungeon
+		(
+			GameStateManager gameStatemanager,
 			TileMap tileMap,
 			Player player,
 			ConversationState conversationState
-			) 
+		) 
 	{
-		super(gameStatemanager, 
+		super
+			(
+				gameStatemanager, 
 				tileMap,
 				player,
 				conversationState,
 				GameStateManager.GameMaps.MysteriousDungeon.toString()
-				
-				);
 		
-		conversation = player.getConversation();
+			);
+		
 		
 		spawnDoodad.spawnTorch(109, 440);		
 		
@@ -177,11 +177,11 @@ public class MysteriousDungeon extends MainMap
 			{
 				if(!player.getInConversation())
 				{
-					player.getConversationState().startConversation(player, null, null, conversation.mysteriousDungeonTorchMessage, new int[] { 0 });
+					conversationState.startConversation(player, null, null, conversation.mysteriousDungeonTorchMessage, new int[] { 0 });
 				}
-				else if(player.getConversationState().getConversationOver())
+				else if(conversationState.getConversationOver())
 				{
-					player.getConversationState().endConversation();
+					conversationState.endConversation();
 					dungeonIntroduction = true;
 					JukeBox.play("PlayerEnterDungeon");
 				}

@@ -4,6 +4,7 @@ import Audio.JukeBox;
 import Entity.MapObject;
 import Entity.Player.CreateBuff;
 import Entity.Unit.Unit;
+import GameState.MainMap.MainMap;
 import Main.Content;
 import TileMap.TileMap;
 
@@ -13,6 +14,7 @@ public class Potion extends Item
 	public Potion
 		(
 			TileMap tileMap,
+			MainMap mainMap,
 			boolean inWorld, 
 			double locationX, 
 			double locationY, 
@@ -21,8 +23,10 @@ public class Potion extends Item
 			String potionType
 		) 
 	{
-		super(
-				tileMap, 
+		super
+			(
+				tileMap,
+				mainMap,
 				inWorld, 
 				60, 
 				60, 
@@ -40,7 +44,7 @@ public class Potion extends Item
 				potionType,
 				CreateItem.getDescriptionName(potionType),
 				CreateItem.getDescription(potionType)
-				);
+			);
 
 	}
 	

@@ -27,15 +27,19 @@ public class StatueSave extends Doodad
 	
 	protected MainMap mainMap;
 	
-	public StatueSave(
-			TileMap tileMap, 
+	public StatueSave
+		(
+			TileMap tileMap,
+			MainMap mainMap,
 			double spawnLocationX,
 			double spawnLocationY,
-			GameStateManager gameStateManager,
-			MainMap mainMap
-			) 
+			GameStateManager gameStateManager
+		) 
 	{
-		super(tileMap, 
+		super
+			(
+				tileMap,
+				mainMap,
 				spawnLocationX, 
 				spawnLocationY, 
 				116, 
@@ -58,7 +62,6 @@ public class StatueSave extends Doodad
 		this.spawnLocationX = spawnLocationX;
 		this.spawnLocationY = spawnLocationY;
 		this.gameStateManager = gameStateManager;
-		this.mainMap = mainMap;
 	}
 	
 	public void setDoodad(int currentAction)

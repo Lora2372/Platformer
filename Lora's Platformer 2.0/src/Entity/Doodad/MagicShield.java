@@ -1,19 +1,23 @@
 package Entity.Doodad;
 
+import GameState.MainMap.MainMap;
 import Main.Content;
 import TileMap.TileMap;
 
 public class MagicShield extends Doodad
 {
 
-	public MagicShield(
-			TileMap tileMap, 
+	public MagicShield
+		(
+			TileMap tileMap,
+			MainMap mainMap,
 			double spawnLocationX,
 			double spawnLocationY
-			) 
+		) 
 	{
 		super(
-				tileMap, 
+				tileMap,
+				mainMap,
 				spawnLocationX, 
 				spawnLocationY, 
 				192, 

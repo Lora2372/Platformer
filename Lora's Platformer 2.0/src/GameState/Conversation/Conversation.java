@@ -135,168 +135,7 @@ public class Conversation
 			2
 		};
 	}
-	
-	
-	public String[] liadrinFirstEncounter()
-	{
-			return new String[]
-			{
-				"Ah, so you have awakened at last then...",
-				"Greetings Liadrin.",
-				"How does your test fair thus far?",
-				"- It's easy! \n " +
-				"- It's hard..."
-			};
-			
-	}
-	
-	public int[] liadrinFirstEncounterWhoTalks()
-	{
-		return new int[]
-		{
-			1,
-			0,
-			1,
-			0
-		};
-	}
-	
-	public String[] liadrinFirstEncounterChoiceHard()
-	{
-		return new String[]
-		{
-			"Don't give up ok? \n Here, take these potions, I'm sure they will come in handy.",
-			"Thank you!",
-			"Now if you don't mind, I have some things to take care of."
-		};
-	}
-	
-	public int[] liadrinFirstEncounterChoiceHardWhoTalks()
-	{
-		return new int[]
-		{
-			1,
-			0,
-			1
-		};
-	}
-	
-	public String[] liadrinFirstEncounterChoiceEasy()
-	{
-		return new String[]
-		{
-			"Glad to hear it! \nUnfortunately I can't stay, keep up the good work and we'll meet again soon."
-		};
-	}
-	
-	public int[] liadrinFirstEncounterChoiceEasyWhoTalks()
-	{
-		return new int[]
-		{
-			1
-		};
-	}
-	
-
-	
-
-	
-	public String[] interactWithFionasShrine()
-	{
-		return new String[]
-		{
-			"The shrine glows faintly, there appears to be some pulsing orb at its core.",
-			"Touch the orb? \n - Yes \n - No"
-		};
-	};
-	
-	public int[] interactWithFinonasShrineWhoTalks()
-	{
-		return new int[]
-		{
-			3,
-			3
-		};
-	}
-	
-	
-	public String[] interactWithFionasShrineChoiceYes()
-	{
-		return new String[]
-		{
-			"The shrine hums at your touch...",														// 3
-			"Laughter echo through the tunnels",													// 3
-			"The door behind you closed...",														// 3
-			"Well look what I found, rummaging through my sanctum...",								// 5
-			"Who's there? Reveal yourself!",														// 0
-			"Another apprentice thrown to the wolves I see...",										// 1
-			"I won't be an apprentice for much longer!",											// 0
-			"No? \n We'll see...",																	// 1
-			"I'm Fiona, by the way, keeper of this sanctum.",										// 1
-			"If you manage to defeat me, you've earned your freedom.",								// 1
-			"If you lose however, well... let's just say you will never see the light of day.",		// 1
-			"I lose to no one!",																	// 0
-			"Defend yourself if you must, it will make my victory all the sweeter..."				// 1
-		};
-	}
-	
-	public int[] interactWithFinonasShrineChoiceYesWhoTalks()
-	{
-		return new int[]
-		{
-			3,
-			3,
-			3,
-			5,
-			0,
-			1,
-			0,
-			1,
-			1,
-			1,
-			1,
-			0,
-			1
-		};
-	}
-
-	
-	public String[] interactWithFionasShrineChoiceNo()
-	{
-		return new String[]
-		{
-			"You step away from the shrine..."
-		};
-	}
-	
-	public int[] interactWithFinonasShrineChoiceNoWhoTalks()
-	{
-		return new int[]
-		{
-			3
-		};
-	}
-	
-
-	
-	public String[] fionaDefeated = new String[]
-	{
-		"Ugh... \n Well done, I see you are an apprentice no longer.",							// 1
-		"As keeper of this sanctum I hearby release you from duty, you're free to go.",			// 1
-		"Just like that?",																		// 0
-		"But of course, were you expecting some form of reward? \n Until we meet again...",		// 1
-		"The door up ahead opens up."															// 3
-	};
-	
-	public int[] fionaDefeatedWhoTalks = new int[]
-	{
-		1,
-		1,
-		0,
-		1,
-		3
-	};
-	
+		
 	public String[] tutorialInstructions()
 	{
 		return new String[]
@@ -345,7 +184,7 @@ public class Conversation
 	public String[] tutorialJumpMessage = new String[]
 	{
 		"Nice one! Those are the basic movements you can do. "
-		+ "Why don't you try exploring the map for a bit, see what we can find." 
+		+ "Why don't you try exploring the world for a bit, see what we can find." 
 	};
 	
 	public int[] tutorialJumpMessageWhoTalks = new int[]
@@ -504,6 +343,113 @@ public class Conversation
 		4, 4
 	};
 	
+	public String[] lorasCavernWelcomeMessage = new String[]
+	{
+		"Ah, so you have finally awakened.",
+		"I feel dizzy... Where am I?",
+		"In the realm of mortals, this is the final test before you earn your freedom.",
+		"In order to succeed, you must make you way to the keeper's sanctum and prove your worth to her.",
+		"Sound simple enough... How do I get out of here?",
+		"There should be a lever that opens the door, see it?",
+		"- Yes \n " +
+		"- No..."
+	};
+	
+	public int[] lorasCavernWelcomeMessageWhoTalks = new int[]
+	{
+		1,
+		0,
+		1,
+		1,
+		0,
+		1,
+		1
+	};
+	
+	public String[] lorasCavernWelcomeMessageChoiceYes = new String[]
+	{
+		"Great!, unfortunately I have other things that require my attention, but I will drop by to help if I'm able."			
+	};
+	
+	public int[] lorasCavernWelcomeMessageWhoTalksChoiceYes = new int[]
+	{
+		1
+	};
+	
+	public String[] lorasCavernWelcomeMessageChoiceNo = new String[]
+	{
+		"It should be right in front of you... Try looking around for a bit, I'm sure you'll find it.",
+		"Unfortunately I have other things that require my attention, but I will drop by later to help if I'm able."
+	};
+	
+	public int[] lorasCavernWelcomeMessageWhoTalksChoiceNo = new int[]
+	{
+		1,
+		1
+	};
+	
+	
+	public String[] liadrinFirstEncounter()
+	{
+			return new String[]
+			{
+				"Greetings yet again.",
+				"Greetings Liadrin.",
+				"How does your test fair thus far?",
+				"- It's easy! \n " +
+				"- It's hard..."
+			};
+			
+	}
+	
+	public int[] liadrinFirstEncounterWhoTalks()
+	{
+		return new int[]
+		{
+			1,
+			0,
+			1,
+			0
+		};
+	}
+	
+	public String[] liadrinFirstEncounterChoiceHard()
+	{
+		return new String[]
+		{
+			"Don't give up ok? \n Here, take these potions, I'm sure they will come in handy.",
+			"Thank you!",
+			"Now if you don't mind, I have some things to take care of."
+		};
+	}
+	
+	public int[] liadrinFirstEncounterChoiceHardWhoTalks()
+	{
+		return new int[]
+		{
+			1,
+			0,
+			1
+		};
+	}
+	
+	public String[] liadrinFirstEncounterChoiceEasy()
+	{
+		return new String[]
+		{
+			"Glad to hear it! \nUnfortunately I can't stay, keep up the good work and we'll meet again soon."
+		};
+	}
+	
+	public int[] liadrinFirstEncounterChoiceEasyWhoTalks()
+	{
+		return new int[]
+		{
+			1
+		};
+	}
+	
+
 	public String[] mysteriousDungeonTorchMessage = new String[]
 	{
 			"Torches, someone must live here, or something..."
@@ -520,6 +466,104 @@ public class Conversation
 	public int[] mysteriousDungeonDirectionMessageWhoTalks = new int[]
 	{
 		2, 0
+	};
+	
+
+	
+	public String[] interactWithFionasShrine()
+	{
+		return new String[]
+		{
+			"The shrine glows faintly, there appears to be some pulsing orb at its core.",
+			"Touch the orb? \n - Yes \n - No"
+		};
+	};
+	
+	public int[] interactWithFinonasShrineWhoTalks()
+	{
+		return new int[]
+		{
+			3,
+			3
+		};
+	}
+	
+	
+	public String[] interactWithFionasShrineChoiceYes()
+	{
+		return new String[]
+		{
+			"The shrine hums at your touch...",														// 3
+			"Laughter echo through the tunnels",													// 3
+			"The door behind you closed...",														// 3
+			"Well look what I found, rummaging through my sanctum...",								// 5
+			"Who's there? Reveal yourself!",														// 0
+			"Another apprentice thrown to the wolves I see...",										// 1
+			"I won't be an apprentice for much longer!",											// 0
+			"No? \n We'll see...",																	// 1
+			"I'm Fiona, by the way, keeper of this sanctum.",										// 1
+			"If you manage to defeat me, you've earned your freedom.",								// 1
+			"If you lose however, well... let's just say you will never see the light of day.",		// 1
+			"I lose to no one!",																	// 0
+			"Defend yourself if you must, it will make my victory all the sweeter..."				// 1
+		};
+	}
+	
+	public int[] interactWithFinonasShrineChoiceYesWhoTalks()
+	{
+		return new int[]
+		{
+			3,
+			3,
+			3,
+			5,
+			0,
+			1,
+			0,
+			1,
+			1,
+			1,
+			1,
+			0,
+			1
+		};
+	}
+
+	
+	public String[] interactWithFionasShrineChoiceNo()
+	{
+		return new String[]
+		{
+			"You step away from the shrine..."
+		};
+	}
+	
+	public int[] interactWithFinonasShrineChoiceNoWhoTalks()
+	{
+		return new int[]
+		{
+			3
+		};
+	}
+	
+
+	
+	public String[] fionaDefeated = new String[]
+	{
+		"Ugh... \n Well done, I see you are an apprentice no longer.",							// 1
+		"As keeper of this sanctum I hearby release you from duty, you're free to go.",			// 1
+		"Just like that?",																		// 0
+		"But of course, were you expecting some form of reward? \n Until we meet again...",		// 1
+		"The door up ahead opens up."															// 3
+	};
+	
+	public int[] fionaDefeatedWhoTalks = new int[]
+	{
+		1,
+		1,
+		0,
+		1,
+		3
 	};
 
 	

@@ -26,8 +26,8 @@ public class SpawnUnit
 			
 			if(unitData.getUnitType().equals("LiadrinFirstEncounter"))
 			{
-				LiadrinFirstEncounter liadrinFirstEncounter = new LiadrinFirstEncounter(mainMap.tileMap, false, true, false, true, true, "Liadrin", 2680, 1800, mainMap);
-				mainMap.characterList.add(liadrinFirstEncounter);
+				mainMap.liadrin = new LiadrinFirstEncounter(mainMap.tileMap, false, true, false, true, true, 2680, 1800, mainMap);
+				mainMap.characterList.add(mainMap.liadrin);
 			}
 			
 			if(unitData.getUnitType().equals("Slug"))

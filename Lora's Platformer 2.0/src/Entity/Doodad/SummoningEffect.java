@@ -1,18 +1,26 @@
 package Entity.Doodad;
 
 import Audio.JukeBox;
+import GameState.MainMap.MainMap;
 import Main.Content;
 import TileMap.TileMap;
 
 public class SummoningEffect extends Doodad
 {
-	public SummoningEffect(TileMap tileMap, double x, double y )
+	public SummoningEffect
+		(
+			TileMap tileMap,
+			MainMap mainMap,
+			double spawnLocationX,
+			double spawnLocationY 
+		)
 	{
 		super
 		(
-				tileMap, 
-				x, 
-				y, 
+				tileMap,
+				mainMap,
+				spawnLocationX, 
+				spawnLocationY, 
 				192, 
 				192,
 				0,

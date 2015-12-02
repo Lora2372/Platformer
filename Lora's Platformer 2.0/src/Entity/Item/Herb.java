@@ -1,6 +1,7 @@
 package Entity.Item;
 
 import Entity.MapObject;
+import GameState.MainMap.MainMap;
 import Main.Content;
 import TileMap.TileMap;
 
@@ -9,6 +10,7 @@ public class Herb extends Item
 	public Herb
 		(
 			TileMap tileMap,
+			MainMap mainMap,
 			boolean inWorld,
 			double locationX,
 			double locationY,
@@ -20,6 +22,7 @@ public class Herb extends Item
 		super
 			(
 				tileMap,
+				mainMap,
 				inWorld,
 				21,
 				17,

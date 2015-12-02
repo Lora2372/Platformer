@@ -1,19 +1,24 @@
 package Entity.Doodad;
 
+import GameState.MainMap.MainMap;
 import Main.Content;
 import TileMap.TileMap;
 
 public class Poff extends Doodad
 {
 
-	public Poff(
-			TileMap tileMap, 
+	public Poff
+		(
+			TileMap tileMap,
+			MainMap mainMap, 
 			double spawnLocationX,
 			double spawnLocationY
-			) 
+		) 
 	{
-		super(
-				tileMap, 
+		super
+			(
+				tileMap,
+				mainMap,
 				spawnLocationX, 
 				spawnLocationY, 
 				60, 
@@ -30,7 +35,7 @@ public class Poff extends Doodad
 				0,
 				"Poff",
 				""
-				);
+			);
 	}
 	public void setDoodad(int currentAction)
 	{
