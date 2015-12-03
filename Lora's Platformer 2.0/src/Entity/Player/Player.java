@@ -4,7 +4,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import Entity.Unit.Unit;
 import GameState.GameStateManager;
-import GameState.Conversation.Conversation;
+import GameState.Conversation.ConversationData;
 import GameState.Conversation.ConversationState;
 import Main.Content;
 import TileMap.TileMap;
@@ -24,7 +24,7 @@ public class Player extends Unit
 	
 	protected String currentMap;
 	
-	protected Conversation conversation;
+	protected ConversationData conversation;
 	protected ConversationState conversationState;
 	
 	//  Animations 
@@ -99,7 +99,7 @@ public class Player extends Unit
 			loading.add(newBoolean);
 		}
 		
-		conversation = new Conversation(this);
+		conversation = new ConversationData(this);
 		this.conversationState = conversationState;
 		player = true;
 
@@ -108,9 +108,7 @@ public class Player extends Unit
 		hud = new HUD(this);
 		
 	}
-	
-	public Conversation getConversation() { return conversation; }
-	
+		
 	public ConversationState getConversationState() { return conversationState; }
 	
 	public boolean getLoading(int index) { return loading.get(index); }

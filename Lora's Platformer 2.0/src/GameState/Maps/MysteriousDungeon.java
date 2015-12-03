@@ -14,6 +14,7 @@ import Entity.Unit.Slug;
 import Entity.Unit.Succubus;
 import Entity.Unit.Wolf;
 import GameState.GameStateManager;
+import GameState.Conversation.ConversationDataMysteriousDungeon;
 import GameState.Conversation.ConversationState;
 import GameState.MainMap.MainMap;
 import TileMap.GameOver;
@@ -23,13 +24,15 @@ public class MysteriousDungeon extends MainMap
 {
 	protected boolean dungeonIntroduction;
 	
+	protected ConversationDataMysteriousDungeon conversation;
 	
 	protected Door door;
-	
+		
 	public static int startLocationX = 109;
 	public static int startLocationY = 200;
 	public static int doorLocationX = 3045;
 	public static int doorLocationY = 780;
+	
 	
 	public MysteriousDungeon
 		(
@@ -46,9 +49,9 @@ public class MysteriousDungeon extends MainMap
 				player,
 				conversationState,
 				GameStateManager.GameMaps.MysteriousDungeon.toString()
-		
 			);
 		
+		conversation = new ConversationDataMysteriousDungeon();
 		
 		spawnDoodad.spawnTorch(109, 440);		
 		
@@ -164,6 +167,8 @@ public class MysteriousDungeon extends MainMap
 	{
 		return activatables;
 	}
+	
+
 	
 	public void update()
 	{

@@ -250,7 +250,14 @@ public class Item extends MapObject
 		
 		if(spawning) return;
 		
-		super.draw(graphics);
+		try
+		{
+			super.draw(graphics);
+		}
+		catch(Exception exception)
+		{
+			exception.printStackTrace();
+		}
 		
 	}
 	

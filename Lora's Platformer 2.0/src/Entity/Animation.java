@@ -20,6 +20,10 @@ public class Animation
 	
 	public void setFrames(BufferedImage[] frames)
 	{
+		if(frames == null)
+		{
+			currentFrame = 0;
+		}
 		this.frames = frames;
 		currentFrame = 0;
 		startTime = System.nanoTime();
@@ -62,6 +66,19 @@ public class Animation
 	public int getFrame() { return currentFrame; }
 	public int getFramesLength() { return frames.length; }
 	public BufferedImage[] getFrames() { return frames; }
-	public BufferedImage getImage() { return frames[currentFrame]; }
+	
+	public BufferedImage getImage() 
+	{ 
+		try
+		{
+			return frames[currentFrame]; 
+		}
+		catch(Exception exception)
+		{
+			throw exception;
+		}
+		
+	}
+	
 	public Boolean hasPlayedOnce() { return playedOnce; }
 }

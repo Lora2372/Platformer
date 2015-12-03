@@ -7,7 +7,7 @@ import Entity.Doodad.Doodad;
 import Entity.Item.CreateItem;
 import Entity.Item.Item;
 import Entity.Player.Player;
-import GameState.Conversation.Conversation;
+import GameState.Conversation.ConversationData;
 import GameState.Conversation.ConversationState;
 import GameState.MainMap.MainMap;
 
@@ -24,8 +24,8 @@ public class Chest extends Doodad
 	
 	protected String chestName;
 	
-	protected Conversation conversation;
-	protected ConversationState conversationBox;
+	protected ConversationData conversationData;
+	protected ConversationState conversationDataBox;
 	
 	protected Player player;
 	
@@ -136,11 +136,13 @@ public class Chest extends Doodad
 		if(this.player == null)
 		{
 			this.player = player;
-			conversationBox = player.getConversationState();
-			conversation = player.getConversation();
+			conversationDataBox = player.getConversationState();
+			conversationData = new ConversationData(player);
 		}
 		
-		String conversationPiece = "";
+
+		
+		String conversationDataPiece = "";
 		
 		// If it hasn't been opened yet...
 		if(!successfullyOpened)
@@ -148,21 +150,21 @@ public class Chest extends Doodad
 			// If the chest is locked
 			if(locked)
 			{
-				// If the player hasn't started the conversation yet, start it.
+				// If the player hasn't started the conversationData yet, start it.
 				if(!player.getInConversation() && choiceMade == 0)
 				{
-					conversationBox.startConversation(player, null, this, conversation.unlockObject(chestName), conversation.unlockObjectWhoTalks());
+					conversationDataBox.startConversation(player, null, this, conversationData.unlockObject(chestName), conversationData.unlockObjectWhoTalks());
 					return;
 				}
 				
-				// If the player is still in the conversation but we haven't gotten a decision yet
+				// If the player is still in the conversationData but we haven't gotten a decision yet
 				if(player.getInConversation() && choiceMade == 0)
 				{
-					// If the conversation is over
-					if(conversationBox.getConversationOver())
+					// If the conversationData is over
+					if(conversationDataBox.getConversationOver())
 					{
 						// get the decision made
-						choiceMade = conversationBox.getChoiceMade();
+						choiceMade = conversationDataBox.getChoiceMade();
 						
 						// If the player decided to try and open the chest
 						if(choiceMade == 1)
@@ -175,19 +177,19 @@ public class Chest extends Doodad
 								item.use(player);
 								successfullyOpened = true;
 								JukeBox.play("Unlock");
-								conversationBox.startConversation(player, null, this, conversation.unlockObjectChoiceYesSuccess(chestName), conversation.unlockObjectChoiceYesSuccessWhoTalks());
+								conversationDataBox.startConversation(player, null, this, conversationData.unlockObjectChoiceYesSuccess(chestName), conversationData.unlockObjectChoiceYesSuccessWhoTalks());
 							}
 							else
 							{
 								// No key. =(
 								player.playCannotOpenSound();
-								conversationBox.startConversation(player, null, this, conversation.unlockObjectChoiceYesFailure(chestName), conversation.unlockObjectChoiceYesFailureWhoTalks());
+								conversationDataBox.startConversation(player, null, this, conversationData.unlockObjectChoiceYesFailure(chestName), conversationData.unlockObjectChoiceYesFailureWhoTalks());
 							}
 						}
 						// If the player decides not to open the chest
 						else
 						{
-							conversationBox.startConversation(player, null, this, conversation.unlockObjectChoiceNo(chestName), conversation.unlockObjectChoiceNoWhoTalks());
+							conversationDataBox.startConversation(player, null, this, conversationData.unlockObjectChoiceNo(chestName), conversationData.unlockObjectChoiceNoWhoTalks());
 						}	
 					}
 				}
@@ -200,14 +202,14 @@ public class Chest extends Doodad
 		}
 
 		
-		// If the player is in a conversation but has not yet looted the chest
+		// If the player is in a conversationData but has not yet looted the chest
 		if(player.getInConversation() && !used)
 		{
-			// If the conversation is over
-			if(conversationBox.getConversationOver())
+			// If the conversationData is over
+			if(conversationDataBox.getConversationOver())
 			{
-				// End the conversation and reset the choice
-				conversationBox.endConversation();
+				// End the conversationData and reset the choice
+				conversationDataBox.endConversation();
 				choiceMade = 0;
 			}
 		}
@@ -222,7 +224,7 @@ public class Chest extends Doodad
 				player.playLootSound();
 				
 				active = true;
-				conversationPiece = "You found ";
+				conversationDataPiece = "You found ";
 						
 				int tempRows = inventory.getNumberOfRows();
 				int tempColumns = inventory.getNumberOfColumns();
@@ -235,7 +237,7 @@ public class Chest extends Doodad
 						
 						if(item != null)
 						{
-							conversationPiece += item.getStacks() + " " + CreateItem.itemDescriptionName.get(item.getItemType()) + (item.getStacks() > 1 ? "s, " : ", ");
+							conversationDataPiece += item.getStacks() + " " + CreateItem.itemDescriptionName.get(item.getItemType()) + (item.getStacks() > 1 ? "s, " : ", ");
 							
 							if(item.getItemType().equals(CreateItem.Coins.Silver.toString()))
 							{
@@ -252,13 +254,13 @@ public class Chest extends Doodad
 						}
 					}
 				}
-				conversationPiece = conversationPiece.substring(0, conversationPiece.length() - 2);
+				conversationDataPiece = conversationDataPiece.substring(0, conversationDataPiece.length() - 2);
 				
-				conversationPiece += ".";
+				conversationDataPiece += ".";
 				
 				String[] conversation = new String[]
 				{
-					conversationPiece		
+					conversationDataPiece		
 				};
 				player.getConversationState().startConversation(player, null, this, conversation, new int[] { 2 });
 			

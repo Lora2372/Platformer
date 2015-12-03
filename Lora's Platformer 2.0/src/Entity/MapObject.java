@@ -25,7 +25,9 @@ public abstract class MapObject
 	protected boolean flying;
 	protected boolean gliding;
 	protected boolean spawning;
+	protected boolean deSpawning;
 	protected boolean initializeSpawning;
+	protected boolean initializeDeSpawning;
 	protected SummoningEffect summoningEffect;
 	protected boolean inControl;
 	
@@ -166,7 +168,7 @@ public abstract class MapObject
 	
 	protected void getNextPosition()
 	{
-		if(spawning)
+		if(spawning || deSpawning)
 		{
 			directionX = 0;
 			directionY = 0;
@@ -417,55 +419,68 @@ public abstract class MapObject
 	}
 	
 	
-	public void draw(java.awt.Graphics2D graphics)
+	public void draw(java.awt.Graphics2D graphics) throws Exception
 	{
-		setMapPosition();
-		
-		if(hidden) return;
-		
-		if(rotaded)
+		try
 		{
+			setMapPosition();
 			
-			double rotationX = width / 2;
-			double rotationY = height / 2;
-			AffineTransform tx = AffineTransform.getRotateInstance(rotation + Math.PI, rotationX, rotationY);
-			AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
+			if(hidden) return;
 			
+			if(animation.getImage() == null)
+			{
+				System.out.println("Image was null");
+				throw new Exception();
+			}
 			
-			graphics.drawImage(
-					op.filter(animation.getImage(), null),
-							(int)(locationX + mapPositionX - width / 2), 
-							(int)(locationY + mapPositionY - height / 2),
-							width,
-							height,
-							null
-							);
-			return;
+			if(rotaded)
+			{
+				
+				double rotationX = width / 2;
+				double rotationY = height / 2;
+				AffineTransform tx = AffineTransform.getRotateInstance(rotation + Math.PI, rotationX, rotationY);
+				AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
+				
+				
+				graphics.drawImage(
+						op.filter(animation.getImage(), null),
+								(int)(locationX + mapPositionX - width / 2), 
+								(int)(locationY + mapPositionY - height / 2),
+								width,
+								height,
+								null
+								);
+				return;
+				
+			}
 			
-		}
-		
-		if(facingRight)
-		{
-			graphics.drawImage(
-					animation.getImage(),
-					(int) (locationX + mapPositionX - width / 2 + width),
-					(int) (locationY + mapPositionY - height / 2),
-					-width,
-					height,
-					null
-				);
-
-		}
-		else
-		{
-			graphics.drawImage(
-					animation.getImage(),
-					(int) (locationX + mapPositionX - width / 2),
-					(int) (locationY + mapPositionY - height / 2),
-					width,
-					height,
-					null
+			if(facingRight)
+			{
+				graphics.drawImage(
+						animation.getImage(),
+						(int) (locationX + mapPositionX - width / 2 + width),
+						(int) (locationY + mapPositionY - height / 2),
+						-width,
+						height,
+						null
 					);
+	
+			}
+			else
+			{
+				graphics.drawImage(
+						animation.getImage(),
+						(int) (locationX + mapPositionX - width / 2),
+						(int) (locationY + mapPositionY - height / 2),
+						width,
+						height,
+						null
+						);
+			}
+		}
+		catch(Exception exception)
+		{
+			throw exception;
 		}
 	}
 	

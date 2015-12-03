@@ -498,7 +498,10 @@ public class Unit extends MapObject
 	public boolean isDead() { return dead; }
 	
 	public boolean getSpawning() { return spawning; };
-	public void setSpawning(boolean b) { initializeSpawning = b; }
+	public void spawn() { initializeSpawning = true; }
+	
+	public boolean getDeSpawning() { return deSpawning; }
+	public void deSpawn() { initializeDeSpawning = true; }
 	
 	public double getSpawnLocationX() { return spawnLocationX; }
 	public double getSpawnLocationY() { return spawnLocationY; }
@@ -659,18 +662,37 @@ public class Unit extends MapObject
 				spawning = true;
 			}
 			
+			if(initializeDeSpawning)
+			{
+				summoningEffect = new SummoningEffect(tileMap, mainMap, locationX, locationY);
+				initializeDeSpawning = false;
+				deSpawning = true;
+			}
+			
 			if(summoningEffect != null && !summoningEffect.getAnimation().hasPlayedOnce())
 			{
 				summoningEffect.update();
 			}
 			
-			if(spawning && summoningEffect.getAnimation().hasPlayedOnce())
+			if(spawning && summoningEffect.getHasPlayedOnce())
 			{
-				System.out.println("unit null");
 				summoningEffect = null;
 				spawning = false;
+				hidden = false;
+				untouchable = false;
 				if(!inConversation)
 					inControl = true;
+			}
+			
+			if(deSpawning && summoningEffect.getHasPlayedOnce())
+			{
+				summoningEffect = null;
+				deSpawning = false;
+				hidden = true;
+				untouchable = true;
+				inControl = false;
+				
+				removeMe = !player;
 			}
 			
 			if(locationX > tileMap.getWidth() || locationX < 0 || locationY > tileMap.getHeight())
@@ -1519,21 +1541,29 @@ public class Unit extends MapObject
 	
 	public void draw(Graphics2D graphics)
 	{
-		setMapPosition();
-		
-		// Draw Summoning Effect
-		if(summoningEffect != null)
+		try
 		{
-			summoningEffect.draw(graphics);
+			setMapPosition();
+			
+			// Draw Summoning Effect
+			if(summoningEffect != null)
+			{
+				summoningEffect.draw(graphics);
+			}
+			
+			
+			
+			
+			if(spawning) return;
+			
+			// Draw unit
+			super.draw(graphics);
 		}
-		
-		
-		// Draw player
-		
-		if(spawning) return;
-		
-		
-		super.draw(graphics);		
+		catch(Exception exception)
+		{
+			System.out.println("Crash, + " + name);
+			exception.printStackTrace();
+		}
 	}
 	
 	public void drawNamePlate(Graphics2D graphics)

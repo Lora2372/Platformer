@@ -20,7 +20,7 @@ import Entity.Projectile.Projectile;
 import Entity.Unit.*;
 import GameState.GameState;
 import GameState.GameStateManager;
-import GameState.Conversation.Conversation;
+import GameState.Conversation.ConversationData;
 import GameState.Conversation.ConversationState;
 import Audio.JukeBox;
 import java.awt.event.KeyEvent;
@@ -43,8 +43,8 @@ public class MainMap extends GameState
 	protected ArrayList<Explosion> explosions;
 	protected boolean doneInitializing;
 		
-	protected Conversation conversation;
 	protected ConversationState conversationState;
+	protected ConversationData conversationData;
 	
 	protected double mouseLocationX;
 	protected double mouseLocationY;
@@ -67,7 +67,8 @@ public class MainMap extends GameState
 	protected SpawnDoodad spawnDoodad;
 	protected SpawnItem spawnItem;
 	
-	protected LiadrinFirstEncounter liadrin;
+	
+	protected Liadrin liadrin;
 	
 	public MainMap
 		(
@@ -85,7 +86,7 @@ public class MainMap extends GameState
 		this.player = player;
 		this.currentMap = currentMap;
 		
-		this.conversation = player.getConversation();
+		conversationData = new ConversationData(player);
 		
 		spawnUnit	= new SpawnUnit(this);
 		spawnDoodad	= new SpawnDoodad(this);
@@ -772,9 +773,14 @@ public class MainMap extends GameState
 	// useDoodad differs from interact in that interact occurs whenever you interact with any object, 
 	// useDoodad only occurs if you successfully use the doodad. 
 	// Not all interactive doodads are usable (at the moment only the lever is).
-	public void useDoodad(Doodad lever)
+	public void useDoodad(Doodad doodad)
 	{
-		
+		// Runs the useDoodad in the map that inherits this class.
+	}
+	
+	public void useUnit(Unit unit)
+	{
+		// Runs the useUnit in the map that inherits this class.
 	}
 	
 	public void interact()
@@ -806,9 +812,12 @@ public class MainMap extends GameState
 		
 		for(int i = 0; i < characterList.size(); i++)
 		{
-			if(player.intersects(characterList.get(i)) && characterList.get(i).getActivatable())
+			if(!characterList.get(i).getSpawning() && !characterList.get(i).getDeSpawning())
 			{
-				characterList.get(i).interact(player);
+				if(player.intersects(characterList.get(i)) && characterList.get(i).getActivatable())
+				{
+					characterList.get(i).interact(player);
+				}
 			}
 		}
 	}

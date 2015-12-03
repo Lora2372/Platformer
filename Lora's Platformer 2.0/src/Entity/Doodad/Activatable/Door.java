@@ -5,7 +5,7 @@ import Entity.Doodad.Doodad;
 import Entity.Item.Item;
 import Entity.Player.Player;
 import GameState.GameStateManager;
-import GameState.Conversation.Conversation;
+import GameState.Conversation.ConversationData;
 import GameState.Conversation.ConversationState;
 import GameState.MainMap.MainMap;
 import GameState.Maps.FionasSanctum;
@@ -24,7 +24,7 @@ public class Door extends Doodad
 	
 	protected String doorName;
 	
-	protected Conversation conversation;
+	protected ConversationData conversationData;
 	protected ConversationState conversationBox;
 	
 	protected Player player;
@@ -165,7 +165,7 @@ public class Door extends Doodad
 		{
 			this.player = player;
 			conversationBox = player.getConversationState();
-			conversation = player.getConversation();
+			conversationData = new ConversationData(player);
 		}
 		
 		
@@ -175,7 +175,7 @@ public class Door extends Doodad
 			{
 				if(!player.getInConversation() && choiceMade == 0)
 				{
-					conversationBox.startConversation(player, null, this, player.getConversation().unlockObject(doorName), player.getConversation().unlockObjectWhoTalks());
+					conversationBox.startConversation(player, null, this, conversationData.unlockObject(doorName), conversationData.unlockObjectWhoTalks());
 					return;
 				}
 				
@@ -193,17 +193,17 @@ public class Door extends Doodad
 								item.use(player);
 								JukeBox.play("Unlock");
 								successfullyOpened = true;
-								conversationBox.startConversation(player, null, this, conversation.unlockObjectChoiceYesSuccess(doorName), conversation.unlockObjectChoiceYesSuccessWhoTalks());
+								conversationBox.startConversation(player, null, this, conversationData.unlockObjectChoiceYesSuccess(doorName), conversationData.unlockObjectChoiceYesSuccessWhoTalks());
 							}
 							else
 							{
 								player.playCannotOpenSound();
-								conversationBox.startConversation(player, null, this, conversation.unlockObjectChoiceYesFailure(doorName), conversation.unlockObjectChoiceYesFailureWhoTalks());
+								conversationBox.startConversation(player, null, this, conversationData.unlockObjectChoiceYesFailure(doorName), conversationData.unlockObjectChoiceYesFailureWhoTalks());
 							}
 						}
 						else
 						{
-							conversationBox.startConversation(player, null, this, conversation.unlockObjectChoiceNo(doorName), conversation.unlockObjectChoiceNoWhoTalks());
+							conversationBox.startConversation(player, null, this, conversationData.unlockObjectChoiceNo(doorName), conversationData.unlockObjectChoiceNoWhoTalks());
 						}
 					}
 				}

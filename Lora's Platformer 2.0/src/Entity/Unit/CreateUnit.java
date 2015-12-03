@@ -24,6 +24,17 @@ public class CreateUnit
 		
 	}
 	
+	public static enum Units
+	{
+		Bunny,
+		Fiona,
+		Liadrin,
+		Skeleton,
+		Slug,
+		Succubus,
+		Wolf
+	};
+	
 	public static int getCharacterListSize() { return characterList.size(); }
 	
 	public static void addUnit(String currentMap, UnitData unitData)

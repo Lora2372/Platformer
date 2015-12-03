@@ -158,6 +158,13 @@ public class Projectile extends MapObject
 	{	
 		setMapPosition();
 			
-		super.draw(graphics);
+		try
+		{
+			super.draw(graphics);
+		}
+		catch(Exception exception)
+		{
+			exception.printStackTrace();
+		}
 	}
 }

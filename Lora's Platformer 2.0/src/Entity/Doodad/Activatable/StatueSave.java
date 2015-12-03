@@ -5,7 +5,7 @@ import Entity.Doodad.Doodad;
 import Entity.Player.CreateBuff;
 import Entity.Player.Player;
 import GameState.GameStateManager;
-import GameState.Conversation.Conversation;
+import GameState.Conversation.ConversationData;
 import GameState.Conversation.ConversationState;
 import GameState.MainMap.MainMap;
 import Main.Content;
@@ -17,7 +17,7 @@ public class StatueSave extends Doodad
 
 	protected Player player;
 	
-	protected Conversation conversation;
+	protected ConversationData conversationData;
 	
 	protected ConversationState conversationBox;
 	
@@ -78,7 +78,7 @@ public class StatueSave extends Doodad
 		{
 			this.player = player;
 			this.conversationBox = player.getConversationState();
-			this.conversation = player.getConversation();
+			this.conversationData = new ConversationData(player);
 		}
 		
 		if(!player.getInConversation() && choiceMade == 0)
@@ -87,7 +87,7 @@ public class StatueSave extends Doodad
 			player.addBuff(CreateBuff.createBuff(CreateBuff.Buffs.RestoreHealth, 5, 100, player, sprites[0]));
 			player.addBuff(CreateBuff.createBuff(CreateBuff.Buffs.RestoreMana, 5, 100, player, sprites[0]));
 			player.addBuff(CreateBuff.createBuff(CreateBuff.Buffs.RestoreStamina, 5, 100, player, sprites[0]));
-			player.getConversationState().startConversation(player, null, this, conversation.statueSave(), conversation.statueSaveWhoTalks());
+			player.getConversationState().startConversation(player, null, this, conversationData.statueSave(), conversationData.statueSaveWhoTalks());
 			return;
 		}
 		
@@ -98,7 +98,7 @@ public class StatueSave extends Doodad
 				choiceMade = conversationBox.getChoiceMade();
 				if(choiceMade == 1)
 				{
-					player.getConversationState().startConversation(player, null, this, conversation.statueSaveChoiceYes(), conversation.statueSaveChoiceYesWhoTalks());
+					player.getConversationState().startConversation(player, null, this, conversationData.statueSaveChoiceYes(), conversationData.statueSaveChoiceYesWhoTalks());
 					
 					player.setSpawnLocationX(spawnLocationX);
 					player.setSpawnLocationY(spawnLocationY);
@@ -108,7 +108,7 @@ public class StatueSave extends Doodad
 				}
 				else
 				{
-					player.getConversationState().startConversation(player, null, this, conversation.statueSaveChoiceNo(), conversation.statueSaveChoiceNoWhoTalks());	
+					player.getConversationState().startConversation(player, null, this, conversationData.statueSaveChoiceNo(), conversationData.statueSaveChoiceNoWhoTalks());	
 				}
 				return;
 			}

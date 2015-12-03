@@ -83,7 +83,7 @@ public class DeepWoods extends MainMap
 
 		
 		
-		player.setSpawning(true);
+		player.spawn();
 		player.setUnkillable(false);
 		
 	}

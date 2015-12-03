@@ -6,13 +6,13 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import Audio.JukeBox;
 import Entity.Doodad.Doodad;
-import Entity.Doodad.Activatable.ShrineFionasSanctum;
+import Entity.Doodad.Activatable.Shrine;
 import Entity.Doodad.Activatable.Door;
 import Entity.Doodad.Activatable.Portal;
 import Entity.Player.Player;
 import Entity.Unit.Fiona;
 import GameState.GameStateManager;
-import GameState.Conversation.Conversation;
+import GameState.Conversation.ConversationDataFionasSanctum;
 import GameState.Conversation.ConversationState;
 import GameState.MainMap.MainMap;
 import TileMap.GameOver;
@@ -22,40 +22,49 @@ public class FionasSanctum extends MainMap
 {
 	protected boolean pathBlocked;
 	
-	protected ShrineFionasSanctum activatableShrine;
+	protected Shrine activatableShrine;
 	
 	protected Fiona fiona;
 	
 	protected boolean bossEngaged;
 	protected boolean bossDefeated;
 	
-	protected int unlockOnce;
+	protected int unlockConversationOnce;
 	
-	protected Conversation conversation;
+	protected ConversationDataFionasSanctum conversation;
 	
 	protected Door bossDoor;
 	
 	public static int startLocationX = 120;
 	public static int startLocationY = 780;
 	
-	public FionasSanctum(
+	protected boolean shrineStartConversation;
+	protected boolean shrineTouched = false;
+	
+	protected int shrineChoiceMade;
+	protected int shrineCurrentProgress = 0;
+
+	
+	public FionasSanctum
+		(
 			GameStateManager gameStatemanager,
 			TileMap tileMap,
 			Player player,
 			ConversationState conversationState
-			) 
+		) 
 	{
-		super(gameStatemanager, 
+		super
+			(
+				gameStatemanager, 
 				tileMap,
 				player,
 				conversationState,
-				"FionasSanctum"
-				
-				);
+				"FionasSanctum"	
+			);
 		
 
 		
-		conversation = player.getConversation();
+		conversation = new ConversationDataFionasSanctum();
 		
 		spawnDoodad.spawnTorch(390, 410);
 		spawnDoodad.spawnTorch(810, 410);
@@ -69,7 +78,7 @@ public class FionasSanctum extends MainMap
 		characterList.add(fiona);
 		fiona.setHidden(true);
 		
-		activatableShrine = new ShrineFionasSanctum(tileMap, this, gameStatemanager, this, 600, 760, fiona);
+		activatableShrine = new Shrine(tileMap, this, 600, 760);
 		activatables.add(activatableShrine);
 		stuff.add(activatableShrine);
 		
@@ -124,9 +133,7 @@ public class FionasSanctum extends MainMap
 		
 		doneInitializing = true;
 	}
-	
-	public Door getDoor() { return bossDoor; }
-	
+		
 	public ArrayList<Entity.Unit.Unit> getCharacterList()
 	{
 		return characterList;
@@ -146,26 +153,112 @@ public class FionasSanctum extends MainMap
 	
 	public void setEngaged(boolean b) { bossEngaged = b; }
 	
+	
+	public void useDoodad(Doodad doodad)
+	{		
+		
+		// If the player is not yet in a conversation and has not yet used the shrine, start the first conversation:
+		if(!player.getInConversation() && shrineChoiceMade == 0)
+		{
+			conversationState.startConversation(player, null, null, conversation.interactWithFionasShrine(), conversation.interactWithFinonasShrineWhoTalks());
+			return;
+		}
+		
+		// If the player currently is in a conversation but has not yet made the choice to touch the shrine:
+		if(player.getInConversation() && shrineChoiceMade == 0)
+		{
+			if(conversationState.getConversationOver())
+			{
+				shrineChoiceMade = conversationState.getChoiceMade();
+				if(shrineChoiceMade == 1)
+				{
+					conversationState.startConversation(player, fiona, null, conversation.interactWithFionasShrineChoiceYes(), conversation.interactWithFinonasShrineChoiceYesWhoTalks());
+
+				}
+				else
+				{
+					conversationState.startConversation(player, fiona, null, conversation.interactWithFionasShrineChoiceNo(), conversation.interactWithFinonasShrineChoiceNoWhoTalks());
+				}
+			}
+		}
+		
+		// Player didn't want to start the encounter.
+		if(shrineChoiceMade == 2 && conversationState.getConversationOver())
+		{
+			conversationState.endConversation();
+			shrineChoiceMade = 0;
+			return;
+		}
+		// If the player has decided to start the encounter and therefore used the shrine:
+		if(player.getInConversation() && shrineChoiceMade == 1)
+		{
+			if(conversationState.getConversationTracker() == 0)
+			{
+				// Play humming sound
+				JukeBox.loop("Darkness");
+				JukeBox.stop("FionasSanctum");
+
+			}
+			else if(conversationState.getConversationTracker() == 1)
+			{
+				// Play laugh
+				fiona.playRecoverSound();
+				
+			}
+			else if(conversationState.getConversationTracker() == 2)
+			{
+				// Close the door
+				bossDoor.setDoodad(0);
+				JukeBox.play("Close");
+			}
+			
+			else if(conversationState.getConversationTracker() == 5 && shrineCurrentProgress != 5)
+			{
+				shrineCurrentProgress = 5;
+				// Fiona reveals herself
+				fiona.setPosition(player.getLocationX() + 200, player.getLocationY() - 300);
+				fiona.spawn();
+				fiona.setHidden(false);
+				fiona.inControl(false);
+				conversationState.lockConversation(true);
+				
+				JukeBox.loop("MysteriousConversation");
+				JukeBox.stop("Darkness");
+			}
+			else if(conversationState.getConversationOver())
+			{
+				conversationState.endConversation();
+				shrineStartConversation = true;
+				doodad.setActive(true);
+				fiona.inControl(true);
+				bossEngaged = true;
+				JukeBox.stop("MysteriousConversation");
+				JukeBox.loop("MysteriousBattle");
+				player.getHUD().addBoss(fiona);
+			}
+		}
+	}
+	
 	public void update()
 	{
 		super.update();
 		
 		// We don't want the player to be able to progress the conversation whilst Fiona is spawning
 		
-		if(unlockOnce != 2)
+		if(unlockConversationOnce != 2)
 		{
 			if(fiona.getSpawning())
 			{
-				unlockOnce = 1;
+				unlockConversationOnce = 1;
 			}
 		}
 
 		
-		if(unlockOnce == 1)
+		if(unlockConversationOnce == 1)
 		{
 			if(!fiona.getSpawning())
 			{
-				unlockOnce = 2;
+				unlockConversationOnce = 2;
 				player.getConversationState().lockConversation(false);
 			}
 		}
@@ -175,6 +268,55 @@ public class FionasSanctum extends MainMap
 		{
 			if(bossDefeated)
 			{
+				if(!player.getInConversation())
+				{
+					gameStateManager.stopMusic();
+					JukeBox.loop("MysteriousConversation");
+					conversationState.startConversation(player, fiona, null, conversation.fionaDefeated, conversation.fionaDefeatedWhoTalks);
+				}
+				
+				if(!conversationState.getConversationOver())
+				{
+					
+					
+					if(player.getConversationState().getConversationTracker() == 3)
+					{
+						if(!fiona.getDeSpawning())
+						{
+							player.getConversationState().lockConversation(true);
+							fiona.deSpawn();
+							player.getHUD().removeBoss();
+						}
+					}
+					
+					if(fiona.getHidden())
+					{
+						player.getConversationState().lockConversation(false);
+					}
+					
+					if(player.getConversationState().getConversationTracker() == 4)
+					{
+						JukeBox.play("Close");
+						JukeBox.loop("MysteriousDungeon");
+						JukeBox.stop("MysteriousConversation");
+						try 
+						{
+							tileMap.loadTiles(ImageIO.read(getClass().getResource("/Art/Tilesets/LorasTileset.png")));
+						} 
+						catch (IOException e) 
+						{
+							e.printStackTrace();
+						}
+						tileMap.loadMap("/Maps/FionasSanctumB.map");
+						tileMap.setPosition(0, 0);
+					}
+					
+					if(player.getConversationState().getConversationTracker() >= conversation.fionaDefeated.length)
+					{
+						player.getConversationState().endConversation();
+					}
+				}
+				
 				bossEngaged = false;
 				JukeBox.stop("MysteriousBattle");
 				JukeBox.loop(GameStateManager.GameMaps.MysteriousDungeon.toString());

@@ -9,9 +9,11 @@ import Entity.Doodad.Doodad;
 import Entity.Doodad.Activatable.Chest;
 import Entity.Doodad.Activatable.CreateDoodad;
 import Entity.Item.CreateItem;
+import Entity.Item.Potion;
 import Entity.Player.*;
 import Entity.Unit.*;
 import GameState.GameStateManager;
+import GameState.Conversation.ConversationDataLorasCavern;
 import GameState.Conversation.ConversationState;
 import GameState.MainMap.MainMap;
 import TileMap.Background;
@@ -25,6 +27,14 @@ public class LorasCavern extends MainMap
 	public static int startLocationY = 2220;
 	
 	protected int welcomeMessage = 0; // 0 = unstarted, 1 = choice made, -1 = done
+	
+	protected ConversationDataLorasCavern conversation;
+
+	
+	protected boolean liadrinConversationOver;
+	
+	protected int choiceLiadrin = 0;
+	protected int chocieLever = 0;
 	
 	public LorasCavern
 		(
@@ -43,6 +53,7 @@ public class LorasCavern extends MainMap
 				GameStateManager.GameMaps.LorasCavern.toString()
 			);
 	
+		conversation = new ConversationDataLorasCavern();
 		try
 		{						
 			tileMap.loadTiles(ImageIO.read(getClass().getResource("/Art/Tilesets/LorasTileset.png")));
@@ -104,7 +115,7 @@ public class LorasCavern extends MainMap
 			succubus = spawnUnit.spawnSuccubus(3689, 1430, false);
 			dropPotion("Any", 25, 1, succubus);
 		
-			liadrin = new LiadrinFirstEncounter(tileMap, false, true, false, true, true, 2680, 1800, this);
+			liadrin = new Liadrin(tileMap, false, true, false, true, true, 2680, 1800, this);
 			characterList.add(liadrin);
 			
 			Chest chest = spawnDoodad.spawnChest(1923, 1170, true, 0, "Uncommon");
@@ -156,7 +167,7 @@ public class LorasCavern extends MainMap
 					}
 				);
 
-		player.setSpawning(true);
+		player.spawn();
 		player.setUnkillable(false);	
 		doneInitializing = true;
 	}
@@ -167,25 +178,80 @@ public class LorasCavern extends MainMap
 		player.setCurrentMap(GameStateManager.GameMaps.LorasCavern.toString());
 	}
 	
-	public void useDoodad(Doodad doodad)
+	public void useUnit(Unit unit)
 	{
 		
-		
+		if(unit.getUnitType().equals(CreateUnit.Units.Liadrin.toString()))
+		{
+			// If the player has not yet started talking to Liadrin, do so.
+			if(!player.getInConversation() && choiceLiadrin == 0)
+			{
+				conversationState.startConversation(player, liadrin, null, conversation.liadrinFirstEncounter(), conversation.liadrinFirstEncounterWhoTalks());
+				return;
+			}
+			
+			// If the player is currently in a conversation but has not yet made the choice
+			if(player.getInConversation() && choiceLiadrin == 0)
+			{
+				if(conversationState.getConversationOver())
+				{
+					choiceLiadrin = conversationState.getChoiceMade();
+					if(choiceLiadrin == 1)
+					{
+						player.getConversationState().startConversation(player, liadrin, null, conversation.liadrinFirstEncounterChoiceEasy(), conversation.liadrinFirstEncounterChoiceEasyWhoTalks());
+					}
+					else
+					{
+						player.getConversationState().startConversation(player, liadrin, null, conversation.liadrinFirstEncounterChoiceHard(), conversation.liadrinFirstEncounterChoiceHardWhoTalks());
+					}
+				}
+			}
+
+//			 Player thought it was easy:
+			if(player.getInConversation() && choiceLiadrin == 1)
+			{
+				if(conversationState.getConversationOver())
+				{
+					liadrinConversationOver = true;
+				}
+			}
+			
+			// Player thought it was hard:
+			if(player.getInConversation() && choiceLiadrin == 2)
+			{
+				if(conversationState.getConversationOver())
+				{
+					Potion healingPotion = new Potion(tileMap, this, false, 0, 0, player, 2, CreateItem.Potions.Healing.toString());
+					player.getInventory().addItem(healingPotion);
+					
+					liadrinConversationOver = true;
+				}
+			}
+			
+			if(liadrinConversationOver)
+			{
+				System.out.println("Ending liadrin conversation");
+				conversationState.endConversation();
+				liadrin.deSpawn();
+			}
+
+		}
+	}
+	
+	public void useDoodad(Doodad doodad)
+	{
 		if(doodad.getDoodadType().equals(CreateDoodad.Other.Lever.toString()))
 		{
 			try
 			{
 				if(doodad.getCurrentAction() == 2)
 				{
-					System.out.println("On?");
 					tileMap.loadMap("/Maps/LorasCavernB.map");
 					JukeBox.play("Close");
-					
 				}
 				
 				if(doodad.getCurrentAction() == 0)
 				{
-					System.out.println("Off?");
 					tileMap.loadMap("/Maps/LorasCavernA.map");
 					JukeBox.play("Close");
 				}
@@ -242,14 +308,10 @@ public class LorasCavern extends MainMap
 		{
 			if(player.getLocationX() > 2500 && player.getLocationX() < 2600 && player.getLocationY() > 1850 && player.getLocationY() < 1950)
 			{
-				System.out.println("spawning Liadrin");
 				liadrin.setHidden(false);
-				liadrin.setSpawning(true);
+				liadrin.spawn();
 			}
 		}
-
-
-
 		
 		if(player.getLocationX() < 3750 && player.getLocationY() > 2640)
 		{

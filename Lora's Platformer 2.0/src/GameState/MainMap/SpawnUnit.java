@@ -2,7 +2,7 @@ package GameState.MainMap;
 
 import Entity.Item.Item;
 import Entity.Unit.Bunny;
-import Entity.Unit.LiadrinFirstEncounter;
+import Entity.Unit.Liadrin;
 import Entity.Unit.Skeleton;
 import Entity.Unit.Slug;
 import Entity.Unit.Succubus;
@@ -26,7 +26,7 @@ public class SpawnUnit
 			
 			if(unitData.getUnitType().equals("LiadrinFirstEncounter"))
 			{
-				mainMap.liadrin = new LiadrinFirstEncounter(mainMap.tileMap, false, true, false, true, true, 2680, 1800, mainMap);
+				mainMap.liadrin = new Liadrin(mainMap.tileMap, false, true, false, true, true, 2680, 1800, mainMap);
 				mainMap.characterList.add(mainMap.liadrin);
 			}
 			

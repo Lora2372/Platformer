@@ -9,7 +9,7 @@ import Entity.Player.HUD;
 import Entity.Player.Player;
 import Entity.Unit.Succubus;
 import GameState.GameStateManager;
-import GameState.Conversation.Conversation;
+import GameState.Conversation.ConversationDataTutorial;
 import GameState.Conversation.ConversationState;
 import GameState.MainMap.MainMap;
 import TileMap.Background;
@@ -23,7 +23,7 @@ public class Tutorial extends MainMap
 	
 	protected Succubus succubus;
 	
-	protected Conversation conversation;
+	protected ConversationDataTutorial conversation;
 	
 	protected HUD hud;
 	
@@ -59,7 +59,7 @@ public class Tutorial extends MainMap
 		
 		this.player = player;
 		this.hud = player.getHUD();
-		conversation = player.getConversation();
+		conversation = new ConversationDataTutorial();
 		
 		player.setTileMap(tileMap);
 		player.setCurrentMap("DeepWoods");
@@ -85,7 +85,7 @@ public class Tutorial extends MainMap
 		{
 			player.setPosition(player.getSpawnLocationX(), player.getSpawnLocationY());
 		}
-		player.setSpawning(true);
+		player.spawn();
 		
 		player.getHUD().setShowQuestFrame(true);
 		player.setUnkillable(true);

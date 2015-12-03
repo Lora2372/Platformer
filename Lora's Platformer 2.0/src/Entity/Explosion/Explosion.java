@@ -127,6 +127,13 @@ public class Explosion extends MapObject
    
     public void draw(Graphics2D graphics)
     {               
-        super.draw(graphics);
+		try
+		{
+			super.draw(graphics);
+		}
+		catch(Exception exception)
+		{
+			exception.printStackTrace();
+		}
     }
 }

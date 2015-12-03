@@ -1,14 +1,11 @@
 package Entity.Unit;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import javax.imageio.ImageIO;
 import TileMap.TileMap;
 import Audio.JukeBox;
-import Entity.Doodad.SummoningEffect;
 import Entity.Player.Player;
 import Entity.Projectile.ArcaneBall;
-import GameState.Conversation.Conversation;
+import GameState.Conversation.ConversationData;
 import GameState.Maps.FionasSanctum;
 import Main.Content;
 
@@ -35,13 +32,10 @@ public class Fiona extends Unit
 	
 	
 	protected boolean defeated;
-	protected boolean used;
-	protected boolean conversationOver;
-	protected int conversationProgress = 0;
 	
 	protected Player player;
 	
-	protected Conversation conversation;
+	protected ConversationData conversation;
 		
 	protected FionasSanctum fionasSanctum;
 	
@@ -114,9 +108,7 @@ public class Fiona extends Unit
 		this.fionasSanctum = fionasSanctum;
 		attackTimer = 0;
 		attackCooldown = 300;
-		
-		conversation = player.getConversation();
-		
+				
 		arcaneBallTimer = 30;
 		arcaneBallCooldown = 30;
 		
@@ -127,7 +119,7 @@ public class Fiona extends Unit
 		setTennisPlayer(true);
 	}
 	
-	public void hit(int damage, Unit owner)
+	public void hit(double damage, Unit owner)
 	{
 		if(dead || invulnerable || spawning || hidden)
 		{
@@ -176,14 +168,6 @@ public class Fiona extends Unit
 		mainMap.addProjectile(arcaneBall);
 	}
 	
-	public void startConversation()
-	{
-		JukeBox.stop("MysteriousBattle");
-		JukeBox.loop("MysteriousConversation");
-		used = true;
-		player.getConversationState().startConversation(player, this, null, conversation.fionaDefeated, conversation.fionaDefeatedWhoTalks);
-	}
-	
 	public void update(ArrayList<Unit> characterList)
 	{
 		super.update(characterList);
@@ -203,66 +187,7 @@ public class Fiona extends Unit
 		
 		//If the player moves to one corner, she moves to the other!
 		
-		
-		if(used)
-		{
-			if(!conversationOver)
-			{
-				if(player.getConversationState().getConversationTracker() == 3)
-				{
-					if(summoningEffect == null && conversationProgress == 0)
-					{
-						player.getConversationState().lockConversation(true);
-						summoningEffect = new SummoningEffect(tileMap, mainMap, locationX, locationY);
-						mainMap.addEffect(summoningEffect);
-						player.getHUD().removeBoss();
-						conversationProgress = 1;
-					}
-				}
 				
-				if(player.getConversationState().getConversationTracker() == 4 && conversationProgress == 2)
-				{
-					conversationProgress = 3;
-					JukeBox.play("Close");
-					JukeBox.loop("MysteriousDungeon");
-					JukeBox.stop("MysteriousConversation");
-					try 
-					{
-						tileMap.loadTiles(ImageIO.read(getClass().getResource("/Art/Tilesets/LorasTileset.png")));
-					} 
-					catch (IOException e) 
-					{
-						e.printStackTrace();
-					}
-					tileMap.loadMap("/Maps/FionasSanctumB.map");
-					tileMap.setPosition(0, 0);
-					fionasSanctum.setDefeated(true);
-				}
-				
-				if(player.getConversationState().getConversationTracker() >= conversation.fionaDefeated.length)
-				{
-					player.getConversationState().endConversation();
-				}
-			}
-		}
-		
-		if(conversationProgress == 1)
-		{
-			if(summoningEffect != null)
-			{
-				if(summoningEffect.getRemoveMe())
-				{
-					System.out.println("fiona null");
-					summoningEffect = null;
-					player.getConversationState().lockConversation(false);
-					hidden = true;
-					untouchable = true;
-					conversationProgress = 2;
-				}
-			}
-		}
-
-		
 		if(isHit)
 		{
 			directionY += 0.1;
@@ -278,10 +203,7 @@ public class Fiona extends Unit
 			{
 				defeated = true;
 				health = 1;
-				if(!used)
-				{
-					startConversation();
-				}
+				fionasSanctum.setDefeated(true);
 				
 			}
 			

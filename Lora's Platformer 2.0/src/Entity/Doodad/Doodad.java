@@ -29,6 +29,8 @@ public class Doodad extends MapObject
 	
 	protected boolean locked;
 	
+	protected boolean hasPlayedOnce;
+	
 	protected int stopAt;
 	
 	protected String doodadType;
@@ -125,13 +127,15 @@ public class Doodad extends MapObject
 		return doodadName;
 	}
 	
+	public boolean getHasPlayedOnce() { return hasPlayedOnce; }
+	
 	public void update()
 	{		
 		getNextPosition();
 		checkTileMapCollision();
 		setPosition(xtemp, ytemp);
 
-		boolean hasPlayedOnce = (animation.getFrame() == animation.getFramesLength() - 1);
+		hasPlayedOnce = (animation.getFrame() == animation.getFramesLength() - 1);
 		
 		// I'll change this to work with any toggle-able object later (assuming I ever add another one).
 		if(doodadType.equals(CreateDoodad.Other.Lever.toString()))
@@ -194,7 +198,17 @@ public class Doodad extends MapObject
 	public void draw(Graphics2D graphics)
 	{
 		if(removeMe)
+		{
 			return;
-		super.draw(graphics);
+		}
+		
+		try
+		{
+			super.draw(graphics);
+		}
+		catch(Exception exception)
+		{
+			exception.printStackTrace();
+		}
 	}
 }

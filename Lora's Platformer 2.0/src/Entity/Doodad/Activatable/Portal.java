@@ -64,7 +64,7 @@ public class Portal extends Doodad
 		{
 
 			player.setPosition(DeepWoods.startLocationX, DeepWoods.startLocationY);
-			player.setSpawning(true);
+			player.spawn();
 			
 
 			gameStateManager.setState(GameStateManager.DeepWoods);
