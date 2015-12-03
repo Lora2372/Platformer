@@ -62,6 +62,7 @@ public class StatueSave extends Doodad
 		this.spawnLocationX = spawnLocationX;
 		this.spawnLocationY = spawnLocationY;
 		this.gameStateManager = gameStateManager;
+		this.mainMap = mainMap;
 	}
 	
 	public void setDoodad(int currentAction)

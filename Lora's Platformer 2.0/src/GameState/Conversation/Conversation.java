@@ -347,7 +347,7 @@ public class Conversation
 	{
 		"Ah, so you have finally awakened.",
 		"I feel dizzy... Where am I?",
-		"In the realm of mortals, this is the final test before you earn your freedom.",
+		"In the realm of mortals, this is the final test .",
 		"In order to succeed, you must make you way to the keeper's sanctum and prove your worth to her.",
 		"Sound simple enough... How do I get out of here?",
 		"There should be a lever that opens the door, see it?",
@@ -363,7 +363,7 @@ public class Conversation
 		1,
 		0,
 		1,
-		1
+		0
 	};
 	
 	public String[] lorasCavernWelcomeMessageChoiceYes = new String[]

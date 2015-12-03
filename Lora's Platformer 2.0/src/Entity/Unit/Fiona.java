@@ -245,17 +245,23 @@ public class Fiona extends Unit
 				}
 			}
 		}
-		if(summoningEffect != null)
+		
+		if(conversationProgress == 1)
 		{
-			if(summoningEffect.getRemoveMe())
+			if(summoningEffect != null)
 			{
-				summoningEffect = null;
-				player.getConversationState().lockConversation(false);
-				hidden = true;
-				untouchable = true;
-				conversationProgress = 2;
+				if(summoningEffect.getRemoveMe())
+				{
+					System.out.println("fiona null");
+					summoningEffect = null;
+					player.getConversationState().lockConversation(false);
+					hidden = true;
+					untouchable = true;
+					conversationProgress = 2;
+				}
 			}
 		}
+
 		
 		if(isHit)
 		{

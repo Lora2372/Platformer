@@ -627,93 +627,100 @@ public class Unit extends MapObject
 	
 	public void update(ArrayList<Unit> characterList)
 	{
-		
-		int buffLocationX = GamePanel.WIDTH - 100;
-		int buffLocationY = 50;
-		
-		for(int i = 0; i < buffs.size(); i++)
+		try
 		{
-			Buff buff = buffs.get(i);
-			buff.setLocation(buffLocationX, buffLocationY);
-			buff.update();
+			int buffLocationX = GamePanel.WIDTH - 100;
+			int buffLocationY = 50;
 			
-			if(buff.getExpired())
+			for(int i = 0; i < buffs.size(); i++)
 			{
-				buffs.remove(i);
-				i--;
+				Buff buff = buffs.get(i);
+				buff.setLocation(buffLocationX, buffLocationY);
+				buff.update();
+				
+				if(buff.getExpired())
+				{
+					buffs.remove(i);
+					i--;
+				}
+				
+				buffLocationX -= buff.getWidth() + 10;
 			}
 			
-			buffLocationX -= buff.getWidth() + 10;
+			// Update position
+			getNextPosition();
+			checkTileMapCollision();
+			setPosition(xtemp, ytemp);
+			
+			if(initializeSpawning)
+			{
+				summoningEffect = new SummoningEffect(tileMap, mainMap, locationX, locationY);
+				initializeSpawning = false;
+				spawning = true;
+			}
+			
+			if(summoningEffect != null && !summoningEffect.getAnimation().hasPlayedOnce())
+			{
+				summoningEffect.update();
+			}
+			
+			if(spawning && summoningEffect.getAnimation().hasPlayedOnce())
+			{
+				System.out.println("unit null");
+				summoningEffect = null;
+				spawning = false;
+				if(!inConversation)
+					inControl = true;
+			}
+			
+			if(locationX > tileMap.getWidth() || locationX < 0 || locationY > tileMap.getHeight())
+			{
+				setPosition(spawnLocationX, spawnLocationY);
+				initializeSpawning = true;
+				directionX = 0;
+				directionY = 0;
+				inControl = false;
+			}
+			
+			// Regenerate health
+			if(healthRegen > 0)
+			{
+				health += healthRegen;
+			}
+			
+			if(health > maxHealth) 
+			{
+				health = maxHealth;
+			}
+			
+			// Regenerate mana
+			if(manaRegen > 0)
+			{
+				mana += manaRegen;
+			}
+			
+			if(mana > maxMana) 
+			{
+				mana = maxMana;
+			}
+			
+			// Regenerate stamina
+			
+			if(staminaRegen > 0)
+			{
+				stamina += staminaRegen;
+			}
+			
+			if(stamina > maxStamina) 
+			{
+				stamina = maxStamina;
+			}
+		
 		}
-		
-		// Update position
-		getNextPosition();
-		checkTileMapCollision();
-		setPosition(xtemp, ytemp);
-		
-		if(initializeSpawning)
+		catch(Exception exception)
 		{
-			summoningEffect = new SummoningEffect(tileMap, mainMap, locationX, locationY);
-			initializeSpawning = false;
-			spawning = true;
+			exception.printStackTrace();
 		}
-		
-		if(summoningEffect != null && !summoningEffect.getAnimation().hasPlayedOnce())
-		{
-			summoningEffect.update();
-		}
-		if(spawning && summoningEffect.getAnimation().hasPlayedOnce())
-		{
-			summoningEffect = null;
-			spawning = false;
-			if(!inConversation)
-				inControl = true;
-		}
-		
-		if(locationX > tileMap.getWidth() || locationX < 0 || locationY > tileMap.getHeight())
-		{
-			setPosition(spawnLocationX, spawnLocationY);
-			initializeSpawning = true;
-			directionX = 0;
-			directionY = 0;
-			inControl = false;
-		}
-		
-		// Regenerate health
-		if(healthRegen > 0)
-		{
-			health += healthRegen;
-		}
-		
-		if(health > maxHealth) 
-		{
-			health = maxHealth;
-		}
-		
-		// Regenerate mana
-		if(manaRegen > 0)
-		{
-			mana += manaRegen;
-		}
-		
-		if(mana > maxMana) 
-		{
-			mana = maxMana;
-		}
-		
-		// Regenerate stamina
-		
-		if(staminaRegen > 0)
-		{
-			stamina += staminaRegen;
-		}
-		
-		if(stamina > maxStamina) 
-		{
-			stamina = maxStamina;
-		}
-		
-		
 
 		
 		// Set animations

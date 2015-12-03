@@ -4,6 +4,7 @@ package GameState.Maps;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
+import Audio.JukeBox;
 import Entity.Doodad.Doodad;
 import Entity.Doodad.Activatable.Chest;
 import Entity.Doodad.Activatable.CreateDoodad;
@@ -177,7 +178,8 @@ public class LorasCavern extends MainMap
 				if(doodad.getCurrentAction() == 2)
 				{
 					System.out.println("On?");
-					tileMap.loadMap("/Maps/LorasCavernA.map");
+					tileMap.loadMap("/Maps/LorasCavernB.map");
+					JukeBox.play("Close");
 					
 				}
 				
@@ -185,6 +187,7 @@ public class LorasCavern extends MainMap
 				{
 					System.out.println("Off?");
 					tileMap.loadMap("/Maps/LorasCavernA.map");
+					JukeBox.play("Close");
 				}
 			}
 			catch(Exception exception)
@@ -228,6 +231,7 @@ public class LorasCavern extends MainMap
 			{
 				if(conversationState.getConversationOver())
 				{
+					welcomeMessage = -1;
 					conversationState.endConversation();
 				}
 			}

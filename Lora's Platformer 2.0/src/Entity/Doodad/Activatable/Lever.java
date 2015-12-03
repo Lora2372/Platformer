@@ -85,7 +85,7 @@ public class Lever extends Doodad
 		}
 		
 		animation.setFrames(sprites);
-		animation.setDelay(50);
+		animation.setDelay(200);
 	}
 	
 	public void interact(Player player)
@@ -98,11 +98,13 @@ public class Lever extends Doodad
 		{
 			setDoodad(3);
 		}
+		
+		playSound();
 	}
 	
 	
 	public void playSound() 
 	{ 
-		JukeBox.play("Switch01");
+		JukeBox.play("Switch03");
 	}
 }
