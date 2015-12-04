@@ -139,6 +139,9 @@ public class Unit extends MapObject
 	protected int dashRange;
 	protected int dashCost;
 	
+	// Run
+	protected int runCost = 1;
+	
 	// Magic Shield
 	protected boolean magicShieldCasting;
 	protected boolean magicShieldDoneCasting;
@@ -1175,6 +1178,28 @@ public class Unit extends MapObject
 
 		}
 		
+		//********************************************************************************
+		//*Running                                                                       *
+		//********************************************************************************	
+		else if((left || right) && inControl && running)
+		{
+			if(stamina > runCost)
+			{
+				stamina -= runCost;
+			}
+			else
+			{
+				running = false;
+			}
+			if(currentAction != animationState[16])
+			{
+				currentAction = animationState[16];
+				animation.setFrames(sprites.get(animationState[1]));
+				animation.setDelay((long) (animationDelay[1] / waterResistance / runSpeedMultiplier));
+			}
+
+		}
+		
 		
 		//********************************************************************************
 		//*Walking                                                                       *
@@ -1185,7 +1210,7 @@ public class Unit extends MapObject
 			{
 				currentAction = animationState[1];
 				animation.setFrames(sprites.get(animationState[1]));
-				animation.setDelay(animationDelay[1]);
+				animation.setDelay((long) (animationDelay[1] / waterResistance));
 			}
 
 		}
@@ -1570,7 +1595,7 @@ public class Unit extends MapObject
 		}
 		catch(Exception exception)
 		{
-			System.out.println("Crash, + " + name);
+			System.out.println("Exception in Unit: " + name);
 			exception.printStackTrace();
 		}
 	}
@@ -1595,8 +1620,10 @@ public class Unit extends MapObject
 			graphics.drawString(name, DrawingConstants.shiftWest( (int) drawX, 1), DrawingConstants.shiftSouth( (int) drawY, 1));
 			graphics.drawString(name, DrawingConstants.shiftEast( (int) drawX, 1), DrawingConstants.shiftNorth( (int) drawY, 1));
 			graphics.drawString(name, DrawingConstants.shiftEast( (int) drawX, 1), DrawingConstants.shiftSouth( (int) drawY, 1));
-						
-			graphics.setColor(friendly ? Color.BLUE : Color.RED);
+			
+			
+			
+			graphics.setColor(new Color(friendly? 100 : 255 , 100, friendly ? 250 : 0));
 			graphics.setFont(new Font("Arial", Font.PLAIN, 14));
 			graphics.drawString(name, drawX, drawY);
 		}

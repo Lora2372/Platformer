@@ -6,6 +6,7 @@ import java.awt.image.AffineTransformOp;
 import Entity.Doodad.SummoningEffect;
 import GameState.Inventory.Inventory;
 import Main.GamePanel;
+import TileMap.Tile;
 import TileMap.TileMap;
 
 public abstract class MapObject 
@@ -64,16 +65,17 @@ public abstract class MapObject
 	protected Animation animation;
 	protected int currentAction;
 	protected int previousAction;
-	protected Boolean facingRight = false;
+	protected boolean facingRight = false;
 	
 	// Movement
 	protected boolean left;
 	protected boolean right;
 	protected boolean up;
 	protected boolean down;	
-	protected boolean jumping;	
+	protected boolean jumping;
 	protected boolean falling;
-	protected boolean swimming;
+	protected boolean running;
+	protected boolean inWater;
 	
 	// Movement attributes
 	protected double moveSpeed;
@@ -84,6 +86,8 @@ public abstract class MapObject
 	protected double jumpStart;
 	protected double stopJumpSpeed;
 	protected double dashSpeed;
+	protected double waterResistance = 1;
+	protected double runSpeedMultiplier = 1.7;
 	
 	protected boolean untouchable; // Attacks ignore you.
 	protected boolean invulnerable; // Attacks are able to hit you but you won't take damage.
@@ -174,30 +178,33 @@ public abstract class MapObject
 			directionY = 0;
 			return;
 		}
+		
+		waterResistance = (inWater ? 0.4 : 1);
+		
 		// Movement
 			if(left && inControl )
 			{
 
-				directionX -= moveSpeed;
-				if(directionX < -maxSpeed)
+				directionX -= moveSpeed * waterResistance;
+				if(directionX < -maxSpeed * waterResistance)
 				{
-					directionX = -maxSpeed;
+					directionX = -maxSpeed * waterResistance;
 				}
 			}
 			else if(right && inControl)
 			{
 
-				directionX += moveSpeed;
-				if(directionX > maxSpeed)
+				directionX += moveSpeed * waterResistance;
+				if(directionX > maxSpeed * waterResistance)
 				{
-					directionX = maxSpeed;
+					directionX = maxSpeed * waterResistance;
 				}
 			}
 			else
 			{
 				if(directionX > 0)
 				{
-					directionX -= stopSpeed;
+					directionX -= stopSpeed * waterResistance;
 					if(directionX < 0)
 					{
 						directionX = 0;
@@ -205,16 +212,13 @@ public abstract class MapObject
 				}
 				else if(directionX < 0)
 				{
-					directionX += stopSpeed;
+					directionX += stopSpeed * waterResistance;
 					if(directionX > 0)
 					{
 						directionX = 0;
 					}
 				}
 			}
-			
-			// Cannot move while attacking
-			//Might implement this later
 			
 			if(flying)
 			{
@@ -244,30 +248,25 @@ public abstract class MapObject
 			
 			
 			// Jumping
-			if(jumping && !falling && inControl && !flying)
+			if(jumping && (inWater || ( !falling && inControl && !flying ) ) )
 			{
-				// I'll leave the jump sound commented out until we find a better one.
-//				JukeBox.play("jump");
 				playJumpSound();
-				directionY = jumpStart;
+				directionY = jumpStart  * waterResistance;
 				falling = true;
 			}
 			
-			if(swimming)
-			{
-				
-			}
+			
 			
 			// Falling
 			if( (falling) && !flying)
 			{
-				if(directionY > 0 && gliding) directionY += fallSpeed * 0.1;
-				else directionY += fallSpeed;
+				if(directionY > 0 && gliding) directionY += (fallSpeed * 0.1) * waterResistance;
+				else directionY += fallSpeed * waterResistance;
 			
 				if(directionY > 0) jumping = false;
-				if(directionY < 0 && !jumping) directionY += stopJumpSpeed;
+				if(directionY < 0 && !jumping) directionY += stopJumpSpeed * waterResistance;
 				
-				if(directionY > maxFallSpeed) directionY = maxFallSpeed;
+				if(directionY > maxFallSpeed * waterResistance) directionY = maxFallSpeed * waterResistance;
 			}
 
 	}
@@ -289,15 +288,19 @@ public abstract class MapObject
 		
 		try
 		{
-			swimming = false;//(tileMap.getTile((int)locationY / tileSize, (int)locationX / tileSize).isWater());
+			Tile tile = tileMap.getTile((int)locationY / tileSize, (int)locationX / tileSize);
+			
+			if(tile == null)
+			{
+				throw new Exception();
+			}
+
+			inWater = tile.isWater();
+			
 		}
 		catch(Exception exception)
 		{
 			throw exception;
-		}
-		if(swimming)
-		{
-			System.out.println("You're in water!");
 		}
 		
 		// We're going upwards
@@ -346,7 +349,7 @@ public abstract class MapObject
 			}
 			else
 			{
-				xtemp += directionX;
+				xtemp += (running ? directionX * runSpeedMultiplier : directionX);
 			}
 		}
 		
@@ -361,7 +364,7 @@ public abstract class MapObject
 			}
 			else
 			{
-				xtemp += directionX;
+				xtemp += (running ? directionX * runSpeedMultiplier : directionX);
 			}
 		}
 		
@@ -416,16 +419,30 @@ public abstract class MapObject
 		mapPositionY = tileMap.getY();
 	}
 	
-	public void setLeft(Boolean b) { left = b; }
-	public void setRight(Boolean b) { right = b; }
-	public void setUp(Boolean b) { up = b; }
-	public void setDown(Boolean b) { down = b; }
+	public void setLeft		(boolean left) 	{ this.left 	= left;		}
+	public void setRight	(boolean right) { this.right 	= right;	}
+	public void setUp		(boolean up)	{ this.up 		= up;		}
+	public void setDown		(boolean down) 	{ this.down 	= down;		}
 	
-	public void setJumping(Boolean b) 
+	public void setJumping(boolean jumping) 
 	{ 
-		jumping = b; 		
+		running = false;
+		this.jumping = jumping; 		
 	}
 	
+	public void startRunning()
+	{
+		if(!falling)
+		{
+			running = true;
+		}
+	}
+	
+	public void setRunning(boolean running)
+	{
+		this.running = running;
+
+	}
 	
 	public void draw(java.awt.Graphics2D graphics) throws Exception
 	{
@@ -495,7 +512,7 @@ public abstract class MapObject
 	
 	// Since there is no point in drawing objects that are not on the screen, this
 	// function will determine whether they even are on the screen.
-	public Boolean notOnScreen()
+	public boolean notOnScreen()
 	{
 		// Again, locationX + mapPositionX is the final position on the game screen itself.
 		return 

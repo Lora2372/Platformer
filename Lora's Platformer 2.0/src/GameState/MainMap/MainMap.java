@@ -53,6 +53,7 @@ public class MainMap extends GameState
 	
 	protected boolean holdingInteractButton;
 	
+	
 	protected boolean displayHealthBars;
 	protected boolean displayNamePlates;
 	
@@ -867,6 +868,10 @@ public class MainMap extends GameState
 		if(key == KeyEvent.VK_SPACE) player.setJumping(true);
 		if(key == KeyEvent.VK_E) interact();
 		if(key == KeyEvent.VK_R)player.setGliding(true); 
+		if(key == KeyEvent.VK_SHIFT)
+		{
+			player.startRunning();
+		}
 		
 		if(key == KeyEvent.VK_A) player.setCastingSmallFireBall();
 		if(key == KeyEvent.VK_S) player.setCastingLargeFireBall();
@@ -935,6 +940,10 @@ public class MainMap extends GameState
 		if(key == KeyEvent.VK_UP) player.setUp(false);
 		if(key == KeyEvent.VK_R) player.setGliding(false);
 		if(key == KeyEvent.VK_E) holdingInteractButton = false;
+		if(key == KeyEvent.VK_SHIFT)
+		{
+			player.setRunning(false);
+		}
 		
 		if(key == KeyEvent.VK_A) player.setCastingSmallFireBall();
 		if(key == KeyEvent.VK_S) player.setCastingLargeFireBall();

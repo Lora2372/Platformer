@@ -8,6 +8,7 @@ import Audio.JukeBox;
 import Entity.Doodad.Doodad;
 import Entity.Doodad.Activatable.Chest;
 import Entity.Doodad.Activatable.CreateDoodad;
+import Entity.Doodad.Activatable.Lever;
 import Entity.Item.CreateItem;
 import Entity.Item.Potion;
 import Entity.Player.*;
@@ -123,8 +124,8 @@ public class LorasCavern extends MainMap
 			dropPotion(CreateItem.Potions.Mana.toString(), 100, 2, chest);
 			dropCoin(CreateItem.Coins.Silver.toString(), 100, 3, chest);
 			
-			spawnDoodad.spawnLever(startLocationX + 180, startLocationY, 0);
-			
+			Lever lever = spawnDoodad.spawnLever(startLocationX + 180, startLocationY + 60, 0);
+			lever.setPosition(lever.getLocationX(), lever.getLocationY() - lever.getCollisionHeight());
 			spawnItem.spawnKey(1712, 		2610, CreateItem.Keys.Uncommon.toString(), 1);
 			spawnItem.spawnHerb(2276, 1450, CreateItem.Herbs.Sun.toString(), 1);
 			spawnItem.spawnHerb(3004, 1270, CreateItem.Herbs.Sun.toString(), 1);
@@ -142,7 +143,8 @@ public class LorasCavern extends MainMap
 		
 
 		
-		spawnDoodad.spawnSign(
+		spawnDoodad.spawnSign
+			(
 				3805, 
 				1480, 
 				new String[] 
@@ -246,13 +248,15 @@ public class LorasCavern extends MainMap
 			{
 				if(doodad.getCurrentAction() == 2)
 				{
-					tileMap.loadMap("/Maps/LorasCavernB.map");
+					tileMap.setMapSingleBlock(17, 36, 31);
+					tileMap.setMapSingleBlock(17, 37, 31);
 					JukeBox.play("Close");
 				}
 				
 				if(doodad.getCurrentAction() == 0)
 				{
-					tileMap.loadMap("/Maps/LorasCavernA.map");
+					tileMap.setMapSingleBlock(17, 36, 119);
+					tileMap.setMapSingleBlock(17, 37, 119);
 					JukeBox.play("Close");
 				}
 			}

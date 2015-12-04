@@ -275,7 +275,8 @@ public class Tutorial extends MainMap
 							{
 								alreadyDoneThis = true;
 								JukeBox.play("Close");
-								tileMap.loadMap("/Maps/TutorialB.map");
+								tileMap.setMapSingleBlock(60, 8, 31);
+								tileMap.setMapSingleBlock(60, 9, 31);
 								hud.setQuestCurrent(10);
 							}
 						}

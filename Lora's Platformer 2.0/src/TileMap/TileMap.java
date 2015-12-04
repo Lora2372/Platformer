@@ -49,8 +49,7 @@ public class TileMap
 	
 	public void loadTiles(BufferedImage bufferedImage)
 	{
-		final int waterBlockStart = 41;
-		final int waterBlockEnd = 42;
+
 		try
 		{
 			tileset = bufferedImage;
@@ -67,20 +66,8 @@ public class TileMap
 						tileSize,
 						tileSize
 						);
-				
-//				tiles[0][col] = new Tile(subimage, Tile.NORMAL);
-				
-				
-				if(col == 41 || col == 42)
-				{
-//					System.out.println("water: col: " + col);
-					tiles[0][col] = new Tile(subimage, Tile.NORMAL, true);
-				}
-				else
-				{
-//					System.out.println("normal: col: " + col);
-					tiles[0][col] = new Tile(subimage, Tile.NORMAL, false);
-				}
+								
+				tiles[0][col] = new Tile(subimage, Tile.NORMAL, (col == 41 || col == 42));
 				
 				subimage = tileset.getSubimage(
 						col * tileSize,
@@ -91,7 +78,7 @@ public class TileMap
 				
 
 				
-				tiles[1][col] = new Tile(subimage, Tile.BLOCKED, true);
+				tiles[1][col] = new Tile(subimage, Tile.BLOCKED, false);
 			}
 				
 		}
@@ -111,7 +98,7 @@ public class TileMap
 			BufferedReader bufferedReader = new BufferedReader(
 					new InputStreamReader(inputStream)
 					);
-//			JOptionPane.showMessageDialog(null, bufferedReader.readLine());
+
 			numCols = Integer.parseInt(bufferedReader.readLine());
 			numRows = Integer.parseInt(bufferedReader.readLine());
 			map = new int[numRows] [numCols];
@@ -174,7 +161,7 @@ public class TileMap
 	{
 		if(row == -1 || col == -1 || row >= map.length || col >= map[0].length || row < 0 || col < 0)
 		{
-			return -5000;
+			return -1;
 		}
 		
 		try
@@ -196,7 +183,7 @@ public class TileMap
 		
 		if(row == -1 || col == -1 || row >= map.length || col >= map[0].length || row < 0 || col < 0)
 		{
-			throw new Exception();
+			return null;
 		}
 		
 		int rc = map[row][col];
@@ -210,7 +197,7 @@ public class TileMap
 		return map;
 	}
 	
-	public void setMapSingleBlock(int row, int col, int type)
+	public void setMapSingleBlock(int col, int row, int type)
 	{
 		map[row][col] = type;
 	}

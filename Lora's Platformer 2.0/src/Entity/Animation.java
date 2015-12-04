@@ -75,6 +75,7 @@ public class Animation
 		}
 		catch(Exception exception)
 		{
+			System.out.println("Exception in animation; frames.length(): " + frames.length + ", currentFrame: " + currentFrame);
 			throw exception;
 		}
 		

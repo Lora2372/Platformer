@@ -221,6 +221,11 @@ public class ConversationState  extends GameState
 			
 			BufferedImage[] tempIcon = null;
 			
+			if(conversationTracker > whoTalks.length)
+			{
+				return;
+			}
+			
 			if(whoTalks[conversationTracker] == 0)
 			{
 				tempName = player.getName();
@@ -420,9 +425,9 @@ public class ConversationState  extends GameState
 				myRobot = new Robot();
 				myRobot.keyPress(KeyEvent.VK_E);
 				myRobot.keyRelease(KeyEvent.VK_E);
-			} catch (AWTException e) 
+			} catch (AWTException exception) 
 			{
-				e.printStackTrace();
+				exception.printStackTrace();
 			}
 
 		}

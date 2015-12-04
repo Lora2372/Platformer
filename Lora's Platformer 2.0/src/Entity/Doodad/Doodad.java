@@ -139,7 +139,6 @@ public class Doodad extends MapObject
 		catch(Exception exception)
 		{
 			System.out.println("" + locationX + locationY);
-			String doodadType = this.doodadType;
 			System.out.println("Crash at: " + doodadName);
 			exception.printStackTrace();
 		}

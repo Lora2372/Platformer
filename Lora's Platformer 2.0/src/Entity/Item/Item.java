@@ -265,12 +265,6 @@ public class Item extends MapObject
 		catch(Exception exception)
 		{
 			exception.printStackTrace();
-		}
-		
+		}	
 	}
-	
-
-	
-	
-	
 }

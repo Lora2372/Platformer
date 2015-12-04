@@ -179,14 +179,17 @@ public class MysteriousDungeon extends MainMap
 			{
 				if(doodad.getCurrentAction() == 2)
 				{
-//					tileMap.loadMap("/Maps/MysteriousDungeonB.map");
-					tileMap.setMapSingleBlock(20, 13, 1);
+					tileMap.setMapSingleBlock(13, 20, 31);
+					tileMap.setMapSingleBlock(13, 21, 31);
+					tileMap.setMapSingleBlock(13, 22, 31);
 					JukeBox.play("Close");
 				}
 				
 				if(doodad.getCurrentAction() == 0)
 				{
-					tileMap.loadMap("/Maps/MysteriousDungeonA.map");
+					tileMap.setMapSingleBlock(13, 20, 119);
+					tileMap.setMapSingleBlock(13, 21, 119);
+					tileMap.setMapSingleBlock(13, 22, 119);
 					JukeBox.play("Close");
 				}
 			}
