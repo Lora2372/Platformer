@@ -132,7 +132,18 @@ public class Doodad extends MapObject
 	public void update()
 	{		
 		getNextPosition();
-		checkTileMapCollision();
+		try
+		{
+			checkTileMapCollision();
+		}
+		catch(Exception exception)
+		{
+			System.out.println("" + locationX + locationY);
+			String doodadType = this.doodadType;
+			System.out.println("Crash at: " + doodadName);
+			exception.printStackTrace();
+		}
+		
 		setPosition(xtemp, ytemp);
 
 		hasPlayedOnce = (animation.getFrame() == animation.getFramesLength() - 1);

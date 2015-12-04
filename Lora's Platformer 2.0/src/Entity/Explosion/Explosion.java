@@ -79,7 +79,15 @@ public class Explosion extends MapObject
    
     public void update(ArrayList<Unit> characterList)
     {
-        checkTileMapCollision();
+		try
+		{
+			checkTileMapCollision();
+		}
+		catch(Exception exception)
+		{
+			System.out.println("Crash at: " + explosionType);
+			exception.printStackTrace();
+		}
         setPosition(xtemp, ytemp);
                
         for(int i = 0; i < characterList.size(); i++)
@@ -100,16 +108,14 @@ public class Explosion extends MapObject
                        
 
                        
-                        double distanceDamageMultiplier = 1 - ( (distance - 60) / ( (width + height) / 2 ) );       
+                        double distanceDamageMultiplier = 1 - ( (distance - 50) / ( (width + height) / 2 ) );       
                        
                         if(distanceDamageMultiplier < 0)
                         {
                             System.out.println("distanceDamageMultiplier was negative");
                             distanceDamageMultiplier *= -1;
                         }
-                       
-                        System.out.println("distanceDamageMultiplier: " + distanceDamageMultiplier);
-                       
+                                              
                         character.hit( (damage + owner.getBonusDamageMagical() ) * distanceDamageMultiplier, owner);
                     }
                 }

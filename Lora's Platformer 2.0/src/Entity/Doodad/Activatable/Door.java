@@ -116,6 +116,7 @@ public class Door extends Doodad
 		}
 		
 		animation.setFrames(sprites);
+		animation.setDelay(100);
 	}
 	
 	

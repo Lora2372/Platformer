@@ -261,7 +261,6 @@ public class LorasCavern extends MainMap
 				exception.printStackTrace();
 			}
 		}
-		
 	}
 	
 	public void update()

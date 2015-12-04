@@ -12,7 +12,6 @@ import Entity.Item.CreateItem;
 import Entity.Player.Player;
 import Entity.Unit.Slug;
 import Entity.Unit.Succubus;
-import Entity.Unit.Wolf;
 import GameState.GameStateManager;
 import GameState.Conversation.ConversationDataMysteriousDungeon;
 import GameState.Conversation.ConversationState;
@@ -55,10 +54,6 @@ public class MysteriousDungeon extends MainMap
 		
 		spawnDoodad.spawnTorch(109, 440);		
 		
-		spawnDoodad.spawnTorch(3508, 410 + 240);
-		
-		spawnDoodad.spawnTorch(3928, 410 + 240);
-		
 		spawnDoodad.spawnTorch(390, 1250);
 		spawnDoodad.spawnTorch(390, 1730);
 		
@@ -93,6 +88,8 @@ public class MysteriousDungeon extends MainMap
 		if(!player.getLoading(index))
 		{
 			
+			spawnDoodad.spawnLever(1200, 1580, 0);
+			
 			door = spawnDoodad.spawnDoor(doorLocationX,  doorLocationY, true, 0, CreateDoodad.Doors.Boss.toString());
 			
 			player.setPosition(startLocationX, startLocationY);
@@ -118,17 +115,23 @@ public class MysteriousDungeon extends MainMap
 			succubus = spawnUnit.spawnSuccubus(2833, 780, false);
 			dropPotion("Any", 25, 1, succubus);
 			
-			Wolf wolf = spawnUnit.spawnWolf(537, 1760, true);
-			dropPotion("Any", 25, 1, wolf);
-			wolf = spawnUnit.spawnWolf(537, 1760, false);
-			dropPotion("Any", 25, 1, wolf);
+			Slug slug = spawnUnit.spawnSlug(537, 1760, true, null);
+			dropPotion("Any", 25, 1, slug);
+			slug = spawnUnit.spawnSlug(537, 1760, false, null);
+			dropPotion("Any", 25, 1, slug);
 			
-			Slug slug = spawnUnit.spawnSlug(1788, 1250, true, null);
+			slug = spawnUnit.spawnSlug(1788, 1250, true, null);
 			dropPotion("Any", 25, 1, slug);
 			
 			slug = spawnUnit.spawnSlug(1788, 1250, false, null);
 			dropPotion("Any", 25, 1, slug);
+
+			slug = spawnUnit.spawnSlug(1800, 1900, false, null);
+			dropPotion("Any", 25, 1, slug);
 			
+			slug = spawnUnit.spawnSlug(2100, 1900, false, null);
+			dropPotion("Any", 25, 1, slug);
+
 			spawnItem.spawnKey(380, 1550, "Boss", 1);
 			
 		}
@@ -168,7 +171,31 @@ public class MysteriousDungeon extends MainMap
 		return activatables;
 	}
 	
-
+	public void useDoodad(Doodad doodad)
+	{
+		if(doodad.getDoodadType().equals(CreateDoodad.Other.Lever.toString()))
+		{
+			try
+			{
+				if(doodad.getCurrentAction() == 2)
+				{
+//					tileMap.loadMap("/Maps/MysteriousDungeonB.map");
+					tileMap.setMapSingleBlock(20, 13, 1);
+					JukeBox.play("Close");
+				}
+				
+				if(doodad.getCurrentAction() == 0)
+				{
+					tileMap.loadMap("/Maps/MysteriousDungeonA.map");
+					JukeBox.play("Close");
+				}
+			}
+			catch(Exception exception)
+			{
+				exception.printStackTrace();
+			}
+		}
+	}
 	
 	public void update()
 	{

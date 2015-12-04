@@ -82,7 +82,7 @@ public class Buff
 
 			start = currentTime;
 			double objectValueTotalPiece = objectValueTotal / startDuration / 62;
-			System.out.println("Restore amount piece: " + objectValueTotalPiece);
+
 			if(buff.equals(CreateBuff.Buffs.RestoreHealth))
 			{
 				owner.restoreHealth(objectValueTotalPiece);

@@ -49,8 +49,8 @@ public class TileMap
 	
 	public void loadTiles(BufferedImage bufferedImage)
 	{
-		final int waterBlockStart = 43;
-		final int waterBlockEnd = 44;
+		final int waterBlockStart = 41;
+		final int waterBlockEnd = 42;
 		try
 		{
 			tileset = bufferedImage;
@@ -71,15 +71,15 @@ public class TileMap
 //				tiles[0][col] = new Tile(subimage, Tile.NORMAL);
 				
 				
-				if(col >= waterBlockStart && col <= waterBlockEnd)
+				if(col == 41 || col == 42)
 				{
 //					System.out.println("water: col: " + col);
-					tiles[0][col] = new Tile(subimage, Tile.UNDERWATER);
+					tiles[0][col] = new Tile(subimage, Tile.NORMAL, true);
 				}
 				else
 				{
 //					System.out.println("normal: col: " + col);
-					tiles[0][col] = new Tile(subimage, Tile.NORMAL);
+					tiles[0][col] = new Tile(subimage, Tile.NORMAL, false);
 				}
 				
 				subimage = tileset.getSubimage(
@@ -91,7 +91,7 @@ public class TileMap
 				
 
 				
-				tiles[1][col] = new Tile(subimage, Tile.BLOCKED);
+				tiles[1][col] = new Tile(subimage, Tile.BLOCKED, true);
 			}
 				
 		}
@@ -174,7 +174,6 @@ public class TileMap
 	{
 		if(row == -1 || col == -1 || row >= map.length || col >= map[0].length || row < 0 || col < 0)
 		{
-//			System.out.println("The fuck?");
 			return -5000;
 		}
 		
@@ -190,6 +189,30 @@ public class TileMap
 			e.printStackTrace();
 		}
 		return 0;
+	}
+	
+	public Tile getTile(int row, int col) throws Exception
+	{
+		
+		if(row == -1 || col == -1 || row >= map.length || col >= map[0].length || row < 0 || col < 0)
+		{
+			throw new Exception();
+		}
+		
+		int rc = map[row][col];
+		int r = rc / numTilesAcross;
+		int c = rc % numTilesAcross;
+		return tiles[r][c];
+	}
+	
+	public int[][] getMap()
+	{
+		return map;
+	}
+	
+	public void setMapSingleBlock(int row, int col, int type)
+	{
+		map[row][col] = type;
 	}
 	
 	public void setPosition(double x, double y)

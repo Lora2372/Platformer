@@ -21,6 +21,7 @@ public class Player extends Unit
 	protected double mouseLocationX;
 	protected double mouseLocationY;	
 	
+	protected int timesDefeatedFiona = 0;
 	
 	protected String currentMap;
 	
@@ -115,6 +116,23 @@ public class Player extends Unit
 	public void setLoading(int i, boolean loading) 
 	{ 
 		this.loading.set(i, loading);
+	}
+	
+	public int getTimesDefeated()
+	{
+		if(currentMap.equals(GameStateManager.GameMaps.FionasSanctum.toString()))
+		{
+			return timesDefeatedFiona;
+		}
+		return 0;
+	}
+	
+	public void setTimesDefeated(String currentMap, int timesDefeated)
+	{
+		if(currentMap.equals(this.currentMap))
+		{
+			timesDefeatedFiona = timesDefeated;
+		}
 	}
 	
 	public void setCurrentMap(String currentMap) { this.currentMap = currentMap; }

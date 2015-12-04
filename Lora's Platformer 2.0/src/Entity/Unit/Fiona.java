@@ -350,6 +350,7 @@ public class Fiona extends Unit
 					
 					if(mainMap.RNG(1, 2) == 1)
 					{
+						tennisSuccessChance = 90;
 						JukeBox.play("FionaChargeup01");
 						this.setStunned(1000);
 						arcaneBallMode = true;

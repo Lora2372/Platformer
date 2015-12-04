@@ -35,6 +35,8 @@ public class FionasSanctum extends MainMap
 	
 	protected Door bossDoor;
 	
+	protected Portal portal;
+	
 	public static int startLocationX = 120;
 	public static int startLocationY = 780;
 	
@@ -277,13 +279,11 @@ public class FionasSanctum extends MainMap
 				
 				if(!conversationState.getConversationOver())
 				{
-					
-					
-					if(player.getConversationState().getConversationTracker() == 3)
+					if(conversationState.getConversationTracker() == 3)
 					{
 						if(!fiona.getDeSpawning())
 						{
-							player.getConversationState().lockConversation(true);
+							conversationState.lockConversation(true);
 							fiona.deSpawn();
 							player.getHUD().removeBoss();
 						}
@@ -291,13 +291,13 @@ public class FionasSanctum extends MainMap
 					
 					if(fiona.getHidden())
 					{
-						player.getConversationState().lockConversation(false);
+						conversationState.lockConversation(false);
 					}
 					
-					if(player.getConversationState().getConversationTracker() == 4)
+					if(conversationState.getConversationTracker() == 4 && portal == null)
 					{
 						JukeBox.play("Close");
-						JukeBox.loop("MysteriousDungeon");
+						JukeBox.loop("FionasSanctum");
 						JukeBox.stop("MysteriousConversation");
 						try 
 						{
@@ -309,28 +309,25 @@ public class FionasSanctum extends MainMap
 						}
 						tileMap.loadMap("/Maps/FionasSanctumB.map");
 						tileMap.setPosition(0, 0);
+						
+						
+						portal = new Portal(tileMap, this, gameStateManager, 1468, 790);
+						stuff.add(portal);
+						activatables.add(portal);
+						
+						spawnDoodad.spawnTorch(1350, 410);
+						spawnDoodad.spawnTorch(1590, 410);
+						
+						spawnDoodad.spawnTorch(1350, 650);
+						spawnDoodad.spawnTorch(1590, 650);
 					}
 					
-					if(player.getConversationState().getConversationTracker() >= conversation.fionaDefeated.length)
+					if(conversationState.getConversationOver())
 					{
-						player.getConversationState().endConversation();
+						bossEngaged = false;
+						conversationState.endConversation();
 					}
 				}
-				
-				bossEngaged = false;
-				JukeBox.stop("MysteriousBattle");
-				JukeBox.loop(GameStateManager.GameMaps.MysteriousDungeon.toString());
-				
-				Portal portal = new Portal(tileMap, this, gameStateManager, 1468, 790);
-				stuff.add(portal);
-				activatables.add(portal);
-				
-				spawnDoodad.spawnTorch(1350, 410);
-				spawnDoodad.spawnTorch(1590, 410);
-				
-				spawnDoodad.spawnTorch(1350, 650);
-				spawnDoodad.spawnTorch(1590, 650);
-				
 			}
 		}
 	}

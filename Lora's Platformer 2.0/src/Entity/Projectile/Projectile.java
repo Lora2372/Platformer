@@ -132,7 +132,15 @@ public class Projectile extends MapObject
 	
 	public void update(ArrayList<Unit> characterList)
 	{
-		checkTileMapCollision();
+		try
+		{
+			checkTileMapCollision();
+		}
+		catch(Exception exception)
+		{
+			System.out.println("Crash at: " + projectileType);
+			exception.printStackTrace();
+		}
 		setPosition(xtemp, ytemp);
 
 		if(locationX > tileMap.getWidth() || locationX < 0 || locationY < 0 || locationY > tileMap.getHeight())

@@ -1,7 +1,6 @@
 package Entity.Unit;
 
 import java.util.ArrayList;
-import java.util.Random;
 import Audio.JukeBox;
 import javax.imageio.ImageIO;
 import Entity.Animation;
@@ -63,6 +62,7 @@ public class Unit extends MapObject
 	protected int sightRangeY;
 	
 	protected boolean tennisPlayer;
+	protected int tennisSuccessChance = 90;
 	
 	protected boolean sexytime1;
 	protected boolean sexytime2;
@@ -652,7 +652,15 @@ public class Unit extends MapObject
 			
 			// Update position
 			getNextPosition();
-			checkTileMapCollision();
+			try
+			{
+				checkTileMapCollision();
+			}
+			catch(Exception exception)
+			{
+				System.out.println("Crash at: " + name);
+				exception.printStackTrace();
+			}
 			setPosition(xtemp, ytemp);
 			
 			if(initializeSpawning)
@@ -1319,10 +1327,12 @@ public class Unit extends MapObject
 					{
 						tennisTimer = 0;
 						
-						if(mainMap.RNG(0, 100) < 70)
+						if(mainMap.RNG(0, 100) < tennisSuccessChance)
 						{
 							startPunch = true;
 							projectile.bounce();
+							tennisSuccessChance -= 5;
+							System.out.println("tennisSuccessChance: " + tennisSuccessChance);
 						}
 					}
 				}
@@ -1340,13 +1350,12 @@ public class Unit extends MapObject
 					if(tennisTimer >= tennisCooldown)
 					{
 						tennisTimer = 0;
-					
-						Random randomizer = new Random();
-						int random2 = randomizer.nextInt((100 - 0) + 1);
-						if(random2 < 70)
+						if(mainMap.RNG(0, 100) < tennisSuccessChance)
 						{
 							startPunch = true;
 							projectile.bounce();
+							tennisSuccessChance -= 5;
+							System.out.println("tennisSuccessChance: " + tennisSuccessChance);
 						}
 					}
 				}

@@ -253,8 +253,13 @@ public abstract class MapObject
 				falling = true;
 			}
 			
+			if(swimming)
+			{
+				
+			}
+			
 			// Falling
-			if( (falling || swimming) && !flying)
+			if( (falling) && !flying)
 			{
 				if(directionY > 0 && gliding) directionY += fallSpeed * 0.1;
 				else directionY += fallSpeed;
@@ -269,7 +274,7 @@ public abstract class MapObject
 	
 	public void playJumpSound() { }
 	
-	public void checkTileMapCollision()
+	public void checkTileMapCollision() throws Exception
 	{
 		currentCol = (int)locationX / tileSize;
 		currentRow = (int)locationY / tileSize;
@@ -282,14 +287,17 @@ public abstract class MapObject
 		
 		calculateCorners(locationX, ydest);
 		
-		
-		if(!swimming && (topLeft == 2 || topRight == 2))
+		try
 		{
-			swimming = true;
+			swimming = false;//(tileMap.getTile((int)locationY / tileSize, (int)locationX / tileSize).isWater());
 		}
-		else if(swimming)
+		catch(Exception exception)
 		{
-			swimming = false;
+			throw exception;
+		}
+		if(swimming)
+		{
+			System.out.println("You're in water!");
 		}
 		
 		// We're going upwards

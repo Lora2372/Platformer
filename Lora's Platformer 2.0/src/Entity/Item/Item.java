@@ -178,7 +178,15 @@ public class Item extends MapObject
 			return;
 		}
 		getNextPosition();
-		checkTileMapCollision();
+		try
+		{
+			checkTileMapCollision();
+		}
+		catch(Exception exception)
+		{
+			System.out.println("Crash at: " + itemType);
+			exception.printStackTrace();
+		}
 		setPosition(xtemp, ytemp);
 		
 		if(initializeSpawning)
