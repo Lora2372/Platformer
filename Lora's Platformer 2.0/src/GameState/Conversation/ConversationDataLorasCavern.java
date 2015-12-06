@@ -13,7 +13,7 @@ public class ConversationDataLorasCavern
 		"I feel dizzy... Where am I?",
 		"In the realm of mortals, this is the final test .",
 		"In order to succeed, you must make you way to the keeper's sanctum and prove your worth to her.",
-		"Sound simple enough... How do I get out of here?",
+		"Sounds simple enough... How do I get out of here?",
 		"There should be a lever that opens the door, see it?",
 		"- Yes \n " +
 		"- No..."
@@ -52,6 +52,40 @@ public class ConversationDataLorasCavern
 		1
 	};
 	
+	
+	public String[] leverToLiadrinOpen()
+	{
+			return new String[]
+			{
+				"Somewhere, a door just opened..."
+			};
+			
+	}
+	
+	public int[] leverToLiadrinOpenWhoTalks()
+	{
+		return new int[]
+		{
+			2
+		};
+	}
+	
+	public String[] leverToLiadrinClose()
+	{
+			return new String[]
+			{
+				"You hear the sound of a door closing..."
+			};
+			
+	}
+	
+	public int[] leverToLiadrinCloseWhoTalks()
+	{
+		return new int[]
+		{
+			2
+		};
+	}
 	
 	public String[] liadrinFirstEncounter()
 	{

@@ -32,6 +32,10 @@ public class MysteriousDungeon extends MainMap
 	public static int doorLocationX = 3045;
 	public static int doorLocationY = 780;
 	
+	protected enum doodadIDs
+	{
+		BossKeyDoor
+	};
 	
 	public MysteriousDungeon
 		(
@@ -88,7 +92,7 @@ public class MysteriousDungeon extends MainMap
 		if(!player.getLoading(index))
 		{
 			
-			spawnDoodad.spawnLever(1200, 1580, 0);
+			spawnDoodad.spawnLever(1200, 1580, doodadIDs.BossKeyDoor.toString(), 0);
 			
 			door = spawnDoodad.spawnDoor(doorLocationX,  doorLocationY, true, 0, CreateDoodad.Doors.Boss.toString());
 			

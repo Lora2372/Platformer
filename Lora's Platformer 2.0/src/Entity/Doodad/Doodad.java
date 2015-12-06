@@ -35,6 +35,7 @@ public class Doodad extends MapObject
 	
 	protected String doodadType;
 	protected String doodadName;
+	protected String uniqueID;
 	
 	public Doodad
 		(
@@ -91,6 +92,11 @@ public class Doodad extends MapObject
 	}
 	
 	public void setDoodad(int currentAction) { }
+	
+	public String getUniqueID()
+	{
+		return uniqueID;
+	}
 	
 	public BufferedImage[] getPortrait() { return portrait; }
 	

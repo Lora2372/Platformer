@@ -145,9 +145,8 @@ public class Projectile extends MapObject
 
 		if(locationX > tileMap.getWidth() || locationX < 0 || locationY < 0 || locationY > tileMap.getHeight())
 		{
-			setHit();
+			removeMe = true;
 		}
-		
 		
 		if(directionX == 0)
 		{

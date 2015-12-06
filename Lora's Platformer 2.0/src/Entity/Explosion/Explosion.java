@@ -106,8 +106,6 @@ public class Explosion extends MapObject
                        
                         double distance = Math.sqrt((characterLocationX - locationX) * (characterLocationX - locationX) + (characterLocationY - locationY)*(characterLocationY - locationY));
                        
-
-                       
                         double distanceDamageMultiplier = 1 - ( (distance - 50) / ( (width + height) / 2 ) );       
                        
                         if(distanceDamageMultiplier < 0)

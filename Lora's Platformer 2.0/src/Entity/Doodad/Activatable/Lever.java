@@ -17,6 +17,7 @@ public class Lever extends Doodad
 	protected boolean successfullyOpened;
 	protected GameStateManager gameStateManager;
 	
+	
 	public Lever
 		(
 			TileMap tileMap,
@@ -24,6 +25,7 @@ public class Lever extends Doodad
 			GameStateManager gameStateManager,
 			double locationX,
 			double locationY,
+			String uniqueID,
 			int currentAction
 		) 
 	{
@@ -48,6 +50,8 @@ public class Lever extends Doodad
 				"Lever",
 				CreateDoodad.doodadName.get("Lever")
 			);
+		
+		this.uniqueID = uniqueID;
 		
 		if(currentAction == 2)
 		{
@@ -90,16 +94,26 @@ public class Lever extends Doodad
 	
 	public void interact(Player player)
 	{
-		if(currentAction == 0)
+		if(!player.getInConversation())
 		{
-			setDoodad(1);
+			if(currentAction == 0)
+			{
+				setDoodad(1);
+			}
+			else if(currentAction == 2)
+			{
+				setDoodad(3);
+			}
+			
+			playSound();
 		}
-		else if(currentAction == 2)
+		else
 		{
-			setDoodad(3);
+			if(player.getConversationState().getConversationOver())
+			{
+				player.getConversationState().endConversation();
+			}
 		}
-		
-		playSound();
 	}
 	
 	

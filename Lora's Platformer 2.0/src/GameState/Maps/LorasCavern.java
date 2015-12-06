@@ -1,14 +1,10 @@
 package GameState.Maps;
 
-
 import java.io.IOException;
 import javax.imageio.ImageIO;
-
 import Audio.JukeBox;
 import Entity.Doodad.Doodad;
 import Entity.Doodad.Activatable.Chest;
-import Entity.Doodad.Activatable.CreateDoodad;
-import Entity.Doodad.Activatable.Lever;
 import Entity.Item.CreateItem;
 import Entity.Item.Potion;
 import Entity.Player.*;
@@ -25,12 +21,17 @@ public class LorasCavern extends MainMap
 {
 	
 	public static int startLocationX = 720;
-	public static int startLocationY = 2220;
+	public static int startLocationY = 2225;
 	
 	protected int welcomeMessage = 0; // 0 = unstarted, 1 = choice made, -1 = done
 	
 	protected ConversationDataLorasCavern conversation;
 
+	protected enum doodadIDs
+	{
+		StartingCell,
+		LiadrinDoor
+	};
 	
 	protected boolean liadrinConversationOver;
 	
@@ -124,8 +125,10 @@ public class LorasCavern extends MainMap
 			dropPotion(CreateItem.Potions.Mana.toString(), 100, 2, chest);
 			dropCoin(CreateItem.Coins.Silver.toString(), 100, 3, chest);
 			
-			Lever lever = spawnDoodad.spawnLever(startLocationX + 180, startLocationY + 60, 0);
-			lever.setPosition(lever.getLocationX(), lever.getLocationY() - lever.getCollisionHeight());
+			spawnDoodad.spawnLever(900, 2255, doodadIDs.StartingCell.toString(), 0);
+			
+			spawnDoodad.spawnLever(1300, 680, doodadIDs.LiadrinDoor.toString(), 0);
+			
 			spawnItem.spawnKey(1712, 		2610, CreateItem.Keys.Uncommon.toString(), 1);
 			spawnItem.spawnHerb(2276, 1450, CreateItem.Herbs.Sun.toString(), 1);
 			spawnItem.spawnHerb(3004, 1270, CreateItem.Herbs.Sun.toString(), 1);
@@ -232,7 +235,6 @@ public class LorasCavern extends MainMap
 			
 			if(liadrinConversationOver)
 			{
-				System.out.println("Ending liadrin conversation");
 				conversationState.endConversation();
 				liadrin.deSpawn();
 			}
@@ -242,29 +244,51 @@ public class LorasCavern extends MainMap
 	
 	public void useDoodad(Doodad doodad)
 	{
-		if(doodad.getDoodadType().equals(CreateDoodad.Other.Lever.toString()))
-		{
-			try
+		try
 			{
-				if(doodad.getCurrentAction() == 2)
+				// Lever that opens the starting "cell"
+				if(doodad.getUniqueID().equals(doodadIDs.StartingCell.toString()))
 				{
-					tileMap.setMapSingleBlock(17, 36, 31);
-					tileMap.setMapSingleBlock(17, 37, 31);
-					JukeBox.play("Close");
+					if(doodad.getCurrentAction() == 2)
+					{
+						tileMap.setMapSingleBlock(17, 36, 31);
+						tileMap.setMapSingleBlock(17, 37, 31);
+						JukeBox.play("Close");
+					}
+					
+					if(doodad.getCurrentAction() == 0)
+					{
+						tileMap.setMapSingleBlock(17, 36, 119);
+						tileMap.setMapSingleBlock(17, 37, 119);
+						JukeBox.play("Close");
+					}
 				}
-				
-				if(doodad.getCurrentAction() == 0)
+				// Lever that opens up to Liadrin
+				if(doodad.getUniqueID().equals(doodadIDs.LiadrinDoor.toString()))
 				{
-					tileMap.setMapSingleBlock(17, 36, 119);
-					tileMap.setMapSingleBlock(17, 37, 119);
-					JukeBox.play("Close");
+					if(doodad.getCurrentAction() == 2)
+					{
+						tileMap.setMapSingleBlock(46, 35, 31);
+						tileMap.setMapSingleBlock(46, 36, 31);
+						JukeBox.play("Close");
+						conversationState.startConversation(player, null, doodad, conversation.leverToLiadrinOpen(), conversation.leverToLiadrinOpenWhoTalks());
+					}
+					
+					if(doodad.getCurrentAction() == 0)
+					{
+						tileMap.setMapSingleBlock(46, 35, 119);
+						tileMap.setMapSingleBlock(46, 35, 119);
+						JukeBox.play("Close");
+						conversationState.startConversation(player, null, doodad, conversation.leverToLiadrinClose(), conversation.leverToLiadrinCloseWhoTalks());
+					}
 				}
-			}
-			catch(Exception exception)
-			{
-				exception.printStackTrace();
-			}
+	
 		}
+		catch(Exception exception)
+		{
+			exception.printStackTrace();
+		}
+		
 	}
 	
 	public void update()

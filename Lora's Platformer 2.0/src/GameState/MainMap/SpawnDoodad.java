@@ -71,9 +71,9 @@ public class SpawnDoodad
 		return door;
 	}
 	
-	public Lever spawnLever(double locationX, double locationY, int currentAction)
+	public Lever spawnLever(double locationX, double locationY, String uniqueID, int currentAction)
 	{
-		Lever lever = new Lever(mainMap.tileMap, mainMap, mainMap.getGameStateManager(), locationX, locationY, currentAction);
+		Lever lever = new Lever(mainMap.tileMap, mainMap, mainMap.getGameStateManager(), locationX, locationY, uniqueID, currentAction);
 		mainMap.activatables.add(lever);
 		mainMap.stuff.add(lever);
 		return lever;
