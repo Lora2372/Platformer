@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import com.sun.glass.events.KeyEvent;
+import Audio.JukeBox;
 import Entity.Doodad.Doodad;
 import Entity.Item.Item;
 import Entity.Player.Player;
@@ -107,10 +108,11 @@ public class ConversationState  extends GameState
 
 		this.player = player;
 		this.item = item;
-		conversation = new String[] { item.getDescription() };
-		whoTalks = new int[] { 6 };
-		player.setInConversation(true);
+		
 
+		whoTalks = new int[] { 6 };
+		
+		player.setInConversation(true);
 	}
 	
 	public void startConversation
@@ -159,8 +161,15 @@ public class ConversationState  extends GameState
 		choiceSelected = 1;
 		choiceMade = 0;
 		
+		conversation = null;
+		doodad = null;
+		
 		if(otherPerson != null)
+		{
 			otherPerson.setInConversation(false);
+			otherPerson = null;
+		}
+		
 	}
 	
 	
@@ -198,17 +207,21 @@ public class ConversationState  extends GameState
 	
 	public boolean getConversationOver() { return conversationOver; }
 	
-
+	public void updateChoice(int choice)
+	{
+		if(choiceSelected != choice)
+		{
+			choiceSelected = choice;
+			JukeBox.play("DecisionChange");
+		}
+	}
 	
 	public void draw(Graphics2D graphics)
 	{
-		if(conversationOver)
-		{
-			return;
-		}
 		try
 		{
-			graphics.drawImage(
+			graphics.drawImage
+				(
 					conversationGUI[0],
 					(int) (locationX),
 					(int) (locationY),
@@ -221,7 +234,8 @@ public class ConversationState  extends GameState
 			
 			BufferedImage[] tempIcon = null;
 			
-			if(conversationTracker > whoTalks.length)
+			
+			if(conversationTracker >= whoTalks.length)
 			{
 				return;
 			}
@@ -242,7 +256,7 @@ public class ConversationState  extends GameState
 			{
 				
 				tempName = doodad.getDoodadName();
-				tempIcon = doodad.getPortrait();
+				tempIcon = doodad.getSprites();
 			}
 			
 			if(whoTalks[conversationTracker] == 4)
@@ -259,24 +273,59 @@ public class ConversationState  extends GameState
 			
 			if(whoTalks[conversationTracker] == 6)
 			{
-				tempName = item.getDescriptionName();
-				tempIcon = item.getPortrait();
+				if(item == null)
+				{
+					conversation = new String[] { "" };
+					tempName = "";
+					tempIcon = null;
+				}
+				else
+				{
+					conversation = new String[] { item.getDescription() };
+					tempName = item.getDescriptionName();
+					tempIcon = item.getSprites();
+				}
 			}
-			
-			
-			graphics.setFont(new Font("Arial", Font.PLAIN, 14));
-			graphics.setColor(Color.WHITE);
+						
 			
 			if(whoTalks[conversationTracker] != 3)
 			{
-				graphics.drawImage(
-						tempIcon[0],
-						(int) (locationX - 94),
-						(int) (locationY + 35),
+				int portraitLocationX = (int)locationX - 94;
+				int portraitLocationY = (int)locationY + 40;
+				
+				int portraitWidth = 94;
+				int portraitHeight = 94;
+				
+				graphics.drawImage
+					(
+						Content.BuffIcon[0][0],
+						portraitLocationX,
+						portraitLocationY,
+						portraitWidth,
+						portraitHeight,
 						null
 					);
 				
-				graphics.drawString(tempName, (int)locationX + 21, (int)locationY + 25);	
+				if(tempIcon != null)
+				{
+					graphics.drawImage
+						(
+							tempIcon[0],
+							portraitLocationX + 5,
+							portraitLocationY + 5,
+							portraitWidth - 10,
+							portraitHeight - 10,
+							null
+						);
+				}
+				
+				int textLocationX = (int)locationX + 21;
+				int textLocationY = (int)locationY + 25;
+				
+				
+				graphics.setFont(new Font("Arial", Font.PLAIN, 14));				
+				graphics.setColor(Color.WHITE);
+				graphics.drawString(tempName, textLocationX, textLocationY);	
 			}
 			
 			if(conversationTracker > conversation.length)
@@ -316,16 +365,17 @@ public class ConversationState  extends GameState
 				{
 					tempChoiceAmount++;
 					
-					Rectangle textRectangle = new Rectangle(
+					Rectangle textRectangle = new Rectangle
+						(
 							textLocationX,
 							textLocationY - textHeight / 2,
 							textWidth,
 							textHeight						
-							);
+						);
 					
 					if(mouseRectangle.intersects(textRectangle))
 					{
-						choiceSelected = tempChoiceAmount;
+						updateChoice(tempChoiceAmount);
 					}
 					
 					if(choiceSelected == tempChoiceAmount)
@@ -340,6 +390,10 @@ public class ConversationState  extends GameState
 					choiceRequested = true;
 	
 				}
+				
+				
+				graphics.setFont(new Font("Arial", Font.PLAIN, 14));				
+				graphics.setColor(Color.WHITE);
 				
 				graphics.drawString(myString[i], textLocationX, textLocationY);
 				
@@ -371,8 +425,9 @@ public class ConversationState  extends GameState
 				}
 			}
 		}
-		catch(NullPointerException exception)
+		catch(Exception exception)
 		{
+			System.out.println("whoTalks.length: " + whoTalks.length + "\nconversationTracker: " + conversationTracker);
 			exception.printStackTrace();
 		}
 	}

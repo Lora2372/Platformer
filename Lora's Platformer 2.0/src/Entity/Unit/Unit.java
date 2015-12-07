@@ -1621,8 +1621,6 @@ public class Unit extends MapObject
 			graphics.drawString(name, DrawingConstants.shiftEast( (int) drawX, 1), DrawingConstants.shiftNorth( (int) drawY, 1));
 			graphics.drawString(name, DrawingConstants.shiftEast( (int) drawX, 1), DrawingConstants.shiftSouth( (int) drawY, 1));
 			
-			
-			
 			graphics.setColor(new Color(friendly? 100 : 255 , 100, friendly ? 250 : 0));
 			graphics.setFont(new Font("Arial", Font.PLAIN, 14));
 			graphics.drawString(name, drawX, drawY);

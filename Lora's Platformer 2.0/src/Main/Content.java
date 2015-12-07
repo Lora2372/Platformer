@@ -131,8 +131,6 @@ public class Content
 		DeepWoods
 	}
 	
-	public static void runningWithinEclipseLoad()
-	{}
 	
 	public static void loadContent()
 	{						

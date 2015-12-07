@@ -345,7 +345,7 @@ public class HUD
 						null);			
 			}
 		}
-		catch(NullPointerException exception)
+		catch(Exception exception)
 		{
 			exception.printStackTrace();
 		}

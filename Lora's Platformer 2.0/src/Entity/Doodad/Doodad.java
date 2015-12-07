@@ -100,6 +100,8 @@ public class Doodad extends MapObject
 	
 	public BufferedImage[] getPortrait() { return portrait; }
 	
+	public BufferedImage[] getSprites() { return sprites; }
+	
 	public void interact(Player player)
 	{
 //		if(!active) active = true;

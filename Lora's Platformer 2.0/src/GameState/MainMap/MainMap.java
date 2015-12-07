@@ -615,7 +615,7 @@ public class MainMap extends GameState
 					}
 				}
 			}
-			catch(NullPointerException exception)
+			catch(Exception exception)
 			{
 				exception.printStackTrace();
 			}

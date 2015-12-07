@@ -229,7 +229,7 @@ public class GameStateManager
 				{
 					pausestate.draw(graphics);
 				}
-				
+
 				if(player.getInConversation())
 				{
 					conversationState.draw(graphics);

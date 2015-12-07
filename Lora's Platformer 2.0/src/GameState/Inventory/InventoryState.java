@@ -6,6 +6,8 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+
+import Audio.JukeBox;
 import Entity.Item.Item;
 import Entity.Player.Player;
 import GameState.GameState;
@@ -119,19 +121,30 @@ public class InventoryState extends GameState
 	
 	public void update()
 	{
-//		background.update();
-		if(items[selectedSlotY][selectedSlotX] == null)
-		{
-			player.getConversationState().endConversation();
-			return;
-		}
-		
-		player.getConversationState().displayItem(player, items[selectedSlotY][selectedSlotX]);
 	}
 	
 	public void saveToRAM()
 	{
 		
+	}
+	
+	public void updateChoice(int slotX, int slotY)
+	{
+		if(selectedSlotX != slotX || selectedSlotY != slotY)
+		{
+			selectedSlotX = slotX;
+			selectedSlotY = slotY;
+			JukeBox.play("DecisionChange");
+			
+			try
+			{
+				player.getConversationState().displayItem(player, items[selectedSlotY][selectedSlotX]);
+			}
+			catch(Exception exception)
+			{
+				exception.printStackTrace();
+			}
+		}
 	}
 	
 
@@ -140,10 +153,7 @@ public class InventoryState extends GameState
 	{
 		
 		try
-		{
-		
-//			background.draw(graphics);
-			
+		{			
 			graphics.setColor(titleColor);
 			graphics.setFont(titleFont);
 			int stringLength = (int)graphics.getFontMetrics().getStringBounds(title, graphics).getWidth();
@@ -185,7 +195,8 @@ public class InventoryState extends GameState
 					int inventorySlotLocationX = newX + spacingX * j;
 					int inventorySlotLocationY = newY + spacingY * i;
 					
-					inventorySlotRectangles[i][j] = new Rectangle(
+					inventorySlotRectangles[i][j] = new Rectangle
+						(
 							inventorySlotLocationX, 
 							inventorySlotLocationY, 
 							inventorySlotWidth,
@@ -194,29 +205,29 @@ public class InventoryState extends GameState
 					
 					if(inventorySlotRectangles[i][j].intersects(mouseRectangle))
 					{
-						 selectedSlotX = j;
-						 selectedSlotY = i;
+						updateChoice(j, i);
 					}
 					
 					
 					if(items[i][j] != null)
 					{
-						graphics.drawImage(
+						graphics.drawImage
+							(
 								items[i][j].getSprites()[0],
 								inventorySlotLocationX,
 								inventorySlotLocationY,
 								items[i][j].getWidth(),
 								items[i][j].getHeight(),
 								null
-								);
+							);
 						
 						graphics.setColor(Color.WHITE);
 						graphics.drawString
-						(
-							items[i][j].getStacks() + "",
-							inventorySlotLocationX + inventorySlotWidth / 2,
-							inventorySlotLocationY + inventorySlotHeight + 12
-						);
+							(
+								items[i][j].getStacks() + "",
+								inventorySlotLocationX + inventorySlotWidth / 2,
+								inventorySlotLocationY + inventorySlotHeight + 12
+							);
 					}
 					
 					
@@ -224,23 +235,25 @@ public class InventoryState extends GameState
 					if(selectedSlotX == j && selectedSlotY == i)
 					{
 						graphics.setColor(Color.BLUE);
-						graphics.drawRect(					
+						graphics.drawRect
+							(					
 								inventorySlotLocationX,
 								inventorySlotLocationY,
 								slotWidth,
 								slotHeight
-								);
+							);
 					}
 					else
 					{
-						graphics.drawImage(
+						graphics.drawImage
+							(
 								Content.InventorySquare[0][0],
 								inventorySlotLocationX,
 								inventorySlotLocationY,
 								slotWidth,
 								slotHeight,
 								null
-								);
+							);
 					}
 				}
 			}
