@@ -116,7 +116,7 @@ public class Door extends Doodad
 		}
 		
 		animation.setFrames(sprites);
-		animation.setDelay(100);
+		animation.setDelay(70);
 	}
 	
 	
@@ -127,6 +127,7 @@ public class Door extends Doodad
 	
 	public void interact(Player player)
 	{
+
 		// If the door is already open, we walk through it.
 		if(used)
 		{

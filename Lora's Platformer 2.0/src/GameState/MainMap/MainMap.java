@@ -477,7 +477,8 @@ public class MainMap extends GameState
 					thing.getLocked(), 
 					thing.getSpawnLocationX(),
 					thing.getSpawnLocationY(),
-					thing.getDoodadType(), 
+					thing.getDoodadType(),
+					thing.getDoodadID(),
 					tempItems
 				);
 			

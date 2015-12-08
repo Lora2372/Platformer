@@ -116,7 +116,6 @@ public class InventoryState extends GameState
 		{
 			e.printStackTrace();
 		}
-		
 	}
 	
 	public void update()

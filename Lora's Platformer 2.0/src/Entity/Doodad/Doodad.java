@@ -17,6 +17,7 @@ public class Doodad extends MapObject
 	
 	protected int[] animationState;
 	protected int[] numFrames;
+	protected int delay;
 	
 	protected BufferedImage[] portrait;
 	
@@ -34,6 +35,7 @@ public class Doodad extends MapObject
 	protected int stopAt;
 	
 	protected String doodadType;
+	protected String doodadID;
 	protected String doodadName;
 	protected String uniqueID;
 	
@@ -55,7 +57,8 @@ public class Doodad extends MapObject
 			boolean activatable,
 			boolean active,
 			int currentAction,
-			String doodadType,
+//			String doodadType,
+			String doodadID,
 			String descriptionName
 		)
 	{
@@ -74,7 +77,8 @@ public class Doodad extends MapObject
 		this.collisionWidth = collisionWidth;
 		this.fallSpeed = fallSpeed;
 		this.maxFallSpeed = maxFallSpeed;
-		this.doodadType = doodadType;
+//		this.doodadType = doodadType;
+		this.doodadID = doodadID;
 		this.doodadName = descriptionName;
 				
 		this.locationX = spawnLocationX;
@@ -84,11 +88,13 @@ public class Doodad extends MapObject
 		
 		facingRight = false;
 		
+		delay = 70;
+		
 		setPosition(spawnLocationX, spawnLocationY);
 		this.currentAction = currentAction;
 		setDoodad(currentAction);
 		animation.setFrames(sprites);
-		animation.setDelay(70);		
+		animation.setDelay(delay);		
 	}
 	
 	public void setDoodad(int currentAction) { }
@@ -117,6 +123,7 @@ public class Doodad extends MapObject
 	public boolean getInvulnerable() { return invulnerable; }
 	public boolean getUnkillable() { return unkillable; }
 	public String getDoodadType() { return doodadType; }
+	public String getDoodadID() { return doodadID; }
 	public double getSpawnLocationX() { return spawnLocationX; }
 	public double getSpawnLocationY() { return spawnLocationY; }
 	public int getCurrentAction() { return currentAction; }
@@ -162,7 +169,7 @@ public class Doodad extends MapObject
 			{
 				if(hasPlayedOnce)
 				{
-					
+					hasPlayedOnce = false;
 					setDoodad(2);
 					mainMap.useDoodad(this);
 				}
@@ -171,6 +178,7 @@ public class Doodad extends MapObject
 			{
 				if(hasPlayedOnce)
 				{
+					hasPlayedOnce = false;
 					setDoodad(0);
 					mainMap.useDoodad(this);
 				}
@@ -183,10 +191,15 @@ public class Doodad extends MapObject
 			{
 				if(currentAction!= 1)
 				{
+					if(doodadName.equals("Common Chest"))
+					{
+						System.out.println("currentAction = 1, " + doodadName);
+					}
+					hasPlayedOnce = false;
 					currentAction = 1;
 					setDoodad(currentAction);
 					animation.setFrames(sprites);
-					animation.setDelay(60);
+					animation.setDelay(delay);
 					playSound();
 				}
 				
@@ -194,10 +207,11 @@ public class Doodad extends MapObject
 				{
 					if(currentAction != 2)
 					{
+						hasPlayedOnce = false;
 						currentAction = 2;
 						setDoodad(currentAction);
 						animation.setFrames(sprites);
-						animation.setDelay(1000);
+						animation.setDelay(delay);
 						spent = true;
 					}
 				}

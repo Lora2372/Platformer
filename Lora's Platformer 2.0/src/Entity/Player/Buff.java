@@ -42,6 +42,7 @@ public class Buff
 	protected Unit owner;
 	
 	protected double totalRestoringDone = 0;
+	protected double totalTimePassed = 0;
 	
 	protected boolean mouseOver = false;
 	
@@ -76,7 +77,7 @@ public class Buff
 	public void update()
 	{
 		double currentTime = System.currentTimeMillis();
-		System.out.println("time passed: " + (currentTime - start) );
+		totalTimePassed += currentTime - start;
 		if( (currentTime - start)  >= 16)
 		{
 
@@ -114,7 +115,9 @@ public class Buff
 		
 		if(duration <= 0)
 		{
-			System.out.println("Amount to restore: " + objectValueTotal + "\nTotal " + buff.toString() + " restored: " + totalRestoringDone);
+			System.out.println("Amount to restore: " + objectValueTotal + "\n" +
+					"Total " + buffDescriptionName + " restored: " + totalRestoringDone + "\n" +
+						"Amount of time to pass: " + startDuration + ", Total time passed: " + (totalTimePassed / 1000));
 			expired = true;
 		}
 		

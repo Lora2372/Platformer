@@ -26,10 +26,10 @@ public class JSONWriter
   
     @SuppressWarnings("unchecked")
 	public static void saveFile
-	(
-		Player player
+		(
+			Player player
 		
-	) 
+		) 
     {  
     	
         try 
@@ -61,7 +61,7 @@ public class JSONWriter
     		jsonObjectPlayer.put("Unkillable", player.getUnkillable());
 			jsonObjectPlayer.put("UseMouse", player.getUseMouse());
 			jsonObjectPlayer.put("DisplayHealthBars", player.getDisplayHealthBars());
-			jsonObjectPlayer.put("DisplayNamePlates", player.getDisplayNamePlates());	
+			jsonObjectPlayer.put("DisplayNamePlates", player.getDisplayNamePlates());
 			
 			JSONObject jsonObjectItems = new JSONObject();
 			

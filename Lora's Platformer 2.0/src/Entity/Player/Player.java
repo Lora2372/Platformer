@@ -68,8 +68,8 @@ public class Player extends Unit
 			0.05,	 															// staminaRegen
 			800,																// sightRangeX
 			120,																// sightRangeY
-			5,	 	 															// punchCost
-			1, 		 															// punchDamage
+			10,	 	 															// punchCost
+			10,		 															// punchDamage
 			80, 	 															// punchRange
 			40,		 															// dashCost
 			40,		 															// dashDamage

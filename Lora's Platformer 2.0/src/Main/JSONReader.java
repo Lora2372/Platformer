@@ -141,6 +141,8 @@ public class JSONReader
 						JSONObject jsonObjectDoodad = (JSONObject) jsonObjectDoodads.get("Doodad" + (whileCounter < 10 ? "0" : "") + whileCounter);
 						String doodadType = (String) jsonObjectDoodad.get("DoodadType");
 						
+						String doodadID = (String) jsonObject.get("DoodadID");
+						
 						untouchable = (Boolean) jsonObjectDoodad.get("Untouchable");
 						invulnerable = (Boolean) jsonObjectDoodad.get("Invulnerable");
 						boolean active = (Boolean) jsonObjectDoodad.get("Active");
@@ -174,8 +176,6 @@ public class JSONReader
 						
 						DoodadData unitData = new DoodadData
 						(
-							 
-							 
 							untouchable, 
 							invulnerable, 
 							active, 
@@ -184,6 +184,7 @@ public class JSONReader
 							spawnLocationX, 
 							spawnLocationY, 
 							doodadType,
+							doodadID,
 							items
 						);
 						

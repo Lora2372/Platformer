@@ -237,6 +237,7 @@ public class ConversationState  extends GameState
 			
 			if(conversationTracker >= whoTalks.length)
 			{
+//				endConversation();
 				return;
 			}
 			
@@ -328,7 +329,7 @@ public class ConversationState  extends GameState
 				graphics.drawString(tempName, textLocationX, textLocationY);	
 			}
 			
-			if(conversationTracker > conversation.length)
+			if(conversationTracker >= conversation.length)
 			{
 				return;
 			}
@@ -389,11 +390,7 @@ public class ConversationState  extends GameState
 					tempChoiceRows.add(line);
 					choiceRequested = true;
 	
-				}
-				
-				
-				graphics.setFont(new Font("Arial", Font.PLAIN, 14));				
-				graphics.setColor(Color.WHITE);
+				}			
 				
 				graphics.drawString(myString[i], textLocationX, textLocationY);
 				

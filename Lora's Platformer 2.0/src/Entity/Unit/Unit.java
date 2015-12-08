@@ -140,7 +140,7 @@ public class Unit extends MapObject
 	protected int dashCost;
 	
 	// Run
-	protected int runCost = 1;
+	protected double runCost = 0.7;
 	
 	// Magic Shield
 	protected boolean magicShieldCasting;

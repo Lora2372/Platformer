@@ -40,8 +40,8 @@ public class Succubus extends Unit
 			0.6, 	 															// stopJumpSpeed
 			facingRight,														// facingRight
 			true,  																// inControl
-			50,		 															// health
-			50,		 															//maxHealth
+			40,		 															// health
+			40,		 															//maxHealth
 			0.005,	 															// healthRegen
 			100,		 														// mana
 			100,		 														// maxMana
