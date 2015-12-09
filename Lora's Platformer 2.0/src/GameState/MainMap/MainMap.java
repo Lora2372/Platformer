@@ -37,7 +37,7 @@ public class MainMap extends GameState
 	protected ArrayList<Unit> characterList;
 	protected ArrayList<Doodad> stuff;
 	protected ArrayList<Doodad> activatables;
-	protected ArrayList<Doodad> activatablesUsableOnce;
+	protected ArrayList<Doodad> alterableDoodads;
 	protected ArrayList<Item> items;
 	protected ArrayList<Projectile> projectiles;
 	protected ArrayList<Explosion> explosions;
@@ -102,7 +102,7 @@ public class MainMap extends GameState
 		characterList = new ArrayList<Unit>();
 		stuff = new ArrayList<Doodad>();
 		activatables = new ArrayList<Doodad>();
-		activatablesUsableOnce = new ArrayList<Doodad>();
+		alterableDoodads = new ArrayList<Doodad>();
 		items = new ArrayList<Item>();
 		
 		projectiles = new ArrayList<Projectile>();
@@ -452,9 +452,9 @@ public class MainMap extends GameState
 		}
 		
 		
-		for(int i = 0; i < activatablesUsableOnce.size(); i++)
+		for(int i = 0; i < alterableDoodads.size(); i++)
 		{
-			Doodad thing = activatablesUsableOnce.get(i);
+			Doodad thing = alterableDoodads.get(i);
 			
 			ArrayList<Item> tempItems = new ArrayList<Item>();
 			for(int y = 0; y < thing.getInventory().getNumberOfRows(); y++)
@@ -478,7 +478,7 @@ public class MainMap extends GameState
 					thing.getSpawnLocationX(),
 					thing.getSpawnLocationY(),
 					thing.getDoodadType(),
-					thing.getDoodadID(),
+					thing.getUniqueID(),
 					tempItems
 				);
 			
@@ -688,6 +688,17 @@ public class MainMap extends GameState
 			}
 		}
 		
+		if(doodadData.getDoodadType().equals(CreateDoodad.Other.Lever.toString()))
+		{
+			doodad = spawnDoodad.spawnLever
+				(
+					doodadData.getSpawnLocationX(),
+					doodadData.getSpawnLocationY(),
+					doodadData.getUniqueID(),
+					doodadData.getCurrentAction()
+				);
+		}
+		
 		if(doodad != null)
 		{
 			for(int i = 0; i < doodadData.getItems().size(); i++)
@@ -850,7 +861,7 @@ public class MainMap extends GameState
 			gameStateManager.setBrowsingInventory(false);
 		}
 		
-		if(key == KeyEvent.VK_B)
+		if(key == player.getCastInventoryKey())
 		{
 			if(player.getInConversation())
 			{
@@ -866,7 +877,7 @@ public class MainMap extends GameState
 		if(key == KeyEvent.VK_RIGHT) player.setRight(true);
 		if(key == KeyEvent.VK_DOWN) player.setDown(true);
 		if(key == KeyEvent.VK_UP) player.setUp(true);
-		if(key == KeyEvent.VK_SPACE) player.setJumping(true);
+		if(key == player.getCastJumpKey()) player.setJumping(true);
 		if(key == KeyEvent.VK_E) interact();
 		if(key == KeyEvent.VK_R)player.setGliding(true); 
 		if(key == KeyEvent.VK_SHIFT)
@@ -874,10 +885,10 @@ public class MainMap extends GameState
 			player.startRunning();
 		}
 		
-		if(key == KeyEvent.VK_A) player.setCastingSmallFireBall();
-		if(key == KeyEvent.VK_S) player.setCastingLargeFireBall();
-		if(key == KeyEvent.VK_F) player.setPunching();
-		if(key == KeyEvent.VK_D) player.setDashing(true);
+		if(key == player.getCastFireBallSmallKey()) player.setCastingSmallFireBall();
+		if(key == player.getCastFireBallLargeKey()) player.setCastingLargeFireBall();
+		if(key == player.getCastPunchKey()) player.setPunching();
+		if(key == player.getCastDashKey()) player.setDashing(true);
 		if(key == KeyEvent.VK_G) player.setCastingMagicShield();
 		if(key == KeyEvent.VK_Z) player.drinkPotion(CreateItem.Potions.Healing.toString());
 		if(key == KeyEvent.VK_X) player.drinkPotion(CreateItem.Potions.Mana.toString());
@@ -945,9 +956,6 @@ public class MainMap extends GameState
 		{
 			player.setRunning(false);
 		}
-		
-		if(key == KeyEvent.VK_A) player.setCastingSmallFireBall();
-		if(key == KeyEvent.VK_S) player.setCastingLargeFireBall();
 	}
 
 

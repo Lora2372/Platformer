@@ -142,7 +142,8 @@ public class JSONWriter
 		    	    	jsonObjectDoodad.put("SpawnLocationX", doodad.getSpawnLocationX());
 	    	    		jsonObjectDoodad.put("SpawnLocationY", doodad.getSpawnLocationY());
 						jsonObjectDoodad.put("DoodadType", doodad.getDoodadType());
-
+						jsonObjectDoodad.put("UniqueID", doodad.getUniqueID());
+						
 	    	    		jsonObjectItems = new JSONObject();
 	    	    		
 	    		        ArrayList<Item> itemsList = doodad.getItems();

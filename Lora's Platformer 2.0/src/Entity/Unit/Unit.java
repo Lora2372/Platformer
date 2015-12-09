@@ -1635,7 +1635,7 @@ public class Unit extends MapObject
 	{
 		try
 		{
-			if(player || hidden )
+			if(player || hidden  || health == maxHealth)
 			{
 				return;
 			}

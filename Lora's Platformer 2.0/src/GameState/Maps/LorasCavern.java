@@ -62,7 +62,7 @@ public class LorasCavern extends MainMap
 			tileMap.loadMap("/Maps/LorasCavernA.map");
 			tileMap.setPosition(0, 0);
 			
-			background = new Background(getClass().getResource("/Art/Backgrounds/ForestMountainBackgroud.png"), 0.1);
+			background = new Background(getClass().getResource("/Art/Backgrounds/ForestMountainBackground.png"), 0.1);
 			gameoverScreen = new GameOver(getClass().getResource("/Art/HUD/Foregrounds/GameOver.png"));
 		}
 		catch(IOException e)
@@ -93,7 +93,7 @@ public class LorasCavern extends MainMap
 		}
 
 		if(!player.getLoading(index))
-		{			
+		{
 			player.setPosition(startLocationX, startLocationY);
 			player.setSpawnPoint(startLocationX, startLocationY);
 			
@@ -136,6 +136,36 @@ public class LorasCavern extends MainMap
 		else
 		{
 			welcomeMessage = -1;
+			for(int i = 0; i < alterableDoodads.size(); i++)
+			{
+				Doodad doodad = alterableDoodads.get(i);
+				if(doodad.getUniqueID() != null)
+				{
+					if(doodad.getUniqueID().equals(doodadIDs.StartingCell.toString()))
+					{
+						if(doodad.getCurrentAction() == 2)
+						{
+							openStartingCell(false);
+						}
+						else
+						{
+							closeStartingCell(false);
+						}
+					}
+					
+					if(doodad.getUniqueID().equals(doodadIDs.LiadrinDoor.toString()))
+					{
+						if(doodad.getCurrentAction() == 2)
+						{
+							openLiadrinDoor(false);
+						}
+						else
+						{
+							closeLiadrinDoor(false);
+						}
+					}
+				}
+			}
 		}
 		
 		liadrin.setHidden(true);
@@ -242,6 +272,47 @@ public class LorasCavern extends MainMap
 		}
 	}
 	
+	public void closeStartingCell(boolean playSound)
+	{
+		tileMap.setMapSingleBlock(17, 36, 119);
+		tileMap.setMapSingleBlock(17, 37, 119);
+		if(playSound)
+		{
+			JukeBox.play("Close");
+		}
+	}
+	
+	public void openStartingCell(boolean playSound)
+	{
+		tileMap.setMapSingleBlock(17, 36, 31);
+		tileMap.setMapSingleBlock(17, 37, 31);
+		if(playSound)
+		{
+			JukeBox.play("Close");
+		}
+
+	}
+	
+	public void closeLiadrinDoor(boolean playSound)
+	{
+		tileMap.setMapSingleBlock(46, 35, 119);
+		tileMap.setMapSingleBlock(46, 36, 119);
+		if(playSound)
+		{
+			JukeBox.play("Close");
+		}
+	}
+	
+	public void openLiadrinDoor(boolean playSound)
+	{
+		tileMap.setMapSingleBlock(46, 35, 31);
+		tileMap.setMapSingleBlock(46, 36, 31);
+		if(playSound)
+		{
+			JukeBox.play("Close");
+		}
+	}
+	
 	public void useDoodad(Doodad doodad)
 	{
 		try
@@ -251,36 +322,31 @@ public class LorasCavern extends MainMap
 				{
 					if(doodad.getCurrentAction() == 2)
 					{
-						tileMap.setMapSingleBlock(17, 36, 31);
-						tileMap.setMapSingleBlock(17, 37, 31);
-						JukeBox.play("Close");
+						openStartingCell(true);
 					}
 					
 					if(doodad.getCurrentAction() == 0)
 					{
-						tileMap.setMapSingleBlock(17, 36, 119);
-						tileMap.setMapSingleBlock(17, 37, 119);
-						JukeBox.play("Close");
+						closeStartingCell(true);
 					}
 				}
+				
 				// Lever that opens up to Liadrin
 				if(doodad.getUniqueID().equals(doodadIDs.LiadrinDoor.toString()))
 				{
 					if(doodad.getCurrentAction() == 2)
 					{
-						tileMap.setMapSingleBlock(46, 35, 31);
-						tileMap.setMapSingleBlock(46, 36, 31);
-						JukeBox.play("Close");
-						conversationState.startConversation(player, null, doodad, conversation.leverToLiadrinOpen(), conversation.leverToLiadrinOpenWhoTalks());
+						openLiadrinDoor(true);
+//						conversationState.startConversation(player, null, doodad, conversation.leverToLiadrinOpen(), conversation.leverToLiadrinOpenWhoTalks());
 					}
 					
 					if(doodad.getCurrentAction() == 0)
 					{
-						tileMap.setMapSingleBlock(46, 35, 119);
-						tileMap.setMapSingleBlock(46, 35, 119);
-						JukeBox.play("Close");
-						conversationState.startConversation(player, null, doodad, conversation.leverToLiadrinClose(), conversation.leverToLiadrinCloseWhoTalks());
+						closeLiadrinDoor(true);
+//						conversationState.startConversation(player, null, doodad, conversation.leverToLiadrinClose(), conversation.leverToLiadrinCloseWhoTalks());
 					}
+					
+					
 				}
 	
 		}

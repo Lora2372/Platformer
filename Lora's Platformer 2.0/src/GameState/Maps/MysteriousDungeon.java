@@ -73,6 +73,7 @@ public class MysteriousDungeon extends MainMap
 			tileMap.loadTiles(ImageIO.read(getClass().getResource("/Art/Tilesets/LorasTileset.png")));
 			tileMap.loadMap("/Maps/MysteriousDungeonA.map");
 			tileMap.setPosition(0, 0);
+//			background = new Background(getClass().getResource("/Art/Backgrounds/UnusedUndergroundBackground.png"), 0.1);
 			gameoverScreen = new GameOver(getClass().getResource("/Art/HUD/Foregrounds/GameOver.png"));
 		}
 		catch(IOException e)
@@ -143,6 +144,25 @@ public class MysteriousDungeon extends MainMap
 		{
 			dungeonIntroduction = true;
 			player.setPosition(player.getSpawnLocationX(), player.getSpawnLocationY());
+			
+			for(int i = 0; i < alterableDoodads.size(); i++)
+			{
+				Doodad doodad = alterableDoodads.get(i);
+				if(doodad.getUniqueID() != null)
+				{
+					if(doodad.getUniqueID().equals(doodadIDs.BossKeyDoor.toString()))
+					{
+						if(doodad.getCurrentAction() == 2)
+						{
+							openBossKeyDoor(false);
+						}
+						else
+						{
+							closeBossKeyDoor(false);
+						}
+					}
+				}
+			}
 		}
 
 
@@ -175,6 +195,26 @@ public class MysteriousDungeon extends MainMap
 		return activatables;
 	}
 	
+	public void closeBossKeyDoor(boolean playSound)
+	{
+		tileMap.setMapSingleBlock(13, 21, 119);
+		tileMap.setMapSingleBlock(13, 22, 119);
+		if(playSound)
+		{
+			JukeBox.play("Close");
+		}
+	}
+	
+	public void openBossKeyDoor(boolean playSound)
+	{
+		tileMap.setMapSingleBlock(13, 21, 31);
+		tileMap.setMapSingleBlock(13, 22, 31);
+		if(playSound)
+		{
+			JukeBox.play("Close");
+		}
+	}
+	
 	public void useDoodad(Doodad doodad)
 	{
 		if(doodad.getDoodadType().equals(CreateDoodad.Other.Lever.toString()))
@@ -183,18 +223,12 @@ public class MysteriousDungeon extends MainMap
 			{
 				if(doodad.getCurrentAction() == 2)
 				{
-					tileMap.setMapSingleBlock(13, 20, 31);
-					tileMap.setMapSingleBlock(13, 21, 31);
-					tileMap.setMapSingleBlock(13, 22, 31);
-					JukeBox.play("Close");
+					openBossKeyDoor(true);
 				}
 				
 				if(doodad.getCurrentAction() == 0)
 				{
-					tileMap.setMapSingleBlock(13, 20, 119);
-					tileMap.setMapSingleBlock(13, 21, 119);
-					tileMap.setMapSingleBlock(13, 22, 119);
-					JukeBox.play("Close");
+					closeBossKeyDoor(true);
 				}
 			}
 			catch(Exception exception)

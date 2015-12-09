@@ -66,7 +66,7 @@ public class SpawnDoodad
 			door.setUsed(true);
 		}
 		mainMap.activatables.add(door);
-		mainMap.activatablesUsableOnce.add(door);
+		mainMap.alterableDoodads.add(door);
 		mainMap.stuff.add(door);
 		return door;
 	}
@@ -76,6 +76,7 @@ public class SpawnDoodad
 		Lever lever = new Lever(mainMap.tileMap, mainMap, mainMap.getGameStateManager(), locationX, locationY, uniqueID, currentAction);
 		mainMap.activatables.add(lever);
 		mainMap.stuff.add(lever);
+		mainMap.alterableDoodads.add(lever);
 		return lever;
 	}
 	
@@ -89,7 +90,7 @@ public class SpawnDoodad
 		}
 		
 		mainMap.activatables.add(chest);
-		mainMap.activatablesUsableOnce.add(chest);
+		mainMap.alterableDoodads.add(chest);
 		mainMap.stuff.add(chest);
 		return chest;
 	}

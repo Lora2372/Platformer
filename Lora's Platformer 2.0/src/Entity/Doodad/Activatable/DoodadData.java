@@ -15,7 +15,7 @@ public class DoodadData
 	double spawnLocationX;
 	double spawnLocationY;
 	String doodadType;
-	String doodadID;
+	String uniqueID;
 	ArrayList<Item> items;
 	
 	
@@ -29,7 +29,7 @@ public class DoodadData
 			double spawnLocationX,
 			double spawnLocationY,
 			String doodadType,
-			String doodadID,
+			String uniqueID,
 			ArrayList<Item> items
 		)
 	{
@@ -41,7 +41,7 @@ public class DoodadData
 		this.spawnLocationX = spawnLocationX;
 		this.spawnLocationY = spawnLocationY;
 		this.doodadType = doodadType;
-		this.doodadID = doodadID;
+		this.uniqueID = uniqueID;
 		this.items = items;
 	}
 	
@@ -85,9 +85,9 @@ public class DoodadData
 		return doodadType;
 	}
 	
-	public String getDoodadID()
+	public String getUniqueID()
 	{
-		return doodadID;
+		return uniqueID;
 	}
 	
 	public ArrayList<Item> getItems()

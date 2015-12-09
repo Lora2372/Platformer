@@ -33,7 +33,7 @@ public class ConversationState  extends GameState
 	protected BufferedImage[] endConversation;
 	
 	private int conversationTracker;
-		
+
 	private double locationX;
 	private double locationY;
 	
@@ -232,6 +232,9 @@ public class ConversationState  extends GameState
 			
 			String tempName = "";
 			
+			int tempWidth = 0;
+			int tempHeight = 0;
+			
 			BufferedImage[] tempIcon = null;
 			
 			
@@ -245,12 +248,16 @@ public class ConversationState  extends GameState
 			{
 				tempName = player.getName();
 				tempIcon = player.getPortrait();
+				tempWidth = 94;
+				tempHeight = 94;
 			}
 			
 			if(whoTalks[conversationTracker] == 1)
 			{
 				tempName = otherPerson.getName();
 				tempIcon = otherPerson.getPortrait();
+				tempWidth = 94;
+				tempHeight = 94;
 			}
 			
 			if(whoTalks[conversationTracker] == 2)
@@ -258,6 +265,8 @@ public class ConversationState  extends GameState
 				
 				tempName = doodad.getDoodadName();
 				tempIcon = doodad.getSprites();
+				tempWidth = 60;
+				tempHeight = 60;
 			}
 			
 			if(whoTalks[conversationTracker] == 4)
@@ -270,6 +279,8 @@ public class ConversationState  extends GameState
 			{
 				tempName = "Unknown";
 				tempIcon = Content.PortraitSuccubus[0];
+				tempWidth = 94;
+				tempHeight = 94;
 			}
 			
 			if(whoTalks[conversationTracker] == 6)
@@ -285,17 +296,19 @@ public class ConversationState  extends GameState
 					conversation = new String[] { item.getDescription() };
 					tempName = item.getDescriptionName();
 					tempIcon = item.getSprites();
+					tempWidth = 60;
+					tempHeight = 60;
 				}
 			}
 						
 			
 			if(whoTalks[conversationTracker] != 3)
 			{
-				int portraitLocationX = (int)locationX - 94;
-				int portraitLocationY = (int)locationY + 40;
+				int portraitLocationX = (int)locationX - 104;
+				int portraitLocationY = (int)locationY + 30;
 				
-				int portraitWidth = 94;
-				int portraitHeight = 94;
+				int portraitWidth = 104;
+				int portraitHeight = 104;
 				
 				graphics.drawImage
 					(
@@ -312,10 +325,10 @@ public class ConversationState  extends GameState
 					graphics.drawImage
 						(
 							tempIcon[0],
-							portraitLocationX + 5,
-							portraitLocationY + 5,
-							portraitWidth - 10,
-							portraitHeight - 10,
+							portraitLocationX + 5 + (portraitWidth / 2 - tempWidth / 2),
+							portraitLocationY + 5 + (portraitHeight / 2 - tempHeight / 2),
+							tempWidth,
+							tempHeight,
 							null
 						);
 				}

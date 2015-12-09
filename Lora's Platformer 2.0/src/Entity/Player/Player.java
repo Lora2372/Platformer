@@ -2,6 +2,9 @@ package Entity.Player;
 
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+
+import com.sun.glass.events.KeyEvent;
+
 import Entity.Unit.Unit;
 import GameState.GameStateManager;
 import GameState.Conversation.ConversationData;
@@ -27,6 +30,14 @@ public class Player extends Unit
 	
 	protected ConversationData conversation;
 	protected ConversationState conversationState;
+	
+	protected int castFireBallSmall = KeyEvent.VK_A;
+	protected int castFireBallLarge = KeyEvent.VK_S;
+	protected int castDash = KeyEvent.VK_D;
+	protected int castPunch = KeyEvent.VK_F;
+	protected int castJump = KeyEvent.VK_SPACE;
+	protected int castInventory = KeyEvent.VK_B;
+	
 	
 	//  Animations 
 	
@@ -134,6 +145,14 @@ public class Player extends Unit
 			timesDefeatedFiona = timesDefeated;
 		}
 	}
+	
+	public int getCastFireBallSmallKey() { return castFireBallSmall; }
+	public int getCastFireBallLargeKey() { return castFireBallLarge; }
+	public int getCastDashKey() { return castDash; }
+	public int getCastPunchKey() { return castPunch; }
+	public int getCastJumpKey() { return castJump; }
+	public int getCastInventoryKey() { return castInventory; }
+	
 	
 	public void setCurrentMap(String currentMap) { this.currentMap = currentMap; }
 	public String getCurrentMap() { return currentMap; }

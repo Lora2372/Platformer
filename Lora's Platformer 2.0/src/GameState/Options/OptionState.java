@@ -7,6 +7,9 @@ import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import Entity.Player.Player;
@@ -20,6 +23,8 @@ import Main.GamePanel;
 public class OptionState extends GameState implements ChangeListener
 {
 	
+	JFrame myFrame;
+	
 	protected boolean addStuff;
 	protected GamePanel gamePanel;
 	
@@ -32,8 +37,31 @@ public class OptionState extends GameState implements ChangeListener
 	protected double mouseLocationX;
 	protected double mouseLocationY;
 	
+	protected JButton testButton;
+	
 	public OptionState(GameStateManager gameStateManager, GamePanel gamePanel)
-	{
+	{	
+//		myFrame = new JFrame();
+//		myFrame.setSize(600, 400);
+//
+//		myFrame.requestFocus();
+//		myFrame.setLayout(null);
+//		
+//		
+//		JButton button = new JButton("Hello");
+//		button.setSize(100,60);
+//		button.setLocation(0,0);
+//		myFrame.add(button);
+//
+//		testButton = new JButton();
+//		testButton.setSize(100,60);
+//		testButton.setLocation(0,70);
+//		myFrame.add(testButton);
+//		
+//		myFrame.setVisible(true);
+		
+		
+		
 		this.gameStateManager = gameStateManager;
 		this.gamePanel = gamePanel;
 		
@@ -142,6 +170,7 @@ public class OptionState extends GameState implements ChangeListener
 	
 	public void setPlayer(Player player)
 	{
+//		testButton.setText(player.getName());
 		this.player = player;
 		for(int i = 0; i < optionObjects.size(); i++)
 		{
@@ -171,6 +200,7 @@ public class OptionState extends GameState implements ChangeListener
 
 	public void draw(Graphics2D graphics) 
 	{
+
 		
 		graphics.drawImage
 		(

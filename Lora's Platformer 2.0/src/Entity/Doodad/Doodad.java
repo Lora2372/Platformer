@@ -35,7 +35,6 @@ public class Doodad extends MapObject
 	protected int stopAt;
 	
 	protected String doodadType;
-	protected String doodadID;
 	protected String doodadName;
 	protected String uniqueID;
 	
@@ -57,8 +56,7 @@ public class Doodad extends MapObject
 			boolean activatable,
 			boolean active,
 			int currentAction,
-//			String doodadType,
-			String doodadID,
+			String doodadType,
 			String descriptionName
 		)
 	{
@@ -77,10 +75,9 @@ public class Doodad extends MapObject
 		this.collisionWidth = collisionWidth;
 		this.fallSpeed = fallSpeed;
 		this.maxFallSpeed = maxFallSpeed;
-//		this.doodadType = doodadType;
-		this.doodadID = doodadID;
+		this.doodadType = doodadType;
 		this.doodadName = descriptionName;
-				
+		this.uniqueID = "";		
 		this.locationX = spawnLocationX;
 		this.locationY = spawnLocationY;
 		this.spawnLocationX = spawnLocationX;
@@ -123,7 +120,6 @@ public class Doodad extends MapObject
 	public boolean getInvulnerable() { return invulnerable; }
 	public boolean getUnkillable() { return unkillable; }
 	public String getDoodadType() { return doodadType; }
-	public String getDoodadID() { return doodadID; }
 	public double getSpawnLocationX() { return spawnLocationX; }
 	public double getSpawnLocationY() { return spawnLocationY; }
 	public int getCurrentAction() { return currentAction; }
