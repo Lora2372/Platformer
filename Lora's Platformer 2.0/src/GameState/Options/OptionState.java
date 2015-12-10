@@ -7,9 +7,6 @@ import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import Entity.Player.Player;
@@ -23,7 +20,6 @@ import Main.GamePanel;
 public class OptionState extends GameState implements ChangeListener
 {
 	
-	JFrame myFrame;
 	
 	protected boolean addStuff;
 	protected GamePanel gamePanel;
@@ -33,32 +29,13 @@ public class OptionState extends GameState implements ChangeListener
 	protected ArrayList<OptionObject> optionObjects;
 	
 	protected OptionObject goBack;
+	protected OptionObject openKeyBindings;
 	
 	protected double mouseLocationX;
 	protected double mouseLocationY;
-	
-	protected JButton testButton;
-	
+		
 	public OptionState(GameStateManager gameStateManager, GamePanel gamePanel)
 	{	
-//		myFrame = new JFrame();
-//		myFrame.setSize(600, 400);
-//
-//		myFrame.requestFocus();
-//		myFrame.setLayout(null);
-//		
-//		
-//		JButton button = new JButton("Hello");
-//		button.setSize(100,60);
-//		button.setLocation(0,0);
-//		myFrame.add(button);
-//
-//		testButton = new JButton();
-//		testButton.setSize(100,60);
-//		testButton.setLocation(0,70);
-//		myFrame.add(testButton);
-//		
-//		myFrame.setVisible(true);
 		
 		
 		
@@ -144,6 +121,20 @@ public class OptionState extends GameState implements ChangeListener
 			optionObjects.get(i).setLocation(400, 200 + i * 50);
 		}
 		
+		openKeyBindings = new OptionObject
+			(
+				GamePanel.WIDTH / 2,
+				300,
+				100,
+				50,
+				1,
+				1,
+				1,
+				new String[] { "Keybindings" },
+				new BufferedImage[] { },
+				"OpenKeyBindings"
+			);
+		optionObjects.add(openKeyBindings);
 		
 		goBack = new OptionObject
 		(
@@ -197,20 +188,26 @@ public class OptionState extends GameState implements ChangeListener
 		
 	}
 	
+	@SuppressWarnings("unused")
+	public void OpenKeyBindings()
+	{
+		OptionKeyBindFrame optionKeyBindFrame = new OptionKeyBindFrame(player);
+	}
+	
 
 	public void draw(Graphics2D graphics) 
 	{
 
 		
 		graphics.drawImage
-		(
-			Content.OptionBackground[0][0],
-			0,
-			0,
-			GamePanel.WIDTH,
-			GamePanel.HEIGHT,
-			null
-		);
+			(
+				Content.OptionBackground[0][0],
+				0,
+				0,
+				GamePanel.WIDTH,
+				GamePanel.HEIGHT,
+				null
+			);
 		
 		graphics.setFont(new Font("Arial", Font.PLAIN, 14));
 		graphics.setColor(Color.WHITE);
@@ -240,33 +237,31 @@ public class OptionState extends GameState implements ChangeListener
 					
 					graphics.setColor(Color.WHITE);			
 					graphics.drawString(textString, locationX, locationY);
-
 				}
 				
 				if(optionObject.getImage() != null)
 				{
 					graphics.drawImage
-					(
-						optionObject.getImage(),
-						(int)optionObject.getLocationX(),
-						(int)optionObject.getLocationY(),
-						optionObject.getWidth(),
-						optionObject.getHeight(),
-						null
-					);
+						(
+							optionObject.getImage(),
+							(int)optionObject.getLocationX(),
+							(int)optionObject.getLocationY(),
+							optionObject.getWidth(),
+							optionObject.getHeight(),
+							null
+						);
 				}
 				else
 				{
 					graphics.setColor(optionObject.getColor());
 					graphics.fillRect
-					(
+						(
 							optionObject.getRectangle().x,
 							optionObject.getRectangle().y,
 							optionObject.getRectangle().width,
 							optionObject.getRectangle().height
-					);
+						);
 				}
-				
 			}
 			catch(Exception exception)
 			{
@@ -277,7 +272,7 @@ public class OptionState extends GameState implements ChangeListener
 
 	public void keyPressed(int k) 
 	{
-		
+		System.out.println("You pressed: " + k);
 	}
 
 	public void keyReleased(int k) 
@@ -297,14 +292,24 @@ public class OptionState extends GameState implements ChangeListener
 		
 		for(int i = 0; i < optionObjects.size(); i++)
 		{
-			if(mouseRectangle.intersects(optionObjects.get(i).getRectangle()))
+			OptionObject optionObject = optionObjects.get(i);
+			
+			if(mouseRectangle.intersects(optionObject.getRectangle()))
 			{
-				if(optionObjects.get(i) == goBack)
+				System.out.println(optionObject.getText());
+				if(optionObject == goBack)
 				{
 					gameStateManager.options(false);
 					return;
 				}
-				optionObjects.get(i).click();
+				
+				if(optionObject == openKeyBindings)
+				{
+					OpenKeyBindings();
+				}
+				
+
+				optionObject.click();
 			}
 		}	
 	}

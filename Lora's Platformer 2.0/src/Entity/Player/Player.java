@@ -2,6 +2,7 @@ package Entity.Player;
 
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.sun.glass.events.KeyEvent;
 
@@ -31,17 +32,32 @@ public class Player extends Unit
 	protected ConversationData conversation;
 	protected ConversationState conversationState;
 	
-	protected int castFireBallSmall = KeyEvent.VK_A;
-	protected int castFireBallLarge = KeyEvent.VK_S;
-	protected int castDash = KeyEvent.VK_D;
-	protected int castPunch = KeyEvent.VK_F;
-	protected int castJump = KeyEvent.VK_SPACE;
-	protected int castInventory = KeyEvent.VK_B;
 	
+	protected HashMap<KeyBind, Integer> keyBindMap;
 	
 	//  Animations 
 	
 	
+	protected enum KeyBind
+	{
+		CastSmallFireBall,
+		CastLargeFireBall,
+		CastDash,
+		CastPunch,
+		Jump,
+		OpenInventory
+	};
+	
+	protected int[] keyBinds = new int[]
+	{
+		KeyEvent.VK_A,
+		KeyEvent.VK_S,
+		KeyEvent.VK_D,
+		KeyEvent.VK_F,
+		KeyEvent.VK_SPACE,
+		KeyEvent.VK_B
+		
+	};
 	// Animation actions, these are enums similar to the GameState, we use them to determine the index of the sprite animation
 	
 	// Constructor
@@ -103,6 +119,17 @@ public class Player extends Unit
 			null
 				
 		);
+		
+		
+
+		
+		keyBindMap = new HashMap<KeyBind, Integer>();
+		
+		for(int i = 0; i < KeyBind.values().length; i++)
+		{
+			keyBindMap.put(KeyBind.values()[i], i);			
+		}
+		 
 		loading = new ArrayList<Boolean>();
 		
 		for(int i = 0; i < GameStateManager.GameMaps.values().length; i++)
@@ -119,6 +146,30 @@ public class Player extends Unit
 
 		hud = new HUD(this);
 		
+	}
+	
+
+	
+	public int getKeyBind(int index)
+	{
+		return keyBinds[index];
+	}
+	
+	public int getKeyBind(KeyBind e)
+	{
+		return keyBinds[keyBindMap.get(e)];
+	}
+	
+//	public KeyBind getKeyBind()
+//	{
+//		return KeyBind;
+//	}
+	
+	public void setKeyBind(int index, int keybind)
+	{
+		System.out.println("keybindList old value: " + keyBinds[index]);
+		keyBinds[index] = keybind;
+		System.out.println("keybindList new value: " + keyBinds[index]);
 	}
 		
 	public ConversationState getConversationState() { return conversationState; }
@@ -145,13 +196,6 @@ public class Player extends Unit
 			timesDefeatedFiona = timesDefeated;
 		}
 	}
-	
-	public int getCastFireBallSmallKey() { return castFireBallSmall; }
-	public int getCastFireBallLargeKey() { return castFireBallLarge; }
-	public int getCastDashKey() { return castDash; }
-	public int getCastPunchKey() { return castPunch; }
-	public int getCastJumpKey() { return castJump; }
-	public int getCastInventoryKey() { return castInventory; }
 	
 	
 	public void setCurrentMap(String currentMap) { this.currentMap = currentMap; }

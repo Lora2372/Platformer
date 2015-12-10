@@ -861,7 +861,7 @@ public class MainMap extends GameState
 			gameStateManager.setBrowsingInventory(false);
 		}
 		
-		if(key == player.getCastInventoryKey())
+		if(key == KeyEvent.VK_B)
 		{
 			if(player.getInConversation())
 			{
@@ -877,7 +877,7 @@ public class MainMap extends GameState
 		if(key == KeyEvent.VK_RIGHT) player.setRight(true);
 		if(key == KeyEvent.VK_DOWN) player.setDown(true);
 		if(key == KeyEvent.VK_UP) player.setUp(true);
-		if(key == player.getCastJumpKey()) player.setJumping(true);
+		if(key == KeyEvent.VK_SPACE) player.setJumping(true);
 		if(key == KeyEvent.VK_E) interact();
 		if(key == KeyEvent.VK_R)player.setGliding(true); 
 		if(key == KeyEvent.VK_SHIFT)
@@ -885,10 +885,10 @@ public class MainMap extends GameState
 			player.startRunning();
 		}
 		
-		if(key == player.getCastFireBallSmallKey()) player.setCastingSmallFireBall();
-		if(key == player.getCastFireBallLargeKey()) player.setCastingLargeFireBall();
-		if(key == player.getCastPunchKey()) player.setPunching();
-		if(key == player.getCastDashKey()) player.setDashing(true);
+		if(key == KeyEvent.VK_A) player.setCastingSmallFireBall();
+		if(key == KeyEvent.VK_S) player.setCastingLargeFireBall();
+		if(key == KeyEvent.VK_F) player.setPunching();
+		if(key == KeyEvent.VK_D) player.setDashing(true);
 		if(key == KeyEvent.VK_G) player.setCastingMagicShield();
 		if(key == KeyEvent.VK_Z) player.drinkPotion(CreateItem.Potions.Healing.toString());
 		if(key == KeyEvent.VK_X) player.drinkPotion(CreateItem.Potions.Mana.toString());
