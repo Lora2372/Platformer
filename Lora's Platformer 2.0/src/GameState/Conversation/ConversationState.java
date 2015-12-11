@@ -9,7 +9,6 @@ import java.awt.Robot;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import com.sun.glass.events.KeyEvent;
 import Audio.JukeBox;
 import Entity.Doodad.Doodad;
 import Entity.Item.Item;
@@ -446,14 +445,14 @@ public class ConversationState  extends GameState
 	{
 		if(player.getInConversation())
 		{
-			if(key == KeyEvent.VK_UP)
+			if(key == player.getKeyBind(Player.KeyBind.AimUp))
 			{
 				if(choiceSelected > 1)
 				{
 					choiceSelected--;
 				}
 			}
-			if(key == KeyEvent.VK_DOWN)
+			if(key == player.getKeyBind(Player.KeyBind.AimDown))
 			{
 				if(choiceSelected < choiceAmount)
 				{
@@ -488,8 +487,8 @@ public class ConversationState  extends GameState
 			try 
 			{
 				myRobot = new Robot();
-				myRobot.keyPress(KeyEvent.VK_E);
-				myRobot.keyRelease(KeyEvent.VK_E);
+				myRobot.keyPress(player.getKeyBind(Player.KeyBind.Interact));
+				myRobot.keyRelease(player.getKeyBind(Player.KeyBind.Interact));
 			} catch (AWTException exception) 
 			{
 				exception.printStackTrace();

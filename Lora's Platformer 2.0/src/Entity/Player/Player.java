@@ -38,23 +38,55 @@ public class Player extends Unit
 	//  Animations 
 	
 	
-	protected enum KeyBind
+	public enum KeyBind
 	{
+		MoveLeft,
+		MoveRight,
+		AimDown,
+		AimUp,
+		Jump,
+		Interact,
+		Glide,
+		Run,
 		CastSmallFireBall,
 		CastLargeFireBall,
 		CastDash,
 		CastPunch,
-		Jump,
+		UseItem1,
+		UseItem2,
+		UseItem3,
+		UseItem4,
+		UseItem5,
+		UseItem6,
+		UseItem7,
+		UseItem8,
+		UseItem9,
 		OpenInventory
 	};
 	
 	protected int[] keyBinds = new int[]
 	{
+		KeyEvent.VK_LEFT,
+		KeyEvent.VK_RIGHT,
+		KeyEvent.VK_DOWN,
+		KeyEvent.VK_UP,
+		KeyEvent.VK_SPACE,
+		KeyEvent.VK_E,
+		KeyEvent.VK_R,
+		KeyEvent.VK_SHIFT,
 		KeyEvent.VK_A,
 		KeyEvent.VK_S,
 		KeyEvent.VK_D,
 		KeyEvent.VK_F,
-		KeyEvent.VK_SPACE,
+		KeyEvent.VK_1,
+		KeyEvent.VK_2,
+		KeyEvent.VK_3,
+		KeyEvent.VK_4,
+		KeyEvent.VK_5,
+		KeyEvent.VK_6,
+		KeyEvent.VK_7,
+		KeyEvent.VK_8,
+		KeyEvent.VK_9,
 		KeyEvent.VK_B
 		
 	};
@@ -155,15 +187,16 @@ public class Player extends Unit
 		return keyBinds[index];
 	}
 	
+	public int[] getKeyBinds()
+	{
+		return keyBinds;
+	}
+	
 	public int getKeyBind(KeyBind e)
 	{
 		return keyBinds[keyBindMap.get(e)];
 	}
 	
-//	public KeyBind getKeyBind()
-//	{
-//		return KeyBind;
-//	}
 	
 	public void setKeyBind(int index, int keybind)
 	{

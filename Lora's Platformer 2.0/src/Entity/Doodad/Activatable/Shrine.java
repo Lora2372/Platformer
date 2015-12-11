@@ -36,7 +36,7 @@ public class Shrine extends Doodad
 				false,
 				0,
 				"Shrine",
-				CreateDoodad.doodadName.get("Shrine")
+				DoodadData.doodadName.get("Shrine")
 			);
 		
 		

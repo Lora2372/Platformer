@@ -47,7 +47,7 @@ public class Portal extends Doodad
 				false,
 				0,
 				"Portal",
-				CreateDoodad.doodadName.get("Portal")
+				DoodadData.doodadName.get("Portal")
 			);
 
 		this.gameStateManager = gameStateManager;

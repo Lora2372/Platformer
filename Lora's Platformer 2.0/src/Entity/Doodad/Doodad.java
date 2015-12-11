@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import TileMap.TileMap;
 import Entity.MapObject;
-import Entity.Doodad.Activatable.CreateDoodad;
+import Entity.Doodad.Activatable.DoodadData;
 import Entity.Player.Player;
 import GameState.MainMap.MainMap;
 
@@ -159,7 +159,7 @@ public class Doodad extends MapObject
 		hasPlayedOnce = (animation.getFrame() == animation.getFramesLength() - 1);
 		
 		// I'll change this to work with any toggle-able object later (assuming I ever add another one).
-		if(doodadType.equals(CreateDoodad.Other.Lever.toString()))
+		if(doodadType.equals(DoodadData.Other.Lever.toString()))
 		{
 			if(currentAction == 1)
 			{

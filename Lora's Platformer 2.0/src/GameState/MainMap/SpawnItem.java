@@ -1,10 +1,10 @@
 package GameState.MainMap;
 
 import Entity.Item.Coin;
-import Entity.Item.CreateItem;
+import Entity.Item.ItemData;
 import Entity.Item.Herb;
 import Entity.Item.Item;
-import Entity.Item.ItemData;
+import Entity.Item.TemporaryItemData;
 import Entity.Item.Key;
 import Entity.Item.Potion;
 
@@ -17,35 +17,35 @@ public class SpawnItem {
 		this.mainMap = mainMap;
 	}
 	
-	public Item spawn(ItemData itemData)
+	public Item spawn(TemporaryItemData itemData)
 	{		
-		for(int i = 0; i < CreateItem.Coins.values().length; i++)
+		for(int i = 0; i < ItemData.Coins.values().length; i++)
 		{
-			if(itemData.getItemType().equals(CreateItem.Coins.values()[i].toString()))
+			if(itemData.getItemType().equals(ItemData.Coins.values()[i].toString()))
 			{
 				return spawnCoin(itemData.getSpawnLocationX(), itemData.getSpawnLocationY(), itemData.getItemType(), itemData.getStacks());
 			}
 		}
 		
-		for(int i = 0; i < CreateItem.Keys.values().length; i++)
+		for(int i = 0; i < ItemData.Keys.values().length; i++)
 		{
-			if(itemData.getItemType().equals(CreateItem.Keys.values()[i].toString()))
+			if(itemData.getItemType().equals(ItemData.Keys.values()[i].toString()))
 			{
 				return spawnKey(itemData.getSpawnLocationX(), itemData.getSpawnLocationY(), itemData.getItemType(), itemData.getStacks());
 			}
 		}
 		
-		for(int i = 0; i < CreateItem.Potions.values().length; i++)
+		for(int i = 0; i < ItemData.Potions.values().length; i++)
 		{
-			if(itemData.getItemType().equals(CreateItem.Potions.values()[i].toString()))
+			if(itemData.getItemType().equals(ItemData.Potions.values()[i].toString()))
 			{
 				return spawnPotion(itemData.getSpawnLocationX(), itemData.getSpawnLocationY(), itemData.getItemType(), itemData.getStacks());
 			}
 		}
 		
-		for(int i = 0; i < CreateItem.Herbs.values().length; i++)
+		for(int i = 0; i < ItemData.Herbs.values().length; i++)
 		{
-			if(itemData.getItemType().equals(CreateItem.Herbs.values()[i].toString()))
+			if(itemData.getItemType().equals(ItemData.Herbs.values()[i].toString()))
 			{
 				return spawnHerb(itemData.getSpawnLocationX(), itemData.getSpawnLocationY(), itemData.getItemType(), itemData.getStacks());
 			}

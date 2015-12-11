@@ -46,7 +46,7 @@ public class Sign extends Doodad
 				false,
 				0,
 				"Sign",
-				CreateDoodad.doodadName.get("Sign")
+				DoodadData.doodadName.get("Sign")
 			);
 				
 		this.conversation = conversation;

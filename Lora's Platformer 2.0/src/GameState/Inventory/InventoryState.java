@@ -271,7 +271,7 @@ public class InventoryState extends GameState
 
 	public void keyPressed(int k) 
 	{
-		if(k == KeyEvent.VK_B)
+		if(k == player.getKeyBind(Player.KeyBind.OpenInventory))
 		{
 			player.getConversationState().endConversation();
 			gameStateManager.setBrowsingInventory(false);
@@ -283,7 +283,7 @@ public class InventoryState extends GameState
 			select();
 		}
 		
-		if(k == KeyEvent.VK_LEFT)
+		if(k == player.getKeyBind(Player.KeyBind.MoveLeft))
 		{
 			if(selectedSlotX > 0)
 			{
@@ -291,7 +291,7 @@ public class InventoryState extends GameState
 			}
 		}
 		
-		if(k == KeyEvent.VK_RIGHT)
+		if(k == player.getKeyBind(Player.KeyBind.MoveRight))
 		{
 			if(selectedSlotX < numberOfColumns - 1)
 			{
@@ -300,7 +300,7 @@ public class InventoryState extends GameState
 		}
 		
 		
-		if(k == KeyEvent.VK_UP)
+		if(k == player.getKeyBind(Player.KeyBind.AimUp))
 		{
 			if(selectedSlotY > 0) 
 			{
@@ -308,7 +308,7 @@ public class InventoryState extends GameState
 			}
 		}
 		
-		if(k == KeyEvent.VK_DOWN)
+		if(k == player.getKeyBind(Player.KeyBind.AimDown))
 		{
 			if(selectedSlotY < numberOfRows - 1) 
 			{

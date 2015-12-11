@@ -61,11 +61,11 @@ public class Door extends Doodad
 			false,
 			currentAction,
 			doorType,
-			CreateDoodad.doodadName.get(doorType)
+			DoodadData.doodadName.get(doorType)
 		);
 		
 		this.locked = locked;
-		this.doorName = CreateDoodad.doodadName.get(doodadType);
+		this.doorName = DoodadData.doodadName.get(doodadType);
 		
 		if(currentAction == 2)
 		{
@@ -81,7 +81,7 @@ public class Door extends Doodad
 	{
 		this.currentAction = currentAction;
 		
-		if(doodadType.equals(CreateDoodad.Doors.Boss.toString()))
+		if(doodadType.equals(DoodadData.Doors.Boss.toString()))
 		{
 			portrait = Content.PortraitDoorBoss[0];
 			if(currentAction == 0)
@@ -98,7 +98,7 @@ public class Door extends Doodad
 			}
 		}
 		
-		if(doodadType.equals(CreateDoodad.Doors.Village.toString()))
+		if(doodadType.equals(DoodadData.Doors.Village.toString()))
 		{
 			portrait = Content.PortraitDoorVillage[0];
 			if(currentAction == 0)

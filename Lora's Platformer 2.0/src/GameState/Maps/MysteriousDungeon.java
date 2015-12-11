@@ -6,9 +6,9 @@ import javax.imageio.ImageIO;
 import Audio.JukeBox;
 import Entity.Doodad.Doodad;
 import Entity.Doodad.Activatable.Chest;
-import Entity.Doodad.Activatable.CreateDoodad;
+import Entity.Doodad.Activatable.DoodadData;
 import Entity.Doodad.Activatable.Door;
-import Entity.Item.CreateItem;
+import Entity.Item.ItemData;
 import Entity.Player.Player;
 import Entity.Unit.Slug;
 import Entity.Unit.Succubus;
@@ -95,18 +95,18 @@ public class MysteriousDungeon extends MainMap
 			
 			spawnDoodad.spawnLever(1200, 1580, doodadIDs.BossKeyDoor.toString(), 0);
 			
-			door = spawnDoodad.spawnDoor(doorLocationX,  doorLocationY, true, 0, CreateDoodad.Doors.Boss.toString());
+			door = spawnDoodad.spawnDoor(doorLocationX,  doorLocationY, true, 0, DoodadData.Doors.Boss.toString());
 			
 			player.setPosition(startLocationX, startLocationY);
 			player.setSpawnPoint(startLocationX, startLocationY);
 			
 			Chest chest = spawnDoodad.spawnChest(800, 850, false, 0, "Common");
-			dropPotion(CreateItem.Potions.Mana.toString(), 100, 1, chest);
+			dropPotion(ItemData.Potions.Mana.toString(), 100, 1, chest);
 			
 			spawnDoodad.spawnSign(400, 810, conversation.mysteriousDungeonDirectionMessage, conversation.mysteriousDungeonDirectionMessageWhoTalks);
 			
 			chest = spawnDoodad.spawnChest(3262, 1620, false, 0, "Common");
-			dropPotion(CreateItem.Potions.Stamina.toString(), 100, 1, chest);
+			dropPotion(ItemData.Potions.Stamina.toString(), 100, 1, chest);
 			
 			Succubus succubus = spawnUnit.spawnSuccubus(500, 1550, true);
 			dropPotion("Any", 25, 1, succubus);
@@ -217,7 +217,7 @@ public class MysteriousDungeon extends MainMap
 	
 	public void useDoodad(Doodad doodad)
 	{
-		if(doodad.getDoodadType().equals(CreateDoodad.Other.Lever.toString()))
+		if(doodad.getDoodadType().equals(DoodadData.Other.Lever.toString()))
 		{
 			try
 			{

@@ -7,14 +7,14 @@ import java.util.ArrayList;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import Entity.Doodad.Activatable.CreateDoodad;
 import Entity.Doodad.Activatable.DoodadData;
-import Entity.Item.CreateItem;
-import Entity.Item.Item;
+import Entity.Doodad.Activatable.TemporaryDoodadData;
 import Entity.Item.ItemData;
+import Entity.Item.Item;
+import Entity.Item.TemporaryItemData;
 import Entity.Player.Player;
 import Entity.Unit.CreateUnit;
-import Entity.Unit.UnitData;
+import Entity.Unit.TemporaryUnitData;
 import GameState.GameStateManager;
 import TileMap.TileMap;
 
@@ -23,7 +23,7 @@ public class JSONReader
 	
 	public static boolean load(Player player, TileMap tileMap)
 	{
-		CreateItem createItem = new CreateItem(player.getTileMap());
+		ItemData createItem = new ItemData(player.getTileMap());
 		JSONParser jsonParser = new JSONParser();
 		
 		
@@ -71,6 +71,26 @@ public class JSONReader
 			player.addSilver(silver);
 			
 			player.addGold(gold);
+			
+			// Load player keybinds:
+			JSONObject jsonObjectKeyBindings = (JSONObject) jsonObjectPlayer.get("KeyBindings");
+			int index = 0;
+			do
+			{
+				int keybind = ( (Long) jsonObjectKeyBindings.get(Player.KeyBind.values()[index].toString()) ).intValue();
+				if(keybind != 0)
+				{
+					player.setKeyBind(index, keybind);
+					index++;
+					System.out.println("index: " + index);
+				}
+				else
+				{
+					index = -1;
+				}
+				
+			}
+			while(index < player.getKeyBinds().length);
 			
 			// Load player items:
 			JSONObject jsonObjectItems = (JSONObject) jsonObjectPlayer.get("Items");
@@ -123,8 +143,8 @@ public class JSONReader
 						spawnLocationX = (Double) jsonObjectItem.get("SpawnLocationX");
 						spawnLocationY = (Double) jsonObjectItem.get("SpawnLocationY");
 						
-						ItemData itemData = new ItemData(itemType, stacks, spawnLocationX, spawnLocationY);
-						CreateItem.addItem(currentMap, itemData);
+						TemporaryItemData itemData = new TemporaryItemData(itemType, stacks, spawnLocationX, spawnLocationY);
+						ItemData.addItem(currentMap, itemData);
 						
 						whileCounter++;
 					}
@@ -173,7 +193,7 @@ public class JSONReader
 							}
 						} while(x != -1);
 						
-						DoodadData unitData = new DoodadData
+						TemporaryDoodadData unitData = new TemporaryDoodadData
 						(
 							untouchable, 
 							invulnerable, 
@@ -187,7 +207,7 @@ public class JSONReader
 							items
 						);
 						
-						CreateDoodad.addDoodad(currentMap, unitData);
+						DoodadData.addDoodad(currentMap, unitData);
 						
 						whileCounter++;	
 					}
@@ -239,7 +259,7 @@ public class JSONReader
 						} while(x != -1);
 						
 						
-						UnitData unitData = new UnitData
+						TemporaryUnitData unitData = new TemporaryUnitData
 						(
 							facingRight, 
 							friendly, 

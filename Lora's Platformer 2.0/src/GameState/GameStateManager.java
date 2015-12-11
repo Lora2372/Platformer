@@ -67,10 +67,19 @@ public class GameStateManager
 	
 	public void setPlayer(Player player) 
 	{ 
-		this.player = player;
-		optionstate.setPlayer(player);
-		inventorystate.initialize(player);
-		conversationState.initialize(player);
+		try
+		{
+			this.player = player;
+			optionstate.setPlayer(player);
+			inventorystate.initialize(player);
+			conversationState.initialize(player);
+			pausestate.initialize(player);
+		}
+		catch(Exception exception)
+		{
+			exception.printStackTrace();
+		}
+
 	}
 	
 	public void setTileMap(TileMap tileMap) { this.tileMap = tileMap; }

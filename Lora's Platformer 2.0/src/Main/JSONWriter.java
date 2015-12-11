@@ -11,14 +11,14 @@ import java.util.ArrayList;
 
 import org.json.simple.JSONObject;
 
-import Entity.Doodad.Activatable.CreateDoodad;
 import Entity.Doodad.Activatable.DoodadData;
-import Entity.Item.CreateItem;
-import Entity.Item.Item;
+import Entity.Doodad.Activatable.TemporaryDoodadData;
 import Entity.Item.ItemData;
+import Entity.Item.Item;
+import Entity.Item.TemporaryItemData;
 import Entity.Player.Player;
 import Entity.Unit.CreateUnit;
-import Entity.Unit.UnitData;
+import Entity.Unit.TemporaryUnitData;
 import GameState.GameStateManager;
 
 public class JSONWriter 
@@ -50,8 +50,8 @@ public class JSONWriter
     		jsonObjectPlayer.put("Map", player.getCurrentMap());
     		jsonObjectPlayer.put("SpawnLocationX", player.getSpawnLocationX());
     		jsonObjectPlayer.put("SpawnLocationY", player.getSpawnLocationY());
-    		jsonObjectPlayer.put(CreateItem.Coins.Silver.toString(), player.getSilver());
-    		jsonObjectPlayer.put(CreateItem.Coins.Gold, player.getGold());
+    		jsonObjectPlayer.put(ItemData.Coins.Silver.toString(), player.getSilver());
+    		jsonObjectPlayer.put(ItemData.Coins.Gold, player.getGold());
     		jsonObjectPlayer.put("Friendly", player.getFriendly());
     		jsonObjectPlayer.put("Health", (int)player.getHealth());
     		jsonObjectPlayer.put("UnitType", player.getUnitType());
@@ -62,6 +62,13 @@ public class JSONWriter
 			jsonObjectPlayer.put("UseMouse", player.getUseMouse());
 			jsonObjectPlayer.put("DisplayHealthBars", player.getDisplayHealthBars());
 			jsonObjectPlayer.put("DisplayNamePlates", player.getDisplayNamePlates());
+			
+			JSONObject jsonObjectKeyBindings = new JSONObject();
+			for(int i = 0; i < player.getKeyBinds().length; i++)
+			{
+				jsonObjectKeyBindings.put(Player.KeyBind.values()[i].toString(), player.getKeyBind(i));
+			}
+			jsonObjectPlayer.put("KeyBindings", jsonObjectKeyBindings);
 			
 			JSONObject jsonObjectItems = new JSONObject();
 			
@@ -97,14 +104,14 @@ public class JSONWriter
 					JSONObject jsonObjectUnits = new JSONObject();
 	    	    	for(int j = 0; j < CreateUnit.getUnitDataList(gameMap).size(); j++)
 	    	    	{
-	    	    		UnitData unit = CreateUnit.getUnitDataList(gameMap).get(j);
+	    	    		TemporaryUnitData unit = CreateUnit.getUnitDataList(gameMap).get(j);
 	    	            JSONObject jsonObjectUnit = new JSONObject();
 	    	            
 		    	    	jsonObjectUnit.put("Name", unit.getName());
 		    	    	jsonObjectUnit.put("SpawnLocationX", unit.getSpawnLocationX());
 	    	    		jsonObjectUnit.put("SpawnLocationY", unit.getSpawnLocationY());
-	    	    		jsonObjectUnit.put(CreateItem.Coins.Silver.toString(), unit.getSilver());
-	    	    		jsonObjectUnit.put(CreateItem.Coins.Gold, unit.getGold());
+	    	    		jsonObjectUnit.put(ItemData.Coins.Silver.toString(), unit.getSilver());
+	    	    		jsonObjectUnit.put(ItemData.Coins.Gold, unit.getGold());
 	    	    		jsonObjectUnit.put("Friendly", unit.getFriendly());
 	    	    		jsonObjectUnit.put("Health", (int)unit.getHealth());
 	    	    		jsonObjectUnit.put("UnitType", unit.getUnitType());
@@ -129,9 +136,9 @@ public class JSONWriter
 	    	    	
 					// Saving doodads
 					JSONObject jsonObjectDoodads = new JSONObject();
-					for(int j = 0; j < CreateDoodad.getDoodadDataList(gameMap).size(); j++)
+					for(int j = 0; j < DoodadData.getDoodadDataList(gameMap).size(); j++)
 					{
-						DoodadData doodad = CreateDoodad.getDoodadDataList(gameMap).get(j);
+						TemporaryDoodadData doodad = DoodadData.getDoodadDataList(gameMap).get(j);
 						JSONObject jsonObjectDoodad = new JSONObject();
 						
 						jsonObjectDoodad.put("Untouchable", doodad.getUntouchable());
@@ -161,9 +168,9 @@ public class JSONWriter
 					// Saving items in the world:
 					jsonObjectItems = new JSONObject();
 					
-					for(int j = 0; j < CreateItem.getItemDataList(gameMap).size(); j++)
+					for(int j = 0; j < ItemData.getItemDataList(gameMap).size(); j++)
 					{
-						ItemData item = CreateItem.getItemDataList(gameMap).get(j);
+						TemporaryItemData item = ItemData.getItemDataList(gameMap).get(j);
 						JSONObject jsonObjectItem = new JSONObject();
 						jsonObjectItem.put("ItemType", item.getItemType());
 						jsonObjectItem.put("Stack", item.getStacks());

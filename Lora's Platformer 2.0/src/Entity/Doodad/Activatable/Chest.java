@@ -4,7 +4,7 @@ import Main.Content;
 import TileMap.TileMap;
 import Audio.JukeBox;
 import Entity.Doodad.Doodad;
-import Entity.Item.CreateItem;
+import Entity.Item.ItemData;
 import Entity.Item.Item;
 import Entity.Player.Player;
 import GameState.Conversation.ConversationData;
@@ -61,16 +61,16 @@ public class Chest extends Doodad
 				false,
 				currentAction,
 				chestType,
-				CreateDoodad.doodadName.get(chestType)
+				DoodadData.doodadName.get(chestType)
 			);
 		
 		this.locked = locked;
-		this.chestName = CreateDoodad.doodadName.get(chestType);
+		this.chestName = DoodadData.doodadName.get(chestType);
 	}
 	
 	public void setDoodad(int currentAction)
 	{
-		if(doodadType.equals(CreateDoodad.Chests.Common.toString()))
+		if(doodadType.equals(DoodadData.Chests.Common.toString()))
 		{
 			portrait = Content.PortraitChestCommon[0];
 			if(currentAction == 0)
@@ -89,7 +89,7 @@ public class Chest extends Doodad
 				delay = 1000;
 			}
 		}
-		else if(doodadType.equals(CreateDoodad.Chests.Uncommon.toString()))
+		else if(doodadType.equals(DoodadData.Chests.Uncommon.toString()))
 		{
 			portrait = Content.PortraitChestUncommon[0];
 			if(currentAction == 0)
@@ -108,7 +108,7 @@ public class Chest extends Doodad
 				delay = 1000;
 			}
 		}
-		else if(doodadType.equals(CreateDoodad.Chests.Rare.toString()))
+		else if(doodadType.equals(DoodadData.Chests.Rare.toString()))
 		{
 			portrait = Content.PortraitChestRare[0];
 			if(currentAction == 0)
@@ -262,13 +262,13 @@ public class Chest extends Doodad
 							
 							if(item != null)
 							{
-								conversationDataPiece += item.getStacks() + " " + CreateItem.itemDescriptionName.get(item.getItemType()) + (item.getStacks() > 1 ? "s, " : ", ");
+								conversationDataPiece += item.getStacks() + " " + ItemData.itemDescriptionName.get(item.getItemType()) + (item.getStacks() > 1 ? "s, " : ", ");
 								
-								if(item.getItemType().equals(CreateItem.Coins.Silver.toString()))
+								if(item.getItemType().equals(ItemData.Coins.Silver.toString()))
 								{
 									silver = item.getStacks();
 								}
-								else if(item.getItemType().equals(CreateItem.Coins.Gold.toString()))
+								else if(item.getItemType().equals(ItemData.Coins.Gold.toString()))
 								{
 									gold = item.getStacks();
 								}

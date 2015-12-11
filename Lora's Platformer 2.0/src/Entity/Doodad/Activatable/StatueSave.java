@@ -54,8 +54,8 @@ public class StatueSave extends Doodad
 				true,
 				false,
 				0,
-				CreateDoodad.Other.StatueSave.toString(),
-				CreateDoodad.doodadName.get(CreateDoodad.Other.StatueSave.toString())
+				DoodadData.Other.StatueSave.toString(),
+				DoodadData.doodadName.get(DoodadData.Other.StatueSave.toString())
 				);
 				
 		

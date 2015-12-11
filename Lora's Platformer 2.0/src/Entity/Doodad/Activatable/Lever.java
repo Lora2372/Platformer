@@ -48,7 +48,7 @@ public class Lever extends Doodad
 				false,
 				currentAction,
 				"Lever",
-				CreateDoodad.doodadName.get("Lever")
+				DoodadData.doodadName.get("Lever")
 			);
 		
 		this.uniqueID = uniqueID;
@@ -67,7 +67,7 @@ public class Lever extends Doodad
 	{
 		this.currentAction = currentAction;
 		
-		if(doodadType.equals(CreateDoodad.Other.Lever.toString()))
+		if(doodadType.equals(DoodadData.Other.Lever.toString()))
 		{
 			portrait = Content.PortraitLever[0];
 			if(currentAction == 0)

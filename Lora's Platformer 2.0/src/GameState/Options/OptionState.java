@@ -296,7 +296,7 @@ public class OptionState extends GameState implements ChangeListener
 			
 			if(mouseRectangle.intersects(optionObject.getRectangle()))
 			{
-				System.out.println(optionObject.getText());
+				System.out.println("Object text: " + optionObject.getText());
 				if(optionObject == goBack)
 				{
 					gameStateManager.options(false);

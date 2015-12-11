@@ -1,98 +1,86 @@
 package Entity.Doodad.Activatable;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
-import Entity.Item.Item;
+import GameState.GameStateManager;
 
 public class DoodadData 
 {
 	
-	boolean untouchable;
-	boolean invulnerable;
-	boolean active;
-	int currentAction;
-	boolean locked;
-	double spawnLocationX;
-	double spawnLocationY;
-	String doodadType;
-	String uniqueID;
-	ArrayList<Item> items;
+	static ArrayList<ArrayList<TemporaryDoodadData>> doodadList;
 	
-	
-	public DoodadData
-		(
-			boolean untouchable,
-			boolean invulnerable,
-			boolean active,
-			int currentAction,
-			boolean locked,
-			double spawnLocationX,
-			double spawnLocationY,
-			String doodadType,
-			String uniqueID,
-			ArrayList<Item> items
-		)
+	public DoodadData()
 	{
-		this.untouchable = untouchable;
-		this.invulnerable = invulnerable;
-		this.active = active;
-		this.currentAction = currentAction;
-		this.locked = locked;
-		this.spawnLocationX = spawnLocationX;
-		this.spawnLocationY = spawnLocationY;
-		this.doodadType = doodadType;
-		this.uniqueID = uniqueID;
-		this.items = items;
+		
+		doodads = new HashMap<String, ArrayList<TemporaryDoodadData>>();
+		doodadList = new ArrayList<ArrayList<TemporaryDoodadData>>(GameStateManager.GameMaps.values().length - 1);
+		
+		for(int i = 0; i < GameStateManager.GameMaps.values().length - 1; i++)
+		{
+			ArrayList<TemporaryDoodadData> tempList = new ArrayList<TemporaryDoodadData>();
+			doodadList.add(tempList);
+			doodads.put(GameStateManager.GameMaps.values()[i + 1].toString(), doodadList.get(i));
+		}
+		
+		
+		doodadName = new HashMap<String, String>();
+		doodadName.put(Doors.Boss.toString(), "Boss Door");
+		
+		doodadName.put(Chests.Common.toString(), "Common Chest");
+		doodadName.put(Chests.Uncommon.toString(), "Uncommon Chest");
+		doodadName.put(Chests.Rare.toString(), "Rare Chest");
+		
+		doodadName.put(Other.CampFire.toString(), "Campfire");
+		doodadName.put(Other.Lever.toString(), "Lever");
+		doodadName.put(Other.Portal.toString(), "Portal");
+		doodadName.put(Other.Shrine.toString(), "Shrine");
+		doodadName.put(Other.Sign.toString(), "Sign");
+		doodadName.put(Other.StatueSave.toString(), "Shrine of Saving");		
 	}
 	
-	public boolean getUntouchable()
+	public static enum Doors
 	{
-		return untouchable;
+		Boss,
+		Village
 	}
 	
-	public boolean getInvulnerable()
+	public static enum Chests
 	{
-		return invulnerable;
+		Common,
+		Uncommon,
+		Rare
 	}
 	
-	public boolean getActive()
+	public static enum Other
 	{
-		return active;
+		CampFire,
+		Lever,
+		Portal,
+		Shrine,
+		Sign,
+		StatueSave
 	}
 	
-	public double getSpawnLocationX()
+	public static int getDoodadListSize() { return doodadList.size(); }
+	
+	public static void addDoodad(String currentMap, TemporaryDoodadData doodadData)
 	{
-		return spawnLocationX;
+		doodads.get(currentMap).add(doodadData);
 	}
 	
-	public double getSpawnLocationY()
+	public static void resetDoodadList(String map)
 	{
-		return spawnLocationY;
+		doodads.get(map).clear();
 	}
 	
-	public int getCurrentAction()
+	public static ArrayList<TemporaryDoodadData> getDoodadDataList(String map)
 	{
-		return currentAction;
+		return doodads.get(map);
 	}
 	
-	public boolean getLocked()
-	{
-		return locked;
-	}
 	
-	public String getDoodadType()
-	{
-		return doodadType;
-	}
+	public static HashMap<String, String> doodadName = new HashMap<String, String>();
 	
-	public String getUniqueID()
-	{
-		return uniqueID;
-	}
-	
-	public ArrayList<Item> getItems()
-	{
-		return items;
-	}
-	
+	public static HashMap<String, ArrayList<TemporaryDoodadData>> doodads  = new HashMap<String, ArrayList<TemporaryDoodadData>>();
 }

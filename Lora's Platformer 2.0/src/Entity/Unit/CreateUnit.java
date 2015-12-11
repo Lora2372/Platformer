@@ -7,16 +7,16 @@ import GameState.GameStateManager;
 public class CreateUnit 
 {
 
-	static ArrayList<ArrayList<UnitData>> characterList;
+	static ArrayList<ArrayList<TemporaryUnitData>> characterList;
 	
 	public CreateUnit()
 	{
-		units = new HashMap<String, ArrayList<UnitData>>();
-		characterList = new ArrayList<ArrayList<UnitData>>(GameStateManager.GameMaps.values().length - 1);
+		units = new HashMap<String, ArrayList<TemporaryUnitData>>();
+		characterList = new ArrayList<ArrayList<TemporaryUnitData>>(GameStateManager.GameMaps.values().length - 1);
 		
 		for(int i = 0; i < GameStateManager.GameMaps.values().length - 1; i++)
 		{
-			ArrayList<UnitData> tempList = new ArrayList<UnitData>();
+			ArrayList<TemporaryUnitData> tempList = new ArrayList<TemporaryUnitData>();
 			characterList.add(tempList);
 			units.put(GameStateManager.GameMaps.values()[i + 1].toString(), characterList.get(i));
 			
@@ -37,7 +37,7 @@ public class CreateUnit
 	
 	public static int getCharacterListSize() { return characterList.size(); }
 	
-	public static void addUnit(String currentMap, UnitData unitData)
+	public static void addUnit(String currentMap, TemporaryUnitData unitData)
 	{
 		units.get(currentMap).add(unitData);
 	}
@@ -47,12 +47,12 @@ public class CreateUnit
 		units.get(map).clear();
 	}
 	
-	public static ArrayList<UnitData> getUnitDataList(String map)
+	public static ArrayList<TemporaryUnitData> getUnitDataList(String map)
 	{
 		return units.get(map);
 	}
 	
 	
-	public static HashMap<String, ArrayList<UnitData>> units = new HashMap<String, ArrayList<UnitData>>();
+	public static HashMap<String, ArrayList<TemporaryUnitData>> units = new HashMap<String, ArrayList<TemporaryUnitData>>();
 	
 }

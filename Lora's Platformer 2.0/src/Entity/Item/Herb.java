@@ -38,14 +38,14 @@ public class Herb extends Item
 				stacks,
 				false,
 				herbType,
-				CreateItem.getDescriptionName(herbType), 
-				CreateItem.getDescription(herbType)
+				ItemData.getDescriptionName(herbType), 
+				ItemData.getDescription(herbType)
 			);
 	}
 	
 	public void setItem()
 	{
-		if(itemType.equals(CreateItem.Herbs.Sun.toString()))
+		if(itemType.equals(ItemData.Herbs.Sun.toString()))
 		{
 			sprites = Content.HerbSun[0];
 			portrait = sprites;

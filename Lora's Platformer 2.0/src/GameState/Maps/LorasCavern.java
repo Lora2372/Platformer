@@ -5,7 +5,7 @@ import javax.imageio.ImageIO;
 import Audio.JukeBox;
 import Entity.Doodad.Doodad;
 import Entity.Doodad.Activatable.Chest;
-import Entity.Item.CreateItem;
+import Entity.Item.ItemData;
 import Entity.Item.Potion;
 import Entity.Player.*;
 import Entity.Unit.*;
@@ -98,11 +98,11 @@ public class LorasCavern extends MainMap
 			player.setSpawnPoint(startLocationX, startLocationY);
 			
 			Slug slug = spawnUnit.spawnSlug(1690, 1600, false, "Steve");
-			dropPotion(CreateItem.Potions.Healing.toString(), 100, 1, slug);
+			dropPotion(ItemData.Potions.Healing.toString(), 100, 1, slug);
 			
 			Succubus succubus;
 			succubus = spawnUnit.spawnSuccubus(2700, 1400, false);
-			dropCoin(CreateItem.Coins.Silver.toString(), 100, 2, succubus);
+			dropCoin(ItemData.Coins.Silver.toString(), 100, 2, succubus);
 			dropPotion("Any", 25, 1, succubus);
 			
 			succubus = spawnUnit.spawnSuccubus(1339,1900, true);
@@ -121,17 +121,17 @@ public class LorasCavern extends MainMap
 			characterList.add(liadrin);
 			
 			Chest chest = spawnDoodad.spawnChest(1923, 1170, true, 0, "Uncommon");
-			dropPotion(CreateItem.Potions.Healing.toString(), 100, 1, chest);
-			dropPotion(CreateItem.Potions.Mana.toString(), 100, 2, chest);
-			dropCoin(CreateItem.Coins.Silver.toString(), 100, 3, chest);
+			dropPotion(ItemData.Potions.Healing.toString(), 100, 1, chest);
+			dropPotion(ItemData.Potions.Mana.toString(), 100, 2, chest);
+			dropCoin(ItemData.Coins.Silver.toString(), 100, 3, chest);
 			
 			spawnDoodad.spawnLever(900, 2255, doodadIDs.StartingCell.toString(), 0);
 			
 			spawnDoodad.spawnLever(1300, 680, doodadIDs.LiadrinDoor.toString(), 0);
 			
-			spawnItem.spawnKey(1712, 		2610, CreateItem.Keys.Uncommon.toString(), 1);
-			spawnItem.spawnHerb(2276, 1450, CreateItem.Herbs.Sun.toString(), 1);
-			spawnItem.spawnHerb(3004, 1270, CreateItem.Herbs.Sun.toString(), 1);
+			spawnItem.spawnKey(1712, 		2610, ItemData.Keys.Uncommon.toString(), 1);
+			spawnItem.spawnHerb(2276, 1450, ItemData.Herbs.Sun.toString(), 1);
+			spawnItem.spawnHerb(3004, 1270, ItemData.Herbs.Sun.toString(), 1);
 		}
 		else
 		{
@@ -256,7 +256,7 @@ public class LorasCavern extends MainMap
 			{
 				if(conversationState.getConversationOver())
 				{
-					Potion healingPotion = new Potion(tileMap, this, false, 0, 0, player, 2, CreateItem.Potions.Healing.toString());
+					Potion healingPotion = new Potion(tileMap, this, false, 0, 0, player, 2, ItemData.Potions.Healing.toString());
 					player.getInventory().addItem(healingPotion);
 					
 					liadrinConversationOver = true;

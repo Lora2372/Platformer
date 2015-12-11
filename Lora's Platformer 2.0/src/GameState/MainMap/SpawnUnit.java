@@ -7,7 +7,7 @@ import Entity.Unit.Skeleton;
 import Entity.Unit.Slug;
 import Entity.Unit.Succubus;
 import Entity.Unit.Unit;
-import Entity.Unit.UnitData;
+import Entity.Unit.TemporaryUnitData;
 import Entity.Unit.Wolf;
 
 public class SpawnUnit 
@@ -20,7 +20,7 @@ public class SpawnUnit
 			this.mainMap = mainMap;
 		}
 		
-		public Unit spawn(UnitData unitData)
+		public Unit spawn(TemporaryUnitData unitData)
 		{
 			Unit unit = null;
 			

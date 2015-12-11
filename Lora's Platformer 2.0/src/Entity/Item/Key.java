@@ -39,25 +39,25 @@ public class Key extends Item
 				stacks, 
 				true, 
 				keyType,
-				CreateItem.getDescriptionName(keyType.toString()),
-				CreateItem.getDescription(keyType.toString())
+				ItemData.getDescriptionName(keyType.toString()),
+				ItemData.getDescription(keyType.toString())
 			);
 
 	}
 	
 	public void setItem()
 	{
-		if(itemType.equals(CreateItem.Keys.Uncommon.toString()))
+		if(itemType.equals(ItemData.Keys.Uncommon.toString()))
 		{
 			sprites = Content.KeyUncommon[0];
 			portrait = Content.PortraitKeyUncommon[0];
 		}
-		else if(itemType.equals(CreateItem.Keys.Rare.toString()))
+		else if(itemType.equals(ItemData.Keys.Rare.toString()))
 		{
 			sprites = Content.KeyRare[0];
 			portrait = Content.PortraitKeyRare[0];
 		}
-		else if(itemType.equals(CreateItem.Keys.Boss.toString()))
+		else if(itemType.equals(ItemData.Keys.Boss.toString()))
 		{
 			sprites = Content.KeyBoss[0];
 			portrait = Content.PortraitKeyBoss[0];

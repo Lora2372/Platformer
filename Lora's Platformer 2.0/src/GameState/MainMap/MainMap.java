@@ -7,9 +7,9 @@ import Main.GamePanel;
 import TileMap.*;
 import Entity.Explosion.Explosion;
 import Entity.Item.Coin;
-import Entity.Item.CreateItem;
-import Entity.Item.Item;
 import Entity.Item.ItemData;
+import Entity.Item.Item;
+import Entity.Item.TemporaryItemData;
 import Entity.Item.Key;
 import Entity.Item.Potion;
 import Entity.MapObject;
@@ -128,13 +128,13 @@ public class MainMap extends GameState
 		if(player.getLoading(index))
 		{
 			
-			ArrayList<ItemData> itemDataArray = CreateItem.getItemDataList(currentMap);
+			ArrayList<TemporaryItemData> itemDataArray = ItemData.getItemDataList(currentMap);
 			for(int i = 0; i < itemDataArray.size(); i++)
 			{
 				spawnItem.spawn(itemDataArray.get(i));
 			}
 			
-			ArrayList<DoodadData> doodadDataArray = CreateDoodad.getDoodadDataList(currentMap);
+			ArrayList<TemporaryDoodadData> doodadDataArray = DoodadData.getDoodadDataList(currentMap);
 			
 			for(int i = 0; i < doodadDataArray.size(); i++)
 			{
@@ -142,7 +142,7 @@ public class MainMap extends GameState
 			}
 			
 			
-			ArrayList<UnitData> unitDataArray = CreateUnit.getUnitDataList(currentMap);
+			ArrayList<TemporaryUnitData> unitDataArray = CreateUnit.getUnitDataList(currentMap);
 			
 			for(int i = 0; i < unitDataArray.size(); i++)
 			{
@@ -423,8 +423,8 @@ public class MainMap extends GameState
 	{
 
 		CreateUnit.resetUnitList(currentMap);
-		CreateDoodad.resetDoodadList(currentMap);
-		CreateItem.resetItemList(currentMap);
+		DoodadData.resetDoodadList(currentMap);
+		ItemData.resetItemList(currentMap);
 		
 		for(int i = 0; i < GameStateManager.GameMaps.values().length; i++)
 		{
@@ -440,14 +440,14 @@ public class MainMap extends GameState
 			Item item = items.get(i);
 			if(item.getInWorld())
 			{
-				ItemData itemData = new ItemData
+				TemporaryItemData itemData = new TemporaryItemData
 					(
 						item.getItemType(),
 						item.getStacks(),
 						item.getLocationX(), 
 						item.getLocationY()
 					);
-				CreateItem.addItem(currentMap, itemData);
+				ItemData.addItem(currentMap, itemData);
 			}
 		}
 		
@@ -468,7 +468,7 @@ public class MainMap extends GameState
 				}
 			}
 			
-			DoodadData doodadData = new DoodadData
+			TemporaryDoodadData doodadData = new TemporaryDoodadData
 				(
 					thing.getUntouchable(),
 					thing.getInvulnerable(), 
@@ -482,7 +482,7 @@ public class MainMap extends GameState
 					tempItems
 				);
 			
-			CreateDoodad.addDoodad(currentMap, doodadData);
+			DoodadData.addDoodad(currentMap, doodadData);
 		}
 		
 		
@@ -503,7 +503,7 @@ public class MainMap extends GameState
 					}
 				}
 				
-				UnitData unitData = new UnitData
+				TemporaryUnitData unitData = new TemporaryUnitData
 				(
 					unit.getFacingRight(), 
 					unit.getFriendly(), 
@@ -654,13 +654,13 @@ public class MainMap extends GameState
 	
 
 	
-	public Doodad spawnDoodad(DoodadData doodadData)
+	public Doodad spawnDoodad(TemporaryDoodadData doodadData)
 	{
 		Doodad doodad = null;
 		
-		for(int i = 0; i < CreateDoodad.Doors.values().length; i++)
+		for(int i = 0; i < DoodadData.Doors.values().length; i++)
 		{
-			if(doodadData.getDoodadType().equals(CreateDoodad.Doors.values()[i].toString()))
+			if(doodadData.getDoodadType().equals(DoodadData.Doors.values()[i].toString()))
 			{
 				doodad = spawnDoodad.spawnDoor
 					(
@@ -673,9 +673,9 @@ public class MainMap extends GameState
 			}
 		}
 		
-		for(int i = 0; i < CreateDoodad.Chests.values().length; i++)
+		for(int i = 0; i < DoodadData.Chests.values().length; i++)
 		{
-			if(doodadData.getDoodadType().equals(CreateDoodad.Chests.values()[i].toString()))
+			if(doodadData.getDoodadType().equals(DoodadData.Chests.values()[i].toString()))
 			{
 				doodad = spawnDoodad.spawnChest
 					(
@@ -688,7 +688,7 @@ public class MainMap extends GameState
 			}
 		}
 		
-		if(doodadData.getDoodadType().equals(CreateDoodad.Other.Lever.toString()))
+		if(doodadData.getDoodadType().equals(DoodadData.Other.Lever.toString()))
 		{
 			doodad = spawnDoodad.spawnLever
 				(
@@ -735,15 +735,15 @@ public class MainMap extends GameState
 				{
 					if(potionDropped == 1)
 					{
-						potion = new Potion(tileMap, this, false, 0, 0, owner, stacks, CreateItem.Potions.Healing.toString());
+						potion = new Potion(tileMap, this, false, 0, 0, owner, stacks, ItemData.Potions.Healing.toString());
 					}
 					else if(potionDropped == 2)
 					{
-						potion= new Potion(tileMap, this, false, 0, 0, owner, stacks, CreateItem.Potions.Mana.toString());
+						potion= new Potion(tileMap, this, false, 0, 0, owner, stacks, ItemData.Potions.Mana.toString());
 					}
 					else if(potionDropped == 3)
 					{
-						potion = new Potion(tileMap, this, false, 0, 0, owner, stacks, CreateItem.Potions.Stamina.toString());
+						potion = new Potion(tileMap, this, false, 0, 0, owner, stacks, ItemData.Potions.Stamina.toString());
 					}
 				}
 				if(potion == null)
@@ -861,7 +861,7 @@ public class MainMap extends GameState
 			gameStateManager.setBrowsingInventory(false);
 		}
 		
-		if(key == KeyEvent.VK_B)
+		if(key == player.getKeyBind(Player.KeyBind.OpenInventory))
 		{
 			if(player.getInConversation())
 			{
@@ -873,26 +873,26 @@ public class MainMap extends GameState
 		
 		if(gameStateManager.getPaused()) return;
 		
-		if(key == KeyEvent.VK_LEFT) player.setLeft(true);
-		if(key == KeyEvent.VK_RIGHT) player.setRight(true);
-		if(key == KeyEvent.VK_DOWN) player.setDown(true);
-		if(key == KeyEvent.VK_UP) player.setUp(true);
-		if(key == KeyEvent.VK_SPACE) player.setJumping(true);
-		if(key == KeyEvent.VK_E) interact();
-		if(key == KeyEvent.VK_R)player.setGliding(true); 
-		if(key == KeyEvent.VK_SHIFT)
+		if(key == player.getKeyBind(Player.KeyBind.MoveLeft)) player.setLeft(true);
+		if(key == player.getKeyBind(Player.KeyBind.MoveRight)) player.setRight(true);
+		if(key == player.getKeyBind(Player.KeyBind.AimDown)) player.setDown(true);
+		if(key == player.getKeyBind(Player.KeyBind.AimUp)) player.setUp(true);
+		if(key == player.getKeyBind(Player.KeyBind.Jump)) player.setJumping(true);
+		if(key == player.getKeyBind(Player.KeyBind.Interact)) interact();
+		if(key == player.getKeyBind(Player.KeyBind.Glide))player.setGliding(true); 
+		if(key == player.getKeyBind(Player.KeyBind.Run))
 		{
 			player.startRunning();
 		}
 		
-		if(key == KeyEvent.VK_A) player.setCastingSmallFireBall();
-		if(key == KeyEvent.VK_S) player.setCastingLargeFireBall();
-		if(key == KeyEvent.VK_F) player.setPunching();
-		if(key == KeyEvent.VK_D) player.setDashing(true);
+		if(key == player.getKeyBind(Player.KeyBind.CastSmallFireBall)) player.setCastingSmallFireBall();
+		if(key == player.getKeyBind(Player.KeyBind.CastLargeFireBall)) player.setCastingLargeFireBall();
+		if(key == player.getKeyBind(Player.KeyBind.CastPunch)) player.setPunching();
+		if(key == player.getKeyBind(Player.KeyBind.CastDash)) player.setDashing(true);
 		if(key == KeyEvent.VK_G) player.setCastingMagicShield();
-		if(key == KeyEvent.VK_Z) player.drinkPotion(CreateItem.Potions.Healing.toString());
-		if(key == KeyEvent.VK_X) player.drinkPotion(CreateItem.Potions.Mana.toString());
-		if(key == KeyEvent.VK_C) player.drinkPotion(CreateItem.Potions.Stamina.toString());
+		if(key == KeyEvent.VK_Z) player.drinkPotion(ItemData.Potions.Healing.toString());
+		if(key == KeyEvent.VK_X) player.drinkPotion(ItemData.Potions.Mana.toString());
+		if(key == KeyEvent.VK_C) player.drinkPotion(ItemData.Potions.Stamina.toString());
 		
 		
 		// Note: This is a built in cheat that is not supposed to be used to get the real game experience.
@@ -934,7 +934,7 @@ public class MainMap extends GameState
 		// Note: This is a built in cheat that is not supposed to be used to get the real game experience.
 		if(key == KeyEvent.VK_P)
 		{
-			Potion myPotion = new Potion(tileMap, this, false, 0, 0, player, 1, CreateItem.Potions.Healing.toString());
+			Potion myPotion = new Potion(tileMap, this, false, 0, 0, player, 1, ItemData.Potions.Healing.toString());
 			player.getInventory().addItem(myPotion);
 			items.add(myPotion);
 		}
@@ -945,14 +945,14 @@ public class MainMap extends GameState
 	
 	public void keyReleased(int key)
 	{
-		if(key == KeyEvent.VK_LEFT) player.setLeft(false);
-		if(key == KeyEvent.VK_RIGHT) player.setRight(false);
-		if(key == KeyEvent.VK_DOWN) player.setDown(false);
-		if(key == KeyEvent.VK_SPACE) player.setJumping(false);
-		if(key == KeyEvent.VK_UP) player.setUp(false);
-		if(key == KeyEvent.VK_R) player.setGliding(false);
-		if(key == KeyEvent.VK_E) holdingInteractButton = false;
-		if(key == KeyEvent.VK_SHIFT)
+		if(key == player.getKeyBind(Player.KeyBind.MoveLeft)) player.setLeft(false);
+		if(key == player.getKeyBind(Player.KeyBind.MoveRight)) player.setRight(false);
+		if(key == player.getKeyBind(Player.KeyBind.AimDown)) player.setDown(false);
+		if(key == player.getKeyBind(Player.KeyBind.Jump)) player.setJumping(false);
+		if(key == player.getKeyBind(Player.KeyBind.AimUp)) player.setUp(false);
+		if(key == player.getKeyBind(Player.KeyBind.Glide)) player.setGliding(false);
+		if(key == player.getKeyBind(Player.KeyBind.Interact)) holdingInteractButton = false;
+		if(key == player.getKeyBind(Player.KeyBind.Run))
 		{
 			player.setRunning(false);
 		}

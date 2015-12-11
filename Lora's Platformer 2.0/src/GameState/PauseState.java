@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 import Audio.JukeBox;
+import Entity.Player.Player;
 import Main.GamePanel;
 import TileMap.Background;
 
@@ -37,10 +38,11 @@ public class PauseState extends GameState
 	protected double mouseLocationX;
 	protected double mouseLocationY;
 	
+	protected Player player;
+	
 	public PauseState(GameStateManager gameStateManager)
 	{
 		this.gameStateManager = gameStateManager;
-		
 		try
 		{
 			background = new Background(getClass().getResource("/Art/HUD/Foregrounds/ScreenPaused.png"), 0);
@@ -60,6 +62,17 @@ public class PauseState extends GameState
 		catch(Exception e)
 		{
 			e.printStackTrace();
+		}
+	}
+	
+	public void initialize(Player player) throws Exception
+	{
+		this.player = player;
+		
+		if(player == null)
+		{
+			System.out.println("player is null");
+			throw new Exception();
 		}
 	}
 	
@@ -178,12 +191,12 @@ public class PauseState extends GameState
 			select();
 		}
 		
-		if(k == KeyEvent.VK_UP)
+		if(k == player.getKeyBind(Player.KeyBind.AimUp))
 		{
 			currentChoice--;
 			if(currentChoice == -1) currentChoice = options.length - 1;
 		}
-		if(k == KeyEvent.VK_DOWN)
+		if(k == player.getKeyBind(Player.KeyBind.AimDown))
 		{
 			currentChoice++;
 			if(currentChoice == options.length) currentChoice = 0;

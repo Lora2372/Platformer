@@ -4,8 +4,8 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import Audio.JukeBox;
-import Entity.Doodad.Activatable.CreateDoodad;
-import Entity.Item.CreateItem;
+import Entity.Doodad.Activatable.DoodadData;
+import Entity.Item.ItemData;
 import Entity.Player.*;
 import Entity.Projectile.ProjectileData;
 import Entity.Unit.CreateUnit;
@@ -57,9 +57,9 @@ public class MenuState extends GameState
 		
 		// Initializing public static classes:
 		@SuppressWarnings("unused")
-		CreateItem createItem = new CreateItem(tileMap);
+		ItemData createItem = new ItemData(tileMap);
 		@SuppressWarnings("unused")
-		CreateDoodad doodadData = new CreateDoodad();
+		DoodadData doodadData = new DoodadData();
 		@SuppressWarnings("unused")
 		ProjectileData projectileData = new ProjectileData();
 		@SuppressWarnings("unused")
@@ -252,7 +252,7 @@ public class MenuState extends GameState
 		{
 			select();
 		}
-		if(k == KeyEvent.VK_UP)
+		if(k == player.getKeyBind(Player.KeyBind.AimUp))
 		{
 			updateChoice(currentChoice -1);
 			if(currentChoice == -1)
@@ -262,7 +262,7 @@ public class MenuState extends GameState
 			
 		}
 		
-		if(k == KeyEvent.VK_DOWN)
+		if(k == player.getKeyBind(Player.KeyBind.AimDown))
 		{
 			updateChoice(currentChoice +1);
 			if(currentChoice == options.length)

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import Entity.Item.Item;
 
-public class UnitData 
+public class TemporaryUnitData 
 {
 	boolean facingRight;
 	boolean friendly;
@@ -22,7 +22,7 @@ public class UnitData
 	ArrayList<Item> items;
 	
 	
-	public UnitData
+	public TemporaryUnitData
 	(
 		boolean facingRight,
 		boolean friendly,
