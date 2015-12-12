@@ -16,7 +16,6 @@ import Main.Content;
 import Main.DrawingConstants;
 import Main.GamePanel;
 
-
 public class OptionState extends GameState implements ChangeListener
 {
 	
@@ -35,10 +34,7 @@ public class OptionState extends GameState implements ChangeListener
 	protected double mouseLocationY;
 		
 	public OptionState(GameStateManager gameStateManager, GamePanel gamePanel)
-	{	
-		
-		
-		
+	{
 		this.gameStateManager = gameStateManager;
 		this.gamePanel = gamePanel;
 		
@@ -123,35 +119,32 @@ public class OptionState extends GameState implements ChangeListener
 		
 		openKeyBindings = new OptionObject
 			(
-				GamePanel.WIDTH / 2,
+				GamePanel.WIDTH - 300,
 				300,
-				100,
-				50,
+				188,
+				68,
 				1,
 				1,
 				1,
-				new String[] { "Keybindings" },
-				new BufferedImage[] { },
+				new String[] { "" },
+				Content.EditKeyBindingsButton[0],
 				"OpenKeyBindings"
 			);
 		optionObjects.add(openKeyBindings);
 		
 		goBack = new OptionObject
 		(
-			GamePanel.WIDTH - 200, 
+			GamePanel.WIDTH - 300, 
 			GamePanel.HEIGHT - 200, 
-			100, 
-			50, 
+			188, 
+			68, 
 			1, 
 			1, 
 			1, 
 			new String[] 
 			{ 
 			},
-			new BufferedImage[]
-			{
-						
-			},
+			Content.ExitButton[0],
 			"Back"
 		);
 		optionObjects.add(goBack);
@@ -188,10 +181,12 @@ public class OptionState extends GameState implements ChangeListener
 		
 	}
 	
-	@SuppressWarnings("unused")
+	@SuppressWarnings({ "unused"})
 	public void OpenKeyBindings()
 	{
+		
 		OptionKeyBindFrame optionKeyBindFrame = new OptionKeyBindFrame(player);
+
 	}
 	
 

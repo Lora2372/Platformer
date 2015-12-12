@@ -64,7 +64,6 @@ public class MysteriousDungeon extends MainMap
 		spawnDoodad.spawnTorch(690, 1250);
 		spawnDoodad.spawnTorch(690, 1730);
 
-		spawnDoodad.spawnStatueSave(250, 780);
 		
 		spawnDoodad.spawnStatueSave(2900, 780);
 		
@@ -102,9 +101,7 @@ public class MysteriousDungeon extends MainMap
 			
 			Chest chest = spawnDoodad.spawnChest(800, 850, false, 0, "Common");
 			dropPotion(ItemData.Potions.Mana.toString(), 100, 1, chest);
-			
-			spawnDoodad.spawnSign(400, 810, conversation.mysteriousDungeonDirectionMessage, conversation.mysteriousDungeonDirectionMessageWhoTalks);
-			
+						
 			chest = spawnDoodad.spawnChest(3262, 1620, false, 0, "Common");
 			dropPotion(ItemData.Potions.Stamina.toString(), 100, 1, chest);
 			
@@ -246,7 +243,7 @@ public class MysteriousDungeon extends MainMap
 
 		if(!dungeonIntroduction)
 		{
-			if(player.getDirectionY() == 0 && player.getLocationY() > 300)
+			if(player.getDirectionY() == 0 && player.getLocationY() > 300 && !player.getInWater())
 			{
 				if(!player.getInConversation())
 				{

@@ -96,26 +96,31 @@ public class Content
 	public static BufferedImage[][] BuffIcon				= load("/Art/HUD/Foregrounds/BuffIcon.png", 64, 64);
 	
 	// Portraits
-	public static BufferedImage[][] PortraitPlayer			=load("/Art/HUD/Portraits/PortraitPlayer.png", 94, 94);
-	public static BufferedImage[][] PortraitSuccubus		=load("/Art/HUD/Portraits/PortraitSuccubus.png", 94, 94);
+	public static BufferedImage[][] PortraitPlayer			= load("/Art/HUD/Portraits/PortraitPlayer.png", 94, 94);
+	public static BufferedImage[][] PortraitSuccubus		= load("/Art/HUD/Portraits/PortraitSuccubus.png", 94, 94);
 	
-	public static BufferedImage[][] PortraitCampFire		=load("/Art/HUD/Portraits/PortraitCampFire.png", 94, 94);
-	public static BufferedImage[][] PortraitChestCommon		=load("/Art/HUD/Portraits/PortraitChestCommon.png", 94, 94);
-	public static BufferedImage[][] PortraitChestUncommon	=load("/Art/HUD/Portraits/PortraitChestUncommon.png", 94, 94);
-	public static BufferedImage[][] PortraitChestRare		=load("/Art/HUD/Portraits/PortraitChestRare.png", 94, 94);
-	public static BufferedImage[][] PortraitKeyUncommon		=load("/Art/HUD/Portraits/PortraitKeyUncommon.png", 94, 94);
-	public static BufferedImage[][] PortraitKeyRare			=load("/Art/HUD/Portraits/PortraitKeyRare.png", 94, 94);
-	public static BufferedImage[][] PortraitKeyBoss			=load("/Art/HUD/Portraits/PortraitKeyBoss.png", 94, 94);
-	public static BufferedImage[][] PortraitLever			=load("/Art/HUD/Portraits/PortraitLever.png", 94, 94);
-	public static BufferedImage[][] PortraitPotionHealing	=load("/Art/HUD/Portraits/PortraitPotionHealing.png", 94, 94);
-	public static BufferedImage[][] PortraitPotionMana		=load("/Art/HUD/Portraits/PortraitPotionMana.png", 94, 94);
-	public static BufferedImage[][] PortraitPotionStamina	=load("/Art/HUD/Portraits/PortraitPotionStamina.png", 94, 94);
-	public static BufferedImage[][] PortraitShrine			=load("/Art/HUD/Portraits/PortraitShrine.png", 94, 94);
-	public static BufferedImage[][] PortraitSign			=load("/Art/HUD/Portraits/PortraitSign.png", 94, 94);
-	public static BufferedImage[][] PortraitStatueSave		=load("/Art/HUD/Portraits/PortraitStatueSave.png", 94, 94);
-	public static BufferedImage[][] PortraitDoorBoss		=load("/Art/HUD/Portraits/PortraitDoorBoss.png", 94, 94);
-	public static BufferedImage[][] PortraitDoorVillage		=load("/Art/HUD/Portraits/PortraitDoorVillage.png", 94, 94);
+	public static BufferedImage[][] PortraitEmpty		= load("/Art/HUD/Portraits/PortraitEmpty.png", 94, 94);
 	
+	public static BufferedImage[][] PortraitCampFire		= load("/Art/HUD/Portraits/PortraitCampFire.png", 94, 94);
+	public static BufferedImage[][] PortraitChestCommon		= load("/Art/HUD/Portraits/PortraitChestCommon.png", 94, 94);
+	public static BufferedImage[][] PortraitChestUncommon	= load("/Art/HUD/Portraits/PortraitChestUncommon.png", 94, 94);
+	public static BufferedImage[][] PortraitChestRare		= load("/Art/HUD/Portraits/PortraitChestRare.png", 94, 94);
+	public static BufferedImage[][] PortraitKeyUncommon		= load("/Art/HUD/Portraits/PortraitKeyUncommon.png", 94, 94);
+	public static BufferedImage[][] PortraitKeyRare			= load("/Art/HUD/Portraits/PortraitKeyRare.png", 94, 94);
+	public static BufferedImage[][] PortraitKeyBoss			= load("/Art/HUD/Portraits/PortraitKeyBoss.png", 94, 94);
+	public static BufferedImage[][] PortraitLever			= load("/Art/HUD/Portraits/PortraitLever.png", 94, 94);
+	public static BufferedImage[][] PortraitPotionHealing	= load("/Art/HUD/Portraits/PortraitPotionHealing.png", 94, 94);
+	public static BufferedImage[][] PortraitPotionMana		= load("/Art/HUD/Portraits/PortraitPotionMana.png", 94, 94);
+	public static BufferedImage[][] PortraitPotionStamina	= load("/Art/HUD/Portraits/PortraitPotionStamina.png", 94, 94);
+	public static BufferedImage[][] PortraitShrine			= load("/Art/HUD/Portraits/PortraitShrine.png", 94, 94);
+	public static BufferedImage[][] PortraitSign			= load("/Art/HUD/Portraits/PortraitSign.png", 94, 94);
+	public static BufferedImage[][] PortraitStatueSave		= load("/Art/HUD/Portraits/PortraitStatueSave.png", 94, 94);
+	public static BufferedImage[][] PortraitDoorBoss		= load("/Art/HUD/Portraits/PortraitDoorBoss.png", 94, 94);
+	public static BufferedImage[][] PortraitDoorVillage		= load("/Art/HUD/Portraits/PortraitDoorVillage.png", 94, 94);
+	
+	// Buttons
+	public static BufferedImage[][] EditKeyBindingsButton	= load("/Art/HUD/Buttons/EditKeyBindingButton.png", 188, 68);
+	public static BufferedImage[][] ExitButton	= load("/Art/HUD/Buttons/ExitButton.png", 188, 68);
 	
 	
 	public static enum mapMusic 

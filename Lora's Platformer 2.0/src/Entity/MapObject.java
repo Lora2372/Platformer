@@ -250,8 +250,12 @@ public abstract class MapObject
 			// Jumping
 			if(jumping && (inWater || ( !falling && inControl && !flying ) ) )
 			{
-				playJumpSound();
-				directionY = jumpStart  * waterResistance;
+				if(directionY >= 0)
+				{
+					playJumpSound();
+				}
+				
+				directionY = jumpStart  * (waterResistance + 0.1);
 				falling = true;
 			}
 			
@@ -383,6 +387,7 @@ public abstract class MapObject
 	}
 	public void setHit() { }
 	
+	public boolean getInWater() { return inWater; }
 	public int getLocationX() { return (int)locationX; }
 	public int getLocationY() { return (int)locationY; }
 	public int getWidth() { return (int)width; }

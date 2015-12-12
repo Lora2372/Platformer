@@ -231,10 +231,7 @@ public class ConversationState  extends GameState
 			
 			String tempName = "";
 			
-			int tempWidth = 0;
-			int tempHeight = 0;
-			
-			BufferedImage[] tempIcon = null;
+			BufferedImage[] tempIcon = Content.PortraitEmpty[0];
 			
 			
 			if(conversationTracker >= whoTalks.length)
@@ -247,25 +244,19 @@ public class ConversationState  extends GameState
 			{
 				tempName = player.getName();
 				tempIcon = player.getPortrait();
-				tempWidth = 94;
-				tempHeight = 94;
 			}
 			
 			if(whoTalks[conversationTracker] == 1)
 			{
 				tempName = otherPerson.getName();
 				tempIcon = otherPerson.getPortrait();
-				tempWidth = 94;
-				tempHeight = 94;
 			}
 			
 			if(whoTalks[conversationTracker] == 2)
 			{
 				
 				tempName = doodad.getDoodadName();
-				tempIcon = doodad.getSprites();
-				tempWidth = 60;
-				tempHeight = 60;
+				tempIcon = doodad.getPortrait();
 			}
 			
 			if(whoTalks[conversationTracker] == 4)
@@ -278,8 +269,6 @@ public class ConversationState  extends GameState
 			{
 				tempName = "Unknown";
 				tempIcon = Content.PortraitSuccubus[0];
-				tempWidth = 94;
-				tempHeight = 94;
 			}
 			
 			if(whoTalks[conversationTracker] == 6)
@@ -288,49 +277,36 @@ public class ConversationState  extends GameState
 				{
 					conversation = new String[] { "" };
 					tempName = "";
-					tempIcon = null;
+					tempIcon = Content.PortraitEmpty[0];
 				}
 				else
 				{
 					conversation = new String[] { item.getDescription() };
 					tempName = item.getDescriptionName();
-					tempIcon = item.getSprites();
-					tempWidth = 60;
-					tempHeight = 60;
+					tempIcon = item.getPortrait();
 				}
 			}
 						
 			
 			if(whoTalks[conversationTracker] != 3)
 			{
-				int portraitLocationX = (int)locationX - 104;
-				int portraitLocationY = (int)locationY + 30;
+				int portraitLocationX = (int)locationX - 94;
+				int portraitLocationY = (int)locationY + 20;
 				
-				int portraitWidth = 104;
-				int portraitHeight = 104;
+				int portraitWidth = 94;
+				int portraitHeight = 94;
 				
+
 				graphics.drawImage
-					(
-						Content.BuffIcon[0][0],
-						portraitLocationX,
-						portraitLocationY,
-						portraitWidth,
-						portraitHeight,
-						null
-					);
+				(
+					tempIcon[0],
+					portraitLocationX + 5,
+					portraitLocationY + 5,
+					portraitWidth,
+					portraitHeight,
+					null
+				);
 				
-				if(tempIcon != null)
-				{
-					graphics.drawImage
-						(
-							tempIcon[0],
-							portraitLocationX + 5 + (portraitWidth / 2 - tempWidth / 2),
-							portraitLocationY + 5 + (portraitHeight / 2 - tempHeight / 2),
-							tempWidth,
-							tempHeight,
-							null
-						);
-				}
 				
 				int textLocationX = (int)locationX + 21;
 				int textLocationY = (int)locationY + 25;
