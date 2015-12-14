@@ -163,14 +163,15 @@ public class InventoryState extends GameState
 			graphics.setFont(font);
 			
 		
-			graphics.drawImage(
+			graphics.drawImage
+				(
 					Content.InventoryBackground[0][0],
 					inventoryBackgroundLocationX,
 					inventoryBackgroundLocationY,
 					inventoryBackgroundWidth,
 					inventoryBackgroundHeight,
 					null
-					);
+				);
 	
 			
 			int newX = inventoryBackgroundLocationX + 60;
@@ -229,10 +230,20 @@ public class InventoryState extends GameState
 							);
 					}
 					
-					
-					
-					if(selectedSlotX == j && selectedSlotY == i)
+					if(j == movingItemFromSlotX && i == movingItemFromSlotY && movingItem)
 					{
+						graphics.setColor(Color.RED);
+						graphics.drawRect
+						(					
+							inventorySlotLocationX,
+							inventorySlotLocationY,
+							slotWidth,
+							slotHeight
+						);
+					}
+					else if(j == selectedSlotX && i == selectedSlotY)
+					{
+						
 						graphics.setColor(Color.BLUE);
 						graphics.drawRect
 							(					
@@ -245,14 +256,14 @@ public class InventoryState extends GameState
 					else
 					{
 						graphics.drawImage
-							(
-								Content.InventorySquare[0][0],
-								inventorySlotLocationX,
-								inventorySlotLocationY,
-								slotWidth,
-								slotHeight,
-								null
-							);
+						(
+							Content.InventorySquare[0][0],
+							inventorySlotLocationX,
+							inventorySlotLocationY,
+							slotWidth,
+							slotHeight,
+							null
+						);
 					}
 				}
 			}
@@ -266,7 +277,19 @@ public class InventoryState extends GameState
 	
 	private void select()
 	{
-
+		if(movingItem)
+		{
+			movingItem = false;
+			Item tempItem = items[movingItemFromSlotY][movingItemFromSlotX];
+			items[movingItemFromSlotY][movingItemFromSlotX] = items[selectedSlotY][selectedSlotX];
+			items[selectedSlotY][selectedSlotX] = tempItem;
+		}
+		else
+		{
+			movingItem = true;
+			movingItemFromSlotY = selectedSlotY;
+			movingItemFromSlotX = selectedSlotX;
+		}
 	}
 
 	public void keyPressed(int k) 
@@ -278,7 +301,9 @@ public class InventoryState extends GameState
 			gameStateManager.setPaused(false);
 		}
 		
-		if(k == KeyEvent.VK_ENTER)
+		
+		
+		if(k == KeyEvent.VK_ENTER || k == player.getKeyBind(Player.KeyBind.Interact))
 		{
 			select();
 		}
@@ -287,15 +312,15 @@ public class InventoryState extends GameState
 		{
 			if(selectedSlotX > 0)
 			{
-				selectedSlotX--;
-			}
+				updateChoice(selectedSlotX - 1, selectedSlotY);
+			}	
 		}
 		
 		if(k == player.getKeyBind(Player.KeyBind.MoveRight))
 		{
 			if(selectedSlotX < numberOfColumns - 1)
 			{
-				selectedSlotX++;
+				updateChoice(selectedSlotX + 1, selectedSlotY);
 			}
 		}
 		
@@ -304,7 +329,7 @@ public class InventoryState extends GameState
 		{
 			if(selectedSlotY > 0) 
 			{
-				selectedSlotY --;
+				updateChoice(selectedSlotX, selectedSlotY - 1);
 			}
 		}
 		
@@ -312,7 +337,7 @@ public class InventoryState extends GameState
 		{
 			if(selectedSlotY < numberOfRows - 1) 
 			{
-				selectedSlotY ++;
+				updateChoice(selectedSlotX, selectedSlotY + 1);
 			}
 		}		
 	}
@@ -340,43 +365,45 @@ public class InventoryState extends GameState
 
 	public void mousePressed(MouseEvent mouse) 
 	{
-		for(int y = 0; y < numberOfRows; y++)
-		{
-			for(int x = 0; x < numberOfColumns; x++)
-			{
-				if(mouseRectangle.intersects(inventorySlotRectangles[y][x]))
-				{
-					if(items[y][x] != null)
-					{
-						movingItem = true;
-					}
-					movingItemFromSlotX = x;
-					movingItemFromSlotY = y;
-				}
-			}
-		}
+		select();
+//		for(int y = 0; y < numberOfRows; y++)
+//		{
+//			for(int x = 0; x < numberOfColumns; x++)
+//			{
+//				if(mouseRectangle.intersects(inventorySlotRectangles[y][x]))
+//				{
+//					if(items[y][x] != null)
+//					{
+//						movingItem = true;
+//					}
+//					movingItemFromSlotX = x;
+//					movingItemFromSlotY = y;
+//				}
+//			}
+//		}
 	}
 
 	public void mouseReleased(MouseEvent mouse) 
 	{
-		if(movingItem)
-		{
-			for(int y = 0; y < numberOfRows; y++)
-			{
-				for(int x = 0; x < numberOfColumns; x++)
-				{
-					if(mouseRectangle.intersects(inventorySlotRectangles[y][x]))
-					{
-						if(items[y][x] == null)
-						{
-							items[y][x] = items[movingItemFromSlotY][movingItemFromSlotX];
-							items[movingItemFromSlotY][movingItemFromSlotX] = null;
-						}
-					}
-				}
-			}
-		}
-		movingItem = false;
+		select();
+//		if(movingItem)
+//		{
+//			for(int y = 0; y < numberOfRows; y++)
+//			{
+//				for(int x = 0; x < numberOfColumns; x++)
+//				{
+//					if(mouseRectangle.intersects(inventorySlotRectangles[y][x]))
+//					{
+//						if(items[y][x] == null)
+//						{
+//							items[y][x] = items[movingItemFromSlotY][movingItemFromSlotX];
+//							items[movingItemFromSlotY][movingItemFromSlotX] = null;
+//						}
+//					}
+//				}
+//			}
+//		}
+//		movingItem = false;
 	}
 	
 	public void mouseMoved(MouseEvent mouse) 

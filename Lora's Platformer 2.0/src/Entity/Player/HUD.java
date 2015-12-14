@@ -36,118 +36,143 @@ public class HUD
 		this.player = player;
 		
 		try{
-			playerBar = ImageIO.read(
-					getClass().getResource(
+			playerBar = ImageIO.read
+				(
+					getClass().getResource
+						(
 							"/Art/HUD/Bars/PlayerBar.png"
-							)
-					);
+						)
+				);
 			
-			playerHealthBar = ImageIO.read(
-					getClass().getResource(
+			playerHealthBar = ImageIO.read
+				(
+					getClass().getResource
+						(
 							"/Art/HUD/Bars/PlayerHealthBar.png"
-							)
-					);
+						)
+				);
 			
-			playerManaBar = ImageIO.read(
-					getClass().getResource(
+			playerManaBar = ImageIO.read
+				(
+					getClass().getResource
+						(
 							"/Art/HUD/Bars/PlayerManaBar.png"
-							)
-					);
+						)
+				);
 			
-			playerStaminaBar = ImageIO.read(
-					getClass().getResource(
+			playerStaminaBar = ImageIO.read
+				(
+					getClass().getResource
+						(
 							"/Art/HUD/Bars/PlayerStaminaBar.png"
-							)
-					);
+						)
+				);
 			
-			bossHealthBar = ImageIO.read(
-					getClass().getResource(
+			bossHealthBar = ImageIO.read
+				(
+					getClass().getResource
+						(
 							"/Art/HUD/Bars/BossHealthBar.png"
-							)
-					);
+						)
+				);
 			
 			
 			
-			bossBar = ImageIO.read(
-					getClass().getResource(
+			bossBar = ImageIO.read
+				(
+					getClass().getResource
+						(
 							"/Art/HUD/Bars/BossHealthBarFrame.png"
-							)
-					);
-				
+						)
+				);
+			
 			
 			spellcost.add(ProjectileData.projectileCost.get(ProjectileData.Projectiles.FireBallSmall.toString()));
 			
-			BufferedImage tempImage = ImageIO.read(
-					getClass().getResource(
+			BufferedImage tempImage = ImageIO.read
+				(
+					getClass().getResource
+						(
 							"/Art/HUD/SpellIcons/FireBallSmallUsable.png"
-							)
-					);
+						)
+				);
 			spellbarUsable.add(tempImage);
 			
-			tempImage = ImageIO.read(
-					getClass().getResource(
+			tempImage = ImageIO.read
+				(
+					getClass().getResource
+						(
 							"/Art/HUD/SpellIcons/FireBallSmallUnusable.png"
-							)
-					);
+						)
+				);
 			spellbarUnusable.add(tempImage);
 
 			spellcost.add(ProjectileData.projectileCost.get(ProjectileData.Projectiles.FireBallLarge.toString()));
 
 			
 			
-			tempImage = ImageIO.read(
-					getClass().getResource(
+			tempImage = ImageIO.read
+				(
+					getClass().getResource
+						(
 							"/Art/HUD/SpellIcons/FireBallLargeUsable.png"
-							)
-					);
+						)
+				);
 			spellbarUsable.add(tempImage);
 			
-			tempImage = ImageIO.read(
-					getClass().getResource(
+			tempImage = ImageIO.read
+				(
+					getClass().getResource
+						(
 							"/Art/HUD/SpellIcons/FireBallLargeUnusable.png"
-							)
-					);
+						)
+				);
 			spellbarUnusable.add(tempImage);
 			
 			spellcost.add(player.getDashStaminaCost());
 
 			
 			
-			tempImage = ImageIO.read(
-					getClass().getResource(
+			tempImage = ImageIO.read
+				(
+					getClass().getResource
+						(
 							"/Art/HUD/SpellIcons/DashUsable.png"
-							)
-					);
+						)
+				);
 			spellbarUsable.add(tempImage);
 			
-			tempImage = ImageIO.read(
-					getClass().getResource(
+			tempImage = ImageIO.read
+				(
+					getClass().getResource
+						(
 							"/Art/HUD/SpellIcons/DashUnusable.png"
-							)
-					);
+						)
+				);
 			spellbarUnusable.add(tempImage);
 			
 			spellcost.add(player.getPunchStaminaCost());
 
 			
 			
-			tempImage = ImageIO.read(
-					getClass().getResource(
+			tempImage = ImageIO.read
+				(
+					getClass().getResource
+						(
 							"/Art/HUD/SpellIcons/PunchUsable.png"
-							)
-					);
+						)
+				);
 			spellbarUsable.add(tempImage);
 			
-			tempImage = ImageIO.read(
-					getClass().getResource(
+			tempImage = ImageIO.read
+				(
+					getClass().getResource
+						(
 							"/Art/HUD/SpellIcons/PunchUnusable.png"
-							)
-					);
+						)
+				);
 			spellbarUnusable.add(tempImage);
 
-
-			
-			
 		}catch(Exception e)
 		{
 			e.printStackTrace();
@@ -220,23 +245,23 @@ public class HUD
 			maxValue = player.getMaxStamina();
 			
 			graphics.drawImage
-			(
-				playerStaminaBar, 
-				106, 
-				86, 
-				(int)((currentValue/maxValue) * playerStaminaBar.getWidth()),
-				playerStaminaBar.getHeight(),
-				null
-			);
+				(
+					playerStaminaBar, 
+					106, 
+					86, 
+					(int)((currentValue/maxValue) * playerStaminaBar.getWidth()),
+					playerStaminaBar.getHeight(),
+					null
+				);
 			
 			// Draw the player bar
 			graphics.drawImage
-			(
-				playerBar, 
-				0, 
-				10, 
-				null
-			);
+				(
+					playerBar, 
+					0, 
+					10, 
+					null
+				);
 			
 			
 			// YARR, there be gold and silver a plenty!
@@ -247,26 +272,26 @@ public class HUD
 			int currencyY = GamePanel.HEIGHT - 100;
 			graphics.drawString("" + player.getSilver(), currencyX, currencyY);
 			graphics.drawImage
-			(
-				Content.CoinSilver[0][0],
-				currencyX + 15,
-				currencyY - 20,				
-				30,
-				30,
-				null
-			);
+				(
+					Content.CoinSilver[0][0],
+					currencyX + 15,
+					currencyY - 20,				
+					30,
+					30,
+					null
+				);
 	
 			currencyY += 30;
 			
 			graphics.drawImage
-			(
-				Content.CoinGold[0][0],
-				currencyX + 15,
-				currencyY - 20,
-				30,
-				30,
-				null
-			);		
+				(
+					Content.CoinGold[0][0],
+					currencyX + 15,
+					currencyY - 20,
+					30,
+					30,
+					null
+				);		
 			graphics.drawString("" + player.getGold(), currencyX, currencyY);
 			
 			// The gold is ours, let's head back to the ship!
@@ -285,14 +310,14 @@ public class HUD
 						double locationY = 100;
 						
 						graphics.drawImage
-						(
-							Content.ConversationGUIEndConversation[0][0],
-							(int)locationX - 20,
-							(int)locationY - 20,
-							(int)textWidth + 40,
-							30,
-							null
-						);
+							(
+								Content.ConversationGUIEndConversation[0][0],
+								(int)locationX - 20,
+								(int)locationY - 20,
+								(int)textWidth + 40,
+								30,
+								null
+							);
 						
 						graphics.drawString(questName[questCurrent], (int)locationX, (int)locationY);
 					}
@@ -310,10 +335,24 @@ public class HUD
 				{
 					if( (player.getMana() >= spellcost.get(i) && i < 2) || (player.getStamina() >= spellcost.get(i) && i >=2) )
 					{
-						graphics.drawImage(spellbarUsable.get(i), x + i * spellbarUsable.get(i).getWidth(), y, null);
+						graphics.drawImage
+							(
+								spellbarUsable.get(i),
+								x + i * spellbarUsable.get(i).getWidth(),
+								y,
+								null
+							);
 					}
 					else
-						graphics.drawImage(spellbarUnusable.get(i), x + i * spellbarUsable.get(i).getWidth(), y, null);
+					{
+						graphics.drawImage
+							(
+								spellbarUnusable.get(i),
+								x + i * spellbarUsable.get(i).getWidth(),
+								y,
+								null
+							);
+					}
 				}
 			}
 			
@@ -326,30 +365,33 @@ public class HUD
 				int x = GamePanel.WIDTH / 2 - imageWidth / 2;
 				int y = 20;
 				
-				graphics.drawImage(bossBar,
+				graphics.drawImage
+					(
+						bossBar,
 						x,
 						y,
 						imageWidth,
 						bossBar.getHeight(),
 						null
-						);
+					);
 				
 				currentValue = boss.getHealth();
 				maxValue = boss.getMaxHealth();
 	
-				graphics.drawImage(bossHealthBar, 
+				graphics.drawImage
+					(
+						bossHealthBar, 
 						x, 
 						y, 
 						(int)((currentValue/maxValue) * imageWidth),
 						bossHealthBar.getHeight(),
-						null);			
+						null
+					);
 			}
 		}
 		catch(Exception exception)
 		{
 			exception.printStackTrace();
 		}
-	}
-
-	
+	}	
 }

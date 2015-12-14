@@ -210,13 +210,7 @@ public class PauseState extends GameState
 	
 	public void mouseClicked(MouseEvent mouse) 
 	{
-		for(int i = 0; i < options.length; i++)
-		{
-			if(textRectangles[i].intersects(mouseRectangle))
-			{
-				select();
-			}
-		}
+
 	}
 
 
@@ -232,7 +226,13 @@ public class PauseState extends GameState
 
 	public void mousePressed(MouseEvent mouse) 
 	{
-		
+		for(int i = 0; i < options.length; i++)
+		{
+			if(textRectangles[i].intersects(mouseRectangle))
+			{
+				select();
+			}
+		}
 	}
 
 	public void mouseReleased(MouseEvent mouse) 

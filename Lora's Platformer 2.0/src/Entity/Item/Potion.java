@@ -21,7 +21,7 @@ public class Potion extends Item
 			MapObject owner, 
 			int stacks,
 			String potionType
-		) 
+		)
 	{
 		super
 			(
@@ -40,7 +40,8 @@ public class Potion extends Item
 				owner, 
 				true, 
 				stacks, 
-				true, 
+				true,
+				true,
 				potionType,
 				ItemData.getDescriptionName(potionType),
 				ItemData.getDescription(potionType)

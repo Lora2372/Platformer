@@ -167,8 +167,10 @@ public class LorasCavern extends MainMap
 				}
 			}
 		}
-		
-		liadrin.setHidden(true);
+		if(liadrin != null)
+		{
+			liadrin.setHidden(true);			
+		}
 		
 		player.setCurrentMap(GameStateManager.GameMaps.LorasCavern.toString());
 		
@@ -316,39 +318,35 @@ public class LorasCavern extends MainMap
 	public void useDoodad(Doodad doodad)
 	{
 		try
+		{
+			// Lever that opens the starting "cell"
+			if(doodad.getUniqueID().equals(doodadIDs.StartingCell.toString()))
 			{
-				// Lever that opens the starting "cell"
-				if(doodad.getUniqueID().equals(doodadIDs.StartingCell.toString()))
+				if(doodad.getCurrentAction() == 2)
 				{
-					if(doodad.getCurrentAction() == 2)
-					{
-						openStartingCell(true);
-					}
-					
-					if(doodad.getCurrentAction() == 0)
-					{
-						closeStartingCell(true);
-					}
+					openStartingCell(true);
+				}		
+				if(doodad.getCurrentAction() == 0)
+				{
+					closeStartingCell(true);
+				}
+			}
+			
+			// Lever that opens up to Liadrin
+			if(doodad.getUniqueID().equals(doodadIDs.LiadrinDoor.toString()))
+			{
+				if(doodad.getCurrentAction() == 2)
+				{
+					openLiadrinDoor(true);
+//					conversationState.startConversation(player, null, doodad, conversation.leverToLiadrinOpen(), conversation.leverToLiadrinOpenWhoTalks());
 				}
 				
-				// Lever that opens up to Liadrin
-				if(doodad.getUniqueID().equals(doodadIDs.LiadrinDoor.toString()))
+				if(doodad.getCurrentAction() == 0)
 				{
-					if(doodad.getCurrentAction() == 2)
-					{
-						openLiadrinDoor(true);
-//						conversationState.startConversation(player, null, doodad, conversation.leverToLiadrinOpen(), conversation.leverToLiadrinOpenWhoTalks());
-					}
-					
-					if(doodad.getCurrentAction() == 0)
-					{
-						closeLiadrinDoor(true);
-//						conversationState.startConversation(player, null, doodad, conversation.leverToLiadrinClose(), conversation.leverToLiadrinCloseWhoTalks());
-					}
-					
-					
+					closeLiadrinDoor(true);
+//					conversationState.startConversation(player, null, doodad, conversation.leverToLiadrinClose(), conversation.leverToLiadrinCloseWhoTalks());
 				}
-	
+			}
 		}
 		catch(Exception exception)
 		{
@@ -396,15 +394,18 @@ public class LorasCavern extends MainMap
 			}
 		}
 		
-		
-		if(liadrin.getHidden())
+		if(liadrin != null)
 		{
-			if(player.getLocationX() > 2500 && player.getLocationX() < 2600 && player.getLocationY() > 1850 && player.getLocationY() < 1950)
+			if(liadrin.getHidden())
 			{
-				liadrin.setHidden(false);
-				liadrin.spawn();
+				if(player.getLocationX() > 2500 && player.getLocationX() < 2600 && player.getLocationY() > 1850 && player.getLocationY() < 1950)
+				{
+					liadrin.setHidden(false);
+					liadrin.spawn();
+				}
 			}
 		}
+
 		
 		if(player.getLocationX() < 3750 && player.getLocationY() > 2640)
 		{

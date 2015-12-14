@@ -889,10 +889,20 @@ public class MainMap extends GameState
 		if(key == player.getKeyBind(Player.KeyBind.CastLargeFireBall)) player.setCastingLargeFireBall();
 		if(key == player.getKeyBind(Player.KeyBind.CastPunch)) player.setPunching();
 		if(key == player.getKeyBind(Player.KeyBind.CastDash)) player.setDashing(true);
+		
+		if(key == player.getKeyBind(Player.KeyBind.UseItem1)) player.useItem(0, 0);
+		if(key == player.getKeyBind(Player.KeyBind.UseItem2)) player.useItem(1, 0);
+		if(key == player.getKeyBind(Player.KeyBind.UseItem3)) player.useItem(2, 0);
+		if(key == player.getKeyBind(Player.KeyBind.UseItem4)) player.useItem(3, 0);
+		if(key == player.getKeyBind(Player.KeyBind.UseItem5)) player.useItem(4, 0);
+		
+		if(key == player.getKeyBind(Player.KeyBind.UseItem6)) player.useItem(0, 1);
+		if(key == player.getKeyBind(Player.KeyBind.UseItem7)) player.useItem(1, 1);
+		if(key == player.getKeyBind(Player.KeyBind.UseItem8)) player.useItem(2, 1);
+		if(key == player.getKeyBind(Player.KeyBind.UseItem9)) player.useItem(3, 1);
+		
+		
 		if(key == KeyEvent.VK_G) player.setCastingMagicShield();
-		if(key == KeyEvent.VK_Z) player.drinkPotion(ItemData.Potions.Healing.toString());
-		if(key == KeyEvent.VK_X) player.drinkPotion(ItemData.Potions.Mana.toString());
-		if(key == KeyEvent.VK_C) player.drinkPotion(ItemData.Potions.Stamina.toString());
 		
 		
 		// Note: This is a built in cheat that is not supposed to be used to get the real game experience.

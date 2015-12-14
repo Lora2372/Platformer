@@ -64,51 +64,51 @@ public class OptionState extends GameState implements ChangeListener
 		optionObjects.add(useMouse);
 			
 		ToggleObject displayHealthBars = new ToggleObject
-		(
-			400, 
-			300, 
-			50, 
-			50, 
-			2, 
-			1, 
-			1, 
-			new String[] 
-			{ 
-				"Hide health bars",
-				"Display health bars"
-			}, 
-			new BufferedImage[] 
-			{ 
-				Content.LeverOpened[0][0], 
-				Content.LeverClosed[0][0] 
-			},
-			"displayHealthBars",
-			player
-		);
+			(
+				400, 
+				300, 
+				50, 
+				50, 
+				2, 
+				1, 
+				1, 
+				new String[] 
+				{ 
+					"Hide health bars",
+					"Display health bars"
+				}, 
+				new BufferedImage[] 
+				{ 
+					Content.LeverOpened[0][0], 
+					Content.LeverClosed[0][0] 
+				},
+				"displayHealthBars",
+				player
+			);
 		optionObjects.add(displayHealthBars);
 				
 		ToggleObject displayNamePlates = new ToggleObject
-		(
-			400, 
-			300, 
-			50, 
-			50, 
-			2, 
-			1, 
-			1, 
-			new String[] 
-			{ 
-				"Hide name plates",
-				"Display name plates"
-			}, 
-			new BufferedImage[] 
-			{ 
-				Content.LeverOpened[0][0], 
-				Content.LeverClosed[0][0] 
-			},
-				"displayNamePlates",
-				player
-		);
+			(
+				400, 
+				300, 
+				50, 
+				50, 
+				2, 
+				1, 
+				1, 
+				new String[] 
+				{ 
+					"Hide name plates",
+					"Display name plates"
+				}, 
+				new BufferedImage[] 
+				{ 
+					Content.LeverOpened[0][0], 
+					Content.LeverClosed[0][0] 
+				},
+					"displayNamePlates",
+					player
+			);
 		
 		optionObjects.add(displayNamePlates);
 		
@@ -133,20 +133,20 @@ public class OptionState extends GameState implements ChangeListener
 		optionObjects.add(openKeyBindings);
 		
 		goBack = new OptionObject
-		(
-			GamePanel.WIDTH - 300, 
-			GamePanel.HEIGHT - 200, 
-			188, 
-			68, 
-			1, 
-			1, 
-			1, 
-			new String[] 
-			{ 
-			},
-			Content.ExitButton[0],
-			"Back"
-		);
+			(
+				GamePanel.WIDTH - 300, 
+				GamePanel.HEIGHT - 200, 
+				188, 
+				68, 
+				1, 
+				1, 
+				1, 
+				new String[] 
+				{ 
+				},
+				Content.ExitButton[0],
+				"Back"
+			);
 		optionObjects.add(goBack);
 		
 		
@@ -154,7 +154,6 @@ public class OptionState extends GameState implements ChangeListener
 	
 	public void setPlayer(Player player)
 	{
-//		testButton.setText(player.getName());
 		this.player = player;
 		for(int i = 0; i < optionObjects.size(); i++)
 		{
@@ -181,12 +180,9 @@ public class OptionState extends GameState implements ChangeListener
 		
 	}
 	
-	@SuppressWarnings({ "unused"})
 	public void OpenKeyBindings()
 	{
-		
-		OptionKeyBindFrame optionKeyBindFrame = new OptionKeyBindFrame(player);
-
+		new OptionKeyBindFrame(player);
 	}
 	
 
@@ -277,36 +273,7 @@ public class OptionState extends GameState implements ChangeListener
 
 	public void mouseClicked(MouseEvent mouse) 
 	{
-		Rectangle mouseRectangle = new Rectangle
-			(
-				(int)mouseLocationX,
-				(int)mouseLocationY,
-				1,
-				1
-			);
-		
-		for(int i = 0; i < optionObjects.size(); i++)
-		{
-			OptionObject optionObject = optionObjects.get(i);
-			
-			if(mouseRectangle.intersects(optionObject.getRectangle()))
-			{
-				System.out.println("Object text: " + optionObject.getText());
-				if(optionObject == goBack)
-				{
-					gameStateManager.options(false);
-					return;
-				}
-				
-				if(optionObject == openKeyBindings)
-				{
-					OpenKeyBindings();
-				}
-				
 
-				optionObject.click();
-			}
-		}	
 	}
 
 	public void mouseEntered(MouseEvent mouse) 
@@ -321,7 +288,35 @@ public class OptionState extends GameState implements ChangeListener
 
 	public void mousePressed(MouseEvent mouse) 
 	{
-		
+		Rectangle mouseRectangle = new Rectangle
+				(
+					(int)mouseLocationX,
+					(int)mouseLocationY,
+					1,
+					1
+				);
+			
+			for(int i = 0; i < optionObjects.size(); i++)
+			{
+				OptionObject optionObject = optionObjects.get(i);
+				
+				if(mouseRectangle.intersects(optionObject.getRectangle()))
+				{
+					if(optionObject == goBack)
+					{
+						gameStateManager.options(false);
+						return;
+					}
+					
+					if(optionObject == openKeyBindings)
+					{
+						OpenKeyBindings();
+					}
+					
+
+					optionObject.click();
+				}
+			}
 	}
 
 	public void mouseReleased(MouseEvent mouse) 

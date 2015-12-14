@@ -39,7 +39,8 @@ public class Coin extends Item
 				owner, 
 				true, 
 				stacks, 
-				true, 
+				false,
+				true,
 				coinType,
 				ItemData.getDescriptionName(coinType.toString()),
 				ItemData.getDescription(coinType.toString())

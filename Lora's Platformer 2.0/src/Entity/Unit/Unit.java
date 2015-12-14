@@ -1491,12 +1491,12 @@ public class Unit extends MapObject
 		return buffs;
 	}
 	
-	public void drinkPotion(String potionType)
+	public void useItem(int inventorySlotX, int inventorySlotY)
 	{
-		Item potion = inventory.hasItem(potionType);
-		if(potion != null)
+		Item item = inventory.getItem(inventorySlotX, inventorySlotY);
+		if(item != null && item.getConsumable())
 		{
-			potion.use(this);
+			item.use(this);
 		}
 	}
 	

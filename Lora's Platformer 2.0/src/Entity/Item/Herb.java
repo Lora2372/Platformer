@@ -37,6 +37,7 @@ public class Herb extends Item
 				true,
 				stacks,
 				false,
+				true,
 				herbType,
 				ItemData.getDescriptionName(herbType), 
 				ItemData.getDescription(herbType)

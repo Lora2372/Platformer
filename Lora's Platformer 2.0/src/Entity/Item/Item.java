@@ -28,6 +28,7 @@ public class Item extends MapObject
 	protected MapObject owner; 				// Whatever is carrying it, assuming something/someone is.
 	
 	protected boolean consumable;
+	protected boolean expendable;
 	
 	protected Poff poff;
 	
@@ -59,6 +60,7 @@ public class Item extends MapObject
 			boolean stackable,
 			int stacks,
 			boolean consumable,
+			boolean expendable,
 			String itemType,
 			String descriptionName,
 			String description
@@ -110,6 +112,7 @@ public class Item extends MapObject
 		}
 		
 		this.consumable = consumable;
+		this.expendable = expendable;
 		this.itemType = itemType;
 		
 		setItem();
@@ -157,7 +160,7 @@ public class Item extends MapObject
 	
 	
 	public boolean getConsumable() { return consumable; }
-	
+	public boolean getExpendable() { return expendable; }
 	
 	public String getItemType() { return itemType; }
 	
@@ -230,7 +233,7 @@ public class Item extends MapObject
 	
 	public void use(Unit user)
 	{
-		if(consumable)
+		if(consumable || expendable)
 		{
 			stacks--;
 			if(stacks <= 0)
