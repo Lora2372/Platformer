@@ -29,8 +29,6 @@ public class InventoryState extends GameState
 	protected int numberOfColumns;
 	protected int numberOfRows;
 	protected int numberOfSlots;
-	protected int slotWidth = 60;
-	protected int slotHeight = 60;
 	
 	protected int selectedSlotX = 0;
 	protected int selectedSlotY = 0;
@@ -89,8 +87,7 @@ public class InventoryState extends GameState
 		numberOfSlots = numberOfColumns * numberOfRows;
 		
 		inventorySlotRectangles = new Rectangle[numberOfRows][numberOfColumns];
-		
-		
+				
 		this.items = inventory.getItems();
 
 		try
@@ -120,6 +117,10 @@ public class InventoryState extends GameState
 	
 	public void update()
 	{
+		if(inventory.getNumberOfColumns() != numberOfColumns || inventory.getNumberOfRows() != numberOfRows)
+		{
+			initialize(player);
+		}
 	}
 	
 	public void saveToRAM()
@@ -185,8 +186,12 @@ public class InventoryState extends GameState
 			int spacingY = newHeight / numberOfRows;
 			
 			
+			inventorySlotWidth = inventorySlotWidth < spacingX - 5 ? inventorySlotWidth : spacingX - 5;
+			inventorySlotHeight = inventorySlotHeight < spacingY - 5 ? inventorySlotHeight : spacingY - 5;
+			
+			
 			mouseRectangle = new Rectangle((int)mouseLocationX, (int)mouseLocationY, 1, 1);
-	
+			
 			
 			for(int i = 0; i < numberOfRows; i++)
 			{
@@ -216,8 +221,8 @@ public class InventoryState extends GameState
 								items[i][j].getSprites()[0],
 								inventorySlotLocationX,
 								inventorySlotLocationY,
-								items[i][j].getWidth(),
-								items[i][j].getHeight(),
+								inventorySlotWidth,
+								inventorySlotHeight,
 								null
 							);
 						
@@ -237,8 +242,8 @@ public class InventoryState extends GameState
 						(					
 							inventorySlotLocationX,
 							inventorySlotLocationY,
-							slotWidth,
-							slotHeight
+							inventorySlotWidth,
+							inventorySlotHeight
 						);
 					}
 					else if(j == selectedSlotX && i == selectedSlotY)
@@ -249,8 +254,8 @@ public class InventoryState extends GameState
 							(					
 								inventorySlotLocationX,
 								inventorySlotLocationY,
-								slotWidth,
-								slotHeight
+								inventorySlotWidth,
+								inventorySlotHeight
 							);
 					}
 					else
@@ -260,8 +265,8 @@ public class InventoryState extends GameState
 							Content.InventorySquare[0][0],
 							inventorySlotLocationX,
 							inventorySlotLocationY,
-							slotWidth,
-							slotHeight,
+							inventorySlotWidth,
+							inventorySlotHeight,
 							null
 						);
 					}
@@ -301,7 +306,11 @@ public class InventoryState extends GameState
 			gameStateManager.setPaused(false);
 		}
 		
-		
+		if(k == player.getKeyBind(Player.KeyBind.TossItem))
+		{
+			items[selectedSlotY][selectedSlotX].drop();
+			items[selectedSlotY][selectedSlotX] = null;
+		}
 		
 		if(k == KeyEvent.VK_ENTER || k == player.getKeyBind(Player.KeyBind.Interact))
 		{

@@ -6,6 +6,7 @@ import javax.imageio.ImageIO;
 import Entity.Animation;
 import Entity.MapObject;
 import Entity.Doodad.*;
+import Entity.Doodad.Activatable.DoodadData;
 import Entity.Item.Item;
 import Entity.Player.Buff;
 import Entity.Player.Player;
@@ -38,11 +39,8 @@ public class Unit extends MapObject
 	protected int silver;
 	protected int gold;
 	
-	public enum soundTypes { Attack, Hurt, Jump , Loot, CannotOpen, Chargeup, Hit, Recover}
+	public enum soundTypes { Attack, Hurt, Jump , Loot, CannotCarry, CannotOpen, Chargeup, Hit, Recover}
 	
-	protected int numberofAttackSounds;
-	protected int numberofHurtSounds;
-	protected int numberofJumpSounds;
 	
 	protected int[] numberofSounds;
 	
@@ -1473,6 +1471,11 @@ public class Unit extends MapObject
 		} // End for loop		
 	}
 	
+	public void emoteExclamation()
+	{
+		mainMap.spawnDoodad.spawnEmotionBubble(locationX + width / 2, locationY - height / 2, DoodadData.EmotionBubbles.Exclamation);
+	}
+	
 	public void addBuff(Buff buff)
 	{
 		for(int i = 0; i < buffs.size(); i++)
@@ -1540,9 +1543,17 @@ public class Unit extends MapObject
 		JukeBox.play(unitType + soundTypes.Loot + (RNG < 10 ? "0" : "") + RNG);	
 	}
 	
-	public void playCannotOpenSound()
+	public void playCannotCarrySound()
 	{
 		int RNG = mainMap.RNG(1, numberofSounds[4]);
+		if(RNG == -1)
+			return;
+		JukeBox.play(unitType + soundTypes.CannotCarry + (RNG < 10 ? "0" : "") + RNG);	
+	}
+	
+	public void playCannotOpenSound()
+	{
+		int RNG = mainMap.RNG(1, numberofSounds[5]);
 		if(RNG == -1)
 			return;
 		JukeBox.play(unitType + soundTypes.CannotOpen + (RNG < 10 ? "0" : "") + RNG);	
@@ -1550,7 +1561,7 @@ public class Unit extends MapObject
 	
 	public void playHitSound()
 	{
-		int RNG = mainMap.RNG(1, numberofSounds[6]);
+		int RNG = mainMap.RNG(1, numberofSounds[7]);
 		if(RNG == -1)
 			return;
 		JukeBox.play(unitType + soundTypes.Hit + (RNG < 10 ? "0" : "") + RNG);
@@ -1558,7 +1569,7 @@ public class Unit extends MapObject
 	
 	public void playRecoverSound()
 	{
-		int RNG = mainMap.RNG(1, numberofSounds[7]);
+		int RNG = mainMap.RNG(1, numberofSounds[8]);
 		if(RNG == -1)
 			return;
 		JukeBox.play(unitType + soundTypes.Recover + (RNG < 10 ? "0" : "") + RNG);

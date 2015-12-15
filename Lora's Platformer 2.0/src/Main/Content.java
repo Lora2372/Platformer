@@ -74,6 +74,8 @@ public class Content
 	
 	public static BufferedImage[][] HerbSun					= load("/Art/Sprites/Doodads/HerbSun.png", 21, 17);
 	
+	public static BufferedImage[][] EmotionBubbleExclamation = load("/Art/HUD/EmotionBubbleExclamation.png", 32, 30);
+	
 	
 	//Effects
 	public static BufferedImage[][] Teleport 				= load("/Art/Sprites/Effects/Teleport.png", 192, 192);
@@ -99,7 +101,7 @@ public class Content
 	public static BufferedImage[][] PortraitPlayer			= load("/Art/HUD/Portraits/PortraitPlayer.png", 94, 94);
 	public static BufferedImage[][] PortraitSuccubus		= load("/Art/HUD/Portraits/PortraitSuccubus.png", 94, 94);
 	
-	public static BufferedImage[][] PortraitEmpty		= load("/Art/HUD/Portraits/PortraitEmpty.png", 94, 94);
+	public static BufferedImage[][] PortraitEmpty			= load("/Art/HUD/Portraits/PortraitEmpty.png", 94, 94);
 	
 	public static BufferedImage[][] PortraitCampFire		= load("/Art/HUD/Portraits/PortraitCampFire.png", 94, 94);
 	public static BufferedImage[][] PortraitChestCommon		= load("/Art/HUD/Portraits/PortraitChestCommon.png", 94, 94);

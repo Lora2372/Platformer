@@ -1,10 +1,12 @@
 package GameState.MainMap;
 
+import Entity.Doodad.EmotionBubble;
 import Entity.Doodad.SummoningEffect;
 import Entity.Doodad.Torch;
 import Entity.Doodad.Waterfall;
 import Entity.Doodad.Activatable.CampFire;
 import Entity.Doodad.Activatable.Chest;
+import Entity.Doodad.Activatable.DoodadData;
 import Entity.Doodad.Activatable.Door;
 import Entity.Doodad.Activatable.Lever;
 import Entity.Doodad.Activatable.Sign;
@@ -32,7 +34,12 @@ public class SpawnDoodad
 	{
 		SummoningEffect summoningEffect = new SummoningEffect(mainMap.tileMap, mainMap, locationX, locationY);
 		mainMap.stuff.add(summoningEffect);
-		
+	}
+	
+	public void spawnEmotionBubble(double locationX, double locationY, DoodadData.EmotionBubbles emotionBubbleType)
+	{
+		EmotionBubble emotionBubble = new EmotionBubble(mainMap.tileMap, mainMap, locationX, locationY, emotionBubbleType);
+		mainMap.stuff.add(emotionBubble);
 	}
 	
 	public void spawnTorch(double locationX, double locationY)

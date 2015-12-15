@@ -52,6 +52,11 @@ public class DoodadData
 		Rare
 	}
 	
+	public static enum EmotionBubbles
+	{
+		Exclamation
+	}
+	
 	public static enum Other
 	{
 		CampFire,

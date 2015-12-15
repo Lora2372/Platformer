@@ -43,7 +43,6 @@ public class Key extends Item
 				ItemData.getDescriptionName(keyType.toString()),
 				ItemData.getDescription(keyType.toString())
 			);
-
 	}
 	
 	public void setItem()

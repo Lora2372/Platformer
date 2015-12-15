@@ -61,6 +61,7 @@ public class Player extends Unit
 		UseItem7,
 		UseItem8,
 		UseItem9,
+		TossItem,
 		OpenInventory
 	};
 	
@@ -87,6 +88,7 @@ public class Player extends Unit
 		KeyEvent.VK_7,
 		KeyEvent.VK_8,
 		KeyEvent.VK_9,
+		KeyEvent.VK_R,
 		KeyEvent.VK_B
 		
 	};

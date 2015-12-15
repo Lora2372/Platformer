@@ -83,6 +83,13 @@ public class ItemData
 		Sun
 	}
 	
+	public static enum BackPacks
+	{
+		Small,
+		Medium,
+		Large
+	}
+	
 	public static HashMap<String, String> itemDescriptionName = new HashMap<String, String>();
 
 	public static HashMap<String, String> itemDescription = new HashMap<String, String>();

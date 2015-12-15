@@ -4,12 +4,13 @@ import java.util.ArrayList;
 
 import Entity.MapObject;
 import Entity.Item.Item;
+import Entity.Item.ItemData;
 
 public class Inventory 
 {
 	
-	protected int maxColumns = 5;
-	protected int maxRows = 5;
+	protected int maxColumns = 10;
+	protected int maxRows = 10;
 	
 	protected int numberOfColumns;
 	protected int numberOfRows;
@@ -27,6 +28,7 @@ public class Inventory
 		)
 	{
 		
+		
 		if(numberOfColumns > maxColumns)
 			this.numberOfColumns = maxColumns;
 		else
@@ -39,7 +41,7 @@ public class Inventory
 		
 		this.owner = owner;
 		
-		this.items = new Item[this.numberOfColumns][this.numberOfRows];
+		this.items = new Item[maxRows][maxColumns];
 		if(items != null)
 		{
 			for(int i = 0; i < items.size(); i++)
@@ -47,7 +49,49 @@ public class Inventory
 				addItem(items.get(i));
 			}
 		}
-
+	}
+	
+	public void addInventorySlots(ItemData.BackPacks backpack)
+	{
+		int slotsToAdd = 0;
+		if(backpack.equals(ItemData.BackPacks.Small))
+		{
+			slotsToAdd = 5;
+		}
+		
+		if(backpack.equals(ItemData.BackPacks.Medium))
+		{
+			slotsToAdd = 10;
+		}
+		
+		if(backpack.equals(ItemData.BackPacks.Large))
+		{
+			slotsToAdd = 15;
+		}
+		
+		while(slotsToAdd > 0)
+		{
+			if(numberOfRows < maxRows)
+			{
+				numberOfRows++;
+				slotsToAdd -= numberOfColumns;
+			}
+			else if(numberOfColumns < maxColumns)
+			{
+				numberOfColumns++;
+				slotsToAdd -= numberOfRows;
+			}
+			else
+			{
+				System.out.println("-------Inventory.java 86-------");
+				System.out.println("numberOfRows: " + numberOfRows + "\nmaxRows: " + maxRows + "\nnumberOfColumns: " + numberOfColumns + "\nmaxColumns: " + maxColumns);
+				System.out.println("-------------------------------");
+				slotsToAdd = 0;
+				Exception exception = new Exception();
+				exception.printStackTrace();
+			}
+		}
+		
 	}
 	
 	
@@ -58,7 +102,7 @@ public class Inventory
 		item.setOwner(owner);
 		
 		Item tempItem = hasItem(item.getItemType());
-		if(tempItem != null)
+		if(tempItem != null && tempItem.getStackable())
 		{
 			tempItem.setStacks(tempItem.getStacks() + item.getStacks());
 			return true;
@@ -74,6 +118,12 @@ public class Inventory
 					return true;
 				}
 			}
+		}
+		item.drop();
+		if(owner != null)
+		{
+			owner.emoteExclamation();
+			owner.playCannotCarry();
 		}
 		System.out.println("Item could not be added.");
 		return false;
@@ -104,19 +154,27 @@ public class Inventory
 	
 	public Item hasItem(String itemType)
 	{
-		for(int i = 0; i < numberOfRows; i++)
+		try
 		{
-			for(int j = 0; j < numberOfColumns; j++)
+			for(int i = 0; i < numberOfRows; i++)
 			{
-				if(items[i][j] != null)
+				for(int j = 0; j < numberOfColumns; j++)
 				{
-					if(items[i][j].getItemType().equals(itemType))
+					if(items[i][j] != null)
 					{
-						return items[i][j];
+						if(items[i][j].getItemType().equals(itemType))
+						{
+							return items[i][j];
+						}
 					}
 				}
 			}
 		}
+		catch(Exception exception)
+		{
+			exception.printStackTrace();
+		}
+
 		return null;
 	}
 	

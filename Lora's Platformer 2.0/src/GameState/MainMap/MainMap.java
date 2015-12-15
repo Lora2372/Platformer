@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import Main.GamePanel;
 import TileMap.*;
 import Entity.Explosion.Explosion;
+import Entity.Item.BackPack;
 import Entity.Item.Coin;
 import Entity.Item.ItemData;
 import Entity.Item.Item;
@@ -64,9 +65,9 @@ public class MainMap extends GameState
 	
 	protected String currentMap;
 	
-	protected SpawnUnit spawnUnit;
-	protected SpawnDoodad spawnDoodad;
-	protected SpawnItem spawnItem;
+	public SpawnUnit spawnUnit;
+	public SpawnDoodad spawnDoodad;
+	public SpawnItem spawnItem;
 	
 	
 	protected Liadrin liadrin;
@@ -903,6 +904,15 @@ public class MainMap extends GameState
 		
 		
 		if(key == KeyEvent.VK_G) player.setCastingMagicShield();
+		if(key == KeyEvent.VK_H) player.emoteExclamation();
+		// Note: This is a built in cheat that is not supposed to be used to get the real game experience.
+		if(key == KeyEvent.VK_I)
+		{
+			BackPack myBackPack = new BackPack(tileMap, this, false, 0, 0, player, 1, ItemData.BackPacks.Small);
+			player.getInventory().addItem(myBackPack);
+			items.add(myBackPack);
+		}
+		
 		
 		
 		// Note: This is a built in cheat that is not supposed to be used to get the real game experience.

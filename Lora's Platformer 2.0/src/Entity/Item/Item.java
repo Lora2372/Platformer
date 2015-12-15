@@ -2,8 +2,6 @@ package Entity.Item;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.util.Random;
-
 import Entity.MapObject;
 import Entity.Doodad.Poff;
 import Entity.Player.Player;
@@ -127,19 +125,18 @@ public class Item extends MapObject
 		locationY = owner.getLocationY();
 		inWorld = true;
 		
-		Random random = new Random();
-		int maxX = 30;
-		int minX = -30;
+		int maxX = 5;
+		int minX = -5;
 		
-		int maxY = -10;
-		int minY = -80;
+		int maxY = -4;
+		int minY = -8;
 		
+		directionX = mainMap.RNG(minX, maxX);
+		directionY = mainMap.RNG(minY, maxY);
 		
-		directionX =  (random.nextInt((maxX - minX) + 1) + minX);
-		directionY = (random.nextInt((maxY - minY) + 1) + minY);
-		
-		directionX /= 10;
-		directionY /= 10;
+		directionX = directionX < 2 && directionX > 0 ? 2 : directionX;
+		directionX = directionX > -2 && directionX <= 0 ? -2 : directionX;
+
 		setOwner(null);
 		
 	}

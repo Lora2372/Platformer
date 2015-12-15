@@ -116,6 +116,8 @@ public class OptionKeyBindFrame extends JFrame
 			labels.add(newLabel);
 		}
 		
+		newLabel = new JLabel("Toss item:");
+		labels.add(newLabel);
 		newLabel = new JLabel("Open inventory:");
 		labels.add(newLabel);
 		

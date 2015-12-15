@@ -103,7 +103,7 @@ public abstract class MapObject
 	// Constructor
 	public MapObject(TileMap tileMap)
 	{
-		inventory = new Inventory(5, 5, null, this);
+		inventory = new Inventory(5, 1, null, this);
 		
 		if(tileMap == null) return;
 		this.tileMap = tileMap;
@@ -275,7 +275,13 @@ public abstract class MapObject
 
 	}
 	
+	public void emoteExclamation()
+	{
+	}
+	
 	public void playJumpSound() { }
+	
+	public void playCannotCarry() { }
 	
 	public void checkTileMapCollision() throws Exception
 	{
