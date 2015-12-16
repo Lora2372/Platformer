@@ -76,6 +76,10 @@ public class Content
 	
 	public static BufferedImage[][] EmotionBubbleExclamation = load("/Art/HUD/EmotionBubbleExclamation.png", 32, 30);
 	
+	public static BufferedImage[][] BagSmall				 = load("/Art/Sprites/Doodads/BagSmall.png", 28, 27);
+	public static BufferedImage[][] BagMedium				 = load("/Art/Sprites/Doodads/BagMedium.png", 28, 27);
+	
+	
 	
 	//Effects
 	public static BufferedImage[][] Teleport 				= load("/Art/Sprites/Effects/Teleport.png", 192, 192);
@@ -119,6 +123,9 @@ public class Content
 	public static BufferedImage[][] PortraitStatueSave		= load("/Art/HUD/Portraits/PortraitStatueSave.png", 94, 94);
 	public static BufferedImage[][] PortraitDoorBoss		= load("/Art/HUD/Portraits/PortraitDoorBoss.png", 94, 94);
 	public static BufferedImage[][] PortraitDoorVillage		= load("/Art/HUD/Portraits/PortraitDoorVillage.png", 94, 94);
+	public static BufferedImage[][] PortraitBagSmall		= load("/Art/HUD/Portraits/PortraitBagSmall.png", 94, 94);
+	public static BufferedImage[][] PortraitBagMedium		= load("/Art/HUD/Portraits/PortraitBagMedium.png", 94, 94);
+	
 	
 	// Buttons
 	public static BufferedImage[][] EditKeyBindingsButton	= load("/Art/HUD/Buttons/EditKeyBindingButton.png", 188, 68);
@@ -170,6 +177,11 @@ public class Content
 			for(int i = 1; i <= 3; i++)
 			{
 				JukeBox.load("/Sound/CharacterSounds/Player/CannotOpen" + (i < 10 ? "0" : "")+ i + ".mp3", "PlayerCannotOpen" + (i < 10 ? "0" : "")+ i);
+			}
+			
+			for(int i = 1; i <= 8; i++)
+			{
+				JukeBox.load("/Sound/CharacterSounds/Player/CannotCarry" + (i < 10 ? "0" : "")+ i + ".mp3", "PlayerCannotCarry" + (i < 10 ? "0" : "")+ i);
 			}
 			
 			for(int i = 1; i <= 6; i++)

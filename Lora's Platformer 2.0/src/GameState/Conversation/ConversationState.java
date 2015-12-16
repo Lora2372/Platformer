@@ -457,20 +457,6 @@ public class ConversationState  extends GameState
 	
 	public void mouseClicked(MouseEvent mouse) 
 	{
-		if(conversationRectangle.intersects(mouseRectangle))
-		{
-			Robot myRobot;
-			try 
-			{
-				myRobot = new Robot();
-				myRobot.keyPress(player.getKeyBind(Player.KeyBind.Interact));
-				myRobot.keyRelease(player.getKeyBind(Player.KeyBind.Interact));
-			} catch (AWTException exception) 
-			{
-				exception.printStackTrace();
-			}
-
-		}
 	}
 
 
@@ -486,7 +472,20 @@ public class ConversationState  extends GameState
 
 	public void mousePressed(MouseEvent mouse) 
 	{
-		
+		if(conversationRectangle.intersects(mouseRectangle))
+		{
+			Robot myRobot;
+			try 
+			{
+				myRobot = new Robot();
+				myRobot.keyPress(player.getKeyBind(Player.KeyBind.Interact));
+				myRobot.keyRelease(player.getKeyBind(Player.KeyBind.Interact));
+			} catch (AWTException exception) 
+			{
+				exception.printStackTrace();
+			}
+
+		}
 	}
 
 	public void mouseReleased(MouseEvent mouse) 

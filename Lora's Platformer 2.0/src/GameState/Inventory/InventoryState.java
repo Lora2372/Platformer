@@ -186,8 +186,19 @@ public class InventoryState extends GameState
 			int spacingY = newHeight / numberOfRows;
 			
 			
-			inventorySlotWidth = inventorySlotWidth < spacingX - 5 ? inventorySlotWidth : spacingX - 5;
-			inventorySlotHeight = inventorySlotHeight < spacingY - 5 ? inventorySlotHeight : spacingY - 5;
+			
+			if(inventorySlotWidth > spacingX - 5)
+			{
+				System.out.println("inventorySlotWidth: " + inventorySlotWidth + "}\nspacingX -5: " + (spacingX -5));
+				inventorySlotWidth = spacingX - 5;
+			}
+			
+			if(inventorySlotHeight > spacingY - 5)
+			{
+				System.out.println("inventorySlotHeight: " + inventorySlotHeight + "}\nspacingY -5: " + (spacingY -5));
+				inventorySlotHeight = spacingY - 5;
+			}
+			
 			
 			
 			mouseRectangle = new Rectangle((int)mouseLocationX, (int)mouseLocationY, 1, 1);
@@ -198,7 +209,7 @@ public class InventoryState extends GameState
 				for(int j = 0; j < numberOfColumns; j++)
 				{
 					int inventorySlotLocationX = newX + spacingX * j;
-					int inventorySlotLocationY = newY + spacingY * i;
+					int inventorySlotLocationY = newY + (inventorySlotHeight + 5) * i;
 					
 					inventorySlotRectangles[i][j] = new Rectangle
 						(
@@ -310,6 +321,11 @@ public class InventoryState extends GameState
 		{
 			items[selectedSlotY][selectedSlotX].drop();
 			items[selectedSlotY][selectedSlotX] = null;
+		}
+		
+		if(k == KeyEvent.VK_W)
+		{
+			items[selectedSlotY][selectedSlotX].use(player);
 		}
 		
 		if(k == KeyEvent.VK_ENTER || k == player.getKeyBind(Player.KeyBind.Interact))

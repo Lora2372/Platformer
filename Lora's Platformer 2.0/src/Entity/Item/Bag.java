@@ -6,12 +6,12 @@ import GameState.MainMap.MainMap;
 import Main.Content;
 import TileMap.TileMap;
 
-public class BackPack extends Item
+public class Bag extends Item
 {
 
-	protected ItemData.BackPacks backpackType;
+	protected ItemData.Bags BagType;
 	
-	public BackPack
+	public Bag
 		(
 			TileMap tileMap,
 			MainMap mainMap,
@@ -20,7 +20,7 @@ public class BackPack extends Item
 			double locationY, 
 			MapObject owner, 
 			int stacks,
-			ItemData.BackPacks backpackType
+			ItemData.Bags BagType
 		)
 	{
 		super
@@ -42,21 +42,26 @@ public class BackPack extends Item
 				stacks, 
 				true,
 				true,
-				backpackType.toString(),
-				ItemData.getDescriptionName(backpackType.toString()),
-				ItemData.getDescription(backpackType.toString())
+				BagType.toString(),
+				ItemData.getDescriptionName(BagType.toString()),
+				ItemData.getDescription(BagType.toString())
 			);
 		
-		this.backpackType = backpackType;
+		this.BagType = BagType;
 
 	}
 	
 	public void setItem()
 	{
-		if(itemType.equals(ItemData.BackPacks.Small.toString()))
+		if(itemType.equals(ItemData.Bags.Small.toString()))
 		{
-			sprites = Content.PotionHealth[0];
-			portrait = Content.PortraitPotionHealing[0];
+			sprites = Content.BagSmall[0];
+			portrait = Content.PortraitBagSmall[0];
+		}
+		else if(itemType.equals(ItemData.Bags.Medium.toString()))
+		{
+			sprites = Content.BagMedium[0];
+			portrait = Content.PortraitBagMedium[0];
 		}
 
 	}
@@ -65,7 +70,7 @@ public class BackPack extends Item
 	{
 		super.use(user);
 
-		user.getInventory().addInventorySlots(backpackType);
+		user.getInventory().addInventorySlots(BagType);
 	}
 	
 	public void playSound()

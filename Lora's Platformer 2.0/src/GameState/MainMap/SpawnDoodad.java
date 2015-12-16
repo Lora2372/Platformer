@@ -64,9 +64,9 @@ public class SpawnDoodad
 		mainMap.stuff.add(activatableSign);
 	}
 	
-	public Door spawnDoor(double locationX, double locationY, boolean locked, int currentAction, String doorType)
+	public Door spawnDoor(double locationX, double locationY, boolean locked, String uniqueID, int currentAction, String doorType)
 	{
-		Door door = new Door(mainMap.tileMap, mainMap, mainMap.getGameStateManager(), locationX, locationY, locked, currentAction, doorType);
+		Door door = new Door(mainMap.tileMap, mainMap, mainMap.getGameStateManager(), locationX, locationY, locked, uniqueID, currentAction, doorType);
 		if(currentAction == 2)
 		{
 			door.setActive(true);

@@ -51,20 +51,20 @@ public class Inventory
 		}
 	}
 	
-	public void addInventorySlots(ItemData.BackPacks backpack)
+	public void addInventorySlots(ItemData.Bags Bag)
 	{
 		int slotsToAdd = 0;
-		if(backpack.equals(ItemData.BackPacks.Small))
+		if(Bag.equals(ItemData.Bags.Small))
 		{
 			slotsToAdd = 5;
 		}
 		
-		if(backpack.equals(ItemData.BackPacks.Medium))
+		if(Bag.equals(ItemData.Bags.Medium))
 		{
 			slotsToAdd = 10;
 		}
 		
-		if(backpack.equals(ItemData.BackPacks.Large))
+		if(Bag.equals(ItemData.Bags.Large))
 		{
 			slotsToAdd = 15;
 		}
@@ -123,7 +123,7 @@ public class Inventory
 		if(owner != null)
 		{
 			owner.emoteExclamation();
-			owner.playCannotCarry();
+			owner.playCannotCarrySound();
 		}
 		System.out.println("Item could not be added.");
 		return false;

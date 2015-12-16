@@ -43,6 +43,10 @@ public class ItemData
 		
 		itemDescriptionName.put(Herbs.Sun.toString(), "Sun Herb");
 		
+		itemDescriptionName.put(Bags.Small.toString(), "Small Bag");
+		itemDescriptionName.put(Bags.Medium.toString(), "Medium Bag");
+		
+		
 		itemDescription = new HashMap<String, String>();
 		itemDescription.put(Potions.Healing.toString(), "A magical red potion which heals wounds when consumed.");
 		itemDescription.put(Potions.Mana.toString(), "A magical blue potion which replenishes mana when consumed.");
@@ -54,8 +58,12 @@ public class ItemData
 		
 		itemDescription.put(Coins.Silver.toString(), "Common currency of the realm.");
 		itemDescription.put(Coins.Gold.toString(), "Rare currency of the realm.");
-		
+
 		itemDescription.put(Herbs.Sun.toString(), "A common herb used in alchemy.");
+		
+
+		itemDescription.put(Bags.Small.toString(), "A small sized bag increasing your inventory by five slots.");
+		itemDescription.put(Bags.Medium.toString(), "A medium sized bag increasing your inventory by ten slots.");
 	}
 	
 	public static enum Potions
@@ -83,7 +91,7 @@ public class ItemData
 		Sun
 	}
 	
-	public static enum BackPacks
+	public static enum Bags
 	{
 		Small,
 		Medium,

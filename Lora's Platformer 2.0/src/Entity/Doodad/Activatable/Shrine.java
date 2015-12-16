@@ -14,7 +14,8 @@ public class Shrine extends Doodad
 			TileMap tileMap,
 			MainMap mainMap,
 			double spawnLocationX,
-			double spawnLocationY
+			double spawnLocationY,
+			String uniqueID
 		) 
 	{
 		super
@@ -39,7 +40,7 @@ public class Shrine extends Doodad
 				DoodadData.doodadName.get("Shrine")
 			);
 		
-		
+		this.uniqueID = uniqueID;
 	}
 	
 	public void setDoodad(int currentAction)

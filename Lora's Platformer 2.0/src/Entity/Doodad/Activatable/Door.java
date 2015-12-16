@@ -8,8 +8,6 @@ import GameState.GameStateManager;
 import GameState.Conversation.ConversationData;
 import GameState.Conversation.ConversationState;
 import GameState.MainMap.MainMap;
-import GameState.Maps.FionasSanctum;
-import GameState.Maps.MysteriousDungeon;
 import Main.Content;
 import TileMap.TileMap;
 
@@ -38,6 +36,7 @@ public class Door extends Doodad
 			double spawnLocationX,
 			double spawnLocationY,
 			boolean locked,
+			String uniqueID,
 			int currentAction,
 			String doorType
 		) 
@@ -64,6 +63,7 @@ public class Door extends Doodad
 			DoodadData.doodadName.get(doorType)
 		);
 		
+		this.uniqueID = uniqueID;
 		this.locked = locked;
 		this.doorName = DoodadData.doodadName.get(doodadType);
 		
@@ -138,18 +138,7 @@ public class Door extends Doodad
 			}
 			if(!player.getInConversation())
 			{
-				if(gameStateManager.getCurrentState() == GameStateManager.MysteriousDungeon)
-				{
-
-					player.setSpawnPoint(FionasSanctum.startLocationX, FionasSanctum.startLocationY);
-					
-					gameStateManager.setState(GameStateManager.FionasSanctum);
-				}
-				else if(gameStateManager.getCurrentState() == GameStateManager.FionasSanctum)
-				{
-					player.setSpawnPoint(MysteriousDungeon.doorLocationX, MysteriousDungeon.doorLocationY);
-					gameStateManager.setState(GameStateManager.MysteriousDungeon);
-				}
+				mainMap.useDoodad(this);
 			}
 			
 			if(player.getInConversation())

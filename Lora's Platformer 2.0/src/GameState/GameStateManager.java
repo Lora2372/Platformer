@@ -34,7 +34,8 @@ public class GameStateManager
 		LorasCavern,
 		MysteriousDungeon,
 		FionasSanctum,
-		DeepWoods
+		DeepWoods,
+		Inn
 	}
 	
 	public static final int NUMGAMESTATES = GameMaps.values().length + 1;
@@ -44,6 +45,7 @@ public class GameStateManager
 	public static final int MysteriousDungeon = 3;
 	public static final int FionasSanctum = 4;
 	public static final int DeepWoods = 5;
+	public static final int Inn = 6;
 	
 
 	
@@ -126,6 +128,11 @@ public class GameStateManager
 		{
 			JukeBox.loop("DeepWoods");
 			gameStates[state] = new DeepWoods(this, tileMap, player, conversationState);			
+		}
+		else if(state == Inn)
+		{
+			JukeBox.loop("MysteriousConversation");
+			gameStates[state] = new DeepWoodsInn(this, tileMap, player, conversationState);			
 		}
 	}
 	

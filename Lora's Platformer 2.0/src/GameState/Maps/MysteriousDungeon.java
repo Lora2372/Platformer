@@ -34,7 +34,8 @@ public class MysteriousDungeon extends MainMap
 	
 	protected enum doodadIDs
 	{
-		BossKeyDoor
+		BossKeyDoor,
+		BossDoor
 	};
 	
 	public MysteriousDungeon
@@ -94,7 +95,7 @@ public class MysteriousDungeon extends MainMap
 			
 			spawnDoodad.spawnLever(1200, 1580, doodadIDs.BossKeyDoor.toString(), 0);
 			
-			door = spawnDoodad.spawnDoor(doorLocationX,  doorLocationY, true, 0, DoodadData.Doors.Boss.toString());
+			door = spawnDoodad.spawnDoor(doorLocationX,  doorLocationY, true, doodadIDs.BossDoor.toString(), 0, DoodadData.Doors.Boss.toString());
 			
 			player.setPosition(startLocationX, startLocationY);
 			player.setSpawnPoint(startLocationX, startLocationY);
@@ -214,7 +215,7 @@ public class MysteriousDungeon extends MainMap
 	
 	public void useDoodad(Doodad doodad)
 	{
-		if(doodad.getDoodadType().equals(DoodadData.Other.Lever.toString()))
+		if(doodad.getUniqueID().equals(doodadIDs.BossKeyDoor.toString()))
 		{
 			try
 			{
@@ -233,6 +234,14 @@ public class MysteriousDungeon extends MainMap
 				exception.printStackTrace();
 			}
 		}
+		
+		if(doodad.getUniqueID().equals(doodadIDs.BossDoor.toString()))
+		{
+			player.setSpawnPoint(FionasSanctum.startLocationX, FionasSanctum.startLocationY);
+			
+			gameStateManager.setState(GameStateManager.FionasSanctum);
+		}
+		
 	}
 	
 	public void update()

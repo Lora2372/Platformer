@@ -128,7 +128,7 @@ public class Fiona extends Unit
 		
 		if(!stunned)
 		{
-			if(!owner.getName().equals(name))
+			if(!owner.getName().equals(name) && damage != 9001)
 			{
 				return;
 			}

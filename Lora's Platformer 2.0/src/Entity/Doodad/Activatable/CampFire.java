@@ -21,15 +21,16 @@ public class CampFire extends Doodad
 			double spawnLocationY
 		) 
 	{
-		super(
+		super
+			(
 				tileMap,
 				mainMap,
 				spawnLocationX, 
 				spawnLocationY, 
 				128, 
 				128,
-				128,
-				128,
+				100,
+				100,
 				0.3, 
 				8, 
 				false, 

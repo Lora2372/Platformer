@@ -281,7 +281,7 @@ public abstract class MapObject
 	
 	public void playJumpSound() { }
 	
-	public void playCannotCarry() { }
+	public void playCannotCarrySound() { }
 	
 	public void checkTileMapCollision() throws Exception
 	{
@@ -339,10 +339,14 @@ public abstract class MapObject
 				setHit();
 				directionY = 0;
 				falling = false;
-				ytemp = (currentRow + 1) * tileSize - collisionHeight / 2;
+				
+				if(collisionHeight / 2 < tileSize)
+				{
+					ytemp = (currentRow + 1) * tileSize - collisionHeight / 2;
+				}
 			}
 			else
-			{
+			{  
 				ytemp += directionY;
 			}
 		}

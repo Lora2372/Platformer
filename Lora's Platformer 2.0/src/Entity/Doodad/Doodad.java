@@ -187,10 +187,6 @@ public class Doodad extends MapObject
 			{
 				if(currentAction!= 1)
 				{
-					if(doodadName.equals("Common Chest"))
-					{
-						System.out.println("currentAction = 1, " + doodadName);
-					}
 					hasPlayedOnce = false;
 					currentAction = 1;
 					setDoodad(currentAction);

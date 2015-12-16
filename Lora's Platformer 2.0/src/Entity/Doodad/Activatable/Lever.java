@@ -89,7 +89,7 @@ public class Lever extends Doodad
 		}
 		
 		animation.setFrames(sprites);
-		animation.setDelay(200);
+		animation.setDelay(150);
 	}
 	
 	public void interact(Player player)
