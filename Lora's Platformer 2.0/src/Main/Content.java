@@ -71,11 +71,8 @@ public class Content
 	public static BufferedImage[][] LeverClosed				= load("/Art/Sprites/Doodads/LeverClosed.png", 26, 29);
 	public static BufferedImage[][] LeverOpening				= load("/Art/Sprites/Doodads/LeverOpening.png", 26, 29);
 	public static BufferedImage[][] LeverClosing				= load("/Art/Sprites/Doodads/LeverClosing.png", 26, 29);
-	
 	public static BufferedImage[][] HerbSun					= load("/Art/Sprites/Doodads/HerbSun.png", 21, 17);
-	
 	public static BufferedImage[][] EmotionBubbleExclamation = load("/Art/HUD/EmotionBubbleExclamation.png", 32, 30);
-	
 	public static BufferedImage[][] BagSmall				 = load("/Art/Sprites/Doodads/BagSmall.png", 28, 27);
 	public static BufferedImage[][] BagMedium				 = load("/Art/Sprites/Doodads/BagMedium.png", 28, 27);
 	
@@ -85,6 +82,7 @@ public class Content
 	public static BufferedImage[][] Teleport 				= load("/Art/Sprites/Effects/Teleport.png", 192, 192);
 	public static BufferedImage[][] MagicShield				= load("/Art/Sprites/Effects/MagicShield.png", 192, 192);
 	public static BufferedImage[][] Poff					= load("/Art/Sprites/Effects/Poff.png", 512, 512);
+	public static BufferedImage[][] RainDrop				 = load("/Art/Sprites/Effects/RainDrop.png", 3, 17);
 	
 	// Foreground
 	public static BufferedImage[][] GameOver				= load("/Art/HUD/Foregrounds/GameOver.png", 544, 416);

@@ -1,6 +1,7 @@
 package GameState.MainMap;
 
 import Entity.Doodad.EmotionBubble;
+import Entity.Doodad.RainDrop;
 import Entity.Doodad.SummoningEffect;
 import Entity.Doodad.Torch;
 import Entity.Doodad.Waterfall;
@@ -28,6 +29,12 @@ public class SpawnDoodad
 		Waterfall waterfall = new Waterfall(mainMap.tileMap, mainMap, locationX, locationY);
 		mainMap.stuff.add(waterfall);
 		
+	}
+	
+	public void spawnRainDrop(double locationX, double locationY)
+	{
+		RainDrop rainDrop = new RainDrop(mainMap.tileMap, mainMap, locationX, locationY);
+		mainMap.stuff.add(rainDrop);
 	}
 	
 	public void spawnSummonEffect(double locationX, double locationY)

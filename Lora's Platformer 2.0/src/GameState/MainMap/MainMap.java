@@ -43,7 +43,9 @@ public class MainMap extends GameState
 	protected ArrayList<Projectile> projectiles;
 	protected ArrayList<Explosion> explosions;
 	protected boolean doneInitializing;
-		
+	
+	protected boolean raining = false;
+	
 	protected ConversationState conversationState;
 	protected ConversationData conversationData;
 	
@@ -262,6 +264,23 @@ public class MainMap extends GameState
 		
 		displayHealthBars = player.getDisplayHealthBars();
 		displayNamePlates = player.getDisplayNamePlates();
+		
+		if(raining)
+		{
+			double startX = player.getLocationX() - GamePanel.WIDTH;
+			if(startX < 0) startX = 20;
+			double endX = player.getLocationX() + GamePanel.WIDTH;
+			
+			System.out.println((endX - startX) / 500);
+			
+			for(double i = startX; i < endX; i += 500)
+			{
+				if(RNG(1, 20) < 3)
+				{
+					spawnDoodad.spawnRainDrop(i + RNG(-400, 400), 0);
+				}
+			}
+		}
 		
 		if(mousePressed)
 		{
@@ -653,8 +672,6 @@ public class MainMap extends GameState
 		return random.nextInt((max - min) + 1) + min;
 	}
 	
-
-	
 	public Doodad spawnDoodad(TemporaryDoodadData doodadData)
 	{
 		Doodad doodad = null;
@@ -842,8 +859,6 @@ public class MainMap extends GameState
 		return gameStateManager;
 	}
 	
-
-	
 	public void GPS()
 	{
 		System.out.println("player X: " + player.getLocationX() + ", playerY: " + player.getLocationY());
@@ -915,6 +930,12 @@ public class MainMap extends GameState
 					characterList.get(i).hit(9001, player);
 				}
 			}
+		}
+		
+		if(key == KeyEvent.VK_Y)
+		{
+			raining = !raining;
+//			System.out.println("It's " + (raining? "" : "not") + " raining");
 		}
 		
 		// Note: This is a built in cheat that is not supposed to be used to get the real game experience.

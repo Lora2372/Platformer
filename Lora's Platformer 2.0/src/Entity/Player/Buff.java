@@ -39,6 +39,8 @@ public class Buff
 	
 	protected boolean expired;
 	
+	protected boolean expiring;
+	
 	protected Unit owner;
 	
 	protected double totalRestoringDone = 0;
@@ -66,6 +68,10 @@ public class Buff
 		this.owner = owner;
 		rectangle = new Rectangle(0, 0, width, height);
 		this.sprites = sprites;
+		
+		expiring = duration != -1;
+		
+		System.out.println("expiring: " + expiring);
 		
 		start = System.currentTimeMillis();
 		
@@ -113,7 +119,7 @@ public class Buff
 //
 //		}
 		
-		if(duration <= 0)
+		if(duration <= 0 && expiring)
 		{
 			System.out.println("Amount to restore: " + objectValueTotal + "\n" +
 					"Total " + buffDescriptionName + " restored: " + totalRestoringDone + "\n" +
@@ -161,6 +167,23 @@ public class Buff
 		return locationY;
 	}
 	
+	public void setBuff(CreateBuff.Buffs newBuff)
+	{
+		this.buff = newBuff;
+		this.buffDescriptionName = CreateBuff.getDescriptionName(buff.toString());
+		this.buffDescription = CreateBuff.getDescription(buff.toString());
+	}
+	
+	public void setObjectValueTotal(double objectValueTotal)
+	{
+		this.objectValueTotal = objectValueTotal;
+	}
+	
+	public void setSprites(BufferedImage sprites)
+	{
+		this.sprites = sprites;
+	}
+	
 	public int getHeight()
 	{
 		return height;
@@ -205,20 +228,23 @@ public class Buff
 				null
 			);
 			
-
 			int stringX = locationX + width / 2;
 			int stringY = locationY + height + 10;
+			
+			if(expiring)
+			{
+				graphics.setFont (new Font("Arial", Font.PLAIN, 14) );
+				graphics.setColor(Color.BLACK);
+				graphics.drawString( (int)duration + "", DrawingConstants.shiftWest( (int) stringX, 1), DrawingConstants.shiftNorth( (int) stringY, 1));
+				graphics.drawString( (int)duration + "", DrawingConstants.shiftWest( (int) stringX, 1), DrawingConstants.shiftSouth( (int) stringY, 1));
+				graphics.drawString( (int)duration + "", DrawingConstants.shiftEast( (int) stringX, 1), DrawingConstants.shiftNorth( (int) stringY, 1));
+				graphics.drawString( (int)duration + "", DrawingConstants.shiftEast( (int) stringX, 1), DrawingConstants.shiftSouth( (int) stringY, 1));
+				
+				graphics.setColor(Color.WHITE);
+				graphics.drawString( (int)duration + "", stringX , stringY);
+			}
+			
 
-			graphics.setFont (new Font("Arial", Font.PLAIN, 14) );
-			graphics.setColor(Color.BLACK);
-			graphics.drawString( (int)duration + "", DrawingConstants.shiftWest( (int) stringX, 1), DrawingConstants.shiftNorth( (int) stringY, 1));
-			graphics.drawString( (int)duration + "", DrawingConstants.shiftWest( (int) stringX, 1), DrawingConstants.shiftSouth( (int) stringY, 1));
-			graphics.drawString( (int)duration + "", DrawingConstants.shiftEast( (int) stringX, 1), DrawingConstants.shiftNorth( (int) stringY, 1));
-			graphics.drawString( (int)duration + "", DrawingConstants.shiftEast( (int) stringX, 1), DrawingConstants.shiftSouth( (int) stringY, 1));
-			
-			graphics.setColor(Color.WHITE);
-			graphics.drawString( (int)duration + "", stringX , stringY);
-			
 
 			if(mouseOver)
 			{

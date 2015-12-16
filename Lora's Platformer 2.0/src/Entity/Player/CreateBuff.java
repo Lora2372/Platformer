@@ -19,11 +19,27 @@ public class CreateBuff
 		buffDescriptionName.put(Buffs.RestoreMana.toString(), "Restore mana");
 		buffDescriptionName.put(Buffs.RestoreStamina.toString(), "Restore stamina");
 		
+		buffDescriptionName.put(Buffs.Dry.toString(), "Dry");
+		buffDescriptionName.put(Buffs.Wet.toString(), "Wet");
+		buffDescriptionName.put(Buffs.Drenched.toString(), "Drenched");
+		buffDescriptionName.put(Buffs.Hot.toString(), "Hot");
+		buffDescriptionName.put(Buffs.Warm.toString(), "Warm");
+		buffDescriptionName.put(Buffs.Cold.toString(), "Cold");
+		buffDescriptionName.put(Buffs.Freezing.toString(), "Freezing");
+		
 		
 		buffDescription = new HashMap<String, String>();
 		buffDescription.put(Buffs.RestoreHealth.toString(), "Restoring health over time.");
 		buffDescription.put(Buffs.RestoreMana.toString(), "Restoring mana over time.");
 		buffDescription.put(Buffs.RestoreStamina.toString(), "Restoring stamina over time.");
+		
+		buffDescription.put(Buffs.Dry.toString(), "You are dry.");
+		buffDescription.put(Buffs.Wet.toString(), "You are wet.");
+		buffDescription.put(Buffs.Drenched.toString(), "You are drenched.");
+		buffDescription.put(Buffs.Hot.toString(), "You are hot.");
+		buffDescription.put(Buffs.Warm.toString(), "You are warm.");
+		buffDescription.put(Buffs.Cold.toString(), "You are cold.");
+		buffDescription.put(Buffs.Freezing.toString(), "You are freezing!");
 		
 	}
 	
@@ -32,7 +48,14 @@ public class CreateBuff
 	{
 		RestoreHealth,
 		RestoreMana,
-		RestoreStamina
+		RestoreStamina,
+		Dry,
+		Wet,
+		Drenched,
+		Hot,
+		Warm,
+		Cold,
+		Freezing
 	}
 	
 	

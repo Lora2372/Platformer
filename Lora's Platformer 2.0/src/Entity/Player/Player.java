@@ -32,6 +32,18 @@ public class Player extends Unit
 	protected ConversationData conversation;
 	protected ConversationState conversationState;
 	
+	protected double atmosphereTemperature = 20;
+	
+	protected Buff warmthBuff;
+	protected Buff wetBuff;
+	
+	protected double warmth = 10;
+	protected double warmMaximum = 100;
+	protected double warmMinimum = - 100;
+	
+	protected double wetLevel = 0;
+	protected double wetLevelMaximum = 100;
+	protected double wetLevelMinimum = 0;
 	
 	protected HashMap<KeyBind, Integer> keyBindMap;
 	
@@ -155,7 +167,6 @@ public class Player extends Unit
 		);
 		
 		
-
 		
 		keyBindMap = new HashMap<KeyBind, Integer>();
 		
@@ -180,9 +191,81 @@ public class Player extends Unit
 
 		hud = new HUD(this);
 		
+		warmthBuff = new Buff(CreateBuff.Buffs.Warm, -1, 0, this, Content.Torch[0][0]);
+		addBuff(warmthBuff);
+		
 	}
 	
 
+	
+	public void update(ArrayList<Unit> characterList)
+	{
+		super.update(characterList);
+		
+		if(inWater)
+		{
+			addWaterLevel(20);
+			
+		}
+		
+		if(atmosphereTemperature < warmth)
+		{
+			warmth -= 0.001 + wetLevel / 1000;
+		}
+		
+		if(atmosphereTemperature > warmth)
+		{
+			warmth += 0.001 - wetLevel / 1000;
+		}
+		
+		System.out.println("warmth: " + warmth + "\nwetLevel: " + wetLevel);
+		
+		// Player is warm
+		if(warmth >= 20 && warmth < 50)
+		{
+			if(!warmthBuff.getBuff().equals(CreateBuff.Buffs.Warm))
+			{
+				System.out.println("Changing to warm buff");
+				
+				warmthBuff.setBuff(CreateBuff.Buffs.Warm);
+				warmthBuff.setSprites(Content.Torch[0][0]);
+				
+//				addBuff(warmthBuff);
+			}
+		}
+		if(warmth < 20 && warmth > 0)
+		{				
+			if(!warmthBuff.getBuff().equals(CreateBuff.Buffs.Cold))
+			{
+				System.out.println("Changing to cold buff");
+				warmthBuff.setBuff(CreateBuff.Buffs.Cold);
+				warmthBuff.setSprites(Content.Bunny[0][0]);
+			}
+		}
+		
+		
+		
+		
+	}
+	
+	public void setAtmosphereTemperature(double atmosphereTemperature)
+	{
+		this.atmosphereTemperature = atmosphereTemperature;
+	}
+	
+	public void addWaterLevel(double wetLevel)
+	{
+		this.wetLevel += wetLevel;
+		
+		if(wetLevel > wetLevelMaximum)
+		{
+			wetLevel = wetLevelMaximum;
+		}
+		if(wetLevel < wetLevelMinimum)
+		{
+			wetLevel = wetLevelMinimum;
+		}
+	}
 	
 	public int getKeyBind(int index)
 	{
