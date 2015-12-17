@@ -46,6 +46,12 @@ public class DeepWoodsInn extends MainMap
 		
 		doneInitializing = true;
 	}
+	
+	public void initialize()
+	{
+		super.initialize();
+		player.setAtmosphereTemperature(30);
+	}
 
 
 }

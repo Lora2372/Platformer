@@ -32,14 +32,15 @@ public class Player extends Unit
 	protected ConversationData conversation;
 	protected ConversationState conversationState;
 	
-	protected double atmosphereTemperature = 20;
+	protected double atmosphereTemperature = 20;	
 	
+	protected Buff campfireBuff;
 	protected Buff warmthBuff;
 	protected Buff wetBuff;
 	
 	protected double warmth = 10;
 	protected double warmMaximum = 100;
-	protected double warmMinimum = - 100;
+	protected double warmMinimum = - 10;
 	
 	protected double wetLevel = 0;
 	protected double wetLevelMaximum = 100;
@@ -191,12 +192,23 @@ public class Player extends Unit
 
 		hud = new HUD(this);
 		
+		wetBuff = new Buff(CreateBuff.Buffs.Dry, -1, 0, this, Content.Bomb[0][0]);
+		addBuff(wetBuff);
+		
 		warmthBuff = new Buff(CreateBuff.Buffs.Warm, -1, 0, this, Content.Torch[0][0]);
 		addBuff(warmthBuff);
 		
 	}
 	
-
+	public void setCampFireBuff(Buff buff)
+	{
+		campfireBuff = buff;
+	}
+	
+	public Buff getCampFireBuff()
+	{
+		return campfireBuff;
+	}
 	
 	public void update(ArrayList<Unit> characterList)
 	{
@@ -204,45 +216,118 @@ public class Player extends Unit
 		
 		if(inWater)
 		{
-			addWaterLevel(20);
+			addWetLevel(20);
 			
+		}
+		
+		if(!inWater)
+		{
+			addWetLevel( (0.001 + warmth / 10000) * -1  ); 
 		}
 		
 		if(atmosphereTemperature < warmth)
 		{
-			warmth -= 0.001 + wetLevel / 1000;
+			addWarmth( ( 0.01 + 2 * wetLevel / 10000) * -1 );
 		}
 		
 		if(atmosphereTemperature > warmth)
 		{
-			warmth += 0.001 - wetLevel / 1000;
+			addWarmth(0.01 - wetLevel / 10000);
 		}
 		
-		System.out.println("warmth: " + warmth + "\nwetLevel: " + wetLevel);
+
+		
+		if(campfireBuff != null)
+		{
+			wetLevel -= 0.1;
+			warmth += 0.1 * (1 - wetLevel / 100) ;
+		}
+				
+		// Player is hot
+		if(warmth >= 50)
+		{
+			if(!warmthBuff.getBuff().equals(CreateBuff.Buffs.Hot))
+			{
+				warmthBuff.setBuff(CreateBuff.Buffs.Hot);
+				warmthBuff.setSprites(Content.CampFire[0][0]);
+				healthRegenCurrent = healthRegenOriginal * 1.1;
+				manaRegenCurrent = manaRegenOriginal * 1.1;
+				staminaRegenCurrent = staminaRegenOriginal * 1.1;
+				
+			}
+		}
 		
 		// Player is warm
 		if(warmth >= 20 && warmth < 50)
 		{
 			if(!warmthBuff.getBuff().equals(CreateBuff.Buffs.Warm))
 			{
-				System.out.println("Changing to warm buff");
 				
 				warmthBuff.setBuff(CreateBuff.Buffs.Warm);
 				warmthBuff.setSprites(Content.Torch[0][0]);
 				
-//				addBuff(warmthBuff);
+				healthRegenCurrent = healthRegenOriginal;
+				manaRegenCurrent = manaRegenOriginal;
+				staminaRegenCurrent = staminaRegenOriginal;
 			}
 		}
+		// Player is cold
 		if(warmth < 20 && warmth > 0)
 		{				
 			if(!warmthBuff.getBuff().equals(CreateBuff.Buffs.Cold))
 			{
-				System.out.println("Changing to cold buff");
 				warmthBuff.setBuff(CreateBuff.Buffs.Cold);
 				warmthBuff.setSprites(Content.Bunny[0][0]);
+				
+				healthRegenCurrent = healthRegenOriginal * 0.5;
+				manaRegenCurrent = manaRegenOriginal * 0.5;
+				staminaRegenCurrent = staminaRegenOriginal * 0.5;
 			}
 		}
 		
+		// Player is freeezing
+		if(warmth <= 0)
+		{
+			if(!warmthBuff.getBuff().equals(CreateBuff.Buffs.Freezing))
+			{
+				warmthBuff.setBuff(CreateBuff.Buffs.Freezing);
+				warmthBuff.setSprites(Content.Waterfall[0][0]);
+				
+				healthRegenCurrent = 0;
+				manaRegenCurrent = 0;
+				staminaRegenCurrent = 0;
+			}
+		}
+		
+		// Player is dry
+		if(wetLevel <= 20)
+		{
+			if(!wetBuff.getBuff().equals(CreateBuff.Buffs.Dry))
+			{
+				wetBuff.setBuff(CreateBuff.Buffs.Dry);
+				wetBuff.setSprites(Content.Sign[0][0]);
+			}
+		}
+		
+		// Player is wet
+		if(wetLevel > 20 && wetLevel < 60)
+		{
+			if(!wetBuff.getBuff().equals(CreateBuff.Buffs.Wet))
+			{
+				wetBuff.setBuff(CreateBuff.Buffs.Wet);
+				wetBuff.setSprites(Content.PortraitSuccubus[0][0]);
+			}
+		}
+		
+		// Player is soaked
+		if(wetLevel > 60)
+		{
+			if(!wetBuff.getBuff().equals(CreateBuff.Buffs.Soaked))
+			{
+				wetBuff.setBuff(CreateBuff.Buffs.Soaked);
+				wetBuff.setSprites(Content.PortraitPlayer[0][0]);
+			}
+		}
 		
 		
 		
@@ -250,20 +335,68 @@ public class Player extends Unit
 	
 	public void setAtmosphereTemperature(double atmosphereTemperature)
 	{
+		System.out.println("Atmosphere is now: " + atmosphereTemperature);
 		this.atmosphereTemperature = atmosphereTemperature;
 	}
 	
-	public void addWaterLevel(double wetLevel)
+	public double getWarmth()
+	{
+		return warmth;
+	}
+	
+	public double getWet()
+	{
+		return wetLevel;
+	}
+	
+	public void setHealth(double health)
+	{
+		this.health = health;
+	}
+	
+	public void setMana(double mana)
+	{
+		this.mana = mana;
+	}
+	public void setStamina(double stamina)
+	{
+		this.stamina = stamina;
+	}
+	
+	public void setWarmth(double warmth)
+	{
+		this.warmth = warmth;
+	}
+	
+	public void setWet(double wet)
+	{
+		this.wetLevel = wet;
+	}
+	
+	public void addWarmth(double warmth)
+	{
+		this.warmth += warmth;
+		if(this.warmth > warmMaximum)
+		{
+			this.warmth = warmMaximum;
+		}
+		if(this.warmth < warmMinimum)
+		{
+			this.warmth = warmMinimum;
+		}
+	}
+	
+	public void addWetLevel(double wetLevel)
 	{
 		this.wetLevel += wetLevel;
 		
-		if(wetLevel > wetLevelMaximum)
+		if(this.wetLevel > wetLevelMaximum)
 		{
-			wetLevel = wetLevelMaximum;
+			this.wetLevel = wetLevelMaximum;
 		}
-		if(wetLevel < wetLevelMinimum)
+		if(this.wetLevel < wetLevelMinimum)
 		{
-			wetLevel = wetLevelMinimum;
+			this.wetLevel = wetLevelMinimum;
 		}
 	}
 	
@@ -285,9 +418,7 @@ public class Player extends Unit
 	
 	public void setKeyBind(int index, int keybind)
 	{
-		System.out.println("keybindList old value: " + keyBinds[index]);
 		keyBinds[index] = keybind;
-		System.out.println("keybindList new value: " + keyBinds[index]);
 	}
 		
 	public ConversationState getConversationState() { return conversationState; }
@@ -376,11 +507,11 @@ public class Player extends Unit
 		aim = Math.atan2(tempY - locationY, tempX - locationX);
 	}
 	
-	public void mouseClicked(MouseEvent mouse) 
+	public void mousePressed(MouseEvent mouse) 
 	{
 		for(int i = 0; i < buffs.size(); i++)
 		{
-			buffs.get(i).mouseClicked(mouse);
+			buffs.get(i).mousePressed(mouse);
 		}
 	}
 	

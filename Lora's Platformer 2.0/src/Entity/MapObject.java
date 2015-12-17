@@ -93,6 +93,7 @@ public abstract class MapObject
 	protected boolean invulnerable; // Attacks are able to hit you but you won't take damage.
 	protected boolean unkillable; // Attacks can hit you and you can take damage, but you won't die.
 	
+	protected boolean removeOutsideScreen;
 	protected boolean removeMe;
 	
 	protected Inventory inventory;
@@ -146,12 +147,13 @@ public abstract class MapObject
 	
 	public Rectangle getRectangle()
 	{		
-		return new Rectangle(				
+		return new Rectangle
+			(
 				(int)locationX - collisionWidth / 2,
 				(int)locationY - collisionHeight / 2,
 				collisionWidth,
 				collisionHeight
-				);
+			);
 	}
 	
 	public void calculateCorners(double x, double y)
@@ -302,6 +304,11 @@ public abstract class MapObject
 			
 			if(tile == null)
 			{
+				if(removeOutsideScreen)
+				{
+					removeMe = true;
+					return;
+				}
 				throw new Exception();
 			}
 

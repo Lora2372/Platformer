@@ -864,6 +864,10 @@ public class MainMap extends GameState
 		System.out.println("player X: " + player.getLocationX() + ", playerY: " + player.getLocationY());
 	}
 	
+	public Player getPlayer()
+	{
+		return player;
+	}
 	
 	public void keyPressed(int key)
 	{
@@ -1022,7 +1026,6 @@ public class MainMap extends GameState
 
 	public void mouseClicked(MouseEvent mouse) 
 	{
-		player.mouseClicked(mouse);
 	}
 
 
@@ -1038,6 +1041,7 @@ public class MainMap extends GameState
 
 	public void mousePressed(MouseEvent mouse) 
 	{
+		player.mousePressed(mouse);
 		mousePressed = true;
 	}
 

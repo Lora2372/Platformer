@@ -21,11 +21,13 @@ public class CreateBuff
 		
 		buffDescriptionName.put(Buffs.Dry.toString(), "Dry");
 		buffDescriptionName.put(Buffs.Wet.toString(), "Wet");
-		buffDescriptionName.put(Buffs.Drenched.toString(), "Drenched");
+		buffDescriptionName.put(Buffs.Soaked.toString(), "Soaked");
 		buffDescriptionName.put(Buffs.Hot.toString(), "Hot");
 		buffDescriptionName.put(Buffs.Warm.toString(), "Warm");
 		buffDescriptionName.put(Buffs.Cold.toString(), "Cold");
 		buffDescriptionName.put(Buffs.Freezing.toString(), "Freezing");
+
+		buffDescriptionName.put(Buffs.CampFire.toString(), "Campfire");
 		
 		
 		buffDescription = new HashMap<String, String>();
@@ -33,14 +35,16 @@ public class CreateBuff
 		buffDescription.put(Buffs.RestoreMana.toString(), "Restoring mana over time.");
 		buffDescription.put(Buffs.RestoreStamina.toString(), "Restoring stamina over time.");
 		
-		buffDescription.put(Buffs.Dry.toString(), "You are dry.");
-		buffDescription.put(Buffs.Wet.toString(), "You are wet.");
-		buffDescription.put(Buffs.Drenched.toString(), "You are drenched.");
-		buffDescription.put(Buffs.Hot.toString(), "You are hot.");
-		buffDescription.put(Buffs.Warm.toString(), "You are warm.");
-		buffDescription.put(Buffs.Cold.toString(), "You are cold.");
-		buffDescription.put(Buffs.Freezing.toString(), "You are freezing!");
-		
+		buffDescription.put(Buffs.Dry.toString(), "Resistant to cold.");
+		buffDescription.put(Buffs.Wet.toString(), "Susceptible to cold.");
+		buffDescription.put(Buffs.Soaked.toString(), "Very susceptible to cold!");
+		buffDescription.put(Buffs.Hot.toString(), "Regeneration slightly increased.");
+		buffDescription.put(Buffs.Warm.toString(), "Normal regeneration.");
+		buffDescription.put(Buffs.Cold.toString(), "Regeneration greatly reduced.");
+		buffDescription.put(Buffs.Freezing.toString(), "Unable to regenerate!");
+
+		buffDescription.put(Buffs.CampFire.toString(), "Keeps you warm and dry.");
+
 	}
 	
 	
@@ -51,11 +55,12 @@ public class CreateBuff
 		RestoreStamina,
 		Dry,
 		Wet,
-		Drenched,
+		Soaked,
 		Hot,
 		Warm,
 		Cold,
-		Freezing
+		Freezing,
+		CampFire
 	}
 	
 	

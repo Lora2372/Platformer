@@ -124,6 +124,7 @@ public class FionasSanctum extends MainMap
 	public void initialize()
 	{
 		super.initialize();
+		player.setAtmosphereTemperature(24);
 		player.setCurrentMap("FionasSanctum");
 		try
 		{

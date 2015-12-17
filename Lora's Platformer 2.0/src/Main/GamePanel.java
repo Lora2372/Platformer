@@ -20,7 +20,7 @@ public class GamePanel
 	public static int WIDTH = 1200;
 	public static int HEIGHT = 900;
 	
-	public static final String version = "0.1.089";
+	public static final String version = "0.1.090";
 		
 	// Game thread
 	private Thread thread;
@@ -232,11 +232,17 @@ public class GamePanel
 	
 	public void keyPressed(KeyEvent key)
 	{
-		gameStateManager.keyPressed(key.getKeyCode());
+		if(gameStateManager != null)
+		{
+			gameStateManager.keyPressed(key.getKeyCode());
+		}
 	}
 	
 	public void keyReleased(KeyEvent key)
 	{
-		gameStateManager.keyReleased(key.getKeyCode());
+		if(gameStateManager != null)
+		{
+			gameStateManager.keyReleased(key.getKeyCode());
+		}
 	}	
 }

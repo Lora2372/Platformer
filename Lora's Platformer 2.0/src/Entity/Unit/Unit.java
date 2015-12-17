@@ -67,15 +67,18 @@ public class Unit extends MapObject
 
 	protected double health;
 	protected double maxHealth;
-	protected double healthRegen;
+	protected double healthRegenOriginal;
+	protected double healthRegenCurrent;
 	
 	protected double mana;
 	protected double maxMana;
-	protected double manaRegen;
+	protected double manaRegenOriginal;
+	protected double manaRegenCurrent;
 	
 	protected double stamina;
 	protected double maxStamina;
-	protected double staminaRegen;
+	protected double staminaRegenOriginal;
+	protected double staminaRegenCurrent;
 	
 	protected double bonusDamageMagical;
 	protected double bonusDamagePhysical;
@@ -253,10 +256,12 @@ public class Unit extends MapObject
 		this.inControl = inControl;
 		this.health = health;
 		this.maxHealth = maxHealth;
-		this.healthRegen = healthRegen;
+		this.healthRegenOriginal = healthRegen;
+		this.healthRegenCurrent = healthRegen;
 		this.stamina = stamina;
 		this.maxStamina = maxStamina;
-		this.staminaRegen = staminaRegen;
+		this.staminaRegenOriginal = staminaRegen;
+		this.staminaRegenCurrent = staminaRegen;
 		this.sightRangeX = sightRangeX;
 		this.sightRangeY = sightRangeY;
 		this.punchCost = punchCost;
@@ -268,7 +273,8 @@ public class Unit extends MapObject
 		this.dashSpeed = dashSpeed;
 		this.mana = mana;
 		this.maxMana = maxMana;
-		this.manaRegen = manaRegen;
+		this.manaRegenOriginal = manaRegen;
+		this.manaRegenCurrent = manaRegen;
 		this.spritePath = spritePath;
 		this.animationState = animationState;
 		this.numFrames = numFrames;
@@ -390,6 +396,18 @@ public class Unit extends MapObject
 		aim = Math.atan2(tempY - locationY, tempX - locationX);
 	}
 	
+	public Buff hasBuff(String buff)
+	{
+		for(int i = 0; i < buffs.size(); i++)
+		{
+			if(buffs.get(i).getBuff().toString().equals(buff))
+			{
+				return buffs.get(i);
+			}
+		}
+		return null;
+	}
+	
 	public void setTennisPlayer(boolean b) { tennisPlayer = b; }
 	
 	public BufferedImage[] getPortrait() { return portrait;}
@@ -422,7 +440,6 @@ public class Unit extends MapObject
 		stamina += staminaRestored;
 		if(stamina > maxStamina) stamina = maxStamina;
 	}
-	
 	
 	
 	public int getDashStaminaCost()  { return dashCost; }
@@ -639,16 +656,26 @@ public class Unit extends MapObject
 			for(int i = 0; i < buffs.size(); i++)
 			{
 				Buff buff = buffs.get(i);
-				buff.setLocation(buffLocationX, buffLocationY);
-				buff.update();
-				
-				if(buff.getExpired())
+				if(buff != null)
+				{
+					buff.setLocation(buffLocationX, buffLocationY);
+					buff.update();
+					
+					
+					if(buff.getExpired())
+					{
+						buffs.remove(i);
+						i--;
+					}
+					
+					buffLocationX -= buff.getWidth() + 10;
+				}
+				else
 				{
 					buffs.remove(i);
 					i--;
 				}
-				
-				buffLocationX -= buff.getWidth() + 10;
+
 			}
 			
 			// Update position
@@ -714,9 +741,9 @@ public class Unit extends MapObject
 			}
 			
 			// Regenerate health
-			if(healthRegen > 0)
+			if(healthRegenCurrent > 0)
 			{
-				health += healthRegen;
+				health += healthRegenCurrent;
 			}
 			
 			if(health > maxHealth) 
@@ -725,9 +752,9 @@ public class Unit extends MapObject
 			}
 			
 			// Regenerate mana
-			if(manaRegen > 0)
+			if(manaRegenCurrent > 0)
 			{
-				mana += manaRegen;
+				mana += manaRegenCurrent;
 			}
 			
 			if(mana > maxMana) 
@@ -737,9 +764,9 @@ public class Unit extends MapObject
 			
 			// Regenerate stamina
 			
-			if(staminaRegen > 0)
+			if(staminaRegenCurrent > 0)
 			{
-				stamina += staminaRegen;
+				stamina += staminaRegenCurrent;
 			}
 			
 			if(stamina > maxStamina) 

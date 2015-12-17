@@ -1,6 +1,9 @@
 package Entity.Doodad.Activatable;
 
+import java.awt.Rectangle;
 import Entity.Doodad.Doodad;
+import Entity.Player.Buff;
+import Entity.Player.CreateBuff;
 import Entity.Player.Player;
 import GameState.GameStateManager;
 import GameState.MainMap.MainMap;
@@ -11,6 +14,8 @@ public class CampFire extends Doodad
 {
 	
 	protected GameStateManager gameStateManager;
+	
+	protected Player player;
 	
 	public CampFire
 		(
@@ -42,7 +47,7 @@ public class CampFire extends Doodad
 				"CampFire",
 				DoodadData.doodadName.get("CampFire")
 				);
-
+		this.player = mainMap.getPlayer();
 		this.gameStateManager = gameStateManager;
 	}
 	
@@ -55,6 +60,35 @@ public class CampFire extends Doodad
 	public void interact(Player player)
 	{
 
+	}
+	
+	public void update()
+	{
+		super.update();
+		
+		this.player = mainMap.getPlayer();
+		
+		Buff campfireBuff = player.getCampFireBuff();
+		if( (new Rectangle((int)locationX - 200, (int)locationY - 200, 400, 400)).intersects(player.getRectangle()) )
+		{
+			if(campfireBuff == null)
+			{
+				System.out.println("Kirby!!!");
+				campfireBuff = new Buff(CreateBuff.Buffs.CampFire, -1, 0.01, player, Content.CampFire[0][0]);
+				player.setCampFireBuff(campfireBuff);
+				player.addBuff(campfireBuff);
+			}
+		}
+		else
+		{
+			if(campfireBuff != null)
+			{
+				System.out.println("Bowser!");
+				campfireBuff.setExpire();
+				player.setCampFireBuff(null);
+			}
+		}
+		
 	}
 	
 	public void playSound() 

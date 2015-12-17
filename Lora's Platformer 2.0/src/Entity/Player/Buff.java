@@ -12,6 +12,7 @@ import javax.swing.SwingUtilities;
 import Entity.Unit.Unit;
 import Main.Content;
 import Main.DrawingConstants;
+import Main.GamePanel;
 
 public class Buff 
 {
@@ -73,15 +74,17 @@ public class Buff
 		
 		System.out.println("expiring: " + expiring);
 		
-		start = System.currentTimeMillis();
-		
-		System.out.println("Duration: " + (this.duration) );
-		
+		start = System.currentTimeMillis();		
 	}
 	
 	
 	public void update()
 	{
+		if(!expiring)
+		{
+			return;
+		}
+		
 		double currentTime = System.currentTimeMillis();
 		totalTimePassed += currentTime - start;
 		if( (currentTime - start)  >= 16)
@@ -102,6 +105,8 @@ public class Buff
 			{
 				owner.restoreStamina(objectValueTotalPiece);
 			}
+
+			
 			totalRestoringDone += objectValueTotalPiece;
 			
 			tick++;
@@ -109,7 +114,6 @@ public class Buff
 			{
 				tick = 0;
 				duration--;
-				System.out.println("Duration: " + duration);
 			}
 		}
 		
@@ -138,6 +142,12 @@ public class Buff
 	public boolean getExpired()
 	{
 		return expired;
+	}
+	
+	public void setExpire()
+	{
+		expired = true;
+		expiring = true;
 	}
 	
 	public double getDuration()
@@ -194,13 +204,16 @@ public class Buff
 		mouseOver = rectangle.intersects(new Rectangle((int)mouse.getX(), (int)mouse.getY(), 1, 1) );
 	}
 	
-	public void mouseClicked(MouseEvent mouse) 
+	public void mousePressed(MouseEvent mouse) 
 	{
 		if(SwingUtilities.isRightMouseButton(mouse))
 		if(mouseOver)
 		{
-			System.out.println("Click!");
-			expired = true;
+			if(expiring)
+			{
+				System.out.println("Click!");
+				expired = true;
+			}
 		}
 	}
 	
@@ -209,24 +222,24 @@ public class Buff
 		try
 		{
 			graphics.drawImage
-			(
-				Content.BuffIcon[0][0],
-				locationX,
-				locationY,
-				width,
-				height,
-				null
-			);
+				(
+					Content.BuffIcon[0][0],
+					locationX,
+					locationY,
+					width,
+					height,
+					null
+				);
 			
 			graphics.drawImage
-			(
-				sprites,
-				locationX + 5,
-				locationY + 5,
-				width - 10,
-				height - 10,
-				null
-			);
+				(
+					sprites,
+					locationX + 5,
+					locationY + 5,
+					width - 10,
+					height - 10,
+					null
+				);
 			
 			int stringX = locationX + width / 2;
 			int stringY = locationY + height + 10;
@@ -251,8 +264,29 @@ public class Buff
 				int stringLength = DrawingConstants.getStringWidth(CreateBuff.getDescriptionName(buff.toString()), graphics);
 				int stringHeight = DrawingConstants.getStringHeight(CreateBuff.getDescriptionName(buff.toString()), graphics);
 				
-				stringX = locationX + - stringLength / 4;
+				stringX = locationX - stringLength / 4;
 				stringY += 10;
+				
+				graphics.drawImage
+					(
+						Content.ConversationGUIEndConversation[0][0],
+						stringX,
+						stringY,
+						stringLength + 20,
+						stringHeight + 10,
+						null
+					);
+				
+				graphics.drawString(CreateBuff.getDescriptionName(buff.toString()), stringX + 10, stringY + 15);
+				
+				stringLength = DrawingConstants.getStringWidth(CreateBuff.getDescription(buff.toString()), graphics);
+				stringHeight = DrawingConstants.getStringHeight(CreateBuff.getDescription(buff.toString()), graphics);
+				stringX = locationX - stringLength / 3;
+				if(stringX + stringLength > GamePanel.WIDTH)
+				{
+					stringX = GamePanel.WIDTH - stringLength - 10;
+				}
+				stringY += stringHeight;
 				
 				graphics.drawImage
 				(
@@ -263,8 +297,8 @@ public class Buff
 					stringHeight + 10,
 					null
 				);
-				
-				graphics.drawString(CreateBuff.getDescriptionName(buff.toString()), stringX + 10, stringY + 15);
+			
+			graphics.drawString(CreateBuff.getDescription(buff.toString()), stringX + 10, stringY + 15);
 			}
 
 			

@@ -212,6 +212,7 @@ public class LorasCavern extends MainMap
 	public void initialize()
 	{
 		super.initialize();
+		player.setAtmosphereTemperature(24);
 		player.setCurrentMap(GameStateManager.GameMaps.LorasCavern.toString());
 	}
 	

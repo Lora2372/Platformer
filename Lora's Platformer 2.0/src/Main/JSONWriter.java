@@ -54,6 +54,10 @@ public class JSONWriter
     		jsonObjectPlayer.put(ItemData.Coins.Gold, player.getGold());
     		jsonObjectPlayer.put("Friendly", player.getFriendly());
     		jsonObjectPlayer.put("Health", (int)player.getHealth());
+    		jsonObjectPlayer.put("Mana", (int)player.getMana());
+    		jsonObjectPlayer.put("Stamina", (int)player.getStamina());
+    		jsonObjectPlayer.put("Warmth", (int)player.getWarmth());
+    		jsonObjectPlayer.put("Wet", (int)player.getWet());
     		jsonObjectPlayer.put("UnitType", player.getUnitType());
     		jsonObjectPlayer.put("FacingRight", player.getFacingRight());
     		jsonObjectPlayer.put("Invulnerable", player.getInvulnerable());

@@ -47,6 +47,10 @@ public class JSONReader
 			boolean unkillable = (Boolean) jsonObjectPlayer.get("Unkillable");
 			String name = (String) jsonObjectPlayer.get("Name");
 			int health = ( (Long) jsonObjectPlayer.get("Health") ).intValue();
+			int mana = ( (Long) jsonObjectPlayer.get("Mana") ).intValue();
+			int stamina = ( (Long) jsonObjectPlayer.get("Stamina") ).intValue();
+			int warmth = ( (Long) jsonObjectPlayer.get("Warmth") ).intValue();
+			int wet = ( (Long) jsonObjectPlayer.get("Wet") ).intValue();
 			double spawnLocationX = (Double) jsonObjectPlayer.get("SpawnLocationX");
 			double spawnLocationY = (Double) jsonObjectPlayer.get("SpawnLocationY");
 			String currentMap = (String) jsonObjectPlayer.get("Map");
@@ -56,6 +60,11 @@ public class JSONReader
 			player.setFacingRight(facingRight);
 			player.setCurrentMap(currentMap);
 			player.setName(name);
+			player.setHealth(health);
+			player.setMana(mana);
+			player.setStamina(stamina);
+			player.setWarmth(warmth);
+			player.setWet(wet);
 			player.setSpawnLocationX(spawnLocationX);
 			player.setSpawnLocationY(spawnLocationY);
 			

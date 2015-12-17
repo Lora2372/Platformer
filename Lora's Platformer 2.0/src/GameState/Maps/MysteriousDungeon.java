@@ -162,13 +162,12 @@ public class MysteriousDungeon extends MainMap
 				}
 			}
 		}
-
-
 	}
 	
 	public void initialize()
 	{
 		super.initialize();
+		player.setAtmosphereTemperature(17);
 		player.setCurrentMap(GameStateManager.GameMaps.MysteriousDungeon.toString());
 		
 

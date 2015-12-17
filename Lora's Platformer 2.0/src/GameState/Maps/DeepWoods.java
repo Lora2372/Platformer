@@ -73,6 +73,7 @@ public class DeepWoods extends MainMap
 		spawnDoodad.spawnTorch(2070, 1670);
 		spawnDoodad.spawnTorch(2250, 1670);
 		
+		spawnDoodad.spawnCampFire(5100,  1800);
 		
 		
 		if(!player.getLoading(index))
@@ -88,7 +89,6 @@ public class DeepWoods extends MainMap
 			
 			spawnUnit.spawnWolf(2940, 1680, true);
 			
-			spawnDoodad.spawnCampFire(5100,  1800);
 			
 			spawnDoodad.spawnDoor(5340,  1800, false, doodadIDs.InnDoor.toString(), 0, "Village");
 			spawnDoodad.spawnDoor(7260,  1140, false, doodadIDs.AlchemyDoor.toString(), 0, "Village");
