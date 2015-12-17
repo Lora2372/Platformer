@@ -53,5 +53,4 @@ public class RainDrop extends Doodad
 			removeMe = true;
 		}
 	}
-
 }

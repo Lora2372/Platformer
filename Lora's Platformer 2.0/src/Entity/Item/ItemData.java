@@ -46,6 +46,8 @@ public class ItemData
 		itemDescriptionName.put(Bags.Small.toString(), "Small Bag");
 		itemDescriptionName.put(Bags.Medium.toString(), "Medium Bag");
 		
+		itemDescriptionName.put(Bombs.Regular.toString(), "Regular bomb");
+		
 		
 		itemDescription = new HashMap<String, String>();
 		itemDescription.put(Potions.Healing.toString(), "A magical red potion which heals wounds when consumed.");
@@ -64,6 +66,10 @@ public class ItemData
 
 		itemDescription.put(Bags.Small.toString(), "A small sized bag increasing your inventory by five slots.");
 		itemDescription.put(Bags.Medium.toString(), "A medium sized bag increasing your inventory by ten slots.");
+		
+		itemDescription.put(Bombs.Regular.toString(), "A regular bomb, use with caution.");
+		
+		
 	}
 	
 	public static enum Potions
@@ -96,6 +102,11 @@ public class ItemData
 		Small,
 		Medium,
 		Large
+	}
+	
+	public static enum Bombs
+	{
+		Regular
 	}
 	
 	public static HashMap<String, String> itemDescriptionName = new HashMap<String, String>();

@@ -918,6 +918,14 @@ public class MainMap extends GameState
 		if(key == player.getKeyBind(Player.KeyBind.UseItem8)) player.useItem(2, 1);
 		if(key == player.getKeyBind(Player.KeyBind.UseItem9)) player.useItem(3, 1);
 		
+		// Note: This is a built in cheat that is not supposed to be used to get the real game experience.
+		if(key == KeyEvent.VK_J)
+		{
+			Entity.Item.Bomb bomb = new Entity.Item.Bomb(tileMap, this, false, 0, 0, player, 1, ItemData.Bombs.Regular);
+			player.getInventory().addItem(bomb);
+			items.add(bomb);
+		}
+		
 		
 		if(key == KeyEvent.VK_G) player.setCastingMagicShield();
 		if(key == KeyEvent.VK_H) player.emoteExclamation();

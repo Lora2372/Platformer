@@ -1,5 +1,6 @@
 package GameState.MainMap;
 
+import Entity.Doodad.Bomb;
 import Entity.Doodad.EmotionBubble;
 import Entity.Doodad.RainDrop;
 import Entity.Doodad.SummoningEffect;
@@ -55,13 +56,20 @@ public class SpawnDoodad
 		mainMap.stuff.add(torch);
 	}
 	
+	public Bomb spawnBomb(double locationX, double locationY)
+	{
+		Bomb bomb = new Bomb(mainMap.tileMap, mainMap, locationX, locationY);
+		mainMap.stuff.add(bomb);
+		mainMap.activatables.add(bomb);
+		return bomb;
+	}
+	
 	public CampFire spawnCampFire(double locationX, double locationY)
 	{
 		CampFire campFire = new CampFire(mainMap.tileMap, mainMap, mainMap.getGameStateManager(), locationX, locationY);
 		mainMap.stuff.add(campFire);
 		mainMap.activatables.add(campFire);
 		return campFire;
-		
 	}
 	
 	public void spawnSign(double locationX, double locationY, String[] conversation, int[] whoTalks)

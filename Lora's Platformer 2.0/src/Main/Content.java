@@ -12,6 +12,7 @@ public class Content
 	public static BufferedImage[][] FireBallSmallExplosion 	= load("/Art/Sprites/Effects/FireBallLargeExplosion.png", 512, 512);
 	public static BufferedImage[][] ElectricBallExplosion 	= load("/Art/Sprites/Effects/ElectricBallExplosion.png", 180, 180);
 	public static BufferedImage[][] ArcaneBallExplosion		= load("/Art/Sprites/Effects/ArcaneBallExplosion.png", 512, 512);
+	public static BufferedImage[][] BombExplosion			= load("/Art/Sprites/Effects/BombExplosion.png", 32, 64);
 	
 	// Projectiles
 	public static BufferedImage[][] FireBallLarge 			= load("/Art/Sprites/Effects/FireBallLarge.png", 90, 90);
@@ -32,76 +33,78 @@ public class Content
 	
 	
 	//Doodads
-	public static BufferedImage[][] Sign 					= load("/Art/Sprites/Doodads/Sign.png", 50, 50);
-	public static BufferedImage[][] SignLeft 				= load("/Art/Sprites/Doodads/SignLeft.png", 50, 50);
-	public static BufferedImage[][] SignRight 				= load("/Art/Sprites/Doodads/SignRight.png", 50, 50);
-	public static BufferedImage[][] Mushroom1 				= load("/Art/Sprites/Doodads/Mushroom01.png", 50, 50);
-	public static BufferedImage[][] Mushroom2 				= load("/Art/Sprites/Doodads/Mushroom02.png", 50, 50);
-	public static BufferedImage[][] Torch 					= load("/Art/Sprites/Doodads/Torch.png", 150, 150);
-	public static BufferedImage[][] Waterfall 				= load("/Art/Sprites/Doodads/Waterfall.png", 192, 192);
-	public static BufferedImage[][] ChestCommonClosed 		= load("/Art/Sprites/Doodads/ChestCommonClosed.png", 60, 60);
-	public static BufferedImage[][] ChestCommonOpening 		= load("/Art/Sprites/Doodads/ChestCommonOpening.png", 60, 60);
-	public static BufferedImage[][] ChestCommonOpened 		= load("/Art/Sprites/Doodads/ChestCommonOpened.png", 60, 60);
-	public static BufferedImage[][] ChestUncommonClosed 	= load("/Art/Sprites/Doodads/ChestUncommonClosed.png", 60, 60);
-	public static BufferedImage[][] ChestUncommonOpening 	= load("/Art/Sprites/Doodads/ChestUncommonOpening.png", 60, 60);
-	public static BufferedImage[][] ChestUncommonOpened 	= load("/Art/Sprites/Doodads/ChestUncommonOpened.png", 60, 60);
-	public static BufferedImage[][] ChestRareClosed 		= load("/Art/Sprites/Doodads/ChestRareClosed.png", 60, 60);
-	public static BufferedImage[][] ChestRareOpening 		= load("/Art/Sprites/Doodads/ChestRareOpening.png", 60, 60);
-	public static BufferedImage[][] ChestRareOpened 		= load("/Art/Sprites/Doodads/ChestRareOpened.png", 60, 60);
-	public static BufferedImage[][] CaveEntrance			= load("/Art/Sprites/Doodads/CaveEntrance.png", 100, 96);
-	public static BufferedImage[][] Shrine					= load("/Art/Sprites/Doodads/Shrine.png", 146, 156);
-	public static BufferedImage[][] StatueSave				= load("/Art/Sprites/Doodads/StatueSave.png", 157, 149);
-	public static BufferedImage[][] KeyUncommon				= load("/Art/Sprites/Doodads/KeyUncommon.png", 120, 120); 
-	public static BufferedImage[][] KeyRare					= load("/Art/Sprites/Doodads/KeyRare.png", 120, 120); 
-	public static BufferedImage[][] KeyBoss					= load("/Art/Sprites/Doodads/KeyBoss.png", 120, 120); 
-	public static BufferedImage[][] PotionHealth			= load("/Art/Sprites/Doodads/PotionHealth.png", 60, 60); 
-	public static BufferedImage[][] PotionMana				= load("/Art/Sprites/Doodads/PotionMana.png", 60, 60); 
-	public static BufferedImage[][] PotionStamina			= load("/Art/Sprites/Doodads/PotionStamina.png", 60, 60); 
-	public static BufferedImage[][] CoinSilver				= load("/Art/Sprites/Doodads/CoinSilver.png", 60, 60);
-	public static BufferedImage[][] CoinGold				= load("/Art/Sprites/Doodads/CoinGold.png", 60, 60);
+	public static BufferedImage[][] Sign 						= load("/Art/Sprites/Doodads/Sign.png", 50, 50);
+	public static BufferedImage[][] SignLeft 					= load("/Art/Sprites/Doodads/SignLeft.png", 50, 50);
+	public static BufferedImage[][] SignRight 					= load("/Art/Sprites/Doodads/SignRight.png", 50, 50);
+	public static BufferedImage[][] Mushroom1 					= load("/Art/Sprites/Doodads/Mushroom01.png", 50, 50);
+	public static BufferedImage[][] Mushroom2 					= load("/Art/Sprites/Doodads/Mushroom02.png", 50, 50);
+	public static BufferedImage[][] Torch 						= load("/Art/Sprites/Doodads/Torch.png", 150, 150);
+	public static BufferedImage[][] Waterfall 					= load("/Art/Sprites/Doodads/Waterfall.png", 192, 192);
+	public static BufferedImage[][] ChestCommonClosed 			= load("/Art/Sprites/Doodads/ChestCommonClosed.png", 60, 60);
+	public static BufferedImage[][] ChestCommonOpening 			= load("/Art/Sprites/Doodads/ChestCommonOpening.png", 60, 60);
+	public static BufferedImage[][] ChestCommonOpened 			= load("/Art/Sprites/Doodads/ChestCommonOpened.png", 60, 60);
+	public static BufferedImage[][] ChestUncommonClosed 		= load("/Art/Sprites/Doodads/ChestUncommonClosed.png", 60, 60);
+	public static BufferedImage[][] ChestUncommonOpening 		= load("/Art/Sprites/Doodads/ChestUncommonOpening.png", 60, 60);
+	public static BufferedImage[][] ChestUncommonOpened 		= load("/Art/Sprites/Doodads/ChestUncommonOpened.png", 60, 60);
+	public static BufferedImage[][] ChestRareClosed 			= load("/Art/Sprites/Doodads/ChestRareClosed.png", 60, 60);
+	public static BufferedImage[][] ChestRareOpening 			= load("/Art/Sprites/Doodads/ChestRareOpening.png", 60, 60);
+	public static BufferedImage[][] ChestRareOpened 			= load("/Art/Sprites/Doodads/ChestRareOpened.png", 60, 60);
+	public static BufferedImage[][] CaveEntrance				= load("/Art/Sprites/Doodads/CaveEntrance.png", 100, 96);
+	public static BufferedImage[][] Shrine						= load("/Art/Sprites/Doodads/Shrine.png", 146, 156);
+	public static BufferedImage[][] StatueSave					= load("/Art/Sprites/Doodads/StatueSave.png", 157, 149);
+	public static BufferedImage[][] KeyUncommon					= load("/Art/Sprites/Doodads/KeyUncommon.png", 120, 120); 
+	public static BufferedImage[][] KeyRare						= load("/Art/Sprites/Doodads/KeyRare.png", 120, 120); 
+	public static BufferedImage[][] KeyBoss						= load("/Art/Sprites/Doodads/KeyBoss.png", 120, 120); 
+	public static BufferedImage[][] PotionHealth				= load("/Art/Sprites/Doodads/PotionHealth.png", 60, 60); 
+	public static BufferedImage[][] PotionMana					= load("/Art/Sprites/Doodads/PotionMana.png", 60, 60); 
+	public static BufferedImage[][] PotionStamina				= load("/Art/Sprites/Doodads/PotionStamina.png", 60, 60); 
+	public static BufferedImage[][] CoinSilver					= load("/Art/Sprites/Doodads/CoinSilver.png", 60, 60);
+	public static BufferedImage[][] CoinGold					= load("/Art/Sprites/Doodads/CoinGold.png", 60, 60);
 	public static BufferedImage[][] DoorBossClosed				= load("/Art/Sprites/Doodads/DoorBossClosed.png", 58, 63);
 	public static BufferedImage[][] DoorBossOpening				= load("/Art/Sprites/Doodads/DoorBossOpening.png", 58, 63);
 	public static BufferedImage[][] DoorBossOpened				= load("/Art/Sprites/Doodads/DoorBossOpened.png", 58, 63);
-	public static BufferedImage[][] Portal					= load("/Art/Sprites/Doodads/Portal.png", 102, 143);
-	public static BufferedImage[][] DoorVillageSquareClosed = load("/Art/Sprites/Doodads/DoorVillageSquareClosed.png", 120, 120);
-	public static BufferedImage[][] DoorVillageSquareOpening = load("/Art/Sprites/Doodads/DoorVillageSquareOpening.png", 120, 120);
-	public static BufferedImage[][] DoorVillageSquareOpened = load("/Art/Sprites/Doodads/DoorVillageSquareOpened.png", 120, 120);
-	public static BufferedImage[][] CampFire				= load("/Art/Sprites/Doodads/CampFire.png", 64, 64);
-	public static BufferedImage[][] LeverOpened				= load("/Art/Sprites/Doodads/LeverOpened.png", 26, 29);
-	public static BufferedImage[][] LeverClosed				= load("/Art/Sprites/Doodads/LeverClosed.png", 26, 29);
+	public static BufferedImage[][] Portal						= load("/Art/Sprites/Doodads/Portal.png", 102, 143);
+	public static BufferedImage[][] DoorVillageSquareClosed 	= load("/Art/Sprites/Doodads/DoorVillageSquareClosed.png", 120, 120);
+	public static BufferedImage[][] DoorVillageSquareOpening 	= load("/Art/Sprites/Doodads/DoorVillageSquareOpening.png", 120, 120);
+	public static BufferedImage[][] DoorVillageSquareOpened 	= load("/Art/Sprites/Doodads/DoorVillageSquareOpened.png", 120, 120);
+	public static BufferedImage[][] CampFire					= load("/Art/Sprites/Doodads/CampFire.png", 64, 64);
+	public static BufferedImage[][] LeverOpened					= load("/Art/Sprites/Doodads/LeverOpened.png", 26, 29);
+	public static BufferedImage[][] LeverClosed					= load("/Art/Sprites/Doodads/LeverClosed.png", 26, 29);
 	public static BufferedImage[][] LeverOpening				= load("/Art/Sprites/Doodads/LeverOpening.png", 26, 29);
 	public static BufferedImage[][] LeverClosing				= load("/Art/Sprites/Doodads/LeverClosing.png", 26, 29);
-	public static BufferedImage[][] HerbSun					= load("/Art/Sprites/Doodads/HerbSun.png", 21, 17);
-	public static BufferedImage[][] EmotionBubbleExclamation = load("/Art/HUD/EmotionBubbleExclamation.png", 32, 30);
-	public static BufferedImage[][] BagSmall				 = load("/Art/Sprites/Doodads/BagSmall.png", 28, 27);
-	public static BufferedImage[][] BagMedium				 = load("/Art/Sprites/Doodads/BagMedium.png", 28, 27);
+	public static BufferedImage[][] HerbSun						= load("/Art/Sprites/Doodads/HerbSun.png", 21, 17);
+	public static BufferedImage[][] EmotionBubbleExclamation	= load("/Art/HUD/EmotionBubbleExclamation.png", 32, 30);
+	public static BufferedImage[][] BagSmall					= load("/Art/Sprites/Doodads/BagSmall.png", 28, 27);
+	public static BufferedImage[][] BagMedium					= load("/Art/Sprites/Doodads/BagMedium.png", 28, 27);
+	public static BufferedImage[][] Bomb						= load("/Art/Sprites/Doodads/Bomb.png", 32, 64);
+	public static BufferedImage[][] BombExploding				= load("/Art/Sprites/Doodads/BombExploding.png", 32, 64);
 	
 	
 	
 	//Effects
-	public static BufferedImage[][] Teleport 				= load("/Art/Sprites/Effects/Teleport.png", 192, 192);
-	public static BufferedImage[][] MagicShield				= load("/Art/Sprites/Effects/MagicShield.png", 192, 192);
-	public static BufferedImage[][] Poff					= load("/Art/Sprites/Effects/Poff.png", 512, 512);
-	public static BufferedImage[][] RainDrop				 = load("/Art/Sprites/Effects/RainDrop.png", 3, 17);
+	public static BufferedImage[][] Teleport 					= load("/Art/Sprites/Effects/Teleport.png", 192, 192);
+	public static BufferedImage[][] MagicShield					= load("/Art/Sprites/Effects/MagicShield.png", 192, 192);
+	public static BufferedImage[][] Poff						= load("/Art/Sprites/Effects/Poff.png", 512, 512);
+	public static BufferedImage[][] RainDrop					= load("/Art/Sprites/Effects/RainDrop.png", 3, 17);
 	
 	// Foreground
-	public static BufferedImage[][] GameOver				= load("/Art/HUD/Foregrounds/GameOver.png", 544, 416);
-	public static BufferedImage[][] ConversationGUI			= load("/Art/HUD/Foregrounds/Conversation GUI.png", 454, 138);
+	public static BufferedImage[][] GameOver					= load("/Art/HUD/Foregrounds/GameOver.png", 544, 416);
+	public static BufferedImage[][] ConversationGUI				= load("/Art/HUD/Foregrounds/Conversation GUI.png", 454, 138);
 	public static BufferedImage[][] ConversationGUIEndConversation = load("/Art/HUD/Foregrounds/ConversationGUIEndConversation.png", 206, 35);
-	public static BufferedImage[][] InventorySquare			= load("/Art/HUD/Foregrounds/InventorySquare.png", 60, 60);
-	public static BufferedImage[][] InventoryBackground		= load("/Art/HUD/Foregrounds/InventoryBackground.png", 424, 348);
-	public static BufferedImage[][] OptionConfirm			= load("/Art/HUD/Foregrounds/OptionConfirm.png", 60, 60);
-	public static BufferedImage[][] OptionDeny				= load("/Art/HUD/Foregrounds/OptionDecline.png", 60, 60);
-	public static BufferedImage[][] OptionBackground		= load("/Art/HUD/Foregrounds/OptionBackground.png", 424, 348);
+	public static BufferedImage[][] InventorySquare				= load("/Art/HUD/Foregrounds/InventorySquare.png", 60, 60);
+	public static BufferedImage[][] InventoryBackground			= load("/Art/HUD/Foregrounds/InventoryBackground.png", 424, 348);
+	public static BufferedImage[][] OptionConfirm				= load("/Art/HUD/Foregrounds/OptionConfirm.png", 60, 60);
+	public static BufferedImage[][] OptionDeny					= load("/Art/HUD/Foregrounds/OptionDecline.png", 60, 60);
+	public static BufferedImage[][] OptionBackground			= load("/Art/HUD/Foregrounds/OptionBackground.png", 424, 348);
 	
-	public static BufferedImage[][] bossHealthBarFrame		= load("/Art/HUD/Bars/BossHealthBarFrame.png", 900, 60);
-	public static BufferedImage[][] bossHealthBar 			= load("/Art/HUD/Bars/BossHealthBar.png", 900, 60);
+	public static BufferedImage[][] bossHealthBarFrame			= load("/Art/HUD/Bars/BossHealthBarFrame.png", 900, 60);
+	public static BufferedImage[][] bossHealthBar 				= load("/Art/HUD/Bars/BossHealthBar.png", 900, 60);
 	
-	public static BufferedImage[][] BuffIcon				= load("/Art/HUD/Foregrounds/BuffIcon.png", 64, 64);
+	public static BufferedImage[][] BuffIcon					= load("/Art/HUD/Foregrounds/BuffIcon.png", 64, 64);
 	
 	// Portraits
-	public static BufferedImage[][] PortraitPlayer			= load("/Art/HUD/Portraits/PortraitPlayer.png", 94, 94);
-	public static BufferedImage[][] PortraitSuccubus		= load("/Art/HUD/Portraits/PortraitSuccubus.png", 94, 94);
+	public static BufferedImage[][] PortraitPlayer				= load("/Art/HUD/Portraits/PortraitPlayer.png", 94, 94);
+	public static BufferedImage[][] PortraitSuccubus			= load("/Art/HUD/Portraits/PortraitSuccubus.png", 94, 94);
 	
 	public static BufferedImage[][] PortraitEmpty			= load("/Art/HUD/Portraits/PortraitEmpty.png", 94, 94);
 	
@@ -123,6 +126,7 @@ public class Content
 	public static BufferedImage[][] PortraitDoorVillage		= load("/Art/HUD/Portraits/PortraitDoorVillage.png", 94, 94);
 	public static BufferedImage[][] PortraitBagSmall		= load("/Art/HUD/Portraits/PortraitBagSmall.png", 94, 94);
 	public static BufferedImage[][] PortraitBagMedium		= load("/Art/HUD/Portraits/PortraitBagMedium.png", 94, 94);
+	public static BufferedImage[][] PortraitBomb			= load("/Art/HUD/Portraits/PortraitBomb.png", 94, 94);
 	
 	
 	// Buttons

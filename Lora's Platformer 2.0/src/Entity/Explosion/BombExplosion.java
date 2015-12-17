@@ -5,16 +5,17 @@ import GameState.MainMap.MainMap;
 import Main.Content;
 import TileMap.TileMap;
 
-public class FireBallLargeExplosion extends Explosion
+public class BombExplosion extends Explosion
 {
-	public FireBallLargeExplosion(
+	public BombExplosion
+		(
 			TileMap tileMap, 
 			MainMap mainMap,
 			Unit owner,
 			double locationX, 
 			double locationY,
 			boolean friendly
-			)
+		)
 	{
 		super
 		(
@@ -24,16 +25,16 @@ public class FireBallLargeExplosion extends Explosion
 				friendly,
 				locationX, 
 				locationY, 
-				240,
-				240,
-				240, 
-				240,
+				32,
+				64,
+				32, 
+				64,
 				50,
-				"FireBallLargeExplosion"
+				"BombExplosion"
 		);
 	}
 	public void setExplosion()
 	{
-		sprites = Content.FireBallLargeExplosion[0];
+		sprites = Content.BombExplosion[0];
 	}
 }

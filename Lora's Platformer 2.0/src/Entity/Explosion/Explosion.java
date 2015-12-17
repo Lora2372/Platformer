@@ -95,7 +95,7 @@ public class Explosion extends MapObject
             Unit character = characterList.get(i);
             if(!unitsHit.contains(character))
             {
-                if(character.getFriendly() != friendly)
+                if(character.getFriendly() != friendly || owner == null)
                 {
                     if(character.intersects(this))
                     {
@@ -113,8 +113,15 @@ public class Explosion extends MapObject
                             System.out.println("distanceDamageMultiplier was negative");
                             distanceDamageMultiplier *= -1;
                         }
-                                              
-                        character.hit( (damage + owner.getBonusDamageMagical() ) * distanceDamageMultiplier, owner);
+                        
+                        double bonusDamage = 0;
+                        
+                        if(owner != null)
+                        {
+                        	bonusDamage = owner.getBonusDamageMagical();
+                        }
+                        
+                        character.hit( (damage + bonusDamage ) * distanceDamageMultiplier, owner);
                     }
                 }
             }
