@@ -192,10 +192,10 @@ public class Player extends Unit
 
 		hud = new HUD(this);
 		
-		wetBuff = new Buff(CreateBuff.Buffs.Dry, -1, 0, this, Content.Bomb[0][0]);
+		wetBuff = new Buff(CreateBuff.Buffs.Dry, -1, 0, this, Content.BuffDry[0][0]);
 		addBuff(wetBuff);
 		
-		warmthBuff = new Buff(CreateBuff.Buffs.Warm, -1, 0, this, Content.Torch[0][0]);
+		warmthBuff = new Buff(CreateBuff.Buffs.Warm, -1, 0, this, Content.BuffWarm[0][0]);
 		addBuff(warmthBuff);
 		
 	}
@@ -225,12 +225,12 @@ public class Player extends Unit
 			addWetLevel( (0.001 + warmth / 10000) * -1  ); 
 		}
 		
-		if(atmosphereTemperature < warmth)
+		if(atmosphereTemperature < (warmth + (wetLevel / 10)) )
 		{
 			addWarmth( ( 0.01 + 2 * wetLevel / 10000) * -1 );
 		}
 		
-		if(atmosphereTemperature > warmth)
+		if(atmosphereTemperature > (warmth - (wetLevel / 10)) )
 		{
 			addWarmth(0.01 - wetLevel / 10000);
 		}
@@ -249,7 +249,7 @@ public class Player extends Unit
 			if(!warmthBuff.getBuff().equals(CreateBuff.Buffs.Hot))
 			{
 				warmthBuff.setBuff(CreateBuff.Buffs.Hot);
-				warmthBuff.setSprites(Content.CampFire[0][0]);
+				warmthBuff.setSprites(Content.BuffHot[0][0]);
 				healthRegenCurrent = healthRegenOriginal * 1.1;
 				manaRegenCurrent = manaRegenOriginal * 1.1;
 				staminaRegenCurrent = staminaRegenOriginal * 1.1;
@@ -264,7 +264,7 @@ public class Player extends Unit
 			{
 				
 				warmthBuff.setBuff(CreateBuff.Buffs.Warm);
-				warmthBuff.setSprites(Content.Torch[0][0]);
+				warmthBuff.setSprites(Content.BuffWarm[0][0]);
 				
 				healthRegenCurrent = healthRegenOriginal;
 				manaRegenCurrent = manaRegenOriginal;
@@ -277,7 +277,7 @@ public class Player extends Unit
 			if(!warmthBuff.getBuff().equals(CreateBuff.Buffs.Cold))
 			{
 				warmthBuff.setBuff(CreateBuff.Buffs.Cold);
-				warmthBuff.setSprites(Content.Bunny[0][0]);
+				warmthBuff.setSprites(Content.BuffCold[0][0]);
 				
 				healthRegenCurrent = healthRegenOriginal * 0.5;
 				manaRegenCurrent = manaRegenOriginal * 0.5;
@@ -291,7 +291,7 @@ public class Player extends Unit
 			if(!warmthBuff.getBuff().equals(CreateBuff.Buffs.Freezing))
 			{
 				warmthBuff.setBuff(CreateBuff.Buffs.Freezing);
-				warmthBuff.setSprites(Content.Waterfall[0][0]);
+				warmthBuff.setSprites(Content.BuffFreezing[0][0]);
 				
 				healthRegenCurrent = 0;
 				manaRegenCurrent = 0;
@@ -305,7 +305,7 @@ public class Player extends Unit
 			if(!wetBuff.getBuff().equals(CreateBuff.Buffs.Dry))
 			{
 				wetBuff.setBuff(CreateBuff.Buffs.Dry);
-				wetBuff.setSprites(Content.Sign[0][0]);
+				wetBuff.setSprites(Content.BuffDry[0][0]);
 			}
 		}
 		
@@ -315,7 +315,7 @@ public class Player extends Unit
 			if(!wetBuff.getBuff().equals(CreateBuff.Buffs.Wet))
 			{
 				wetBuff.setBuff(CreateBuff.Buffs.Wet);
-				wetBuff.setSprites(Content.PortraitSuccubus[0][0]);
+				wetBuff.setSprites(Content.BuffWet[0][0]);
 			}
 		}
 		
@@ -325,7 +325,7 @@ public class Player extends Unit
 			if(!wetBuff.getBuff().equals(CreateBuff.Buffs.Soaked))
 			{
 				wetBuff.setBuff(CreateBuff.Buffs.Soaked);
-				wetBuff.setSprites(Content.PortraitPlayer[0][0]);
+				wetBuff.setSprites(Content.BuffSoaked[0][0]);
 			}
 		}
 		

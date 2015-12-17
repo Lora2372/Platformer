@@ -271,7 +271,7 @@ public class MainMap extends GameState
 			if(startX < 0) startX = 20;
 			double endX = player.getLocationX() + GamePanel.WIDTH;
 			
-			System.out.println((endX - startX) / 500);
+//			System.out.println((endX - startX) / 500);
 			
 			for(double i = startX; i < endX; i += 500)
 			{
@@ -944,10 +944,24 @@ public class MainMap extends GameState
 			}
 		}
 		
+		if(key == KeyEvent.VK_T)
+		{
+			JukeBox.setVolume("Rain", 10);
+		}
+		
 		if(key == KeyEvent.VK_Y)
 		{
-			raining = !raining;
-//			System.out.println("It's " + (raining? "" : "not") + " raining");
+			if(!raining)
+			{
+				raining = true;
+				JukeBox.loop("Rain");
+				
+			}
+			else
+			{
+				raining = false;
+				JukeBox.stop("Rain");
+			}
 		}
 		
 		// Note: This is a built in cheat that is not supposed to be used to get the real game experience.

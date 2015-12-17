@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -17,7 +18,7 @@ import javax.swing.JScrollPane;
 import Entity.Player.Player;
 
 @SuppressWarnings("serial")
-public class OptionKeyBindFrame extends JFrame
+public class OptionVolumeFrame extends JFrame
 {
 	
 //	protected boolean settingKeyBinding = false;
@@ -32,7 +33,7 @@ public class OptionKeyBindFrame extends JFrame
 	
 	protected JDialog optionKeyBindDialog;
 	
-	public OptionKeyBindFrame(Player player)
+	public OptionVolumeFrame(Player player)
 	{
 		
 		this.player = player;
@@ -85,45 +86,15 @@ public class OptionKeyBindFrame extends JFrame
 		
 		ArrayList<JLabel> labels = new ArrayList<JLabel>();
 		
-		JLabel newLabel = new JLabel("Move left:");
+		JLabel newLabel = new JLabel("Music volume:");
 		labels.add(newLabel);
-		newLabel = new JLabel("Move right:");
+		newLabel = new JLabel("Character volume:");
 		labels.add(newLabel);
-		newLabel = new JLabel("Aim down/move down:");
+		newLabel = new JLabel("Effect volume:");
 		labels.add(newLabel);
-		newLabel = new JLabel("Aim up/move up:");
+		newLabel = new JLabel("Background volume:");
 		labels.add(newLabel);
-		newLabel = new JLabel("Jump:");
-		labels.add(newLabel);
-		newLabel = new JLabel("Interact/progress conversation:");
-		labels.add(newLabel);
-		newLabel = new JLabel("Glide:");
-		labels.add(newLabel);
-		newLabel = new JLabel("Run:");
-		labels.add(newLabel);
-		newLabel = new JLabel("Cast small fireball:");
-		labels.add(newLabel);
-		newLabel = new JLabel("Cast large fireball:");
-		labels.add(newLabel);
-		newLabel = new JLabel("Dash:");
-		labels.add(newLabel);
-		newLabel = new JLabel("Punch:");
-		labels.add(newLabel);
-		
-		for(int i = 1; i < 10; i++)
-		{
-			newLabel = new JLabel("Use inventory slot " + i + ":");
-			labels.add(newLabel);
-		}
-		
-		newLabel = new JLabel("Toss item:");
-		labels.add(newLabel);
-		newLabel = new JLabel("Open inventory:");
-		labels.add(newLabel);
-		
-		buttons = new ArrayList<JButton>();
-		
-		
+
 		for(int i = 0; i < labels.size(); i++)
 		{
 			labels.get(i).setSize(labels.get(i).getPreferredSize());

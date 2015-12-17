@@ -85,7 +85,7 @@ public class Content
 	public static BufferedImage[][] Teleport 					= load("/Art/Sprites/Effects/Teleport.png", 192, 192);
 	public static BufferedImage[][] MagicShield					= load("/Art/Sprites/Effects/MagicShield.png", 192, 192);
 	public static BufferedImage[][] Poff						= load("/Art/Sprites/Effects/Poff.png", 512, 512);
-	public static BufferedImage[][] RainDrop					= load("/Art/Sprites/Effects/RainDrop.png", 3, 17);
+	public static BufferedImage[][] RainDrop					= load("/Art/Sprites/Effects/RainDrop.png", 5, 8);
 	
 	// Foreground
 	public static BufferedImage[][] GameOver					= load("/Art/HUD/Foregrounds/GameOver.png", 544, 416);
@@ -100,7 +100,17 @@ public class Content
 	public static BufferedImage[][] bossHealthBarFrame			= load("/Art/HUD/Bars/BossHealthBarFrame.png", 900, 60);
 	public static BufferedImage[][] bossHealthBar 				= load("/Art/HUD/Bars/BossHealthBar.png", 900, 60);
 	
+	// Buffs
 	public static BufferedImage[][] BuffIcon					= load("/Art/HUD/Foregrounds/BuffIcon.png", 64, 64);
+	
+	public static BufferedImage[][] BuffDry						= load("/Art/HUD/SpellIcons/BuffDry.png", 64, 64);
+	public static BufferedImage[][] BuffWet						= load("/Art/HUD/SpellIcons/BuffWet.png", 64, 64);
+	public static BufferedImage[][] BuffSoaked					= load("/Art/HUD/SpellIcons/BuffSoaked.png", 64, 64);
+	
+	public static BufferedImage[][] BuffFreezing				= load("/Art/HUD/SpellIcons/BuffFreezing.png", 64, 64);
+	public static BufferedImage[][] BuffCold					= load("/Art/HUD/SpellIcons/BuffCold.png", 64, 64);
+	public static BufferedImage[][] BuffWarm					= load("/Art/HUD/SpellIcons/BuffWarm.png", 64, 64);
+	public static BufferedImage[][] BuffHot						= load("/Art/HUD/SpellIcons/BuffHot.png", 64, 64);
 	
 	// Portraits
 	public static BufferedImage[][] PortraitPlayer				= load("/Art/HUD/Portraits/PortraitPlayer.png", 94, 94);
@@ -271,7 +281,8 @@ public class Content
 			
 			// Background sound effect
 			JukeBox.load("/Sound/BackgroundSound/Darkness.mp3", 						"Darkness");
-		
+			JukeBox.load("/Sound/BackgroundSound/Rain.mp3", 							"Rain");
+			
 		}
 		catch(Exception e)
 		{

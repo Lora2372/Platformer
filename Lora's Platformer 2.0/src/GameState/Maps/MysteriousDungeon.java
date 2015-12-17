@@ -90,6 +90,8 @@ public class MysteriousDungeon extends MainMap
 			}
 		}
 		
+		spawnDoodad.spawnCampFire(457, 790);
+		
 		if(!player.getLoading(index))
 		{
 			
@@ -251,7 +253,7 @@ public class MysteriousDungeon extends MainMap
 
 		if(!dungeonIntroduction)
 		{
-			if(player.getDirectionY() == 0 && player.getLocationY() > 300 && !player.getInWater())
+			if(player.getDirectionY() == 0 && player.getLocationY() > 300 && player.getLocationX() > 400 && !player.getInWater())
 			{
 				if(!player.getInConversation())
 				{
