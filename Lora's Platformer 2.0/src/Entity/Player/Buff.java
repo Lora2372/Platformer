@@ -74,7 +74,9 @@ public class Buff
 		
 		System.out.println("expiring: " + expiring);
 		
-		start = System.currentTimeMillis();		
+		
+		
+		start = System.currentTimeMillis();
 	}
 	
 	
@@ -241,20 +243,20 @@ public class Buff
 					null
 				);
 			
-			int stringX = locationX + width / 2;
-			int stringY = locationY + height + 10;
+			int textLocationX = locationX + width / 2;
+			int textLocationY = locationY + height + 10;
 			
 			if(expiring)
 			{
 				graphics.setFont (new Font("Arial", Font.PLAIN, 14) );
 				graphics.setColor(Color.BLACK);
-				graphics.drawString( (int)duration + "", DrawingConstants.shiftWest( (int) stringX, 1), DrawingConstants.shiftNorth( (int) stringY, 1));
-				graphics.drawString( (int)duration + "", DrawingConstants.shiftWest( (int) stringX, 1), DrawingConstants.shiftSouth( (int) stringY, 1));
-				graphics.drawString( (int)duration + "", DrawingConstants.shiftEast( (int) stringX, 1), DrawingConstants.shiftNorth( (int) stringY, 1));
-				graphics.drawString( (int)duration + "", DrawingConstants.shiftEast( (int) stringX, 1), DrawingConstants.shiftSouth( (int) stringY, 1));
+				graphics.drawString( (int)duration + "", DrawingConstants.shiftWest( (int) textLocationX, 1), DrawingConstants.shiftNorth( (int) textLocationY, 1));
+				graphics.drawString( (int)duration + "", DrawingConstants.shiftWest( (int) textLocationX, 1), DrawingConstants.shiftSouth( (int) textLocationY, 1));
+				graphics.drawString( (int)duration + "", DrawingConstants.shiftEast( (int) textLocationX, 1), DrawingConstants.shiftNorth( (int) textLocationY, 1));
+				graphics.drawString( (int)duration + "", DrawingConstants.shiftEast( (int) textLocationX, 1), DrawingConstants.shiftSouth( (int) textLocationY, 1));
 				
 				graphics.setColor(Color.WHITE);
-				graphics.drawString( (int)duration + "", stringX , stringY);
+				graphics.drawString( (int)duration + "", textLocationX , textLocationY);
 			}
 			
 
@@ -264,41 +266,41 @@ public class Buff
 				int stringLength = DrawingConstants.getStringWidth(CreateBuff.getDescriptionName(buff.toString()), graphics);
 				int stringHeight = DrawingConstants.getStringHeight(CreateBuff.getDescriptionName(buff.toString()), graphics);
 				
-				stringX = locationX - stringLength / 4;
-				stringY += 10;
+				textLocationX = locationX - stringLength / 4;
+				textLocationY += 10;
 				
 				graphics.drawImage
 					(
 						Content.ConversationGUIEndConversation[0][0],
-						stringX,
-						stringY,
+						textLocationX,
+						textLocationY,
 						stringLength + 20,
 						stringHeight + 10,
 						null
 					);
 				graphics.setColor(Color.WHITE);
-				graphics.drawString(CreateBuff.getDescriptionName(buff.toString()), stringX + 10, stringY + 15);
+				graphics.drawString(CreateBuff.getDescriptionName(buff.toString()), textLocationX + 10, textLocationY + 15);
 				
 				stringLength = DrawingConstants.getStringWidth(CreateBuff.getDescription(buff.toString()), graphics);
 				stringHeight = DrawingConstants.getStringHeight(CreateBuff.getDescription(buff.toString()), graphics);
-				stringX = locationX - stringLength / 3;
-				if(stringX + stringLength > GamePanel.WIDTH)
+				textLocationX = locationX - stringLength / 3;
+				if(textLocationX + stringLength > GamePanel.WIDTH)
 				{
-					stringX = GamePanel.WIDTH - stringLength - 10;
+					textLocationX = GamePanel.WIDTH - stringLength - 10;
 				}
-				stringY += stringHeight;
+				textLocationY += stringHeight;
 				
 				graphics.drawImage
 				(
 					Content.ConversationGUIEndConversation[0][0],
-					stringX,
-					stringY,
+					textLocationX,
+					textLocationY,
 					stringLength + 20,
 					stringHeight + 10,
 					null
 				);
 			graphics.setColor(Color.WHITE);
-			graphics.drawString(CreateBuff.getDescription(buff.toString()), stringX + 10, stringY + 15);
+			graphics.drawString(CreateBuff.getDescription(buff.toString()), textLocationX + 10, textLocationY + 15);
 			}
 
 			

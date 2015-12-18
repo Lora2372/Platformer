@@ -73,6 +73,7 @@ public class CampFire extends Doodad
 		{
 			if(campfireBuff == null)
 			{
+//				player.getHUD().fadeMessage("You begin to warm up.");
 				campfireBuff = new Buff(CreateBuff.Buffs.CampFire, -1, 0.01, player, Content.CampFire[0][0]);
 				player.setCampFireBuff(campfireBuff);
 				player.addBuff(campfireBuff);

@@ -91,7 +91,6 @@ public class JSONReader
 				{
 					player.setKeyBind(index, keybind);
 					index++;
-					System.out.println("index: " + index);
 				}
 				else
 				{

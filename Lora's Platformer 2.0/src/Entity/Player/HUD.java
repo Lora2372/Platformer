@@ -7,6 +7,7 @@ import javax.imageio.ImageIO;
 
 import Entity.Projectile.ProjectileData;
 import Main.Content;
+import Main.DrawingConstants;
 import Main.GamePanel;
 
 public class HUD 
@@ -31,9 +32,16 @@ public class HUD
 	protected int questCurrent;
 	protected String[] questName;
 	
+	ArrayList<String> fadeMessage;
+	protected int fadeStaticTime;
+	protected double fadeTime;
+	protected double fadeStart;
+	protected int fadingStage; // 1 = fading in, 2 = static, 3 = fading out
+	
 	public HUD(Player player)
 	{
 		this.player = player;
+		fadeMessage = new ArrayList<String>();
 		
 		try{
 			playerBar = ImageIO.read
@@ -198,10 +206,89 @@ public class HUD
 		this.boss = null;
 	}
 	
+	public void fadeMessage(String message)
+	{
+		fadeMessage.add(message);
+		this.fadeStart = System.currentTimeMillis();
+		this.fadeTime = 1;
+		fadeStaticTime = 4;
+		this.fadingStage = 1;
+	}
+	
+	public AlphaComposite transparent(float transparency)
+	{
+		int type = AlphaComposite.SRC_OVER;
+		return AlphaComposite.getInstance(type, transparency);
+	}
+	
 	public void draw(Graphics2D graphics)
 	{
 		try
 		{
+			
+			if(fadeMessage.size() > 0)
+			{
+				int textLocationX = 40;
+				int textLocationY = GamePanel.HEIGHT - 300;
+				Composite originalComposite = graphics.getComposite();
+				
+				
+				double elapsed = System.currentTimeMillis() - fadeStart;
+				float transparency = 1;
+				String currentString = fadeMessage.get(0);
+				if(fadingStage == 1)
+				{
+					transparency = (float) (elapsed / (fadeTime * 1000));
+					
+					if(transparency >= 1)
+					{
+						fadingStage = 2;
+						fadeStart = System.currentTimeMillis();
+						elapsed = 0;
+						transparency = 1;
+					}
+				}
+				
+				if(fadingStage == 2)
+				{
+					if(elapsed >= fadeStaticTime * 1000)
+					{
+						elapsed = 0;
+						fadingStage = 3;
+						fadeStart = System.currentTimeMillis();
+					}
+				}
+				
+				if(fadingStage == 3)
+				{
+					transparency = (float) (1 - elapsed / (fadeTime * 1000));
+					if(transparency <= 0)
+					{
+						fadeStart = System.currentTimeMillis();
+						fadingStage = 1;
+						fadeMessage.remove(0);
+						currentString = null;
+					}
+				}
+				
+				if(currentString != null)
+				{	
+					graphics.setComposite(transparent(transparency));
+					graphics.setFont(new Font("Arial", Font.PLAIN, 15));
+					graphics.setColor(Color.BLACK);
+					graphics.drawString( currentString, DrawingConstants.shiftWest( (int) textLocationX, 1), DrawingConstants.shiftNorth( (int) textLocationY, 1));
+					graphics.drawString( currentString, DrawingConstants.shiftWest( (int) textLocationX, 1), DrawingConstants.shiftSouth( (int) textLocationY, 1));
+					graphics.drawString( currentString, DrawingConstants.shiftEast( (int) textLocationX, 1), DrawingConstants.shiftNorth( (int) textLocationY, 1));
+					graphics.drawString( currentString, DrawingConstants.shiftEast( (int) textLocationX, 1), DrawingConstants.shiftSouth( (int) textLocationY, 1));
+					
+					
+					graphics.setColor(Color.WHITE);
+					graphics.drawString(currentString, textLocationX, textLocationY);
+					graphics.setComposite(originalComposite);
+				}
+				
+
+			}
 			
 			// Draw buffs
 			
