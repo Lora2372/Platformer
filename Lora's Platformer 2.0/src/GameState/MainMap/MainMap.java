@@ -1,6 +1,5 @@
 package GameState.MainMap;
 
-
 import java.awt.Color;
 import java.awt.Graphics2D;
 import Main.GamePanel;
@@ -71,6 +70,11 @@ public class MainMap extends GameState
 	public SpawnDoodad spawnDoodad;
 	public SpawnItem spawnItem;
 	
+	protected int[] numberofSounds;
+	public enum soundTypes 
+	{ 
+		Rain 
+	}
 	
 	protected Liadrin liadrin;
 	
@@ -102,6 +106,17 @@ public class MainMap extends GameState
 	public void initialize()
 	{
 
+		numberofSounds = new int[soundTypes.values().length];
+		for(int i = 0; i < numberofSounds.length; i++)
+		{
+			int tempInt = 0;
+			while(JukeBox.checkIfClipExists(soundTypes.values()[i] + (i < 10 ? "0" : "") + (tempInt + 1)))
+			{
+				tempInt++;
+			}
+			numberofSounds[i] = tempInt;
+		}
+		
 		characterList = new ArrayList<Unit>();
 		stuff = new ArrayList<Doodad>();
 		activatables = new ArrayList<Doodad>();
@@ -954,13 +969,19 @@ public class MainMap extends GameState
 			if(!raining)
 			{
 				raining = true;
-				JukeBox.loop("Rain");
-				
+				int RNG = RNG(1, numberofSounds[0]);
+				if(RNG == -1)
+					return;
+				JukeBox.loop(soundTypes.Rain.toString() + (RNG < 10 ? "0" : "") + RNG);	
 			}
 			else
 			{
 				raining = false;
-				JukeBox.stop("Rain");
+				for(int i = 0; i < numberofSounds[0]; i++)
+				{
+					JukeBox.stop(soundTypes.Rain.toString() + (i < 10 ? "0" : "") + i);
+				}
+				
 			}
 		}
 		

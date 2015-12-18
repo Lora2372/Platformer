@@ -38,7 +38,7 @@ public class Bomb extends Item
 				locationX, 
 				locationY,
 				owner, 
-				false, 
+				true, 
 				stacks, 
 				true,
 				true,

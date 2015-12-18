@@ -25,10 +25,10 @@ public class BombExplosion extends Explosion
 				friendly,
 				locationX, 
 				locationY, 
-				32,
-				64,
-				32, 
-				64,
+				128,
+				256,
+				128, 
+				256,
 				50,
 				"BombExplosion"
 		);

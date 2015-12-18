@@ -277,11 +277,15 @@ public class Content
 			JukeBox.load("/Sound/Doodads/Switch01.mp3", 								"Switch01");
 			JukeBox.load("/Sound/Doodads/Switch02.mp3", 								"Switch02");
 			JukeBox.load("/Sound/Doodads/Switch03.mp3", 								"Switch03");
+			JukeBox.load("/Sound/Doodads/BombBurning.mp3", 								"BombBurning");
+			JukeBox.load("/Sound/Doodads/BombExploding.mp3", 							"BombExploding");
 			
 			
 			// Background sound effect
 			JukeBox.load("/Sound/BackgroundSound/Darkness.mp3", 						"Darkness");
-			JukeBox.load("/Sound/BackgroundSound/Rain.mp3", 							"Rain");
+			JukeBox.load("/Sound/BackgroundSound/Rain01.mp3", 							"Rain01");
+			JukeBox.load("/Sound/BackgroundSound/Rain02.mp3", 							"Rain02");
+			JukeBox.load("/Sound/BackgroundSound/Rain02.mp3", 							"Rain03");
 			
 		}
 		catch(Exception e)

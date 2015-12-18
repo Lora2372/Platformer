@@ -1,5 +1,6 @@
 package Entity.Doodad;
 
+import Audio.JukeBox;
 import Entity.Explosion.BombExplosion;
 import GameState.MainMap.MainMap;
 import Main.Content;
@@ -24,10 +25,10 @@ public class Bomb extends Doodad
 				mainMap, 
 				spawnLocationX, 
 				spawnLocationY, 
-				32, 
 				64, 
-				32, 
+				128, 
 				64, 
+				128, 
 				0.3,
 				8, 
 				true, 
@@ -57,17 +58,21 @@ public class Bomb extends Doodad
 		animation.setDelay(delay);
 		active = true;
 		start = System.currentTimeMillis();
+		JukeBox.play("BombBurning");
 	}
 	
 	public void update()
 	{
 		super.update();
 
+
+		
 		if(active)
 		{
 			if(hasPlayedOnce)
 			{
-				mainMap.addExplosion(new BombExplosion(tileMap, mainMap, null, locationX, locationY, false));
+				JukeBox.play("BombExploding");
+				mainMap.addExplosion(new BombExplosion(tileMap, mainMap, null, locationX, locationY - height / 2, false));
 				removeMe = true;
 			}
 		}

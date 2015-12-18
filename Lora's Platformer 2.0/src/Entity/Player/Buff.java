@@ -84,7 +84,7 @@ public class Buff
 		{
 			return;
 		}
-		
+
 		double currentTime = System.currentTimeMillis();
 		totalTimePassed += currentTime - start;
 		if( (currentTime - start)  >= 16)
@@ -276,7 +276,7 @@ public class Buff
 						stringHeight + 10,
 						null
 					);
-				
+				graphics.setColor(Color.WHITE);
 				graphics.drawString(CreateBuff.getDescriptionName(buff.toString()), stringX + 10, stringY + 15);
 				
 				stringLength = DrawingConstants.getStringWidth(CreateBuff.getDescription(buff.toString()), graphics);
@@ -297,7 +297,7 @@ public class Buff
 					stringHeight + 10,
 					null
 				);
-			
+			graphics.setColor(Color.WHITE);
 			graphics.drawString(CreateBuff.getDescription(buff.toString()), stringX + 10, stringY + 15);
 			}
 

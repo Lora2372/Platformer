@@ -73,7 +73,6 @@ public class CampFire extends Doodad
 		{
 			if(campfireBuff == null)
 			{
-				System.out.println("Kirby!!!");
 				campfireBuff = new Buff(CreateBuff.Buffs.CampFire, -1, 0.01, player, Content.CampFire[0][0]);
 				player.setCampFireBuff(campfireBuff);
 				player.addBuff(campfireBuff);
@@ -83,7 +82,6 @@ public class CampFire extends Doodad
 		{
 			if(campfireBuff != null)
 			{
-				System.out.println("Bowser!");
 				campfireBuff.setExpire();
 				player.setCampFireBuff(null);
 			}
