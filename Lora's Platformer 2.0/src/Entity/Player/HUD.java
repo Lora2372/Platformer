@@ -3,6 +3,8 @@ package Entity.Player;
 import java.awt.*;
 import java.awt.image.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import javax.imageio.ImageIO;
 
 import Entity.Projectile.ProjectileData;
@@ -12,38 +14,75 @@ import Main.GamePanel;
 
 public class HUD 
 {
-	private Player player;
+	protected Player player;
 	
-	private BufferedImage playerBar;
-	private BufferedImage playerHealthBar;
-	private BufferedImage playerManaBar;
-	private BufferedImage playerStaminaBar;
-	private BufferedImage bossBar;
-	private BufferedImage bossHealthBar;
+	protected BufferedImage playerBar;
+	protected BufferedImage playerHealthBar;
+	protected BufferedImage playerManaBar;
+	protected BufferedImage playerStaminaBar;
 	
-	private ArrayList<BufferedImage> spellbarUsable = new ArrayList<BufferedImage>();
-	private ArrayList<BufferedImage> spellbarUnusable = new ArrayList<BufferedImage>();
+	protected BufferedImage playerWetBar;
+	protected BufferedImage plyayerHeatBar;
 	
-	private ArrayList<Integer> spellcost = new ArrayList<Integer>();
 	
-	private Entity.Unit.Unit boss;
+	protected BufferedImage bossBar;
+	protected BufferedImage bossHealthBar;
+	
+	protected ArrayList<BufferedImage> spellbarUsable = new ArrayList<BufferedImage>();
+	protected ArrayList<BufferedImage> spellbarUnusable = new ArrayList<BufferedImage>();
+	
+	protected ArrayList<Integer> spellcost = new ArrayList<Integer>();
+	
+	protected Entity.Unit.Unit boss;
 	
 	protected boolean questFrameShow;
 	protected int questCurrent;
 	protected String[] questName;
 	
-	ArrayList<String> fadeMessage;
+	protected ArrayList<String> fadeMessageList;
 	protected int fadeStaticTime;
 	protected double fadeTime;
 	protected double fadeStart;
 	protected int fadingStage; // 1 = fading in, 2 = static, 3 = fading out
 	
+	protected enum wetEnum
+	{
+		Soaked,
+		Wet,
+		Dry
+	}
+	
+	protected enum heatEnum
+	{
+		Hot,
+		Warm,
+		Cold,
+		Freezing
+	}
+	
+	protected HashMap<String, String> wetMessages;
+	protected HashMap<String, String> heatMessages;
+	
+	
 	public HUD(Player player)
 	{
 		this.player = player;
-		fadeMessage = new ArrayList<String>();
+		fadeMessageList = new ArrayList<String>();
 		
-		try{
+		wetMessages = new HashMap<String, String>();
+		wetMessages.put(wetEnum.Soaked.toString(), "You feel completely soaked");
+		wetMessages.put(wetEnum.Wet.toString(), "You feel wet");
+		wetMessages.put(wetEnum.Dry.toString(), "You feel dry");
+		
+		heatMessages = new HashMap<String, String>();
+		heatMessages.put(heatEnum.Hot.toString(), "You feel hot");
+		heatMessages.put(heatEnum.Warm.toString(), "You feel warm");
+		heatMessages.put(heatEnum.Cold.toString(), "You feel cold...");
+		heatMessages.put(heatEnum.Freezing.toString(), "You're freezing!");
+		
+		
+		try
+		{
 			playerBar = ImageIO.read
 				(
 					getClass().getResource
@@ -90,7 +129,7 @@ public class HUD
 				(
 					getClass().getResource
 						(
-							"/Art/HUD/Bars/BossHealthBarFrame.png"
+							"/Art/HUD/Bars/BarFrame.png"
 						)
 				);
 			
@@ -208,11 +247,45 @@ public class HUD
 	
 	public void fadeMessage(String message)
 	{
-		fadeMessage.add(message);
-		this.fadeStart = System.currentTimeMillis();
-		this.fadeTime = 1;
-		fadeStaticTime = 4;
-		this.fadingStage = 1;
+		if(fadeMessageList.isEmpty())
+		{
+			this.fadeStart = System.currentTimeMillis();
+			this.fadeTime = 1;
+			fadeStaticTime = 4;
+			this.fadingStage = 1;
+		}
+		
+		for(int i = 0; i < wetEnum.values().length; i++)
+		{
+			if(message.equals(wetEnum.values()[i].toString()))
+			{
+				for(int j = 0; j < wetEnum.values().length; j++)
+				{
+					if(fadeMessageList.contains(wetMessages.get(wetEnum.values()[j].toString())))
+					{
+						fadeMessageList.remove(wetMessages.get(wetEnum.values()[j].toString()));
+						System.out.println("Removing: " + wetMessages.get(wetEnum.values()[j].toString()));
+					}
+				}
+				fadeMessageList.add(wetMessages.get(message));
+			}
+		}
+		
+		for(int i = 0; i < heatEnum.values().length; i++)
+		{
+			if(message.equals(heatEnum.values()[i].toString()))
+			{
+				for(int j = 0; j < heatEnum.values().length; j++)
+				{
+					if(fadeMessageList.contains(heatMessages.get(heatEnum.values()[j].toString())))
+					{
+						fadeMessageList.remove(heatMessages.get(heatEnum.values()[j].toString()));
+						System.out.println("Removing: " + heatMessages.get(heatEnum.values()[j].toString()));
+					}
+				}
+				fadeMessageList.add(heatMessages.get(message));
+			}
+		}
 	}
 	
 	public AlphaComposite transparent(float transparency)
@@ -225,8 +298,7 @@ public class HUD
 	{
 		try
 		{
-			
-			if(fadeMessage.size() > 0)
+			if(fadeMessageList.size() > 0)
 			{
 				int textLocationX = 40;
 				int textLocationY = GamePanel.HEIGHT - 300;
@@ -235,7 +307,7 @@ public class HUD
 				
 				double elapsed = System.currentTimeMillis() - fadeStart;
 				float transparency = 1;
-				String currentString = fadeMessage.get(0);
+				String currentString = fadeMessageList.get(0);
 				if(fadingStage == 1)
 				{
 					transparency = (float) (elapsed / (fadeTime * 1000));
@@ -266,7 +338,7 @@ public class HUD
 					{
 						fadeStart = System.currentTimeMillis();
 						fadingStage = 1;
-						fadeMessage.remove(0);
+						fadeMessageList.remove(0);
 						currentString = null;
 					}
 				}

@@ -248,7 +248,7 @@ public class Player extends Unit
 		{
 			if(!warmthBuff.getBuff().equals(CreateBuff.Buffs.Hot))
 			{
-				hud.fadeMessage("You feel rather hot.");
+				hud.fadeMessage(HUD.heatEnum.Hot.toString());
 				warmthBuff.setBuff(CreateBuff.Buffs.Hot);
 				warmthBuff.setSprites(Content.BuffHot[0][0]);
 				healthRegenCurrent = healthRegenOriginal * 1.1;
@@ -263,7 +263,7 @@ public class Player extends Unit
 		{
 			if(!warmthBuff.getBuff().equals(CreateBuff.Buffs.Warm))
 			{
-				hud.fadeMessage("You feel warm.");
+				hud.fadeMessage(HUD.heatEnum.Warm.toString());
 				warmthBuff.setBuff(CreateBuff.Buffs.Warm);
 				warmthBuff.setSprites(Content.BuffWarm[0][0]);
 				
@@ -277,7 +277,7 @@ public class Player extends Unit
 		{				
 			if(!warmthBuff.getBuff().equals(CreateBuff.Buffs.Cold))
 			{
-				hud.fadeMessage("You feel cold.");
+				hud.fadeMessage(HUD.heatEnum.Cold.toString());
 				warmthBuff.setBuff(CreateBuff.Buffs.Cold);
 				warmthBuff.setSprites(Content.BuffCold[0][0]);
 				
@@ -292,7 +292,7 @@ public class Player extends Unit
 		{
 			if(!warmthBuff.getBuff().equals(CreateBuff.Buffs.Freezing))
 			{
-				hud.fadeMessage("You're freezing!");
+				hud.fadeMessage(HUD.heatEnum.Freezing.toString());
 				warmthBuff.setBuff(CreateBuff.Buffs.Freezing);
 				warmthBuff.setSprites(Content.BuffFreezing[0][0]);
 				
@@ -307,7 +307,7 @@ public class Player extends Unit
 		{
 			if(!wetBuff.getBuff().equals(CreateBuff.Buffs.Dry))
 			{
-				hud.fadeMessage("You feel dry.");
+				hud.fadeMessage(HUD.wetEnum.Dry.toString());
 				wetBuff.setBuff(CreateBuff.Buffs.Dry);
 				wetBuff.setSprites(Content.BuffDry[0][0]);
 			}
@@ -318,7 +318,7 @@ public class Player extends Unit
 		{
 			if(!wetBuff.getBuff().equals(CreateBuff.Buffs.Wet))
 			{
-				hud.fadeMessage("You feel rather wet.");
+				hud.fadeMessage(HUD.wetEnum.Wet.toString());
 				wetBuff.setBuff(CreateBuff.Buffs.Wet);
 				wetBuff.setSprites(Content.BuffWet[0][0]);
 			}
@@ -329,7 +329,7 @@ public class Player extends Unit
 		{
 			if(!wetBuff.getBuff().equals(CreateBuff.Buffs.Soaked))
 			{
-				hud.fadeMessage("You feel completely soaked.");
+				hud.fadeMessage(HUD.wetEnum.Soaked.toString());
 				wetBuff.setBuff(CreateBuff.Buffs.Soaked);
 				wetBuff.setSprites(Content.BuffSoaked[0][0]);
 			}

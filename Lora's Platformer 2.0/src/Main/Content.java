@@ -97,7 +97,7 @@ public class Content
 	public static BufferedImage[][] OptionDeny					= load("/Art/HUD/Foregrounds/OptionDecline.png", 60, 60);
 	public static BufferedImage[][] OptionBackground			= load("/Art/HUD/Foregrounds/OptionBackground.png", 424, 348);
 	
-	public static BufferedImage[][] bossHealthBarFrame			= load("/Art/HUD/Bars/BossHealthBarFrame.png", 900, 60);
+	public static BufferedImage[][] bossHealthBarFrame			= load("/Art/HUD/Bars/BarFrame.png", 900, 60);
 	public static BufferedImage[][] bossHealthBar 				= load("/Art/HUD/Bars/BossHealthBar.png", 900, 60);
 	
 	// Buffs

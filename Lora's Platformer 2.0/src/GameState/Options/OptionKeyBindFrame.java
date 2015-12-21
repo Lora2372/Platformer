@@ -20,14 +20,10 @@ import Entity.Player.Player;
 public class OptionKeyBindFrame extends JFrame
 {
 	
-//	protected boolean settingKeyBinding = false;
 	protected int settingKeyBinding = -1;
 	
 	protected ArrayList<JButton> buttons;
-	
-	protected JButton castFireBallSmallButton;
-	protected JButton castFireBallLargeButton;
-	
+		
 	protected Player player;
 	
 	protected JDialog optionKeyBindDialog;

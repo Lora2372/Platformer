@@ -29,6 +29,7 @@ public class OptionState extends GameState implements ChangeListener
 	
 	protected OptionObject goBack;
 	protected OptionObject openKeyBindings;
+	protected OptionObject openVolumeSettings;
 	
 	protected double mouseLocationX;
 	protected double mouseLocationY;
@@ -132,6 +133,21 @@ public class OptionState extends GameState implements ChangeListener
 			);
 		optionObjects.add(openKeyBindings);
 		
+		openVolumeSettings = new OptionObject
+			(
+				GamePanel.WIDTH - 300,
+				400,
+				188,
+				68,
+				1,
+				1,
+				1,
+				new String[] { "" },
+				Content.EditKeyBindingsButton[0],
+				"OpenVolumeSettings"
+			);
+		optionObjects.add(openVolumeSettings);
+		
 		goBack = new OptionObject
 			(
 				GamePanel.WIDTH - 300, 
@@ -178,11 +194,6 @@ public class OptionState extends GameState implements ChangeListener
 	public void saveToRAM()
 	{
 		
-	}
-	
-	public void OpenKeyBindings()
-	{
-		new OptionKeyBindFrame(player);
 	}
 	
 
@@ -310,7 +321,11 @@ public class OptionState extends GameState implements ChangeListener
 					
 					if(optionObject == openKeyBindings)
 					{
-						OpenKeyBindings();
+						new OptionKeyBindFrame(player);
+					}
+					if(optionObject == openVolumeSettings)
+					{
+						new OptionVolumeFrame(player);
 					}
 					
 

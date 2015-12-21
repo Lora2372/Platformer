@@ -4,37 +4,38 @@ import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.ArrayList;
-
+import java.util.Hashtable;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-
+import javax.swing.JSlider;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import Audio.JukeBox;
 import Entity.Player.Player;
 
 @SuppressWarnings("serial")
 public class OptionVolumeFrame extends JFrame
 {
-	
-//	protected boolean settingKeyBinding = false;
-	protected int settingKeyBinding = -1;
-	
-	protected ArrayList<JButton> buttons;
-	
-	protected JButton castFireBallSmallButton;
-	protected JButton castFireBallLargeButton;
-	
 	protected Player player;
 	
 	protected JDialog optionKeyBindDialog;
-	
+
+	protected ArrayList<JSlider> sliders = new ArrayList<JSlider>();
+	protected String[] sliderTypes = new String[]
+	{
+		"Music",
+		"Character",
+		"Effect",
+		"Background"
+	};
 	public OptionVolumeFrame(Player player)
 	{
+		
 		
 		this.player = player;
 		
@@ -43,6 +44,7 @@ public class OptionVolumeFrame extends JFrame
 
 		int componentHeight = 30;
 		int componentSpacing = 5;
+		
 		
 		
 		setSize(width, height);
@@ -94,49 +96,50 @@ public class OptionVolumeFrame extends JFrame
 		labels.add(newLabel);
 		newLabel = new JLabel("Background volume:");
 		labels.add(newLabel);
-
-		for(int i = 0; i < labels.size(); i++)
+		
+		for(int i = 0; i < 4; i++)
 		{
-			labels.get(i).setSize(labels.get(i).getPreferredSize());
-			labels.get(i).setLocation(20, (componentHeight + componentSpacing) * i);
-			JButton button = new JButton(KeyEvent.getKeyText(player.getKeyBind(i)));
-			buttons.add(button);
-			button.setSize(120, 30);
-			button.setLocation(scrollPane.getWidth() - button.getWidth() - 20, labels.get(i).getLocation().y);
-			button.setFocusable(true);
+			JSlider musicSlider = new JSlider(JSlider.HORIZONTAL, JukeBox.minVolume, JukeBox.maxVolume, JukeBox.getVolume(JukeBox.soundCategories.values()[i]));
+			sliders.add(musicSlider);
+			musicSlider.setMajorTickSpacing(10);
+			musicSlider.setPaintTicks(true);
+			musicSlider.setSize(musicSlider.getPreferredSize());
+			musicSlider.setSize(musicSlider.getWidth(), 40);
+			musicSlider.setLocation(20, musicSlider.getHeight() * i + 50);
+			Hashtable<Integer, JLabel> labelTable = new Hashtable<Integer, JLabel>();
+			labelTable.put( new Integer( JukeBox.minVolume ), new JLabel("Low") );
+			labelTable.put( new Integer( JukeBox.maxVolume ), new JLabel("High") );
+			musicSlider.setPaintLabels(true);
+			musicSlider.setLabelTable( labelTable );
+			musicSlider.putClientProperty(JukeBox.minVolume, "Low");
+			musicSlider.putClientProperty(JukeBox.maxVolume, "High");
 			
-			button.addActionListener(new ActionListener()
+			musicSlider.addChangeListener(new ChangeListener()
 			{
-				public void actionPerformed(ActionEvent event) 
+				public void stateChanged(ChangeEvent event) 
 				{
-					System.out.println("Performing an action!");
-					for(int i = 0; i < buttons.size(); i++)
+					for(int i = 0; i < sliders.size(); i++)
 					{
-						if(event.getSource() == buttons.get(i))
+						if(event.getSource().equals(sliders.get(i)))
 						{
-							settingKeyBinding = i;
+							JukeBox.setVolume(JukeBox.soundCategories.values()[i], sliders.get(i).getValue());
+							System.out.println("changeEvent: " + sliders.get(i).getValue());
 						}
-					}	
-				}
-			});
-			
-			button.addKeyListener(new KeyListener()
-			{
-				public void keyPressed(KeyEvent e) 
-				{
-					if(settingKeyBinding != -1)
-					{
-						buttons.get(settingKeyBinding).setText( Character.toUpperCase(e.getKeyChar()) + "");
-						getPlayer().setKeyBind(settingKeyBinding, e.getKeyCode());
-						settingKeyBinding = -1;
 					}
 				}
-				public void keyReleased(KeyEvent e) {} public void keyTyped(KeyEvent e) {}
 			});
-			
-			keybindPanel.add(buttons.get(i));
-			keybindPanel.add(labels.get(i));
+			keybindPanel.add(musicSlider);
 		}
+		
+
+//		characterSlider = new JSlider(JukeBox.minVolume, JukeBox.maxVolume, 0);
+//		scrollPane.add(characterSlider);
+//		effectSlider = new JSlider(JukeBox.minVolume, JukeBox.maxVolume, 0);
+//		scrollPane.add(effectSlider);
+//		backgroundSlider = new JSlider(JukeBox.minVolume, JukeBox.maxVolume, 0);
+//		scrollPane.add(backgroundSlider);
+		
+		
 
 		JButton exitButton = new JButton("Exit");
 		exitButton.setSize(exitButton.getPreferredSize());

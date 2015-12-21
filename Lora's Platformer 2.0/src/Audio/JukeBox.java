@@ -2,10 +2,12 @@ package Audio;
 
 import javax.sound.sampled.*;
 import java.util.HashMap;
+import java.util.Map;
 
 public class JukeBox 
 {
-	private static HashMap<String, Clip> allSounds;
+//	private static ArrayList<Clip> allSounds()
+	public static HashMap<String, Clip> allSounds;
 	private static HashMap<String, Clip> musicSounds;
 	private static HashMap<String, Clip> characterSounds;
 	private static HashMap<String, Clip> effectSounds;
@@ -14,7 +16,15 @@ public class JukeBox
 	public static int maxVolume = 6;
 	public static int minVolume = -80;
 	
-	public static HashMap<String, Integer> soundVolumes;
+	public static HashMap<soundCategories, Integer> soundVolumes;
+	
+	public static enum soundCategories
+	{
+		Music,
+		Character,
+		Effect,
+		Background
+	}
 	
 	private static int gap;
 	private static boolean mute = false;
@@ -26,14 +36,14 @@ public class JukeBox
 		characterSounds = new HashMap<String, Clip>();
 		effectSounds = new HashMap<String, Clip>();
 		backgroundSounds = new HashMap<String, Clip>();
+		System.out.println("kirby");
+		soundVolumes = new HashMap<soundCategories, Integer>();
 		
-		soundVolumes = new HashMap<String, Integer>();
-		
-		soundVolumes.put("All", 0);
-		soundVolumes.put("Music", -20);
-		soundVolumes.put("Character", -10);
-		soundVolumes.put("Effect", -20);
-		soundVolumes.put("BackGround", 0);
+//		soundVolumes.put("All", 0);
+		soundVolumes.put(soundCategories.Music, -20);
+		soundVolumes.put(soundCategories.Character, -10);
+		soundVolumes.put(soundCategories.Effect, -20);
+		soundVolumes.put(soundCategories.Background, 0);
 		
 		
 		gap = 0;
@@ -67,7 +77,7 @@ public class JukeBox
 			allSounds.put(n, clip);
 			
 			
-			if(string.contains("Music"))
+			if(string.contains(soundCategories.Music.toString()))
 			{
 				musicSounds.put(n, clip);
 			}
@@ -111,18 +121,87 @@ public class JukeBox
 	{
 		if(musicSounds.containsKey(specificSound) )
 		{
-			return soundVolumes.get("Music");
+			return soundVolumes.get(soundCategories.Music);
 		}
 		if(characterSounds.containsKey(specificSound))
 		{
-			return soundVolumes.get("Character");
+			return soundVolumes.get(soundCategories.Character);
 		}
 		if(effectSounds.containsKey(specificSound))
 		{
 			System.out.println("specificSound: " + specificSound + ", volume: " + soundVolumes.get("Effect"));
+			return soundVolumes.get(soundCategories.Effect);
+		}
+		return 0;
+	}
+	
+	public static int getVolume(soundCategories soundCategory)
+	{
+		if(musicSounds.containsKey(soundCategory) )
+		{
+			return soundVolumes.get(soundCategories.Music.toString());
+		}
+		if(characterSounds.containsKey(soundCategory))
+		{
+			return soundVolumes.get("Character");
+		}
+		if(effectSounds.containsKey(soundCategory))
+		{
+			System.out.println("soundCategory: " + soundCategory.toString() + ", volume: " + soundVolumes.get("Effect"));
 			return soundVolumes.get("Effect");
 		}
 		return 0;
+	}
+	
+	public static void setVolume(soundCategories soundCategory, int newVolume)
+	{
+		soundVolumes.put(soundCategory, newVolume);
+		
+		if(soundCategory.equals(soundCategories.Music))
+		{
+			System.out.println("Changing music values to " + newVolume);
+			for (Map.Entry<String, Clip> entry : musicSounds.entrySet()) 
+			{
+			    Clip clip = entry.getValue();
+			    if(clip.isRunning())
+			    {
+					System.out.println("Changing value!");
+				    FloatControl gainControl = (FloatControl)clip.getControl(FloatControl.Type.MASTER_GAIN);
+					gainControl.setValue(newVolume);
+			    }
+			}
+		}
+		
+		if(soundCategory.equals(soundCategories.Character))
+		{
+			for (Map.Entry<String, Clip> entry : characterSounds.entrySet()) 
+			{
+			    Clip clip = entry.getValue();
+				FloatControl gainControl = (FloatControl)clip.getControl(FloatControl.Type.MASTER_GAIN);
+				gainControl.setValue(newVolume);
+			}
+		}
+		
+		if(soundCategory.equals(soundCategories.Effect))
+		{
+			for (Map.Entry<String, Clip> entry : effectSounds.entrySet()) 
+			{
+			    Clip clip = entry.getValue();
+				FloatControl gainControl = (FloatControl)clip.getControl(FloatControl.Type.MASTER_GAIN);
+				gainControl.setValue(newVolume);
+			}
+		}
+		
+		if(soundCategory.equals(soundCategories.Background))
+		{
+			for (Map.Entry<String, Clip> entry : backgroundSounds.entrySet()) 
+			{
+			    Clip clip = entry.getValue();
+				FloatControl gainControl = (FloatControl)clip.getControl(FloatControl.Type.MASTER_GAIN);
+				gainControl.setValue(newVolume);
+			}
+		}
+
 	}
 	
 	public static void play(String specificSound)
@@ -134,29 +213,19 @@ public class JukeBox
 		clip.setFramePosition(0);
 		FloatControl gainControl = (FloatControl)clip.getControl(FloatControl.Type.MASTER_GAIN);
 		gainControl.setValue(getVolume(specificSound));
-
+		System.out.println("Playing " + specificSound + " at " + getVolume(specificSound) + " volume.");
 		while(!clip.isRunning()) clip.start();
 	}
 	
-	public static void setVolume(String specificSound, float volume)
-	{
-		Clip clip = allSounds.get(specificSound);
-		if(clip == null) return;
-		if(!clip.isRunning()) return;
-		
-		FloatControl gainControl = (FloatControl)clip.getControl(FloatControl.Type.MASTER_GAIN);
-		float currentVolume =  gainControl.getValue();
-		gainControl.setValue(currentVolume + volume);
-	}
-	
-//	AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
-//		    new File("some_file.wav"));
-//		Clip clip = AudioSystem.getClip();
-//		clip.open(audioInputStream);
-//		FloatControl gainControl = 
-//		    (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-//		gainControl.setValue(-10.0f); // Reduce volume by 10 decibels.
-//		clip.start();
+//	public static void setVolume(String specificSound, float volume)
+//	{
+//		Clip clip = allSounds.get(specificSound);
+//		if(clip == null) return;
+//		if(!clip.isRunning()) return;
+//		
+//		FloatControl gainControl = (FloatControl)clip.getControl(FloatControl.Type.MASTER_GAIN);
+//		gainControl.setValue(gainControl.getValue() + volume);
+//	}
 	
 	public static void stop(String specificSound)
 	{

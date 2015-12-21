@@ -958,12 +958,7 @@ public class MainMap extends GameState
 				}
 			}
 		}
-		
-		if(key == KeyEvent.VK_T)
-		{
-			JukeBox.setVolume("Rain", 10);
-		}
-		
+				
 		if(key == KeyEvent.VK_Y)
 		{
 			if(!raining)
