@@ -460,6 +460,9 @@ public class Unit extends MapObject
 	
 	public void respawn()
 	{
+		directionX = 0;
+		directionY = 0;
+		initializeSpawning = true;
 		locationX = spawnLocationX;
 		locationY = spawnLocationY;
 		dead = false;

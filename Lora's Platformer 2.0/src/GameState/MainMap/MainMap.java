@@ -884,6 +884,30 @@ public class MainMap extends GameState
 		return player;
 	}
 	
+	public void setRaining(boolean raining)
+	{
+		this.raining = raining;
+		
+		if(raining)
+		{
+			player.getHUD().fadeMessage("It starts to rain");
+			raining = true;
+			int RNG = RNG(1, numberofSounds[0]);
+			if(RNG == -1)
+				return;
+			JukeBox.loop(soundTypes.Rain.toString() + (RNG < 10 ? "0" : "") + RNG);	
+		}
+		else
+		{
+			player.getHUD().fadeMessage("The raining comes to a halt");
+			player.getHUD().fadeMessage("For now...");
+			for(int i = 0; i <= numberofSounds[0]; i++)
+			{
+				JukeBox.stop(soundTypes.Rain.toString() + (i < 10 ? "0" : "") + i);
+			}
+		}
+	}
+	
 	public void keyPressed(int key)
 	{
 		if(key == KeyEvent.VK_ESCAPE) 
@@ -961,24 +985,7 @@ public class MainMap extends GameState
 				
 		if(key == KeyEvent.VK_Y)
 		{
-			if(!raining)
-			{
-				player.getHUD().fadeMessage("It starts to rain");
-				raining = true;
-				int RNG = RNG(1, numberofSounds[0]);
-				if(RNG == -1)
-					return;
-				JukeBox.loop(soundTypes.Rain.toString() + (RNG < 10 ? "0" : "") + RNG);	
-			}
-			else
-			{
-				raining = false;
-				for(int i = 0; i <= numberofSounds[0]; i++)
-				{
-					JukeBox.stop(soundTypes.Rain.toString() + (i < 10 ? "0" : "") + i);
-				}
-				
-			}
+			setRaining(!raining);
 		}
 		
 		// Note: This is a built in cheat that is not supposed to be used to get the real game experience.

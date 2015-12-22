@@ -257,7 +257,7 @@ public abstract class MapObject
 					playJumpSound();
 				}
 				
-				directionY = jumpStart  * (waterResistance + 0.1);
+				directionY = jumpStart * (inWater ? waterResistance + 0.1 : 1);
 				falling = true;
 			}
 			
@@ -284,6 +284,11 @@ public abstract class MapObject
 	public void playJumpSound() { }
 	
 	public void playCannotCarrySound() { }
+	
+	public void initializeSpawning()
+	{
+		initializeSpawning = true;
+	}
 	
 	public void checkTileMapCollision() throws Exception
 	{
@@ -474,9 +479,9 @@ public abstract class MapObject
 			
 			if(hidden) return;
 			
-			if(animation.getImage() == null)
+			if(animation == null)
 			{
-				System.out.println("Image was null");
+				System.out.println("Animation was null");
 				throw new Exception();
 			}
 			
@@ -489,21 +494,23 @@ public abstract class MapObject
 				AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
 				
 				
-				graphics.drawImage(
+				graphics.drawImage
+					(
 						op.filter(animation.getImage(), null),
-								(int)(locationX + mapPositionX - width / 2), 
-								(int)(locationY + mapPositionY - height / 2),
-								width,
-								height,
-								null
-								);
+						(int)(locationX + mapPositionX - width / 2), 
+						(int)(locationY + mapPositionY - height / 2),
+						width,
+						height,
+						null
+					);
 				return;
 				
 			}
 			
 			if(facingRight)
 			{
-				graphics.drawImage(
+				graphics.drawImage
+					(
 						animation.getImage(),
 						(int) (locationX + mapPositionX - width / 2 + width),
 						(int) (locationY + mapPositionY - height / 2),
@@ -515,14 +522,18 @@ public abstract class MapObject
 			}
 			else
 			{
-				graphics.drawImage(
+				if(animation.getImage() != null)
+				{
+					graphics.drawImage
+					(
 						animation.getImage(),
 						(int) (locationX + mapPositionX - width / 2),
 						(int) (locationY + mapPositionY - height / 2),
 						width,
 						height,
 						null
-						);
+					);
+				}
 			}
 		}
 		catch(Exception exception)

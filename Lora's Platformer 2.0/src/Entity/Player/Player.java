@@ -38,7 +38,7 @@ public class Player extends Unit
 	protected Buff warmthBuff;
 	protected Buff wetBuff;
 	
-	protected double warmth = 10;
+	protected double warmth = 22;
 	protected double warmMaximum = 100;
 	protected double warmMinimum = - 10;
 	

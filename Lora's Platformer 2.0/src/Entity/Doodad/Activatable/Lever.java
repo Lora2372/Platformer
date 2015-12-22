@@ -107,13 +107,6 @@ public class Lever extends Doodad
 			
 			playSound();
 		}
-		else
-		{
-			if(player.getConversationState().getConversationOver())
-			{
-				player.getConversationState().endConversation();
-			}
-		}
 	}
 	
 	

@@ -45,6 +45,13 @@ public class HUD
 	protected double fadeStart;
 	protected int fadingStage; // 1 = fading in, 2 = static, 3 = fading out
 	
+	
+	protected int questFrameX = GamePanel.WIDTH - 60;
+	protected int questFrameY = 150;
+
+	protected int fadeMessageX = questFrameX;
+	protected int fadeMessageY = questFrameY + 100;
+	
 	protected enum wetEnum
 	{
 		Soaked,
@@ -267,6 +274,7 @@ public class HUD
 					}
 				}
 				fadeMessageList.add(wetMessages.get(message));
+				return;
 			}
 		}
 		
@@ -282,8 +290,11 @@ public class HUD
 					}
 				}
 				fadeMessageList.add(heatMessages.get(message));
+				return;
 			}
 		}
+		
+		fadeMessageList.add(message);
 	}
 	
 	public AlphaComposite transparent(float transparency)
@@ -298,8 +309,7 @@ public class HUD
 		{
 			if(fadeMessageList.size() > 0)
 			{
-				int textLocationX = 40;
-				int textLocationY = GamePanel.HEIGHT - 300;
+
 				Composite originalComposite = graphics.getComposite();
 				
 				
@@ -345,25 +355,26 @@ public class HUD
 				{
 					graphics.setComposite(transparent(transparency));
 					
+					
 					int stringLength = DrawingConstants.getStringWidth(currentString, graphics);
 					int stringHeight = DrawingConstants.getStringHeight(currentString, graphics);
+					
+					int tempFadeMessageX = fadeMessageX - stringLength;
+					
+					
 					graphics.drawImage
-					(
-						Content.ConversationGUIEndConversation[0][0],
-						textLocationX,
-						textLocationY,
-						stringLength + 20,
-						stringHeight + 10,
-						null
-					);
+						(
+							Content.ConversationGUIEndConversation[0][0],
+							tempFadeMessageX,
+							fadeMessageY,
+							stringLength + 20,
+							stringHeight + 10,
+							null
+						);
 					
-					textLocationX += 10;
-					textLocationY += 15;
-					
-
 					graphics.setFont(new Font("Arial", Font.PLAIN, 15));
 					graphics.setColor(Color.WHITE);
-					graphics.drawString(currentString, textLocationX, textLocationY);
+					graphics.drawString(currentString, tempFadeMessageX + 10, fadeMessageY + 15);
 					graphics.setComposite(originalComposite);
 				}
 				
@@ -473,8 +484,8 @@ public class HUD
 					{
 						double textWidth = graphics.getFontMetrics().stringWidth(questName[questCurrent]);
 						
-						double locationX = GamePanel.WIDTH - 100 - textWidth;
-						double locationY = 100;
+						double locationX = questFrameX - textWidth;
+						double locationY = questFrameY;
 						
 						graphics.drawImage
 							(

@@ -241,7 +241,7 @@ public class JukeBox
 		
 		FloatControl gainControl = (FloatControl)allSounds.get(specificSound).getControl(FloatControl.Type.MASTER_GAIN);
 		gainControl.setValue(getVolume(specificSound));
-		System.out.println("getVolume(specificSound): " + getVolume(specificSound) + ", "  + specificSound);
+
 		allSounds.get(specificSound).setLoopPoints(start, end);
 		allSounds.get(specificSound).setFramePosition(frame);
 		allSounds.get(specificSound).loop(Clip.LOOP_CONTINUOUSLY);

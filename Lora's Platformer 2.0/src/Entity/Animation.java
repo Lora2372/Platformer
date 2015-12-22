@@ -71,6 +71,11 @@ public class Animation
 	{ 
 		try
 		{
+			if(frames == null)
+			{
+				System.out.println("frames == null");
+				return null;
+			}
 			return frames[currentFrame]; 
 		}
 		catch(Exception exception)

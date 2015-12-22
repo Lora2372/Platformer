@@ -70,19 +70,14 @@ public class Buff
 		rectangle = new Rectangle(0, 0, width, height);
 		this.sprites = sprites;
 		
-		expiring = duration != -1;
-		
-		System.out.println("expiring: " + expiring);
-		
-		
-		
+		expiring = duration != -1;		
 		start = System.currentTimeMillis();
 	}
 	
 	
 	public void update()
 	{
-		if(!expiring)
+		if(!expiring || expired)
 		{
 			return;
 		}

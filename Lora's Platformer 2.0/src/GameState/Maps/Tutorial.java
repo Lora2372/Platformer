@@ -1,11 +1,12 @@
 package GameState.Maps;
 
+import java.awt.event.KeyEvent;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
-
 import Audio.JukeBox;
 import Entity.Doodad.Doodad;
+import Entity.Item.ItemData;
+import Entity.Item.Potion;
 import Entity.Player.HUD;
 import Entity.Player.Player;
 import Entity.Unit.Succubus;
@@ -13,7 +14,6 @@ import GameState.GameStateManager;
 import GameState.Conversation.ConversationDataTutorial;
 import GameState.Conversation.ConversationState;
 import GameState.MainMap.MainMap;
-import GameState.Maps.LorasCavern.doodadIDs;
 import TileMap.Background;
 import TileMap.GameOver;
 import TileMap.TileMap;
@@ -26,10 +26,15 @@ public class Tutorial extends MainMap
 	protected Succubus succubus;
 	
 	protected ConversationDataTutorial conversation;
+	protected ConversationState conversationState;
 	
 	protected HUD hud;
 	
 	protected boolean alreadyDoneThis = false;
+	
+	protected Potion potion;
+	
+	protected int choiceMade = 0;
 	
 	protected enum doodadIDs
 	{
@@ -52,6 +57,7 @@ public class Tutorial extends MainMap
 				conversationState,
 				"Tutorial"
 			);
+		this.conversationState = conversationState;
 		
 		try
 		{
@@ -69,10 +75,10 @@ public class Tutorial extends MainMap
 		
 		this.player = player;
 		this.hud = player.getHUD();
-		conversation = new ConversationDataTutorial();
+		conversation = new ConversationDataTutorial(player);
 		
 		player.setTileMap(tileMap);
-		player.setCurrentMap("DeepWoods");
+		player.setCurrentMap("Tutorial");
 		
 		spawnDoodad.spawnTorch(3810, 400);
 		spawnDoodad.spawnTorch(4650, 400);
@@ -97,11 +103,32 @@ public class Tutorial extends MainMap
 		}
 		player.spawn();
 		
+		spawnDoodad.spawnCampFire(6880, 500);
 		spawnDoodad.spawnLever(5100, 370, doodadIDs.openTemple.toString(), 0);
 		
 		player.getHUD().setShowQuestFrame(true);
 		player.setUnkillable(true);
 		doneInitializing = true;
+	}
+	
+	public void openTempleExit(boolean playSound)
+	{
+		if(playSound)
+		{
+			JukeBox.play("Close");
+		}
+		tileMap.setMapSingleBlock(87, 8, 31);
+		tileMap.setMapSingleBlock(87, 9, 31);
+	}
+	
+	public void closeTempleExit(boolean playSound)
+	{
+		if(playSound)
+		{
+			JukeBox.play("Close");
+		}
+		tileMap.setMapSingleBlock(87, 8, 119);
+		tileMap.setMapSingleBlock(87, 9, 119);
 	}
 	
 	public void useDoodad(Doodad doodad)
@@ -113,15 +140,21 @@ public class Tutorial extends MainMap
 			{
 				if(doodad.getCurrentAction() == 2)
 				{
-					JukeBox.play("Close");
-					tileMap.setMapSingleBlock(87, 8, 31);
-					tileMap.setMapSingleBlock(87, 9, 31);
+					if(tutorialProgress == 15)
+					{
+						tutorialProgress = 16;
+					}
+					if(tutorialProgress == 16)
+					{
+						conversationState.startConversation(player, null, null, 
+								conversation.tutorialTempleExitOpen(), 
+								conversation.tutorialTempleExitOpenWhoTalks());
+					}
+					openTempleExit(true);
 				}		
 				if(doodad.getCurrentAction() == 0)
 				{
-					JukeBox.play("Close");
-					tileMap.setMapSingleBlock(87, 8, 119);
-					tileMap.setMapSingleBlock(87, 9, 119);
+					closeTempleExit(true);
 				}
 			}
 		}
@@ -138,9 +171,9 @@ public class Tutorial extends MainMap
 		{
 			if(player.getInConversation())
 			{
-				if(player.getConversationState().getConversationTracker() >= player.getConversationState().getConversationLength())
+				if(conversationState.getConversationOver())
 				{
-					player.getConversationState().endConversation();
+					conversationState.endConversation();
 					tutorialProgress++;
 				}
 			}
@@ -156,9 +189,9 @@ public class Tutorial extends MainMap
 			{
 				if(!player.getInConversation())
 				{
-					player.getConversationState().startConversation(player, null, null,
-							conversation.tutorialWelcomeMessage, 
-							conversation.tutorialWelcomeMessageWhoTalks);
+					conversationState.startConversation(player, null, null,
+							conversation.tutorialWelcome, 
+							conversation.tutorialWelcomeWhoTalks);
 					
 					hud.setQuest(conversation.tutorialInstructions());
 					hud.setShowQuestFrame(true);
@@ -174,9 +207,9 @@ public class Tutorial extends MainMap
 				{
 					if(player.getLeft() || player.getRight() && !player.getInConversation())
 					{
-						player.getConversationState().startConversation(player, null, null, 
-								conversation.tutorialMoveMessage, 
-								conversation.tutorialMoveMessageWhoTalks);
+						conversationState.startConversation(player, null, null, 
+								conversation.tutorialMove, 
+								conversation.tutorialMoveWhoTalks);
 						
 						
 					}
@@ -189,9 +222,9 @@ public class Tutorial extends MainMap
 				if(player.getJumping() && !player.getInConversation())
 				{
 					
-					player.getConversationState().startConversation(player, null, null, 
-							conversation.tutorialJumpMessage, 
-							conversation.tutorialJumpMessageWhoTalks);
+					conversationState.startConversation(player, null, null, 
+							conversation.tutorialJump, 
+							conversation.tutorialJumpWhoTalks);
 				}
 			}
 			
@@ -201,9 +234,9 @@ public class Tutorial extends MainMap
 				hud.setQuestCurrent(3);
 				if(player.getLocationX() > 1420 && !player.getInConversation())
 				{
-					player.getConversationState().startConversation(player, null, null, 
-							conversation.tutorialHoleSmallMessage, 
-							conversation.tutorialHoleSmallMessageWhoTalks);
+					conversationState.startConversation(player, null, null, 
+							conversation.tutorialHoleSmall, 
+							conversation.tutorialHoleSmallWhoTalks);
 				}
 			}		
 			if(tutorialProgress == 4)
@@ -212,9 +245,9 @@ public class Tutorial extends MainMap
 				if(player.getLocationX() > 1820 && !player.getInConversation() && !player.getFalling())
 				{
 					hud.setShowQuestFrame(false);
-					player.getConversationState().startConversation(player, null, null, 
-							conversation.tutorialHoleSmallPassedMessage, 
-							conversation.tutorialHoleSmallPassedMessageWhoTalks);
+					conversationState.startConversation(player, null, null, 
+							conversation.tutorialHoleSmallPassed, 
+							conversation.tutorialHoleSmallPassedWhoTalks);
 				}
 			}
 			
@@ -222,9 +255,9 @@ public class Tutorial extends MainMap
 			{
 				if(player.getLocationX() > 2600 && !player.getInConversation() && !player.getFalling())
 				{
-					player.getConversationState().startConversation(player, null, null, 
-							conversation.tutorialMovementMasteredMessage, 
-							conversation.tutorialMovementMasteredMessageWhoTalks);
+					conversationState.startConversation(player, null, null, 
+							conversation.tutorialMovementMastered, 
+							conversation.tutorialMovementMasteredWhoTalks);
 				}
 			}
 			
@@ -232,9 +265,9 @@ public class Tutorial extends MainMap
 			{	
 				if(player.getLocationX() > 2950 && !player.getInConversation() && !player.getFalling())
 				{	
-					player.getConversationState().startConversation(player, null, null, 
-							conversation.tutorialFireBallSmallMessage, 
-							conversation.tutorialFireBallSmallMessageWhoTalks);
+					conversationState.startConversation(player, null, null, 
+							conversation.tutorialFireBallSmall, 
+							conversation.tutorialFireBallSmallWhoTalks);
 				}
 			}
 			
@@ -244,9 +277,9 @@ public class Tutorial extends MainMap
 				hud.setShowQuestFrame(true);
 				if(player.getFireBallSmallDoneCasting() && !player.getInConversation())
 				{	
-					player.getConversationState().startConversation(player, null, null, 
-							conversation.tutorialFireBallLargeMessage, 
-							conversation.tutorialFireBallLargeMessageWhoTalks);
+					conversationState.startConversation(player, null, null, 
+							conversation.tutorialFireBallLarge, 
+							conversation.tutorialFireBallLargeWhoTalks);
 				}
 			}
 			
@@ -255,9 +288,9 @@ public class Tutorial extends MainMap
 				hud.setQuestCurrent(6);
 				if(player.getFireBallLargeDoneCasting() && player.getUp() && !player.getInConversation())
 				{
-					player.getConversationState().startConversation(player, null, null, 
-							conversation.tutorialDashMessage, 
-							conversation.tutorialDashMessageWhoTalks);
+					conversationState.startConversation(player, null, null, 
+							conversation.tutorialDash, 
+							conversation.tutorialDashWhoTalks);
 				}
 			}
 			
@@ -266,9 +299,9 @@ public class Tutorial extends MainMap
 				hud.setQuestCurrent(7);
 				if(player.getDashing() && !player.getInConversation())
 				{
-					player.getConversationState().startConversation(player, null, null, 
-							conversation.tutorialPunchMessage, 
-							conversation.tutorialPunchMessageWhoTalks);
+					conversationState.startConversation(player, null, null, 
+							conversation.tutorialPunch, 
+							conversation.tutorialPunchWhoTalks);
 				}
 			}
 			
@@ -277,9 +310,9 @@ public class Tutorial extends MainMap
 				hud.setQuestCurrent(8);
 				if(player.getPunching() && !player.getInConversation())
 				{
-					player.getConversationState().startConversation(player, null, null, 
-							conversation.tutorialPunchDoneMessage, 
-							conversation.tutorialPunchDoneMessageWhoTalks);
+					conversationState.startConversation(player, null, null, 
+							conversation.tutorialPunchDone, 
+							conversation.tutorialPunchDoneWhoTalks);
 				}
 			}
 			
@@ -293,9 +326,9 @@ public class Tutorial extends MainMap
 					characterList.add(succubus);
 					
 					
-					player.getConversationState().startConversation(player, null, null, 
-							conversation.tutorialEnemySuccubusMessage, 
-							conversation.tutorialEnemySuccubusMessageWhoTalks);
+					conversationState.startConversation(player, null, null, 
+							conversation.tutorialEnemySuccubus, 
+							conversation.tutorialEnemySuccubusWhoTalks);
 				}
 			}
 			
@@ -304,11 +337,11 @@ public class Tutorial extends MainMap
 				if(succubus.isDead())
 				{
 					if(!player.getInConversation())
-						player.getConversationState().startConversation(player, null, null, 
-								conversation.tutorialTempleEnterMessage, 
-								conversation.tutorialTempleEnterMessageWhoTalks);
+						conversationState.startConversation(player, null, null, 
+								conversation.tutorialTempleEnter, 
+								conversation.tutorialTempleEnterWhoTalks);
 					else
-						if(player.getConversationState().getConversationTracker() == 1)
+						if(conversationState.getConversationTracker() == 1)
 						{
 							if(!alreadyDoneThis)
 							{
@@ -327,9 +360,9 @@ public class Tutorial extends MainMap
 				alreadyDoneThis = false;
 				if(!player.getInConversation() && player.getLocationX() > 4000 && player.getLocationY() < 390)
 				{	
-					player.getConversationState().startConversation(player, null, null, 
-							conversation.tutorialHoleLargeMessage, 
-							conversation.tutorialHoleLargeMessageWhoTalks);
+					conversationState.startConversation(player, null, null, 
+							conversation.tutorialHoleLarge, 
+							conversation.tutorialHoleLargeWhoTalks);
 				}
 			}
 			
@@ -338,27 +371,200 @@ public class Tutorial extends MainMap
 				hud.setQuestCurrent(11);
 				if(!player.getInConversation() && player.getLocationX() > 4500 && !player.getFalling())
 				{
-					player.getConversationState().startConversation(player, null, null, 
-							conversation.tutorialHoleLargePassedMessage, 
-							conversation.tutorialHoleLargePassedMessageWhoTalks);
+					
+					conversationState.startConversation(player, null, null, 
+							conversation.tutorialHoleLargePassed, 
+							conversation.tutorialHoleLargePassedWhoTalks);
 				}
 			}
 			
 			if(tutorialProgress == 15)
 			{
-				alreadyDoneThis = true;
-				JukeBox.play("Close");
-				tileMap.setMapSingleBlock(60, 8, 31);
-				tileMap.setMapSingleBlock(60, 9, 31);
-				hud.setQuestCurrent(10);
+				hud.setQuestCurrent(12);
+				if(!player.getInConversation() && player.getLocationX() > 5100 && player.getLocationY() > 400 && !player.getFalling())
+				{
+					conversationState.startConversation(player, null, null, 
+							conversation.tutorialTempleExitClosed(), 
+							conversation.tutorialTempleExitClosedWhoTalks());
+				}
 			}
 			
+			if(tutorialProgress == 16)
+			{
+				hud.setQuestCurrent(13);
+			}
 
+			if(tutorialProgress == 17)
+			{
+				hud.setQuestCurrent(14);
+				if(!player.getInConversation() && player.getLocationX() > 5600 && !player.getFalling())
+				{
+					hud.setShowQuestFrame(false);
+					closeTempleExit(false);
+					conversationState.startConversation(player, null, null, 
+							conversation.tutorialNiceWeather(), 
+							conversation.tutorialNiceWeatherWhoTalks());
+				}
+				else if(player.getInConversation())
+				{
+					if(conversationState.getConversationTracker() == 1)
+					{
+						if(!raining)
+						{
+							setRaining(true);
+						}
+					}
+				}
+			}
+			
+			if(tutorialProgress == 18)
+			{
+				hud.setShowQuestFrame(true);
+				hud.setQuestCurrent(15);
+				if(!player.getInConversation() && player.getLocationX() > 6500 && !player.getFalling())
+				{
+					conversationState.startConversation(player, null, null, 
+							conversation.tutorialCampFire(), 
+							conversation.tutorialCampFireWhoTalks());
+				}
+			}
+			
+			if(tutorialProgress == 19)
+			{
+				hud.setQuestCurrent(16);
+				if(player.getWarmth() >= 20 && player.getWet() < 10)
+				{
+					if(raining)
+					{
+						setRaining(false);
+					}
+					if(!player.getInConversation() && !player.getFalling())
+					{
+						conversationState.startConversation(player, null, null, 
+								conversation.tutorialWarmedUp(), 
+								conversation.tutorialWarmedUpWhoTalks());
+					}
+					else if(player.getInConversation())
+					{
+						if(conversationState.getConversationTracker() == 1)
+						{
+							if(potion == null)
+							{
+								potion = spawnItem.spawnPotion(6570, 300, ItemData.Potions.Healing.toString(), 1);
+								potion.initializeSpawning();
+							}
+						}
+					}
+				}
+			}
+			
+			if(tutorialProgress == 20)
+			{
+				hud.setQuestCurrent(17);
+				if(player.getInventory().hasItem(ItemData.Potions.Healing.toString()) != null)
+				{
+					hud.setShowQuestFrame(false);
+					if(!player.getInConversation() && !player.getFalling())
+					{
+						conversationState.startConversation(player, null, null, 
+								conversation.tutorialHealingPotionTheChoice(), 
+								conversation.tutorialHealingPotionTheChoiceWhoTalks());
+					}
+					else
+					{
+						if(player.getInConversation())
+						{
+							choiceMade = conversationState.getChoiceMade();
+						}
+					}
+				}
+			}
+			
+			if(tutorialProgress == 21)
+			{
+				if(choiceMade == 0)
+				{
+					System.out.println("Something is wrong");
+				}
+				if(choiceMade == 1)
+				{
+					if(!player.getInConversation() && !player.getFalling())
+					{
+						conversationState.startConversation(player, null, null, 
+								conversation.tutorialHealingPotionChoiceTaste(), 
+								conversation.tutorialHealingPotionChoiceTasteWhoTalks());
+					}
+				}
+				
+				else if(choiceMade == 2)
+				{
+					if(!player.getInConversation() && !player.getFalling())
+					{
+						conversationState.startConversation(player, null, null, 
+								conversation.tutorialHealingPotionChoiceUseful(), 
+								conversation.tutorialHealingPotionChoiceUsefulWhoTalks());
+					}
+				}
+			}
+			
+			
+			if(tutorialProgress == 22)
+			{
+				if(!player.getInConversation() && !player.getFalling())
+				{
+					conversationState.startConversation(player, null, null, 
+							conversation.tutorialHealingPotionDamage(), 
+							conversation.tutorialHealingPotionDamageWhoTalks());
+				}
+				else if(player.getInConversation())
+				{
+					if(conversationState.getConversationTracker() == 3 && player.getHealth() == player.getMaxHealth())
+					{
+						player.hit(60, null);
+					}
+				}
+			}
+			
+			if(tutorialProgress == 23)
+			{
+				hud.setQuestCurrent(18);
+				hud.setShowQuestFrame(true);
+				if(!player.getInConversation() && !player.getFalling())
+				{
+					if(player.getInventory().hasItem(ItemData.Potions.Healing.toString()) != null)
+					{
+						hud.setShowQuestFrame(false);
+						conversationState.startConversation(player, null, null, 
+								conversation.tutorialHealingPotionDrunk(), 
+								conversation.tutorialHealingPotionDrunkWhoTalks());
+					}
+
+				}
+			}
+			
+			if(tutorialProgress == 24)
+			{
+				System.out.println("The tutorial is over. <'-'>");
+			}
+			
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
 		}
 
+	}
+	
+	public void keyPressed(int key)
+	{
+		if(key == KeyEvent.VK_P) 
+		{
+			player.setSpawnLocationX(4670);
+			player.setSpawnLocationY(420);
+			player.respawn();
+			tutorialProgress = 14;
+			return;
+		}
+		super.keyPressed(key);
 	}
 }
