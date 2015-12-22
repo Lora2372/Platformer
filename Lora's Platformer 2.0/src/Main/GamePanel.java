@@ -20,7 +20,7 @@ public class GamePanel
 	public static int WIDTH = 1200;
 	public static int HEIGHT = 900;
 	
-	public static final String version = "0.1.094";
+	public static final String version = "0.1.095";
 	
 	// Game thread
 	private Thread thread;

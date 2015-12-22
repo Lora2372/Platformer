@@ -264,7 +264,6 @@ public class HUD
 					if(fadeMessageList.contains(wetMessages.get(wetEnum.values()[j].toString())))
 					{
 						fadeMessageList.remove(wetMessages.get(wetEnum.values()[j].toString()));
-						System.out.println("Removing: " + wetMessages.get(wetEnum.values()[j].toString()));
 					}
 				}
 				fadeMessageList.add(wetMessages.get(message));
@@ -280,7 +279,6 @@ public class HUD
 					if(fadeMessageList.contains(heatMessages.get(heatEnum.values()[j].toString())))
 					{
 						fadeMessageList.remove(heatMessages.get(heatEnum.values()[j].toString()));
-						System.out.println("Removing: " + heatMessages.get(heatEnum.values()[j].toString()));
 					}
 				}
 				fadeMessageList.add(heatMessages.get(message));
@@ -344,16 +342,26 @@ public class HUD
 				}
 				
 				if(currentString != null)
-				{	
+				{
 					graphics.setComposite(transparent(transparency));
+					
+					int stringLength = DrawingConstants.getStringWidth(currentString, graphics);
+					int stringHeight = DrawingConstants.getStringHeight(currentString, graphics);
+					graphics.drawImage
+					(
+						Content.ConversationGUIEndConversation[0][0],
+						textLocationX,
+						textLocationY,
+						stringLength + 20,
+						stringHeight + 10,
+						null
+					);
+					
+					textLocationX += 10;
+					textLocationY += 15;
+					
+
 					graphics.setFont(new Font("Arial", Font.PLAIN, 15));
-					graphics.setColor(Color.BLACK);
-					graphics.drawString( currentString, DrawingConstants.shiftWest( (int) textLocationX, 1), DrawingConstants.shiftNorth( (int) textLocationY, 1));
-					graphics.drawString( currentString, DrawingConstants.shiftWest( (int) textLocationX, 1), DrawingConstants.shiftSouth( (int) textLocationY, 1));
-					graphics.drawString( currentString, DrawingConstants.shiftEast( (int) textLocationX, 1), DrawingConstants.shiftNorth( (int) textLocationY, 1));
-					graphics.drawString( currentString, DrawingConstants.shiftEast( (int) textLocationX, 1), DrawingConstants.shiftSouth( (int) textLocationY, 1));
-					
-					
 					graphics.setColor(Color.WHITE);
 					graphics.drawString(currentString, textLocationX, textLocationY);
 					graphics.setComposite(originalComposite);

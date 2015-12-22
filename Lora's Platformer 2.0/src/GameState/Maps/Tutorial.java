@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import Audio.JukeBox;
+import Entity.Doodad.Doodad;
 import Entity.Player.HUD;
 import Entity.Player.Player;
 import Entity.Unit.Succubus;
@@ -12,6 +13,7 @@ import GameState.GameStateManager;
 import GameState.Conversation.ConversationDataTutorial;
 import GameState.Conversation.ConversationState;
 import GameState.MainMap.MainMap;
+import GameState.Maps.LorasCavern.doodadIDs;
 import TileMap.Background;
 import TileMap.GameOver;
 import TileMap.TileMap;
@@ -29,19 +31,27 @@ public class Tutorial extends MainMap
 	
 	protected boolean alreadyDoneThis = false;
 	
-	public Tutorial(GameStateManager gameStatemanager,
+	protected enum doodadIDs
+	{
+		openTemple
+	}
+	
+	public Tutorial
+		(
+			GameStateManager gameStatemanager,
 			TileMap tileMap,
 			Player player,
 			ConversationState conversationState
-			) 
+		) 
 	{
-		super(gameStatemanager, 
+		super
+			(
+				gameStatemanager, 
 				tileMap,
 				player,
 				conversationState,
 				"Tutorial"
-				
-				);
+			);
 		
 		try
 		{
@@ -87,9 +97,38 @@ public class Tutorial extends MainMap
 		}
 		player.spawn();
 		
+		spawnDoodad.spawnLever(5100, 370, doodadIDs.openTemple.toString(), 0);
+		
 		player.getHUD().setShowQuestFrame(true);
 		player.setUnkillable(true);
 		doneInitializing = true;
+	}
+	
+	public void useDoodad(Doodad doodad)
+	{
+		try
+		{
+			// Lever that opens the starting "cell"
+			if(doodad.getUniqueID().equals(doodadIDs.openTemple.toString()))
+			{
+				if(doodad.getCurrentAction() == 2)
+				{
+					JukeBox.play("Close");
+					tileMap.setMapSingleBlock(87, 8, 31);
+					tileMap.setMapSingleBlock(87, 9, 31);
+				}		
+				if(doodad.getCurrentAction() == 0)
+				{
+					JukeBox.play("Close");
+					tileMap.setMapSingleBlock(87, 8, 119);
+					tileMap.setMapSingleBlock(87, 9, 119);
+				}
+			}
+		}
+		catch(Exception exception)
+		{
+			exception.printStackTrace();
+		}
 	}
 	
 	public void update()
@@ -303,6 +342,15 @@ public class Tutorial extends MainMap
 							conversation.tutorialHoleLargePassedMessage, 
 							conversation.tutorialHoleLargePassedMessageWhoTalks);
 				}
+			}
+			
+			if(tutorialProgress == 15)
+			{
+				alreadyDoneThis = true;
+				JukeBox.play("Close");
+				tileMap.setMapSingleBlock(60, 8, 31);
+				tileMap.setMapSingleBlock(60, 9, 31);
+				hud.setQuestCurrent(10);
 			}
 			
 

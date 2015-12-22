@@ -140,8 +140,9 @@ public class Content
 	
 	
 	// Buttons
-	public static BufferedImage[][] EditKeyBindingsButton	= load("/Art/HUD/Buttons/EditKeyBindingButton.png", 188, 68);
-	public static BufferedImage[][] ExitButton	= load("/Art/HUD/Buttons/ExitButton.png", 188, 68);
+	public static BufferedImage[][] EditKeyBindingsButton	= load("/Art/HUD/Buttons/EditKeyBindingButton.png", 100, 50);
+	public static BufferedImage[][] EditVolumeButton		= load("/Art/HUD/Buttons/EditVolumeButton.png", 100, 50);
+	public static BufferedImage[][] ExitButton				= load("/Art/HUD/Buttons/ExitButton.png", 100, 50);
 	
 	
 	public static enum mapMusic 

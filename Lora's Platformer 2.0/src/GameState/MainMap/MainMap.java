@@ -963,6 +963,7 @@ public class MainMap extends GameState
 		{
 			if(!raining)
 			{
+				player.getHUD().fadeMessage("It starts to rain");
 				raining = true;
 				int RNG = RNG(1, numberofSounds[0]);
 				if(RNG == -1)
@@ -972,7 +973,7 @@ public class MainMap extends GameState
 			else
 			{
 				raining = false;
-				for(int i = 0; i < numberofSounds[0]; i++)
+				for(int i = 0; i <= numberofSounds[0]; i++)
 				{
 					JukeBox.stop(soundTypes.Rain.toString() + (i < 10 ? "0" : "") + i);
 				}

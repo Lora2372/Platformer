@@ -66,7 +66,7 @@ public class OptionVolumeFrame extends JFrame
 	    outerPanel.setLayout(null);
 	    outerPanel.setPreferredSize(new Dimension(width, height));
 	    
-		JLabel label = new JLabel("Edit keybindings below.");
+		JLabel label = new JLabel("Edit volume levels below.");
 	    label.setSize(label.getPreferredSize());
 	    
 		outerPanel.add(label);
@@ -99,13 +99,18 @@ public class OptionVolumeFrame extends JFrame
 		
 		for(int i = 0; i < 4; i++)
 		{
+			label = labels.get(i);
+			label.setSize(label.getPreferredSize());
+			label.setLocation(0, i * 70 + 20);
+			keybindPanel.add(label);
+			
 			JSlider musicSlider = new JSlider(JSlider.HORIZONTAL, JukeBox.minVolume, JukeBox.maxVolume, JukeBox.getVolume(JukeBox.soundCategories.values()[i]));
 			sliders.add(musicSlider);
 			musicSlider.setMajorTickSpacing(10);
 			musicSlider.setPaintTicks(true);
 			musicSlider.setSize(musicSlider.getPreferredSize());
 			musicSlider.setSize(musicSlider.getWidth(), 40);
-			musicSlider.setLocation(20, musicSlider.getHeight() * i + 50);
+			musicSlider.setLocation(scrollPane.getWidth() - musicSlider.getWidth() - 20, label.getLocation().y);
 			Hashtable<Integer, JLabel> labelTable = new Hashtable<Integer, JLabel>();
 			labelTable.put( new Integer( JukeBox.minVolume ), new JLabel("Low") );
 			labelTable.put( new Integer( JukeBox.maxVolume ), new JLabel("High") );

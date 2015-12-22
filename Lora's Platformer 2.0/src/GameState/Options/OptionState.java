@@ -122,8 +122,8 @@ public class OptionState extends GameState implements ChangeListener
 			(
 				GamePanel.WIDTH - 300,
 				300,
-				188,
-				68,
+				100,
+				50,
 				1,
 				1,
 				1,
@@ -137,13 +137,13 @@ public class OptionState extends GameState implements ChangeListener
 			(
 				GamePanel.WIDTH - 300,
 				400,
-				188,
-				68,
+				100,
+				50,
 				1,
 				1,
 				1,
 				new String[] { "" },
-				Content.EditKeyBindingsButton[0],
+				Content.EditVolumeButton[0],
 				"OpenVolumeSettings"
 			);
 		optionObjects.add(openVolumeSettings);
@@ -152,8 +152,8 @@ public class OptionState extends GameState implements ChangeListener
 			(
 				GamePanel.WIDTH - 300, 
 				GamePanel.HEIGHT - 200, 
-				188, 
-				68, 
+				100, 
+				50, 
 				1, 
 				1, 
 				1, 
