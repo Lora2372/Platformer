@@ -616,12 +616,13 @@ public class Unit extends MapObject
 		
 	public void hit(double damage, Unit owner)
 	{
-		System.out.println("Damaging " + name + " for: " + damage + " damage.");
 		
-		if(dead || invulnerable)
+		
+		if(dead || invulnerable && owner != null)
 		{
 			return;
 		}
+		System.out.println("Damaging " + name + " for: " + damage + " damage.");
 		
 		health -= damage;
 		

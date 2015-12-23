@@ -286,7 +286,8 @@ public class Content
 			JukeBox.load("/Sound/BackgroundSound/Darkness.mp3", 						"Darkness");
 			JukeBox.load("/Sound/BackgroundSound/Rain01.mp3", 							"Rain01");
 			JukeBox.load("/Sound/BackgroundSound/Rain02.mp3", 							"Rain02");
-			JukeBox.load("/Sound/BackgroundSound/Rain02.mp3", 							"Rain03");
+			JukeBox.load("/Sound/BackgroundSound/Rain03.mp3", 							"Rain03");
+			JukeBox.load("/Sound/BackgroundSound/Thunder01.mp3", 						"Thunder01");
 			
 		}
 		catch(Exception e)

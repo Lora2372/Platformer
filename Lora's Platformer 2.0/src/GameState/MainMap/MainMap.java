@@ -851,9 +851,12 @@ public class MainMap extends GameState
 		
 		for(int i = 0; i < items.size(); i++)
 		{
-			if(player.intersects(items.get(i)))
+			if(items.get(i).getInWorld())
 			{
-				items.get(i).interact(player);
+				if(player.intersects(items.get(i)))
+				{
+					items.get(i).interact(player);
+				}
 			}
 		}
 		
@@ -890,6 +893,7 @@ public class MainMap extends GameState
 		
 		if(raining)
 		{
+			JukeBox.play("Thunder01");
 			player.getHUD().fadeMessage("It starts to rain");
 			raining = true;
 			int RNG = RNG(1, numberofSounds[0]);

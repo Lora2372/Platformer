@@ -173,6 +173,7 @@ public class Tutorial extends MainMap
 			{
 				if(conversationState.getConversationOver())
 				{
+					choiceMade = conversationState.getChoiceMade();
 					conversationState.endConversation();
 					tutorialProgress++;
 				}
@@ -210,8 +211,6 @@ public class Tutorial extends MainMap
 						conversationState.startConversation(player, null, null, 
 								conversation.tutorialMove, 
 								conversation.tutorialMoveWhoTalks);
-						
-						
 					}
 				}
 			}
@@ -221,7 +220,6 @@ public class Tutorial extends MainMap
 				hud.setQuestCurrent(2);
 				if(player.getJumping() && !player.getInConversation())
 				{
-					
 					conversationState.startConversation(player, null, null, 
 							conversation.tutorialJump, 
 							conversation.tutorialJumpWhoTalks);
@@ -457,24 +455,21 @@ public class Tutorial extends MainMap
 					}
 				}
 			}
-			
+						
 			if(tutorialProgress == 20)
 			{
 				hud.setQuestCurrent(17);
-				if(player.getInventory().hasItem(ItemData.Potions.Healing.toString()) != null)
+
+				if(!player.getInConversation())
 				{
-					hud.setShowQuestFrame(false);
-					if(!player.getInConversation() && !player.getFalling())
+					if(player.getInventory().hasItem(ItemData.Potions.Healing.toString()) != null)
 					{
-						conversationState.startConversation(player, null, null, 
-								conversation.tutorialHealingPotionTheChoice(), 
-								conversation.tutorialHealingPotionTheChoiceWhoTalks());
-					}
-					else
-					{
-						if(player.getInConversation())
+						hud.setShowQuestFrame(false);
+						if(!player.getInConversation() && !player.getFalling())
 						{
-							choiceMade = conversationState.getChoiceMade();
+							conversationState.startConversation(player, null, null, 
+									conversation.tutorialHealingPotionTheChoice(), 
+									conversation.tutorialHealingPotionTheChoiceWhoTalks());
 						}
 					}
 				}
@@ -482,10 +477,6 @@ public class Tutorial extends MainMap
 			
 			if(tutorialProgress == 21)
 			{
-				if(choiceMade == 0)
-				{
-					System.out.println("Something is wrong");
-				}
 				if(choiceMade == 1)
 				{
 					if(!player.getInConversation() && !player.getFalling())
@@ -520,6 +511,7 @@ public class Tutorial extends MainMap
 				{
 					if(conversationState.getConversationTracker() == 3 && player.getHealth() == player.getMaxHealth())
 					{
+						JukeBox.play("ArcaneBallImpact");
 						player.hit(60, null);
 					}
 				}
@@ -531,7 +523,7 @@ public class Tutorial extends MainMap
 				hud.setShowQuestFrame(true);
 				if(!player.getInConversation() && !player.getFalling())
 				{
-					if(player.getInventory().hasItem(ItemData.Potions.Healing.toString()) != null)
+					if(player.getInventory().hasItem(ItemData.Potions.Healing.toString()) == null)
 					{
 						hud.setShowQuestFrame(false);
 						conversationState.startConversation(player, null, null, 
@@ -544,7 +536,8 @@ public class Tutorial extends MainMap
 			
 			if(tutorialProgress == 24)
 			{
-				System.out.println("The tutorial is over. <'-'>");
+				hud.setShowQuestFrame(false);
+				gameStateManager.setState(GameStateManager.LorasCavern);
 			}
 			
 		}
