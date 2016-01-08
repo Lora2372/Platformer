@@ -430,7 +430,7 @@ public class Tutorial extends MainMap
 			if(tutorialProgress == 19)
 			{
 				hud.setQuestCurrent(16);
-				if(player.getWarmth() >= 20 && player.getWet() < 10)
+				if(player.getHeat() >= 20 && player.getWet() < 10)
 				{
 					if(raining)
 					{

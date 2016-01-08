@@ -1,5 +1,6 @@
 package Entity.Player;
 
+import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,16 +36,18 @@ public class Player extends Unit
 	protected double atmosphereTemperature = 20;	
 	
 	protected Buff campfireBuff;
-	protected Buff warmthBuff;
+	protected Buff heatBuff;
 	protected Buff wetBuff;
 	
-	protected double warmth = 22;
-	protected double warmMaximum = 100;
-	protected double warmMinimum = - 10;
+	protected double heat = 22;
+	protected double heatMaximum = 100;
+	protected double heatMinimum = 0;
+	protected Color heatColour;
 	
 	protected double wetLevel = 0;
 	protected double wetLevelMaximum = 100;
 	protected double wetLevelMinimum = 0;
+	protected Color wetColour;
 	
 	protected HashMap<KeyBind, Integer> keyBindMap;
 	
@@ -195,8 +198,8 @@ public class Player extends Unit
 		wetBuff = new Buff(CreateBuff.Buffs.Dry, -1, 0, this, Content.BuffDry[0][0]);
 		addBuff(wetBuff);
 		
-		warmthBuff = new Buff(CreateBuff.Buffs.Warm, -1, 0, this, Content.BuffWarm[0][0]);
-		addBuff(warmthBuff);
+		heatBuff = new Buff(CreateBuff.Buffs.Warm, -1, 0, this, Content.BuffWarm[0][0]);
+		addBuff(heatBuff);
 		
 	}
 	
@@ -222,17 +225,17 @@ public class Player extends Unit
 		
 		if(!inWater)
 		{
-			addWetLevel( (0.001 + warmth / 10000) * -1  ); 
+			addWetLevel( (0.001 + heat / 10000) * -1  ); 
 		}
 		
-		if(atmosphereTemperature < (warmth + (wetLevel / 10)) )
+		if(atmosphereTemperature < (heat + (wetLevel / 10)) )
 		{
-			addWarmth( ( 0.01 + 2 * wetLevel / 10000) * -1 );
+			addHeat( ( 0.01 + 2 * wetLevel / 10000) * -1 );
 		}
 		
-		if(atmosphereTemperature > (warmth - (wetLevel / 10)) )
+		if(atmosphereTemperature > (heat - (wetLevel / 10)) )
 		{
-			addWarmth(0.01 - wetLevel / 10000);
+			addHeat(0.01 - wetLevel / 10000);
 		}
 		
 
@@ -240,17 +243,18 @@ public class Player extends Unit
 		if(campfireBuff != null)
 		{
 			wetLevel -= 0.1;
-			warmth += 0.1 * (1 - wetLevel / 100) ;
+			heat += 0.1 * (1 - wetLevel / 100) ;
 		}
 				
 		// Player is hot
-		if(warmth >= 50)
+		if(heat >= 50)
 		{
-			if(!warmthBuff.getBuff().equals(CreateBuff.Buffs.Hot))
+			heatColour = new Color(255, 109, 49);
+			if(!heatBuff.getBuff().equals(CreateBuff.Buffs.Hot))
 			{
 				hud.fadeMessage(HUD.heatEnum.Hot.toString());
-				warmthBuff.setBuff(CreateBuff.Buffs.Hot);
-				warmthBuff.setSprites(Content.BuffHot[0][0]);
+				heatBuff.setBuff(CreateBuff.Buffs.Hot);
+				heatBuff.setSprites(Content.BuffHot[0][0]);
 				healthRegenCurrent = healthRegenOriginal * 1.1;
 				manaRegenCurrent = manaRegenOriginal * 1.1;
 				staminaRegenCurrent = staminaRegenOriginal * 1.1;
@@ -259,13 +263,14 @@ public class Player extends Unit
 		}
 		
 		// Player is warm
-		if(warmth >= 20 && warmth < 50)
+		if(heat >= 20 && heat < 50)
 		{
-			if(!warmthBuff.getBuff().equals(CreateBuff.Buffs.Warm))
+			heatColour = new Color(32, 237, 46);
+			if(!heatBuff.getBuff().equals(CreateBuff.Buffs.Warm))
 			{
 				hud.fadeMessage(HUD.heatEnum.Warm.toString());
-				warmthBuff.setBuff(CreateBuff.Buffs.Warm);
-				warmthBuff.setSprites(Content.BuffWarm[0][0]);
+				heatBuff.setBuff(CreateBuff.Buffs.Warm);
+				heatBuff.setSprites(Content.BuffWarm[0][0]);
 				
 				healthRegenCurrent = healthRegenOriginal;
 				manaRegenCurrent = manaRegenOriginal;
@@ -273,13 +278,14 @@ public class Player extends Unit
 			}
 		}
 		// Player is cold
-		if(warmth < 20 && warmth > 0)
-		{				
-			if(!warmthBuff.getBuff().equals(CreateBuff.Buffs.Cold))
+		if(heat < 20 && heat > 5)
+		{
+			heatColour = new Color(235, 244, 250);
+			if(!heatBuff.getBuff().equals(CreateBuff.Buffs.Cold))
 			{
 				hud.fadeMessage(HUD.heatEnum.Cold.toString());
-				warmthBuff.setBuff(CreateBuff.Buffs.Cold);
-				warmthBuff.setSprites(Content.BuffCold[0][0]);
+				heatBuff.setBuff(CreateBuff.Buffs.Cold);
+				heatBuff.setSprites(Content.BuffCold[0][0]);
 				
 				healthRegenCurrent = healthRegenOriginal * 0.5;
 				manaRegenCurrent = manaRegenOriginal * 0.5;
@@ -287,14 +293,15 @@ public class Player extends Unit
 			}
 		}
 		
-		// Player is freeezing
-		if(warmth <= 0)
+		// Player is freezing
+		if(heat <= 5)
 		{
-			if(!warmthBuff.getBuff().equals(CreateBuff.Buffs.Freezing))
+			heatColour = new Color(165, 242, 243);
+			if(!heatBuff.getBuff().equals(CreateBuff.Buffs.Freezing))
 			{
 				hud.fadeMessage(HUD.heatEnum.Freezing.toString());
-				warmthBuff.setBuff(CreateBuff.Buffs.Freezing);
-				warmthBuff.setSprites(Content.BuffFreezing[0][0]);
+				heatBuff.setBuff(CreateBuff.Buffs.Freezing);
+				heatBuff.setSprites(Content.BuffFreezing[0][0]);
 				
 				healthRegenCurrent = 0;
 				manaRegenCurrent = 0;
@@ -345,14 +352,24 @@ public class Player extends Unit
 		this.atmosphereTemperature = atmosphereTemperature;
 	}
 	
-	public double getWarmth()
+	public double getHeat()
 	{
-		return warmth;
+		return heat;
+	}
+	
+	public Color getHeatColour()
+	{
+		return heatColour;
 	}
 	
 	public double getWet()
 	{
 		return wetLevel;
+	}
+	
+	public Color getWetColour()
+	{
+		return wetColour;
 	}
 	
 	public void setHealth(double health)
@@ -369,9 +386,9 @@ public class Player extends Unit
 		this.stamina = stamina;
 	}
 	
-	public void setWarmth(double warmth)
+	public void setHeat(double heat)
 	{
-		this.warmth = warmth;
+		this.heat = heat;
 	}
 	
 	public void setWet(double wet)
@@ -379,16 +396,16 @@ public class Player extends Unit
 		this.wetLevel = wet;
 	}
 	
-	public void addWarmth(double warmth)
+	public void addHeat(double heat)
 	{
-		this.warmth += warmth;
-		if(this.warmth > warmMaximum)
+		this.heat += heat;
+		if(this.heat > heatMaximum)
 		{
-			this.warmth = warmMaximum;
+			this.heat = heatMaximum;
 		}
-		if(this.warmth < warmMinimum)
+		if(this.heat < heatMinimum)
 		{
-			this.warmth = warmMinimum;
+			this.heat = heatMinimum;
 		}
 	}
 	

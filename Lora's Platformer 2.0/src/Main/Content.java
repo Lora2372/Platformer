@@ -97,8 +97,15 @@ public class Content
 	public static BufferedImage[][] OptionDeny					= load("/Art/HUD/Foregrounds/OptionDecline.png", 60, 60);
 	public static BufferedImage[][] OptionBackground			= load("/Art/HUD/Foregrounds/OptionBackground.png", 424, 348);
 	
-	public static BufferedImage[][] bossHealthBarFrame			= load("/Art/HUD/Bars/BarFrame.png", 900, 60);
-	public static BufferedImage[][] bossHealthBar 				= load("/Art/HUD/Bars/BossHealthBar.png", 900, 60);
+	public static BufferedImage[][] BarFrame					= load("/Art/HUD/Bars/BarFrame.png", 900, 60);
+	public static BufferedImage[][] HealthBar 					= load("/Art/HUD/Bars/HealthBar.png", 900, 60);
+	
+	public static BufferedImage[][] PlayerHealthBar				= load("/Art/HUD/Bars/PlayerHealthBar.png", 225, 30);
+	public static BufferedImage[][] PlayerManaBar				= load("/Art/HUD/Bars/PlayerManaBar.png", 193, 25);
+	public static BufferedImage[][] PlayerStaminaBar			= load("/Art/HUD/Bars/PlayerStaminaBar.png", 173, 18);
+	
+	public static BufferedImage[][] PlayerBar					= load("/Art/HUD/Bars/PlayerBar.png", 325, 125);
+	
 	
 	// Buffs
 	public static BufferedImage[][] BuffIcon					= load("/Art/HUD/Foregrounds/BuffIcon.png", 64, 64);

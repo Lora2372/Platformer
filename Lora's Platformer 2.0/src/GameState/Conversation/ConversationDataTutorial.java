@@ -274,14 +274,14 @@ public class ConversationDataTutorial
 			"Ah, finally some fresh air, it looks like it's a beautiful day today!",
 			"...",
 			"Hey don't look at me, I didn't do this...",
-			"That reminds me, I still haven't taught you about the importance of keeping warm!",
+			"That reminds me, I still haven't taught you about the importance of keeping heat!",
 			"You see, staying out in rain or jumping into pools of water will make you wet.",
 			"The more wet you become the more susceptible you become to cold.",
 			"The more cold you become the weaker you become.",
-			"Different parts of the world hold different temperatures, it can be anything from warm like here, to freezing cold.",
+			"Different parts of the world hold different temperatures, it can be anything from heat like here, to freezing cold.",
 			"In colder areas you must be more careful not to become wet else you will freeze to death real fast!",
-			"How do I warm up then?",
-			"Simple, if you can find a campfire it will dry you off and warm you up in no time!",
+			"How do I heat up then?",
+			"Simple, if you can find a campfire it will dry you off and heat you up in no time!",
 			"Alternatively, if you stay out of rain and pools of water you will dry off eventually.",
 			"For now, just try to find shelter from this rain!"
 		};
@@ -312,7 +312,7 @@ public class ConversationDataTutorial
 		return new String[]
 		{
 			"What luck, not only was there a cave nearby, someone was kind enough to leave a campfire behind!",
-			"Just stay close to the campfire and you will warm up in no time!"
+			"Just stay close to the campfire and you will heat up in no time!"
 		};
 	}
 	
@@ -330,7 +330,7 @@ public class ConversationDataTutorial
 		return new String[]
 		{
 			"Ah, that feels much better.",
-			"All warmed up? Good, while you were slacking off I found this thing.",
+			"All heated up? Good, while you were slacking off I found this thing.",
 			"Wait a minute, slacking off?",
 			"Nevermind that now, pick up the potion I left you, move up to it and press " + KeyEvent.getKeyText(player.getKeyBind(Player.KeyBind.Interact)) + "."
 		};

@@ -43,7 +43,7 @@ public class CreateBuff
 		buffDescription.put(Buffs.Cold.toString(), "Regeneration greatly reduced.");
 		buffDescription.put(Buffs.Freezing.toString(), "Unable to regenerate!");
 
-		buffDescription.put(Buffs.CampFire.toString(), "Keeps you warm and dry.");
+		buffDescription.put(Buffs.CampFire.toString(), "Keeps you heat and dry.");
 
 	}
 	

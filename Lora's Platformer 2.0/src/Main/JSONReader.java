@@ -49,7 +49,7 @@ public class JSONReader
 			int health = ( (Long) jsonObjectPlayer.get("Health") ).intValue();
 			int mana = ( (Long) jsonObjectPlayer.get("Mana") ).intValue();
 			int stamina = ( (Long) jsonObjectPlayer.get("Stamina") ).intValue();
-			int warmth = ( (Long) jsonObjectPlayer.get("Warmth") ).intValue();
+			int heat = ( (Long) jsonObjectPlayer.get("Heat") ).intValue();
 			int wet = ( (Long) jsonObjectPlayer.get("Wet") ).intValue();
 			double spawnLocationX = (Double) jsonObjectPlayer.get("SpawnLocationX");
 			double spawnLocationY = (Double) jsonObjectPlayer.get("SpawnLocationY");
@@ -63,7 +63,7 @@ public class JSONReader
 			player.setHealth(health);
 			player.setMana(mana);
 			player.setStamina(stamina);
-			player.setWarmth(warmth);
+			player.setHeat(heat);
 			player.setWet(wet);
 			player.setSpawnLocationX(spawnLocationX);
 			player.setSpawnLocationY(spawnLocationY);

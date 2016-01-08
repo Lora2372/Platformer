@@ -80,6 +80,8 @@ public class Unit extends MapObject
 	protected double staminaRegenOriginal;
 	protected double staminaRegenCurrent;
 	
+	protected double breath;
+	
 	protected double bonusDamageMagical;
 	protected double bonusDamagePhysical;
 	
@@ -441,6 +443,8 @@ public class Unit extends MapObject
 		if(stamina > maxStamina) stamina = maxStamina;
 	}
 	
+	public double getBreath() { return breath; }
+	
 	
 	public int getDashStaminaCost()  { return dashCost; }
 	public int getPunchStaminaCost() { return punchCost; }
@@ -777,7 +781,20 @@ public class Unit extends MapObject
 			{
 				stamina = maxStamina;
 			}
-		
+			
+			// Update breath
+			breath += (inWater? -0.1: 0.1);
+			if(breath <= 0)
+			{
+				breath = 0;
+				hit(0.1, null);
+			}
+			
+			if(breath > 100)
+			{
+				breath = 100;
+			}
+			
 		}
 		catch(Exception exception)
 		{
@@ -1689,7 +1706,7 @@ public class Unit extends MapObject
 			
 			graphics.drawImage
 			(
-				Content.bossHealthBarFrame[0][0],
+				Content.BarFrame[0][0],
 				drawX,
 				drawY,
 				length,
@@ -1699,7 +1716,7 @@ public class Unit extends MapObject
 
 			graphics.drawImage
 			(
-				Content.bossHealthBar[0][0],
+				Content.HealthBar[0][0],
 				drawX,
 				drawY,
 				(int)((health/maxHealth) * length),

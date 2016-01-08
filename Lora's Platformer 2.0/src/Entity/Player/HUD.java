@@ -16,17 +16,20 @@ public class HUD
 {
 	protected Player player;
 	
-	protected BufferedImage playerBar;
-	protected BufferedImage playerHealthBar;
-	protected BufferedImage playerManaBar;
-	protected BufferedImage playerStaminaBar;
 	
 	protected BufferedImage playerWetBar;
 	protected BufferedImage plyayerHeatBar;
 	
 	
+	protected float breathFader = 1;
+	protected float heatFader = 1;
+	protected float wetFader = 1;
+	
+	protected int barWidth = 108;
+	protected int barHeight = 30;
+	
 	protected BufferedImage bossBar;
-	protected BufferedImage bossHealthBar;
+	protected BufferedImage healthBar;
 	
 	protected ArrayList<BufferedImage> spellbarUsable = new ArrayList<BufferedImage>();
 	protected ArrayList<BufferedImage> spellbarUnusable = new ArrayList<BufferedImage>();
@@ -89,57 +92,7 @@ public class HUD
 		
 		
 		try
-		{
-			playerBar = ImageIO.read
-				(
-					getClass().getResource
-						(
-							"/Art/HUD/Bars/PlayerBar.png"
-						)
-				);
-			
-			playerHealthBar = ImageIO.read
-				(
-					getClass().getResource
-						(
-							"/Art/HUD/Bars/PlayerHealthBar.png"
-						)
-				);
-			
-			playerManaBar = ImageIO.read
-				(
-					getClass().getResource
-						(
-							"/Art/HUD/Bars/PlayerManaBar.png"
-						)
-				);
-			
-			playerStaminaBar = ImageIO.read
-				(
-					getClass().getResource
-						(
-							"/Art/HUD/Bars/PlayerStaminaBar.png"
-						)
-				);
-			
-			bossHealthBar = ImageIO.read
-				(
-					getClass().getResource
-						(
-							"/Art/HUD/Bars/BossHealthBar.png"
-						)
-				);
-			
-			
-			
-			bossBar = ImageIO.read
-				(
-					getClass().getResource
-						(
-							"/Art/HUD/Bars/BarFrame.png"
-						)
-				);
-			
+		{			
 			
 			spellcost.add(ProjectileData.projectileCost.get(ProjectileData.Projectiles.FireBallSmall.toString()));
 			
@@ -307,12 +260,10 @@ public class HUD
 	{
 		try
 		{
+			Composite originalComposite = graphics.getComposite();
+			
 			if(fadeMessageList.size() > 0)
-			{
-
-				Composite originalComposite = graphics.getComposite();
-				
-				
+			{	
 				double elapsed = System.currentTimeMillis() - fadeStart;
 				float transparency = 1;
 				String currentString = fadeMessageList.get(0);
@@ -353,8 +304,7 @@ public class HUD
 				
 				if(currentString != null)
 				{
-					graphics.setComposite(transparent(transparency));
-					
+					graphics.setComposite(transparent(transparency));					
 					
 					int stringLength = DrawingConstants.getStringWidth(currentString, graphics);
 					int stringHeight = DrawingConstants.getStringHeight(currentString, graphics);
@@ -377,8 +327,6 @@ public class HUD
 					graphics.drawString(currentString, tempFadeMessageX + 10, fadeMessageY + 15);
 					graphics.setComposite(originalComposite);
 				}
-				
-
 			}
 			
 			// Draw buffs
@@ -395,11 +343,11 @@ public class HUD
 			
 			graphics.drawImage
 			(
-				playerHealthBar, 
+				Content.PlayerHealthBar[0][0], 
 				94, 
 				27, 
-				(int)((currentValue/maxValue) * playerHealthBar.getWidth()),
-				playerHealthBar.getHeight(),
+				(int)((currentValue/maxValue) * 225),
+				30,
 				null
 			);
 			
@@ -409,14 +357,14 @@ public class HUD
 			maxValue = player.getMaxMana();
 			
 			graphics.drawImage
-			(
-				playerManaBar, 
-				113, 
-				56, 
-				(int)((currentValue/maxValue) * playerManaBar.getWidth()),
-				playerManaBar.getHeight(),
-				null
-			);
+				(
+					Content.PlayerManaBar[0][0], 
+					113, 
+					56, 
+					(int)((currentValue/maxValue) * 193),
+					25,
+					null
+				);
 			
 			// Draw the stamina bar
 			currentValue = player.getStamina();
@@ -424,23 +372,144 @@ public class HUD
 			
 			graphics.drawImage
 				(
-					playerStaminaBar, 
+					Content.PlayerStaminaBar[0][0], 
 					106, 
 					86, 
-					(int)((currentValue/maxValue) * playerStaminaBar.getWidth()),
-					playerStaminaBar.getHeight(),
+					(int)((currentValue / maxValue) * 173),
+					18,
 					null
 				);
 			
 			// Draw the player bar
 			graphics.drawImage
 				(
-					playerBar, 
+					Content.PlayerBar[0][0],
 					0, 
 					10, 
 					null
 				);
 			
+			
+			// Draw breath bar
+			if(player.getBreath() >= 100)
+			{
+				breathFader -= 0.01;
+				if(breathFader < 0)
+				{
+					breathFader = 0;
+				}
+			}
+			else
+			{
+				breathFader = 1;
+			}
+			graphics.setComposite(transparent(breathFader));					
+			
+			
+			
+			if(breathFader > 0)
+			{
+				graphics.drawImage
+					(
+						Content.BarFrame[0][0],
+						400,
+						50,
+						193,
+						25,
+						null
+					);
+				graphics.setColor(Color.BLUE);
+				graphics.fillRect
+					(
+						400,
+						50,
+						(int)((player.getBreath() / 100) * 193),
+						25
+					);
+			}
+			graphics.setComposite(originalComposite);
+			
+			// Draw heat bar
+
+			if(player.getHeat() >= 100)
+			{
+				heatFader -= 0.01;
+				if(heatFader < 0)
+				{
+					heatFader = 0;
+				}
+			}
+			else
+			{
+				heatFader = 1;
+			}
+			graphics.setComposite(transparent(heatFader));					
+			
+			
+			
+			if(heatFader > 0)
+			{
+				graphics.drawImage
+					(
+						Content.BarFrame[0][0],
+						600,
+						50,
+						193,
+						25,
+						null
+					);
+				
+				graphics.setColor(player.getHeatColour());
+				graphics.fillRect
+					(
+						600,
+						50,
+						(int)((player.getHeat() / 100) * 193),
+						25
+					);
+			}
+			graphics.setComposite(originalComposite);
+
+			// Draw wet bar
+
+			if(player.getWet() <= 0)
+			{
+				wetFader -= 0.01;
+				if(wetFader < 0)
+				{
+					wetFader = 0;
+				}
+			}
+			else
+			{
+				wetFader = 1;
+			}
+			graphics.setComposite(transparent(wetFader));					
+			
+			
+			
+			if(wetFader > 0)
+			{
+				graphics.drawImage
+					(
+						Content.BarFrame[0][0],
+						800,
+						50,
+						193,
+						25,
+						null
+					);
+				
+				graphics.setColor(player.getWetColour());
+				graphics.fillRect
+					(
+						800,
+						50,
+						(int)((player.getWet() / 100) * 193),
+						25
+					);
+			}
+			graphics.setComposite(originalComposite);
 			
 			// YARR, there be gold and silver a plenty!
 			//			(Drawing currency)
@@ -500,7 +569,7 @@ public class HUD
 						graphics.drawString(questName[questCurrent], (int)locationX, (int)locationY);
 					}
 				}
-			}
+			}			
 			
 			
 			// Draw the action bar
@@ -558,11 +627,11 @@ public class HUD
 	
 				graphics.drawImage
 					(
-						bossHealthBar, 
+						healthBar, 
 						x, 
 						y, 
 						(int)((currentValue/maxValue) * imageWidth),
-						bossHealthBar.getHeight(),
+						healthBar.getHeight(),
 						null
 					);
 			}
