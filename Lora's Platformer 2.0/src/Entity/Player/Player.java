@@ -26,6 +26,8 @@ public class Player extends Unit
 	protected double mouseLocationX;
 	protected double mouseLocationY;	
 	
+	protected double heatTimer;
+	
 	protected int timesDefeatedFiona = 0;
 	
 	protected String currentMap;
@@ -228,12 +230,12 @@ public class Player extends Unit
 			addWetLevel( (0.001 + heat / 10000) * -1  ); 
 		}
 		
-		if(atmosphereTemperature < (heat + (wetLevel / 10)) )
+		if(atmosphereTemperature < (heat + (wetLevel / 10)) && atmosphereTemperature + 1 < (heat + (wetLevel / 10)))
 		{
 			addHeat( ( 0.01 + 2 * wetLevel / 10000) * -1 );
 		}
 		
-		if(atmosphereTemperature > (heat - (wetLevel / 10)) )
+		if(atmosphereTemperature > (heat - (wetLevel / 10)) && atmosphereTemperature - 1 > (heat - (wetLevel / 10)) )
 		{
 			addHeat(0.01 - wetLevel / 10000);
 		}
@@ -255,9 +257,9 @@ public class Player extends Unit
 				hud.fadeMessage(HUD.heatEnum.Hot.toString());
 				heatBuff.setBuff(CreateBuff.Buffs.Hot);
 				heatBuff.setSprites(Content.BuffHot[0][0]);
-				healthRegenCurrent = healthRegenOriginal * 1.1;
-				manaRegenCurrent = manaRegenOriginal * 1.1;
-				staminaRegenCurrent = staminaRegenOriginal * 1.1;
+				healthRegenCurrent = healthRegenOriginal * 1.5;
+				manaRegenCurrent = manaRegenOriginal * 1.5;
+				staminaRegenCurrent = staminaRegenOriginal * 1.5;
 				
 			}
 		}
@@ -398,6 +400,11 @@ public class Player extends Unit
 	
 	public void addHeat(double heat)
 	{
+		if(heat != 0)
+		{
+			heatTimer = System.currentTimeMillis();
+		}
+
 		this.heat += heat;
 		if(this.heat > heatMaximum)
 		{
@@ -408,6 +415,8 @@ public class Player extends Unit
 			this.heat = heatMinimum;
 		}
 	}
+	
+	public double getHeatTimer() { return heatTimer; }
 	
 	public void addWetLevel(double wetLevel)
 	{

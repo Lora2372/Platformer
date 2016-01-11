@@ -29,6 +29,7 @@ public class FireBallLargeExplosion extends Explosion
 				240, 
 				240,
 				50,
+				Content.damageTypes.Fire,
 				"FireBallLargeExplosion"
 		);
 	}

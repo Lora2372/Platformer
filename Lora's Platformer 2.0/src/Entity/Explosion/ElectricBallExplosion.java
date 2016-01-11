@@ -29,6 +29,7 @@ public class ElectricBallExplosion  extends Explosion
 				180, 
 				180,
 				70,
+				Content.damageTypes.Air,
 				"ElectricBallExplosion"
 		);
 	}

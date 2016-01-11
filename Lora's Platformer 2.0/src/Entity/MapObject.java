@@ -412,6 +412,8 @@ public abstract class MapObject
 	public boolean getInWater() { return inWater; }
 	public int getLocationX() { return (int)locationX; }
 	public int getLocationY() { return (int)locationY; }
+	public int getLocationXOnScreen() { return (int) (locationX + mapPositionX); }
+	public int getLocationYOnScreen() { return (int) (locationY + mapPositionY); }
 	public int getWidth() { return (int)width; }
 	public int getHeight() { return (int)height; }
 	public int getCollisionWidth() { return (int)collisionWidth; }

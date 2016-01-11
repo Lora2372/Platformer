@@ -21,7 +21,7 @@ public class HUD
 	protected BufferedImage plyayerHeatBar;
 	
 	
-	protected float breathFader = 1;
+	protected float breathFader = 0;
 	protected float heatFader = 1;
 	protected float wetFader = 1;
 	
@@ -403,35 +403,39 @@ public class HUD
 			{
 				breathFader = 1;
 			}
+			
 			graphics.setComposite(transparent(breathFader));					
 			
-			
+			int length = 75;
+			int height = 20;
+			int drawX = (int)(player.getLocationXOnScreen()) - length / 2;
+			int drawY = (int)(player.getLocationYOnScreen()) - player.getHeight() / 2 - 20;
 			
 			if(breathFader > 0)
 			{
 				graphics.drawImage
 					(
 						Content.BarFrame[0][0],
-						400,
-						50,
-						193,
-						25,
+						drawX,
+						drawY,
+						length,
+						height,
 						null
 					);
 				graphics.setColor(Color.BLUE);
 				graphics.fillRect
 					(
-						400,
-						50,
-						(int)((player.getBreath() / 100) * 193),
-						25
+						drawX + 1,
+						drawY + 1,
+						(int)((player.getBreath() / 100) * (length - 2)),
+						height - 2
 					);
 			}
 			graphics.setComposite(originalComposite);
 			
 			// Draw heat bar
-
-			if(player.getHeat() >= 100)
+			double timePassed = (System.currentTimeMillis() - player.getHeatTimer()) / 1000;
+			if(timePassed >= 3)
 			{
 				heatFader -= 0.01;
 				if(heatFader < 0)
@@ -462,10 +466,10 @@ public class HUD
 				graphics.setColor(player.getHeatColour());
 				graphics.fillRect
 					(
-						600,
-						50,
-						(int)((player.getHeat() / 100) * 193),
-						25
+						600 + 1,
+						50 + 1,
+						(int)((player.getHeat() / 100) * (193 - 2)),
+						25 - 2
 					);
 			}
 			graphics.setComposite(originalComposite);
@@ -503,10 +507,10 @@ public class HUD
 				graphics.setColor(player.getWetColour());
 				graphics.fillRect
 					(
-						800,
-						50,
-						(int)((player.getWet() / 100) * 193),
-						25
+						800 + 1,
+						50 + 1,
+						(int)((player.getWet() / 100) * (193 - 2)),
+						25 - 2
 					);
 			}
 			graphics.setComposite(originalComposite);

@@ -29,6 +29,7 @@ public class CartoonExplosion extends Explosion
 				60,
 				60,
 				0,
+				Content.damageTypes.Air,
 				"CartoonExplosion"
 		);
 	}

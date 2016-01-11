@@ -14,6 +14,7 @@ import GameState.GameStateManager;
 import GameState.Conversation.ConversationDataTutorial;
 import GameState.Conversation.ConversationState;
 import GameState.MainMap.MainMap;
+import Main.Content;
 import TileMap.Background;
 import TileMap.GameOver;
 import TileMap.TileMap;
@@ -512,7 +513,7 @@ public class Tutorial extends MainMap
 					if(conversationState.getConversationTracker() == 3 && player.getHealth() == player.getMaxHealth())
 					{
 						JukeBox.play("ArcaneBallImpact");
-						player.hit(60, null);
+						player.hit(60, Content.damageTypes.Pure, null);
 					}
 				}
 			}

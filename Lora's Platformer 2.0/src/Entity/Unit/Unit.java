@@ -1,6 +1,8 @@
 package Entity.Unit;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import Audio.JukeBox;
 import javax.imageio.ImageIO;
 import Entity.Animation;
@@ -80,10 +82,13 @@ public class Unit extends MapObject
 	protected double staminaRegenOriginal;
 	protected double staminaRegenCurrent;
 	
-	protected double breath;
+	protected double breath = 100;
 	
 	protected double bonusDamageMagical;
 	protected double bonusDamagePhysical;
+	
+	protected HashMap<String, Integer> bonusResistance = new HashMap<String, Integer>();
+	protected HashMap<String, Integer> bonusDamage = new HashMap<String, Integer>();
 	
 	protected int damageOnTouch;
 	
@@ -618,7 +623,7 @@ public class Unit extends MapObject
 	
 	public int getPunchRange() { return punchRange; }
 		
-	public void hit(double damage, Unit owner)
+	public void hit(double damage, Content.damageTypes damageType, Unit owner)
 	{
 		
 		
@@ -787,7 +792,7 @@ public class Unit extends MapObject
 			if(breath <= 0)
 			{
 				breath = 0;
-				hit(0.1, null);
+				hit(0.1, Content.damageTypes.Pure, null);
 			}
 			
 			if(breath > 100)
@@ -1462,7 +1467,7 @@ public class Unit extends MapObject
 						)
 						{
 							charactersHit.add(character);
-							character.hit(punchDamage, this);
+							character.hit(punchDamage, Content.damageTypes.Physical, this);
 						}
 					}
 					else
@@ -1476,7 +1481,7 @@ public class Unit extends MapObject
 						)
 						{
 							charactersHit.add(character);
-							character.hit(punchDamage, this);
+							character.hit(punchDamage, Content.damageTypes.Physical, this);
 						}
 					}
 				}
@@ -1497,7 +1502,7 @@ public class Unit extends MapObject
 						)
 						{
 							charactersHit.add(character);
-							character.hit(dashDamage, this);
+							character.hit(dashDamage, Content.damageTypes.Physical, this);
 						}
 					}
 					else
@@ -1511,7 +1516,7 @@ public class Unit extends MapObject
 						)
 						{
 							charactersHit.add(character);
-							character.hit(dashDamage, this);
+							character.hit(dashDamage, Content.damageTypes.Physical, this);
 						}
 					}
 				}

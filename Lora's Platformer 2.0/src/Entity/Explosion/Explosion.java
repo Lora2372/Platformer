@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import Entity.MapObject;
 import Entity.Unit.Unit;
 import GameState.MainMap.MainMap;
+import Main.Content;
 import TileMap.TileMap;
 
 public class Explosion extends MapObject
@@ -21,14 +22,15 @@ public class Explosion extends MapObject
     protected int explosionHeight;
        
     protected int damage;
-
+    protected Content.damageTypes damageType;
     protected String explosionType;
    
     protected MainMap mainMap;
    
     protected Unit owner;
    
-    public Explosion(
+    public Explosion
+    	(
             TileMap tileMap,
             MainMap mainMap,
             Unit owner,
@@ -40,8 +42,9 @@ public class Explosion extends MapObject
             int collisionWidth,
             int collisionHeight,
             int damage,
+            Content.damageTypes damageType,
             String explosionType
-            )
+    	)
     {
         super(tileMap);
        
@@ -53,7 +56,8 @@ public class Explosion extends MapObject
         this.collisionWidth = collisionWidth;
         this.collisionHeight = collisionHeight;
         this.explosionType = explosionType;
-        this.damage = damage;   
+        this.damage = damage;
+        this.damageType = damageType;
         this.unkillable = true;
         this.invulnerable = true;
         this.untouchable = false;
@@ -121,7 +125,7 @@ public class Explosion extends MapObject
                         	bonusDamage = owner.getBonusDamageMagical();
                         }
                         
-                        character.hit( (damage + bonusDamage ) * distanceDamageMultiplier, owner);
+                        character.hit( (damage + bonusDamage ) * distanceDamageMultiplier, damageType, owner);
                     }
                 }
             }

@@ -30,6 +30,7 @@ public class BombExplosion extends Explosion
 				128, 
 				256,
 				50,
+				Content.damageTypes.Fire,
 				"BombExplosion"
 		);
 	}

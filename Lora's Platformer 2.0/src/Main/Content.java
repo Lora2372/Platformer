@@ -165,6 +165,25 @@ public class Content
 		DeepWoods
 	}
 	
+	public static enum damageTypes
+	{
+		Fire,
+		Air,
+		Arcane,
+		Cold,
+		Physical,
+		Pure
+	}
+	
+	public static enum armourTypes
+	{
+		FireResistance,
+		ArcaneResistance,
+		AirResistance,
+		ColdResistance,
+		PhysicalResistance
+	}
+	
 	
 	public static void loadContent()
 	{						

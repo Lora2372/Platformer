@@ -29,6 +29,7 @@ public class ArcaneBallExplosion extends Explosion
 				90, 
 				90,
 				30,
+				Content.damageTypes.Arcane,
 				"ArcaneBallExplosion"
 		);
 	}

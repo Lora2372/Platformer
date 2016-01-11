@@ -2,6 +2,8 @@ package GameState.MainMap;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+
+import Main.Content;
 import Main.GamePanel;
 import TileMap.*;
 import Entity.Explosion.Explosion;
@@ -982,7 +984,7 @@ public class MainMap extends GameState
 			{
 				if(characterList.get(i).getName().equals("Fiona"))
 				{
-					characterList.get(i).hit(9001, player);
+					characterList.get(i).hit(9001, Content.damageTypes.Pure, player);
 				}
 			}
 		}
